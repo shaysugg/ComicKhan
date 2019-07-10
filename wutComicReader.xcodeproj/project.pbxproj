@@ -1,0 +1,446 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9D41222421E15F361BC95DF5 /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */; };
+		E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */; };
+		E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */; };
+		E40C7AA222A1168C00D7CD17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA022A1168C00D7CD17 /* Main.storyboard */; };
+		E40C7AA422A1169000D7CD17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA322A1169000D7CD17 /* Assets.xcassets */; };
+		E40C7AA722A1169000D7CD17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */; };
+		E40DC33A22AADD08009D271D /* Batman.cbr in Resources */ = {isa = PBXBuildFile; fileRef = E40DC33922AADD08009D271D /* Batman.cbr */; };
+		E40FD64D22D1239800926CC4 /* thumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40FD64C22D1239800926CC4 /* thumbnailCell.swift */; };
+		E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440DEEE22A1814A00DCF4F7 /* Comic.swift */; };
+		E45213A922D4927D00216217 /* exteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45213A822D4927D00216217 /* exteractor.swift */; };
+		E463B29822AC2FCE0094265C /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463B29722AC2FCE0094265C /* Consts.swift */; };
+		E4CAE6D922CF88690062DDC2 /* pageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAE6D822CF88690062DDC2 /* pageCell.swift */; };
+		E4E8FCED22C28E4700A8B32D /* bookReaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
+		E40C7A9922A1168C00D7CD17 /* wutComicReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wutComicReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryVC.swift; sourceTree = "<group>"; };
+		E40C7AA122A1168C00D7CD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E40C7AA322A1169000D7CD17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E40C7AA622A1169000D7CD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E40C7AA822A1169000D7CD17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E40DC33922AADD08009D271D /* Batman.cbr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Batman.cbr; sourceTree = "<group>"; };
+		E40FD64C22D1239800926CC4 /* thumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thumbnailCell.swift; sourceTree = "<group>"; };
+		E440DEEE22A1814A00DCF4F7 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		E45213A822D4927D00216217 /* exteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = exteractor.swift; sourceTree = "<group>"; };
+		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
+		E4CAE6D822CF88690062DDC2 /* pageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pageCell.swift; sourceTree = "<group>"; };
+		E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookReaderVC.swift; sourceTree = "<group>"; };
+		F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E40C7A9622A1168C00D7CD17 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D41222421E15F361BC95DF5 /* Pods_wutComicReader.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3912A66950EBC8860D574C05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8A0647C74B61F7E31CE0FDDC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */,
+				7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E40C7A9022A1168C00D7CD17 = {
+			isa = PBXGroup;
+			children = (
+				E40C7A9B22A1168C00D7CD17 /* wutComicReader */,
+				E40C7A9A22A1168C00D7CD17 /* Products */,
+				8A0647C74B61F7E31CE0FDDC /* Pods */,
+				3912A66950EBC8860D574C05 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E40C7A9A22A1168C00D7CD17 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E40C7A9922A1168C00D7CD17 /* wutComicReader.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E40C7A9B22A1168C00D7CD17 /* wutComicReader */ = {
+			isa = PBXGroup;
+			children = (
+				E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */,
+				E45213A822D4927D00216217 /* exteractor.swift */,
+				E45213A722D4902C00216217 /* book reader */,
+				E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */,
+				E463B29722AC2FCE0094265C /* Consts.swift */,
+				E40C7AA022A1168C00D7CD17 /* Main.storyboard */,
+				E40C7AA322A1169000D7CD17 /* Assets.xcassets */,
+				E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */,
+				E40C7AA822A1169000D7CD17 /* Info.plist */,
+				E40DC33922AADD08009D271D /* Batman.cbr */,
+				E440DEEE22A1814A00DCF4F7 /* Comic.swift */,
+			);
+			path = wutComicReader;
+			sourceTree = "<group>";
+		};
+		E45213A722D4902C00216217 /* book reader */ = {
+			isa = PBXGroup;
+			children = (
+				E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */,
+				E40FD64C22D1239800926CC4 /* thumbnailCell.swift */,
+				E4CAE6D822CF88690062DDC2 /* pageCell.swift */,
+			);
+			path = "book reader";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E40C7A9822A1168C00D7CD17 /* wutComicReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E40C7AAB22A1169000D7CD17 /* Build configuration list for PBXNativeTarget "wutComicReader" */;
+			buildPhases = (
+				D572D00559386204283AC4AE /* [CP] Check Pods Manifest.lock */,
+				E40C7A9522A1168C00D7CD17 /* Sources */,
+				E40C7A9622A1168C00D7CD17 /* Frameworks */,
+				E40C7A9722A1168C00D7CD17 /* Resources */,
+				CCE1A8579695161DCBD27811 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wutComicReader;
+			productName = wutComicReader;
+			productReference = E40C7A9922A1168C00D7CD17 /* wutComicReader.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E40C7A9122A1168C00D7CD17 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = wutup;
+				TargetAttributes = {
+					E40C7A9822A1168C00D7CD17 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = E40C7A9422A1168C00D7CD17 /* Build configuration list for PBXProject "wutComicReader" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E40C7A9022A1168C00D7CD17;
+			productRefGroup = E40C7A9A22A1168C00D7CD17 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E40C7A9822A1168C00D7CD17 /* wutComicReader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E40C7A9722A1168C00D7CD17 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E40C7AA722A1169000D7CD17 /* LaunchScreen.storyboard in Resources */,
+				E40C7AA422A1169000D7CD17 /* Assets.xcassets in Resources */,
+				E40C7AA222A1168C00D7CD17 /* Main.storyboard in Resources */,
+				E40DC33A22AADD08009D271D /* Batman.cbr in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CCE1A8579695161DCBD27811 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/UnrarKit/UnrarKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UnrarKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D572D00559386204283AC4AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-wutComicReader-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E40C7A9522A1168C00D7CD17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E40FD64D22D1239800926CC4 /* thumbnailCell.swift in Sources */,
+				E4E8FCED22C28E4700A8B32D /* bookReaderVC.swift in Sources */,
+				E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */,
+				E463B29822AC2FCE0094265C /* Consts.swift in Sources */,
+				E45213A922D4927D00216217 /* exteractor.swift in Sources */,
+				E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */,
+				E4CAE6D922CF88690062DDC2 /* pageCell.swift in Sources */,
+				E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E40C7AA022A1168C00D7CD17 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E40C7AA122A1168C00D7CD17 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E40C7AA622A1169000D7CD17 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E40C7AA922A1169000D7CD17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E40C7AAA22A1169000D7CD17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E40C7AAC22A1169000D7CD17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MCLTVLC;
+				INFOPLIST_FILE = wutComicReader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.wutup.wutComicReader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E40C7AAD22A1169000D7CD17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MCLTVLC;
+				INFOPLIST_FILE = wutComicReader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.wutup.wutComicReader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E40C7A9422A1168C00D7CD17 /* Build configuration list for PBXProject "wutComicReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E40C7AA922A1169000D7CD17 /* Debug */,
+				E40C7AAA22A1169000D7CD17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E40C7AAB22A1169000D7CD17 /* Build configuration list for PBXNativeTarget "wutComicReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E40C7AAC22A1169000D7CD17 /* Debug */,
+				E40C7AAD22A1169000D7CD17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E40C7A9122A1168C00D7CD17 /* Project object */;
+}

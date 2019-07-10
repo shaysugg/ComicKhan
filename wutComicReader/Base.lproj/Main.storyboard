@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kyb-M5-WBj">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Shelves-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="LibraryVC" customModule="wutComicReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vjD-gc-wg7">
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qLy-rl-vpP">
+                                    <size key="itemSize" width="169" height="187"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="center" reuseIdentifier="BookCell" id="i9p-fZ-PJv">
+                                        <rect key="frame" x="0.0" y="0.0" width="169" height="187"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="169" height="187"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vDQ-JN-GqE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="169" height="162"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Batman New Issue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jco-in-KGu">
+                                                    <rect key="frame" x="0.0" y="162" width="169" height="25"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="vDQ-JN-GqE" firstAttribute="top" secondItem="i9p-fZ-PJv" secondAttribute="top" id="DeT-ft-TBY"/>
+                                            <constraint firstItem="vDQ-JN-GqE" firstAttribute="leading" secondItem="i9p-fZ-PJv" secondAttribute="leading" id="GGA-z8-uUG"/>
+                                            <constraint firstItem="jco-in-KGu" firstAttribute="top" secondItem="vDQ-JN-GqE" secondAttribute="bottom" id="L0B-OE-wX3"/>
+                                            <constraint firstItem="jco-in-KGu" firstAttribute="leading" secondItem="i9p-fZ-PJv" secondAttribute="leading" id="Nbl-C4-xDr"/>
+                                            <constraint firstAttribute="bottom" secondItem="vDQ-JN-GqE" secondAttribute="bottom" constant="25" id="VJG-Ol-MEl"/>
+                                            <constraint firstAttribute="trailing" secondItem="vDQ-JN-GqE" secondAttribute="trailing" id="dBv-nK-zt4"/>
+                                            <constraint firstAttribute="bottom" secondItem="jco-in-KGu" secondAttribute="bottom" id="fgS-23-DpQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="jco-in-KGu" secondAttribute="trailing" id="x22-Of-Hha"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="o7G-8d-oNb"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="auA-Lr-qf0"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vjD-gc-wg7" secondAttribute="bottom" constant="20" id="0Ae-Us-wf9"/>
+                            <constraint firstItem="vjD-gc-wg7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="REw-Ox-IE9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vjD-gc-wg7" secondAttribute="trailing" constant="20" id="hOz-zp-Ebo"/>
+                            <constraint firstItem="vjD-gc-wg7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="sy5-B3-e4G"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Shelves" largeTitleDisplayMode="always" id="dJd-sc-R8B">
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" id="aQu-YS-2cc">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5sO-fS-I5I">
+                                    <rect key="frame" x="349" y="7" width="45" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="UNZIP"/>
+                                    <connections>
+                                        <action selector="unzipButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EDG-5r-BZ0"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="hM2-Lr-NJf">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0fs-q9-JfJ">
+                                    <rect key="frame" x="293" y="7" width="48" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="FETCH"/>
+                                    <connections>
+                                        <action selector="fetchButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OnG-G3-VdB"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="bookCollectionView" destination="vjD-gc-wg7" id="veE-v5-pwY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1042.0289855072465" y="110.49107142857143"/>
+        </scene>
+        <!--Book ReaderVC-->
+        <scene sceneID="bpz-hA-CwV">
+            <objects>
+                <viewController storyboardIdentifier="bookReader" id="h7d-RW-WmF" customClass="BookReaderVC" customModule="wutComicReader" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZeX-qG-MUh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="PVo-lG-Gvs"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W6W-Zd-90i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1046" y="802"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Pak-Aj-Ovi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kyb-M5-WBj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XPG-91-FGr">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="pNQ-Cp-5Pj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LSp-aZ-EHm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="110.49107142857143"/>
+        </scene>
+    </scenes>
+</document>
