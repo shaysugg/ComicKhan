@@ -24,6 +24,8 @@ xcuserdata/
 *.rar
 *.zip
 *.pdf
+*.cbz
+*.cbr
 
 
 ## Obj-C/Swift specific
@@ -39,18 +41,18 @@ playground.xcworkspace
 # Swift Package Manager
 #
 # Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
+ Packages/
+ Package.pins
+ Package.resolved
 .build/
 
-# CocoaPods
+ CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
+ Pods/
 
 # Carthage
 #
@@ -59,7 +61,7 @@ playground.xcworkspace
 
 Carthage/Build
 
-# fastlane
+ fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
@@ -70,3 +72,29 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+
+# Mac gitignore files ----------------------------------------------
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Compiled Python files
+*.pyc
+
+# Compiled C++ files
+*.out
+
+# Application specific files
+venv
+node_modules
+.sass-cache
