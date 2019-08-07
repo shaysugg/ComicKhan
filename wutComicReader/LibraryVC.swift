@@ -17,7 +17,7 @@ class LibraryVC: UIViewController {
     var appDirectory : URL?
     var comics : [[Comic]] = []
     var bottomGradientImage : UIImageView?
-    var sectionCount : Int = 1
+    var sectionNames : [String] = []
     
     var editingMode = false {
         didSet{
@@ -41,6 +41,7 @@ class LibraryVC: UIViewController {
         didSet{
             groupBarButton.isEnabled = !selectedCell.isEmpty
             deleteBarButton.isEnabled = !selectedCell.isEmpty
+            print(selectedCell)
         }
     }
     @IBOutlet weak var bottomBar: UIToolbar!
@@ -68,7 +69,16 @@ class LibraryVC: UIViewController {
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
         
         for index in selectedCell {
-            comics[index.section].remove(at: index.row)
+            comics[index.section].remove(at: index.row) 
+        }
+        
+        
+        for comic in comics {
+            if comic.isEmpty {
+                if let index = comics.firstIndex(of: comic) {
+                    comics.remove(at: index)
+                }
+            }
         }
         
         bookCollectionView.deleteItems(at: selectedCell)
@@ -78,31 +88,19 @@ class LibraryVC: UIViewController {
     }
     @IBAction func groupBarButtonTapped(_ sender: Any) {
         
-        if selectedCell.count < 2 { return }
         
-        //creating a group in dataBase
         
-        var selectedComics : [Comic] = []
-        
-        for indexpath in selectedCell {
-            let cell = bookCollectionView.cellForItem(at: indexpath) as? BookCell
-            if let book = cell?.book {
-                comics[indexpath.section].remove(at: indexpath.row)
-                selectedComics.append(book)
-            }
+        let alert = UIAlertController(title: "New Group Title", message: "enter the new group title", preferredStyle: .alert)
+        alert.addTextField { (textfield) in
+            textfield.text = ""
         }
-        comics.append(selectedComics)
-        
-        
-        //removing empty sections that may generate after grouping
-        
-        for comic in comics {
-            if comic.isEmpty {
-                if let index = comics.firstIndex(of: comic) {
-                    comics.remove(at: index)
-                }
-            }
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            self.makingAnAppGroup(with: alert.textFields![0].text ?? "")
+            alert.dismiss(animated: true, completion: nil)
         }
+        
+        alert.addAction(okAction)
+        present(alert , animated: true)
         
         bookCollectionView.reloadData()
         
@@ -119,6 +117,7 @@ class LibraryVC: UIViewController {
 //            }
 //        }
         editingMode = !editingMode
+        selectedCell.removeAll()
         bookCollectionView.reloadData()
     }
     
@@ -138,10 +137,10 @@ class LibraryVC: UIViewController {
         if !UserDefaults.standard.bool(forKey: "hasBeenLaunchedBeforeFlag") {
             makeAppDirectory()
         }
-        makeRandomComic()
+//        makeRandomComic()
         print(comics.count)
         bookCollectionView.allowsMultipleSelection = true
-//        fetchComics()
+        fetchComics()
         setUpDesigns()
         bookCollectionView.reloadData()
         
@@ -155,6 +154,8 @@ class LibraryVC: UIViewController {
         let comic5 = Comic(cover: UIImage(named: "005-ct"), name: "fifth tank girl", pageNumbers: 1, pages: [UIImage(named: "005-ct")!])
         let comic6 = Comic(cover: UIImage(named: "006-ct"), name: "sixth tank girl", pageNumbers: 1, pages: [UIImage(named: "006-ct")!])
         comics.append(contentsOf: [[comic1 , comic2 , comic3 , comic4] , [comic5 , comic6]])
+        
+        sectionNames.append(contentsOf: ["Tank Girl Series One" , "Tank Girl Series Two"])
         
         bookCollectionView.reloadData()
     }
@@ -183,6 +184,40 @@ class LibraryVC: UIViewController {
         imageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         bottomGradientImage = imageView
+    }
+    
+    func makingAnAppGroup(with name: String){
+        
+        if selectedCell.count < 2 { return }
+        
+        
+        //creating a group in dataBase
+        
+        var selectedComics : [Comic] = []
+        
+        for indexpath in selectedCell {
+            let cell = bookCollectionView.cellForItem(at: indexpath) as? BookCell
+            if let book = cell?.book {
+                comics[indexpath.section].remove(at: indexpath.row)
+                selectedComics.append(book)
+            }
+        }
+        comics.append(selectedComics)
+        sectionNames.append(name)
+        
+        //removing empty sections that may generate after grouping
+        
+        for comic in comics {
+            if comic.isEmpty {
+                if let index = comics.firstIndex(of: comic) {
+                    comics.remove(at: index)
+                }
+            }
+        }
+        
+        bookCollectionView.reloadData()
+        
+        
     }
     
     func makeCustomNavigationBar(){
@@ -256,7 +291,7 @@ class LibraryVC: UIViewController {
                 }
                 
                 let comic = Comic(cover: comicImages.first, name: comicName, pageNumbers: comicImages.count, pages: comicImages)
-                comics[0].append(comic)
+                comics.append([comic])
             }
             
         }catch{
@@ -305,7 +340,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         let title = header.viewWithTag(101) as! UILabel
         let holder = header.viewWithTag(102)!
         holder.layer.cornerRadius = holder.frame.height * 0.5
-        title.text = "Cat Woman Series"
+//        title.text = sectionNames[indexPath.section]
         return header
     }
     
@@ -315,11 +350,10 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+//        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         if editingMode {
                 if !selectedCell.contains(indexPath) {
                     selectedCell.append(indexPath)
-//            cell.isSelected = !(cell?.isSelected ?? false)
             }
         }else{
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
@@ -336,7 +370,6 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
                 guard let index = selectedCell.firstIndex(of: indexPath) else { return }
                 selectedCell.remove(at: index)
             }
-            print(indexPath)
         }
     }
     

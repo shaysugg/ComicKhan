@@ -13,6 +13,7 @@ class BookReaderVC: UIViewController {
     //MARK:- Variables
     
     var comic : Comic?
+    var lastViewedPage : Int?
     var menusAreAppeard: Bool = false
     
     var previousCell : thumbnailCell?
@@ -115,7 +116,11 @@ class BookReaderVC: UIViewController {
        
     }
     
- 
+    override func viewDidAppear(_ animated: Bool) {
+        let id = comic!.id + "-lastViewedPage"
+        let index = UserDefaults.standard.integer(forKey: id)
+        bookCollectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: true)
+    }
     
     func setupDesign(){
         
@@ -150,7 +155,7 @@ class BookReaderVC: UIViewController {
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: view.bounds.height * 0.35).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         
         bottomView.addSubview(thumbnailCollectionView)
         thumbnailCollectionView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 10).isActive = true
@@ -233,6 +238,15 @@ class BookReaderVC: UIViewController {
     
     @objc func closeTheVC(){
         dismiss(animated: true, completion: nil)
+        if let visibleCell = bookCollectionView.visibleCells.first {
+            lastViewedPage = bookCollectionView.indexPath(for: visibleCell)?.row
+            
+            if let _ = comic {
+                let defaults = UserDefaults.standard
+                let id = comic!.id + "-lastViewedPage"
+                defaults.set(lastViewedPage, forKey: id)
+            }
+        }
     }
     
     
@@ -301,6 +315,16 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if collectionView.restorationIdentifier == "thumbnail" {
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.restorationIdentifier != "thumbnail" {
+            let visibleCell = bookCollectionView.visibleCells.first!
+            if let index = bookCollectionView.indexPath(for: visibleCell) {
+                thumbnailCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+//                thumbnailCollectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+            }
         }
     }
     

@@ -21,6 +21,11 @@ extension UIView {
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
+    
+    
+    func deviceModel(){
+//        UIDevice().type
+    }
    
     func presentCostomAlert( hasTextfield : Bool , title: String? ,text: String , buttonTexts : [String] ){
 //        self.bounds.width * 0.7
