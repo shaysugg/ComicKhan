@@ -15,31 +15,38 @@ class LibraryVC: UIViewController {
     //MARK:- variables
     
     var appDirectory : URL?
-    var comics : [[Comic]] = []
+    var userDiractory : URL? {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    }
     var bottomGradientImage : UIImageView?
-    var sectionNames : [String] = []
+    var comics : [[Comic]] = [[]]
+    var sectionNames : [String] = ["New Comics"]
+    var collectionViewCellSize: CGSize?
     
     var editingMode = false {
         didSet{
-//            navigationItem.largeTitleDisplayMode =  editingMode ? .never : .always
+            //            navigationItem.largeTitleDisplayMode =  editingMode ? .never : .always
             if editingMode {
                 groupBarButton.title = "Group"
                 deleteBarButton.title = "Delete"
                 editBarButton.title = "Done"
-//                groupBarButton.isEnabled = true
-//                deleteBarButton.isEnabled = true
+                
             }else{
                 groupBarButton.title = ""
                 deleteBarButton.title = ""
                 editBarButton.title = "edit"
                 deleteBarButton.isEnabled = false
                 groupBarButton.isEnabled = false
+                
             }
+            bookCollectionView.reloadData()
         }
+        
     }
+    
     var selectedCell : [IndexPath] = [] {
         didSet{
-            groupBarButton.isEnabled = !selectedCell.isEmpty
+            groupBarButton.isEnabled = selectedCell.count > 1
             deleteBarButton.isEnabled = !selectedCell.isEmpty
             print(selectedCell)
         }
@@ -53,37 +60,14 @@ class LibraryVC: UIViewController {
     //MARK:- actions
     
     @IBAction func unzipButtonTapped(_ sender: Any) {
-//        unzipingCBR(fileName: "Dick Tracyy")
-//        unzipingCBR(fileName: "Mr. Higgins Comes Home")
-//        unzipingCBR(fileName: "Hellboy")
-        unzipingCBR(fileName: "Batman")
-//        unzipingCBR(fileName: "Wonder Woman")
-        
+        unzipAll()
         fetchComics()
         bookCollectionView.reloadData()
-        
-        
-        
     }
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
         
-        for index in selectedCell {
-            comics[index.section].remove(at: index.row) 
-        }
-        
-        
-        for comic in comics {
-            if comic.isEmpty {
-                if let index = comics.firstIndex(of: comic) {
-                    comics.remove(at: index)
-                }
-            }
-        }
-        
-        bookCollectionView.deleteItems(at: selectedCell)
-        selectedCell.removeAll()
-        bookCollectionView.reloadData()
+        deleteSelectedComics()
         
     }
     @IBAction func groupBarButtonTapped(_ sender: Any) {
@@ -96,6 +80,7 @@ class LibraryVC: UIViewController {
         }
         let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
             self.makingAnAppGroup(with: alert.textFields![0].text ?? "")
+            self.selectedCell.removeAll()
             alert.dismiss(animated: true, completion: nil)
         }
         
@@ -104,18 +89,19 @@ class LibraryVC: UIViewController {
         
         bookCollectionView.reloadData()
         
+        
     }
     
     @IBAction func editButtonTapped(_ sender: Any) {
-//        let numberOfSections = bookCollectionView.numberOfSections
-//        if !editingMode {
-//            for sectionNumber in 0 ... numberOfSections - 1 {
-//                for _ in 0 ... bookCollectionView.numberOfItems(inSection: sectionNumber) - 1 {
-                    bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
-//                }
+        //        let numberOfSections = bookCollectionView.numberOfSections
+        //        if !editingMode {
+        //            for sectionNumber in 0 ... numberOfSections - 1 {
+        //                for _ in 0 ... bookCollectionView.numberOfItems(inSection: sectionNumber) - 1 {
+        bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+        //                }
         
-//            }
-//        }
+        //            }
+        //        }
         editingMode = !editingMode
         selectedCell.removeAll()
         bookCollectionView.reloadData()
@@ -128,7 +114,12 @@ class LibraryVC: UIViewController {
     }
     
     
-    //MARK:- functions
+    @IBAction func closeSectionButtonTapped(_ sender: Any) {
+        
+    }
+    
+    
+    //MARK:- Design functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,30 +128,32 @@ class LibraryVC: UIViewController {
         if !UserDefaults.standard.bool(forKey: "hasBeenLaunchedBeforeFlag") {
             makeAppDirectory()
         }
-//        makeRandomComic()
-        print(comics.count)
+        //        makeRandomComic()
         bookCollectionView.allowsMultipleSelection = true
         fetchComics()
         setUpDesigns()
         bookCollectionView.reloadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceDidRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        print(NSHomeDirectory())
         
     }
     
     func makeRandomComic() {
-        let comic1 = Comic(cover: UIImage(named: "001-ct"), name: "first tank girl", pageNumbers: 1, pages: [UIImage(named: "001-ct")!])
-        let comic2 = Comic(cover: UIImage(named: "002-ct"), name: "second tank girl", pageNumbers: 1, pages: [UIImage(named: "002-ct")!])
-        let comic3 = Comic(cover: UIImage(named: "003-ct"), name: "third tank girl", pageNumbers: 1, pages: [UIImage(named: "004-ct")!])
-        let comic4 = Comic(cover: UIImage(named: "004-ct"), name: "fourth tank girl", pageNumbers: 1, pages: [UIImage(named: "004-ct")!])
-        let comic5 = Comic(cover: UIImage(named: "005-ct"), name: "fifth tank girl", pageNumbers: 1, pages: [UIImage(named: "005-ct")!])
-        let comic6 = Comic(cover: UIImage(named: "006-ct"), name: "sixth tank girl", pageNumbers: 1, pages: [UIImage(named: "006-ct")!])
+        let comic1 = Comic(cover: UIImage(named: "001-p"), name: "first tank girl", pageNumbers: 1, pages: [UIImage(named: "001-p")!])
+        let comic2 = Comic(cover: UIImage(named: "002-p"), name: "second tank girl", pageNumbers: 1, pages: [UIImage(named: "002-p")!])
+        let comic3 = Comic(cover: UIImage(named: "003-p"), name: "third tank girl", pageNumbers: 1, pages: [UIImage(named: "003-p")!])
+        let comic4 = Comic(cover: UIImage(named: "004-p"), name: "fourth tank girl", pageNumbers: 1, pages: [UIImage(named: "004-p")!])
+        let comic5 = Comic(cover: UIImage(named: "005-p"), name: "fifth tank girl", pageNumbers: 1, pages: [UIImage(named: "005-p")!])
+        let comic6 = Comic(cover: UIImage(named: "007-p"), name: "sixth tank girl", pageNumbers: 1, pages: [UIImage(named: "007-p")!])
         comics.append(contentsOf: [[comic1 , comic2 , comic3 , comic4] , [comic5 , comic6]])
         
         sectionNames.append(contentsOf: ["Tank Girl Series One" , "Tank Girl Series Two"])
-        
+        print(comics)
         bookCollectionView.reloadData()
     }
     
     func setUpDesigns(){
+        
         
         groupBarButton.isEnabled = false
         deleteBarButton.isEnabled = false
@@ -168,7 +161,18 @@ class LibraryVC: UIViewController {
         deleteBarButton.title = ""
         
         makeCustomNavigationBar()
-        makeBottomViewGradiant()
+    }
+    
+    @objc func deviceDidRotated() {
+        let deviceWidth = UIScreen.main.bounds.width
+        print("device width is : \(UIScreen.main.bounds.width)")
+        if deviceWidth < 567 {
+            collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 3.9, height: bookCollectionView.frame.width / 2.3)
+        }else {
+            collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 8.0, height: bookCollectionView.frame.width / 4.2)
+        }
+        #warning("configuration for ipad ??(if device with > 1000)")
+        bookCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     func makeBottomViewGradiant(){
@@ -186,14 +190,45 @@ class LibraryVC: UIViewController {
         bottomGradientImage = imageView
     }
     
+    //MARK:- top bar functions
+    
+    func deleteSelectedComics() {
+        
+        selectedCell.sort()
+        selectedCell.reverse()
+        
+        for index in selectedCell {
+            comics[index.section].remove(at: index.row)
+        }
+        
+        //removing empty section
+        
+        for comic in comics {
+            if comic.isEmpty && comic != comics.first {
+                if let index = comics.firstIndex(of: comic) {
+                    comics.remove(at: index)
+                    sectionNames.remove(at: index)
+                }
+            }
+        }
+        
+        //        bookCollectionView.deleteItems(at: selectedCell)
+        selectedCell.removeAll()
+        bookCollectionView.reloadData()
+    }
+    
+    
     func makingAnAppGroup(with name: String){
         
         if selectedCell.count < 2 { return }
         
         
-        //creating a group in dataBase
+        //creating a group in array
         
         var selectedComics : [Comic] = []
+        
+        selectedCell.sort()
+        selectedCell.reverse()
         
         for indexpath in selectedCell {
             let cell = bookCollectionView.cellForItem(at: indexpath) as? BookCell
@@ -211,6 +246,7 @@ class LibraryVC: UIViewController {
             if comic.isEmpty {
                 if let index = comics.firstIndex(of: comic) {
                     comics.remove(at: index)
+                    sectionNames.remove(at: index)
                 }
             }
         }
@@ -228,8 +264,11 @@ class LibraryVC: UIViewController {
     }
     
     
+    //MARK:- file functions
+    
+    
     func makeAppDirectory(){
-        let documentDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentDir = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
         appDirectory = documentDir.appendingPathComponent("wutComic")
         
         do{
@@ -242,16 +281,13 @@ class LibraryVC: UIViewController {
     
     func printContent(subPath : String?) {
         
-        var Url = appDirectory
-//        if let subpath = subPath {
-//            Url = appDir!.appendingPathComponent(subpath)
-//        }
+        let Url = appDirectory
         let subpathh = FileManager.default.subpaths(atPath: appDirectory!.path)
-        print(subpathh)
+        print(subpathh ?? "")
         
         
         do{
-            print(Url)
+            print(Url ?? "")
             let contents = try FileManager.default.contentsOfDirectory(atPath: Url!.path)
             print(contents)
         }catch {
@@ -259,16 +295,26 @@ class LibraryVC: UIViewController {
         }
     }
     
+    func deleteFile(at fileName : String){
+        do {
+            try FileManager.default.removeItem(at: userDiractory!.appendingPathComponent(fileName))
+        }catch{
+            print("couldnt delete file : \(fileName)")
+            return
+        }
+    }
+    
     func fetchComics(){
-        comics.removeAll()
+        #warning("we shouldnt delete all the comics and add all of them again!")
+        comics[0].removeAll()
+        
         var folders : [URL] = []
         
         do{
             folders = try FileManager.default.contentsOfDirectory(at: appDirectory!, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             
             for folder in folders {
-                print(folder.path)
-                
+
                 guard let files = FileManager.default.subpaths(atPath: folder.path) else {
                     print("the folder has no files")
                     return
@@ -276,11 +322,11 @@ class LibraryVC: UIViewController {
                 
                 let validFilePaths = files.filter { (fileName) -> Bool in
                     return fileName.contains(".jpg") || fileName.contains(".png")
-                    }.sorted { $0 < $1 }
+                }.sorted { $0 < $1 }
                 
                 let comicName = makeComicNameFromPath(path: folder.path)
                 var comicImages : [UIImage] = []
-//                var comicCover : UIImage?
+                //                var comicCover : UIImage?
                 
                 
                 for file in validFilePaths{
@@ -290,8 +336,8 @@ class LibraryVC: UIViewController {
                     }
                 }
                 
-                let comic = Comic(cover: comicImages.first, name: comicName, pageNumbers: comicImages.count, pages: comicImages)
-                comics.append([comic])
+                let fetchedComic = Comic(cover: comicImages.first, name: comicName, pageNumbers: comicImages.count, pages: comicImages)
+                comics[0].append(fetchedComic)
             }
             
         }catch{
@@ -300,6 +346,47 @@ class LibraryVC: UIViewController {
         
         
         
+    }
+    
+    func newFileHasBeenAdded() -> Bool {
+        return false
+    }
+    
+    func unzipAll() {
+        let filePaths = FileManager.default.subpaths(atPath: userDiractory!.path)
+        
+        let comicPaths = filePaths?.filter({ (path) -> Bool in
+            guard let dotIndex = path.lastIndex(of: ".") else { return false }
+            let endIndex = path.endIndex
+            let range = dotIndex..<endIndex
+            let formatName = path.substring(with:range)
+            let acceptedFormats = [".cbr" , ".cbz"]
+            return acceptedFormats.contains(formatName)
+        }) ?? []
+        
+        for path in comicPaths {
+            var comicpath = path
+            comicpath.removeLast(4)
+            if !comicAlreadyExistedInAppDiractory(name: comicpath) {
+                
+                unzipingCBR(fileName: comicpath) { (error) in
+                    if let _ = error {
+                        return
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func comicAlreadyExistedInAppDiractory(name: String) -> Bool {
+        do
+        {
+            let appDirectoryComics = try FileManager.default.contentsOfDirectory(atPath: appDirectory!.path)
+            return appDirectoryComics.contains("Extracted-" + name)
+        }catch{
+            return false
+        }
     }
     
     
@@ -317,49 +404,61 @@ class LibraryVC: UIViewController {
     
 }
 
+    //MARK:- collectionView functions
+
 extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return comics[section].count
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return comics.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! BookCell
         cell.book = comics[indexPath.section][indexPath.row]
+        cell.selectionImageView.isHidden = !editingMode
         cell.setUpDesign()
         return cell
     }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return comics.count
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BookHeader", for: indexPath)
         let title = header.viewWithTag(101) as! UILabel
-        let holder = header.viewWithTag(102)!
-        holder.layer.cornerRadius = holder.frame.height * 0.5
-//        title.text = sectionNames[indexPath.section]
+        let closeSectionButton = header.viewWithTag(102) as! UIButton
+        title.text = sectionNames[indexPath.section]
         return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 4, height: collectionView.frame.width / 2)
+        
+        if let size = collectionViewCellSize {
+            return size
+        }else{
+            return CGSize(width: collectionView.frame.width / 3.9, height: collectionView.frame.width / 2.3)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        //        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         if editingMode {
-                if !selectedCell.contains(indexPath) {
-                    selectedCell.append(indexPath)
+            if !selectedCell.contains(indexPath) {
+                selectedCell.append(indexPath)
+                
             }
         }else{
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
             readerVC.comic = comics[indexPath.section][indexPath.row]
-            present(readerVC , animated: true)
+            //            NotificationCenter.default.post(name: NSNotification.Name(scrolltoLastViewedPageNN), object: nil)
+            readerVC.modalPresentationStyle = .fullScreen
+            present(readerVC , animated: false)
             
         }
     }

@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData/
+DESIGNS/
 
 ## Various settings
 *.pbxuser
@@ -26,7 +27,7 @@ xcuserdata/
 *.pdf
 *.cbz
 *.cbr
-
+ /DESIGNS
 
 ## Obj-C/Swift specific
 *.hmap

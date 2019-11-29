@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A583" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Comic" representedClassName="Comic" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ComicGroup" representedClassName="ComicGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="comics" optional="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Comic"/>
+        <fetchedProperty name="fetchedProperty" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="ComicGroup"/>
+        </fetchedProperty>
+    </entity>
+    <elements>
+        <element name="ComicGroup" positionX="-63" positionY="-18" width="128" height="116"/>
+        <element name="Comic" positionX="-54" positionY="-9" width="128" height="73"/>
+    </elements>
+</model>

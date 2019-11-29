@@ -13,26 +13,45 @@ class BookCell: UICollectionViewCell {
     var book : Comic? {
         didSet{
             bookCoverImageView.image = book?.cover
-            bookTitleLabel.text = book?.name
         }
     }
     
-    @IBOutlet weak var shadowView: UIView!
+    
+    @IBOutlet weak var selectionImageView: UIImageView!
+    @IBOutlet weak var whiteView: UIView!
     @IBOutlet weak var bookCoverImageView: UIImageView!
-    @IBOutlet weak var bookTitleLabel: UILabel!
-    @IBOutlet weak var checkMarkImage: UIImageView!
+    //    @IBOutlet weak var checkMarkImage: UIImageView!
     
     override var isSelected: Bool {
         didSet{
-            bookCoverImageView.alpha = isSelected ? 0.5 : 1
-            checkMarkImage.isHidden = !isSelected
+            whiteView.alpha = isSelected ? 0.6 : 0
+            selectionImageView.image = isSelected ? #imageLiteral(resourceName: "Mask Copy") : #imageLiteral(resourceName: "selected")
         }
     }
     
-    func setUpDesign(){
-                shadowView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.7, radius: 25)
-                bookCoverImageView.layer.cornerRadius = 2
-                bookCoverImageView.clipsToBounds = true
-                self.clipsToBounds = false
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func layoutSubviews() {
+        self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
+        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
+    }
+    
+    func setUpDesign(){
+        
+        bookCoverImageView.layer.cornerRadius = 4
+        bookCoverImageView.clipsToBounds = true
+        whiteView.layer.cornerRadius = 4
+        whiteView.clipsToBounds = true
+        
+        
+        self.clipsToBounds = false
+    }
+    
+    
 }

@@ -23,7 +23,11 @@ class thumbnailCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet{
-            choosePage(active: isSelected)
+            if isSelected {
+                choosePageAsActive()
+            }else{
+                choosePageAsDiactive()
+            }
         }
     }
     
@@ -43,30 +47,69 @@ class thumbnailCell: UICollectionViewCell {
         return label
     }()
     
+    var imageHolderView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0.6
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupDesign()
     }
     
     func setupDesign() {
-        addSubview(pageImageView)
-        pageImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        pageImageView.bottomAnchor.constraint(equalTo: bottomAnchor , constant: -15).isActive = true
-        pageImageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        pageImageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         
-        addSubview(pageNumberLabel)
-        pageNumberLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        pageNumberLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        pageNumberLabel.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        addSubview(imageHolderView)
+        imageHolderView.topAnchor.constraint(equalTo: topAnchor , constant: 10).isActive = true
+        imageHolderView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        imageHolderView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        imageHolderView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        
+        imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.3, radius: 25)
+        
+        imageHolderView.addSubview(pageImageView)
+        pageImageView.topAnchor.constraint(equalTo: imageHolderView.topAnchor).isActive = true
+        pageImageView.bottomAnchor.constraint(equalTo: imageHolderView.bottomAnchor , constant: -15).isActive = true
+        pageImageView.leftAnchor.constraint(equalTo: imageHolderView.leftAnchor).isActive = true
+        pageImageView.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor).isActive = true
+        
+        pageImageView.clipsToBounds = true
+        pageImageView.layer.cornerRadius = 2
+        
+        
+//        addSubview(pageNumberLabel)
+//        pageNumberLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+//        pageNumberLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+//        pageNumberLabel.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         
         
     }
     
-    private func choosePage(active: Bool){
-        backgroundColor = UIColor.black.withAlphaComponent( active ? 0.8 : 0)
-        layer.borderWidth = active ? 2 : 0
-        layer.borderColor = UIColor.white.cgColor
+    private func choosePageAsActive() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.imageHolderView.transform = CGAffineTransform(translationX: 0, y: -10)
+            self.imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.6, radius: 25)
+            self.imageHolderView.alpha = 1
+        }) { (_) in
+            self.imageHolderView.transform = CGAffineTransform(translationX: 0, y: -10)
+            self.imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.6, radius: 25)
+            self.imageHolderView.alpha = 1
+        }
+    }
+    
+    private func choosePageAsDiactive() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.imageHolderView.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.3, radius: 25)
+            self.imageHolderView.alpha = 0.6
+            }) { (_) in
+                self.imageHolderView.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.3, radius: 25)
+                self.imageHolderView.alpha = 0.6
+            }
+
     }
     
     required init?(coder aDecoder: NSCoder) {

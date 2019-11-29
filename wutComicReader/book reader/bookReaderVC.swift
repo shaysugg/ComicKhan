@@ -12,7 +12,13 @@ class BookReaderVC: UIViewController {
     
     //MARK:- Variables
     
-    var comic : Comic?
+    var comic : Comic? {
+        didSet{
+            comicPageNumberLabel.text = String(comic!.pageNumbers)
+            pageSlider.maximumValue = Float(comic!.pageNumbers)
+            titleLabel.text = comic?.name
+        }
+    }
     var lastViewedPage : Int?
     var menusAreAppeard: Bool = false
     
@@ -25,9 +31,12 @@ class BookReaderVC: UIViewController {
         let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
         collectionview.isPagingEnabled = true
-        collectionview.register(pageCell.self, forCellWithReuseIdentifier: "pageCell")
-        collectionview.backgroundColor = .black
+        collectionview.register(PageCell.self, forCellWithReuseIdentifier: "pageCell")
         collectionview.translatesAutoresizingMaskIntoConstraints = false
+        collectionview.restorationIdentifier = "book"
+        collectionview.showsHorizontalScrollIndicator = false
+        collectionview.backgroundColor = .appSystemSecondaryBackground
+        collectionview.decelerationRate = UIScrollView.DecelerationRate.fast
         collectionview.tag = 101
         return collectionview
     }()
@@ -35,64 +44,95 @@ class BookReaderVC: UIViewController {
     
     var thumbnailCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         collectionView.register(thumbnailCell.self, forCellWithReuseIdentifier: "thumbnailCell")
         collectionView.restorationIdentifier = "thumbnail"
+        collectionView.backgroundColor = .appSystemBackground
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
-    var closeButton : UIButton = {
+    var pageSlider : UISlider = {
+        let slider = UISlider(frame: .zero)
+        slider.tintColor = .appBlue
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        slider.minimumValue = 1
+        slider.setValue(1.00, animated: false)
+        slider.addTarget(self, action: #selector(sliderDidChanged), for: .valueChanged)
+        slider.addTarget(self, action: #selector(sliderDidFinishedChanging), for: .touchUpInside)
+        return slider
+    }()
+    
+    var currentPageNumberLabel : UILabel = {
+       let label = UILabel()
+        label.font = UIFont(name: appFontRegular, size: 14)
+        label.textColor = .appSeconedlabelColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "1"
+        return label
+    }()
+    
+    var comicPageNumberLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: appFontRegular, size: 14)
+        label.textColor = .appSeconedlabelColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "50"
+        return label
+    }()
+    
+    
+    var titleLabel : UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: appFontRegular, size: 15)
+        label.text = "BLAH!"
+        label.textAlignment = .center
+        label.textColor = .appMainLabelColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var topBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .appSystemBackground
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.makeDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 15)
+        return view
+    }()
+    
+    var dismissButton : UIButton = {
         let button = UIButton()
-        button.setTitle("close", for: .normal)
+        button.clipsToBounds = true
+        button.setImage( UIImage(named: "down") , for: .normal)
         button.addTarget(self, action: #selector(closeTheVC), for: .touchUpInside)
-        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    var topNavigationMenu : UINavigationBar = {
-        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 340, height: 44))
-        let navTitle = UINavigationItem(title: "Reader")
-        navBar.translatesAutoresizingMaskIntoConstraints = false
-        let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(closeTheVC))
-        navTitle.leftBarButtonItems = [closeButton]
-        navBar.tintColor = .lightGray
-        navBar.barTintColor = .black
-        navBar.isTranslucent = false
-        navBar.barStyle = UIBarStyle.black
-        navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.lightGray]
-        navTitle.titleView?.tintColor = .lightGray
-//        navBar.setItems([navTitle], animated: false)
-        return navBar
-    }()
-    
-    var borderView : UIView = {
-       let view = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
-        return view
-    }()
-    
     var bottomView : UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        view.backgroundColor = .appSystemBackground
         view.clipsToBounds = false
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
     
-    lazy var appearingMenuTapGesture : UITapGestureRecognizer = {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(appearTapGestureTapped))
-        tapGesture.numberOfTapsRequired = 1
-        tapGesture.numberOfTouchesRequired = 1
-        tapGesture.cancelsTouchesInView = true
-        tapGesture.delaysTouchesBegan = true
-        return tapGesture
-    }()
+//    lazy var appearingMenuTapGesture : UIPanGestureRecognizer = {
+////        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(appearTapGestureTapped))
+////        tapGesture.numberOfTapsRequired = 1
+////        tapGesture.numberOfTouchesRequired = 1
+////        tapGesture.cancelsTouchesInView = true
+////        tapGesture.delaysTouchesBegan = true
+////        return tapGesture
+//
+//
+//    }()
+    
     
     
     //MARK:- Functions
@@ -102,10 +142,7 @@ class BookReaderVC: UIViewController {
         setupDesign()
         disappearMenus(animated: false)
         
-        let navTitle = UINavigationItem(title: comic?.name ?? "")
-        topNavigationMenu.setItems([navTitle], animated: false)
-        let closeButton = UIBarButtonItem(title: "X", style: .plain, target: self, action: #selector(closeTheVC))
-        navTitle.leftBarButtonItems = [closeButton]
+        addGestures()
         
         bookCollectionView.delegate = self
         bookCollectionView.dataSource = self
@@ -113,96 +150,166 @@ class BookReaderVC: UIViewController {
         thumbnailCollectionView.delegate = self
         thumbnailCollectionView.dataSource = self
         
+        
+        
+        
+        
        
     }
     
+    
+    override func viewDidLayoutSubviews() {
+//        view.backgroundColor = .appSystemFill
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        let id = comic!.id + "-lastViewedPage"
-        let index = UserDefaults.standard.integer(forKey: id)
-        bookCollectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: true)
+        let LastpageNumber = getLastviewedPage()
+        updatePageSlider(with: LastpageNumber)
+        bookCollectionView.isUserInteractionEnabled = false
+        bookCollectionView.scrollToItem(at: IndexPath(row: LastpageNumber, section: 0), at: .centeredHorizontally, animated: false)
+        thumbnailCollectionView.selectItem(at: IndexPath(row: LastpageNumber, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+        bookCollectionView.isUserInteractionEnabled = true
+        
+
     }
     
     func setupDesign(){
-        
-        view.backgroundColor = .black
-        
+
         view.addSubview(bookCollectionView)
-        bookCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor , constant: 30).isActive = true
-        bookCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        bookCollectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        bookCollectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        bookCollectionView.topAnchor.constraint(equalTo: view.topAnchor , constant: 0).isActive = true
+        bookCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bookCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        bookCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        bookCollectionView.addGestureRecognizer(appearingMenuTapGesture)
-        
-        
-        view.addSubview(topNavigationMenu)
-        topNavigationMenu.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        topNavigationMenu.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        topNavigationMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        topNavigationMenu.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        let topBorderView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
-        topBorderView.translatesAutoresizingMaskIntoConstraints = false
-        topBorderView.backgroundColor = .lightGray
-        
-        topNavigationMenu.addSubview(topBorderView)
-        topBorderView.leftAnchor.constraint(equalTo: topNavigationMenu.leftAnchor).isActive = true
-        topBorderView.rightAnchor.constraint(equalTo: topNavigationMenu.rightAnchor).isActive = true
-        topBorderView.bottomAnchor.constraint(equalTo: topNavigationMenu.bottomAnchor, constant: -5).isActive = true
-        topBorderView.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        setupTopBar()
+        setupBottomViewDesign()
+    }
+    
+    func setupBottomViewDesign(){
         
         view.addSubview(bottomView)
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 20).isActive = true
+        #warning("width should handled progromaticly based on device size")
+        bottomView.heightAnchor.constraint(equalToConstant: 340).isActive = true
+        
+        bottomView.layer.cornerRadius = 20
+        bottomView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 25)
+        
+        bottomView.addSubview(pageSlider)
+        pageSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.62).isActive = true
+        pageSlider.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
+        pageSlider.bottomAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.bottomAnchor, constant: -35).isActive = true
         
         bottomView.addSubview(thumbnailCollectionView)
-        thumbnailCollectionView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 10).isActive = true
-        thumbnailCollectionView.bottomAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        thumbnailCollectionView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20).isActive = true
+        thumbnailCollectionView.bottomAnchor.constraint(equalTo: pageSlider.topAnchor, constant: -5).isActive = true
         thumbnailCollectionView.leftAnchor.constraint(equalTo: bottomView.leftAnchor, constant: 10).isActive = true
         thumbnailCollectionView.rightAnchor.constraint(equalTo: bottomView.rightAnchor, constant: -10).isActive = true
         
-        let bottomBorderView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
-        topBorderView.translatesAutoresizingMaskIntoConstraints = false
-        topBorderView.backgroundColor = .lightGray
+        bottomView.addSubview(currentPageNumberLabel)
+        currentPageNumberLabel.centerYAnchor.constraint(equalTo: pageSlider.centerYAnchor, constant: 0).isActive = true
+        currentPageNumberLabel.rightAnchor.constraint(equalTo: pageSlider.leftAnchor, constant: -17).isActive = true
         
-        bottomView.addSubview(bottomBorderView)
-        bottomBorderView.leftAnchor.constraint(equalTo: bottomView.leftAnchor).isActive = true
-        bottomBorderView.rightAnchor.constraint(equalTo: bottomView.rightAnchor).isActive = true
-        bottomBorderView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 10).isActive = true
-        bottomBorderView.heightAnchor.constraint(equalToConstant: 5).isActive = true
+        bottomView.addSubview(comicPageNumberLabel)
+        comicPageNumberLabel.centerYAnchor.constraint(equalTo: pageSlider.centerYAnchor, constant: 0).isActive = true
+        comicPageNumberLabel.leftAnchor.constraint(equalTo: pageSlider.rightAnchor, constant: 17).isActive = true
+        
+    }
+    
+    func setupTopBar(){
+        
+        view.addSubview(topBar)
+        topBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        topBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        topBar.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -50).isActive = true
+        
+        topBar.addSubview(titleLabel)
+        titleLabel.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 60).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: topBar.rightAnchor, constant: -30).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        
+        topBar.addSubview(dismissButton)
+        dismissButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
+        dismissButton.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 20).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 27).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 27).isActive = true
+        dismissButton.clipsToBounds = true
+        
         
         
     }
     
+    func addGestures() {
+        
+        let upSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(appearTapGestureTapped))
+        upSwipeGesture.direction = .up
+        bookCollectionView.addGestureRecognizer(upSwipeGesture)
+        
+        let downSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(dissappearTapGestureTapped))
+        downSwipeGesture.direction = .down
+        thumbnailCollectionView.addGestureRecognizer(downSwipeGesture)
+        
+        let downSwipeGesture2 = UISwipeGestureRecognizer(target: self, action: #selector(dissappearTapGestureTapped))
+        downSwipeGesture2.direction = .down
+        bookCollectionView.addGestureRecognizer(downSwipeGesture)
+        
+    }
+    
+    func updatePageSlider(with value: Int){
+        pageSlider.setValue(Float(value), animated: true)
+        currentPageNumberLabel.text = String(value)
+    }
+    
+    @objc func sliderDidChanged(){
+        let value = Int(pageSlider.value)
+        currentPageNumberLabel.text = String(value)
+        thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
+    }
+    
+    @objc func sliderDidFinishedChanging(){
+        let value = Int(pageSlider.value)
+        thumbnailCollectionView.selectItem(at: IndexPath(row: value - 1, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        bookCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: true)
+        
+    }
+    
     @objc func appearTapGestureTapped() {
-        menusAreAppeard ? disappearMenus(animated: true) : appearMenus(animated: true)
+        appearMenus(animated: true)
+    }
+    
+    @objc func dissappearTapGestureTapped() {
+        disappearMenus(animated: true)
     }
     
     func disappearMenus(animated: Bool) {
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                self.topNavigationMenu.transform = CGAffineTransform(translationX: 0, y:  -self.topNavigationMenu.frame.height)
-                self.topNavigationMenu.alpha = 0
+                self.titleLabel.alpha = 0.0
+                self.dismissButton.alpha = 0.0
+                self.topBar.alpha = 0.0
                 
                 
                 self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-                self.bottomView.alpha = 0
+                self.bottomView.alpha = 0.7
             }) { (_) in
-                self.topNavigationMenu.transform = CGAffineTransform(translationX: 0, y:  -self.topNavigationMenu.frame.height)
-                self.topNavigationMenu.alpha = 0
+                self.titleLabel.alpha = 0.0
+                self.dismissButton.alpha = 0.0
+                self.topBar.alpha = 0.0
                 
                 self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-                self.bottomView.alpha = 0
+                self.bottomView.alpha = 0.7
                 self.menusAreAppeard = false
             }
         }else{
-            self.topNavigationMenu.transform = CGAffineTransform(translationX: 0, y:  -self.topNavigationMenu.frame.height)
-            self.topNavigationMenu.alpha = 0
+            self.titleLabel.alpha = 0.0
+            self.dismissButton.alpha = 0.0
+            self.topBar.alpha = 0.0
             
-            self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-            self.bottomView.alpha = 0
+            self.bottomView.transform = CGAffineTransform(translationX: 0, y: 500)
+            self.bottomView.alpha = 0.0
             menusAreAppeard = false
         }
         
@@ -211,22 +318,25 @@ class BookReaderVC: UIViewController {
     func appearMenus(animated: Bool) {
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                self.topNavigationMenu.transform = CGAffineTransform(translationX: 0, y:  0)
-                self.topNavigationMenu.alpha = 1
+                self.titleLabel.alpha = 1
+                self.dismissButton.alpha = 1
+                self.topBar.alpha = 1
                 
                 self.bottomView.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.bottomView.alpha = 1
             }) { (_) in
-                self.topNavigationMenu.transform = CGAffineTransform(translationX: 0, y:  0)
-                self.topNavigationMenu.alpha = 1
+                self.titleLabel.alpha = 1
+                self.dismissButton.alpha = 1
+                 self.topBar.alpha = 1
                 
                 self.bottomView.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.bottomView.alpha = 1
                 self.menusAreAppeard = true
             }
         }else{
-            self.topNavigationMenu.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.topNavigationMenu.alpha = 1
+            self.titleLabel.alpha = 1
+            self.dismissButton.alpha = 1
+             self.topBar.alpha = 1
             
             self.bottomView.transform = CGAffineTransform(translationX: 0, y: 0)
             self.bottomView.alpha = 1
@@ -237,7 +347,8 @@ class BookReaderVC: UIViewController {
     
     
     @objc func closeTheVC(){
-        dismiss(animated: true, completion: nil)
+//        self.modalPresentationStyle = .fullScreen
+        dismiss(animated: false, completion: nil)
         if let visibleCell = bookCollectionView.visibleCells.first {
             lastViewedPage = bookCollectionView.indexPath(for: visibleCell)?.row
             
@@ -249,10 +360,16 @@ class BookReaderVC: UIViewController {
         }
     }
     
+    func getLastviewedPage() -> Int{
+        let id = comic!.id + "-lastViewedPage"
+        return UserDefaults.standard.integer(forKey: id)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        
+       
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -282,9 +399,9 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
             return cell
             
         }else{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pageCell", for: indexPath) as! pageCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pageCell", for: indexPath) as! PageCell
             cell.comicPage  = comic?.pages[indexPath.row]
-            cell.pageNumber = indexPath.row
+//            cell.pageNumber = indexPath.row
             return cell
         }
     }
@@ -303,13 +420,32 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print(scrollView.superview?.restorationIdentifier)
+        if scrollView.restorationIdentifier ==  "book" {
+            if let visibleCell = bookCollectionView.visibleCells.first {
+                if let currentIndex = bookCollectionView.indexPath(for: visibleCell) {
+                    thumbnailCollectionView.selectItem(at: currentIndex, animated: true, scrollPosition: .centeredHorizontally)
+                    updatePageSlider(with: currentIndex.row + 1)
+                    
+                }
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView.restorationIdentifier == "book" {
+            let pageCell = cell as? PageCell
+            guard let scale = pageCell?.scrollView.minimumZoomScale else { return }
+            if scale < 1.0 {
+                pageCell?.scrollView.setZoomScale(scale, animated: false)
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.restorationIdentifier == "thumbnail" {
-            let bookCollectionView = view.viewWithTag(101) as! UICollectionView
             bookCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            thumbnailCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            updatePageSlider(with: indexPath.row + 1)
         }
     }
     
@@ -318,18 +454,24 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.restorationIdentifier != "thumbnail" {
-            let visibleCell = bookCollectionView.visibleCells.first!
-            if let index = bookCollectionView.indexPath(for: visibleCell) {
-                thumbnailCollectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
-//                thumbnailCollectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
-            }
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.restorationIdentifier != "thumbnail" {
+//            let visibleCells = bookCollectionView.visibleCells
+//            for cell in visibleCells {
+//                print(bookCollectionView.indexPath(for: cell) ?? "not found")
+//            }
+//
+////            if let index = bookCollectionView.indexPath(for: visibleCell) {
+////                print(index)
+////                thumbnailCollectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+//////                thumbnailCollectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+////            }
+////        }
+//        }
+//    }
+    
     
     
 }
-
 
 

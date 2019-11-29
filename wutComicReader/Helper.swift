@@ -12,7 +12,7 @@ import UIKit
 extension UIView {
     
     func makeDropShadow(scale: Bool = true , shadowOffset: CGSize , opacity: Float, radius: Int) {
-        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowColor = UIColor.appShadowColor.cgColor
         layer.shadowOffset = shadowOffset
         layer.shadowRadius = 5
         layer.shadowOpacity = opacity
@@ -26,6 +26,8 @@ extension UIView {
     func deviceModel(){
 //        UIDevice().type
     }
+    
+
    
     func presentCostomAlert( hasTextfield : Bool , title: String? ,text: String , buttonTexts : [String] ){
 //        self.bounds.width * 0.7
@@ -51,3 +53,8 @@ extension UIView {
 
 
 
+extension UIResponder {
+    public var parentViewController: UIViewController? {
+        return next as? UIViewController ?? next?.parentViewController
+    }
+}
