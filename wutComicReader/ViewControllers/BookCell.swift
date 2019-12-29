@@ -12,7 +12,11 @@ class BookCell: UICollectionViewCell {
     
     var book : Comic? {
         didSet{
-            bookCoverImageView.image = book?.cover
+            #warning("line below would crash if comic has no pages!")
+            guard let name = book?.name , let imageName = book?.imageNames?.first else { return }
+            let cover = UIImage(book, withImageName: imageName)
+            
+            bookCoverImageView.image = cover
         }
     }
     
@@ -51,6 +55,10 @@ class BookCell: UICollectionViewCell {
         
         
         self.clipsToBounds = false
+    }
+    
+    func fullPathofImagePath(imagePath: String){
+        
     }
     
     
