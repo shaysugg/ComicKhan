@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookCell: UICollectionViewCell {
+class LibraryCell: UICollectionViewCell {
     
     var book : Comic? {
         didSet{

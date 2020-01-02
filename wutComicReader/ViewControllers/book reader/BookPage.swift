@@ -12,13 +12,13 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     var pageNumber: Int?
     
-    var doubleTapZoomingGesture: UITapGestureRecognizer!
-    
     var comicPage : UIImage? {
         didSet{
-            pageImageView.image = comicPage
+            pageImageView1.image = comicPage
             updateMinZoomScaleForSize(view.bounds.size)
             centerTheImage()
+            
+
             
         }
     }
@@ -31,35 +31,94 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         return scrollview
     }()
     
-    var pageImageView : UIImageView = {
+    var imagesContainerView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    var imageContainerViewLeftAnchor: NSLayoutConstraint?
+    var imageContainerView1CloseRightAnchor: NSLayoutConstraint?
+    var imageContainerViewFarRightAnchor: NSLayoutConstraint?
+    var imageContainerViewTopAnchor: NSLayoutConstraint?
+    var imageContainerViewBottomAnchor: NSLayoutConstraint?
+    
+    var pageImageView1 : UIImageView = {
         
         let imageView = UIImageView(frame: .zero )
-        imageView.image = #imageLiteral(resourceName: "test")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = .cyan
+        return imageView
+    }()
+    
+    var pageImageView1LeftAnchor: NSLayoutConstraint?
+    var pageImageView1CloseRightAnchor: NSLayoutConstraint?
+    var pageImageView1FarRightAnchor: NSLayoutConstraint?
+    var pageImageView1TopAnchor: NSLayoutConstraint?
+    var pageImageView1BottomAnchor: NSLayoutConstraint?
+    
+    var pageImageView2 : UIImageView = {
+        
+        let imageView = UIImageView(frame: .zero )
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
-    var pageImageViewLeftAnchor: NSLayoutConstraint?
-    var pageImageViewRightAnchor: NSLayoutConstraint?
-    var pageImageViewTopAnchor: NSLayoutConstraint?
-    var pageImageViewBottomAnchor: NSLayoutConstraint?
+
+    var pageImageView2LeftAnchor: NSLayoutConstraint?
+    var pageImageView2RightAnchor: NSLayoutConstraint?
+    var pageImageView2TopAnchor: NSLayoutConstraint?
+    var pageImageView2BottomAnchor: NSLayoutConstraint?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pageImageView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+        pageImageView1.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         scrollView.delegate = self
         setupDesign()
-        doubleTapZoomingGesture = UITapGestureRecognizer(target: self, action: #selector(zoomWithDoubleTap))
-        doubleTapZoomingGesture.numberOfTapsRequired = 2
         
-        scrollView.addGestureRecognizer(doubleTapZoomingGesture)
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
+        
         updateMinZoomScaleForSize(view.bounds.size)
+        
         
     }
     
+    var haveDoublePage:Bool = UIDevice.current.orientation.isLandscape {
+        didSet{
+            
+            if haveDoublePage{
+                imagesContainerView.addSubview(pageImageView2)
+                
+                pageImageView1FarRightAnchor?.isActive = false
+                pageImageView1CloseRightAnchor?.isActive = true
+                
+                pageImageView2LeftAnchor = pageImageView2.leftAnchor.constraint(equalTo: pageImageView1.rightAnchor )
+                pageImageView2RightAnchor = pageImageView2.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor)
+                pageImageView2BottomAnchor = pageImageView2.bottomAnchor.constraint(equalTo: imagesContainerView.bottomAnchor)
+                pageImageView2TopAnchor = pageImageView2.topAnchor.constraint(equalTo: imagesContainerView.topAnchor)
+                pageImageView2LeftAnchor?.isActive = true
+                pageImageView2RightAnchor?.isActive = true
+                pageImageView2TopAnchor?.isActive = true
+                pageImageView2BottomAnchor?.isActive = true
+                
+            }else{
+                pageImageView2.removeFromSuperview()
+                pageImageView1CloseRightAnchor?.isActive = false
+                pageImageView1FarRightAnchor?.isActive = true
+                
+            }
+            
+        }
+    }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateMinZoomScaleForSize(view.bounds.size)
+    }
     
     
     func setupDesign() {
@@ -69,19 +128,38 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.backgroundColor = .appSystemSecondaryBackground
         
-        scrollView.addSubview(pageImageView)
-        pageImageViewLeftAnchor = pageImageView.leftAnchor.constraint(equalTo: scrollView.leftAnchor)
-        pageImageViewRightAnchor = pageImageView.rightAnchor.constraint(equalTo: scrollView.rightAnchor)
-        pageImageViewBottomAnchor = pageImageView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-        pageImageViewTopAnchor = pageImageView.topAnchor.constraint(equalTo: scrollView.topAnchor)
-        pageImageViewLeftAnchor?.isActive = true
-        pageImageViewRightAnchor?.isActive = true
-        pageImageViewTopAnchor?.isActive = true
-        pageImageViewBottomAnchor?.isActive = true
+        scrollView.addSubview(imagesContainerView)
+        imageContainerViewLeftAnchor = imagesContainerView.leftAnchor.constraint(equalTo: scrollView.leftAnchor)
+        imageContainerViewFarRightAnchor = imagesContainerView.rightAnchor.constraint(equalTo: scrollView.rightAnchor)
+        imageContainerViewBottomAnchor = imagesContainerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+        imageContainerViewTopAnchor = imagesContainerView.topAnchor.constraint(equalTo: scrollView.topAnchor)
+        imageContainerViewLeftAnchor?.isActive = true
+        imageContainerViewFarRightAnchor?.isActive = true
+        imageContainerViewBottomAnchor?.isActive = true
+        imageContainerViewTopAnchor?.isActive = true
+        
+        imagesContainerView.addSubview(pageImageView1)
+        pageImageView1.leftAnchor.constraint(equalTo: imagesContainerView.leftAnchor).isActive = true
+        pageImageView1FarRightAnchor = pageImageView1.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor)
+        pageImageView1.bottomAnchor.constraint(equalTo: imagesContainerView.bottomAnchor).isActive = true
+        pageImageView1.topAnchor.constraint(equalTo: imagesContainerView.topAnchor).isActive = true
+        pageImageView1FarRightAnchor?.isActive = true
+        
         
         //            self.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.4, radius: 25)
         
+    }
+    
+    func zoomWithDoubleTap() {
+        
+        let minScale = scrollView.minimumZoomScale
+        if scrollView.zoomScale == minScale {
+            scrollView.setZoomScale(minScale * 2.1, animated: true)
+        }else{
+            scrollView.setZoomScale(minScale, animated: true)
+        }
     }
     
     
@@ -91,7 +169,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     func updateMinZoomScaleForSize(_ size: CGSize) {
         
-        guard let pageImageViewSize = pageImageView.image?.size else { return }
+        guard let pageImageViewSize = pageImageView1.image?.size else { return }
         
         let widthScale = size.width / pageImageViewSize.width
         let heightScale = size.height / pageImageViewSize.height
@@ -102,43 +180,72 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return pageImageView
+        return imagesContainerView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         centerTheImage()
-        
-        //        print(superview?.tag)
+
     }
     
     
     func centerTheImage(){
         
-        let offset = (view.bounds.height - pageImageView.frame.height) / 2
+        let yOffset = max(0 ,(scrollView.bounds.height - scrollView.contentSize.height) / 2)
         
-        let yOffset = max(0, offset)
+//        print("Offset is \(yOffset) || scroll view content height is \(scrollView.contentSize.height) || scroll view bounds height is \(view.frame.height)")
         
-        pageImageViewTopAnchor?.constant = yOffset
-        pageImageViewBottomAnchor?.constant = yOffset
+//        imageContainerViewTopAnchor?.constant = yOffset
+//        imageContainerViewBottomAnchor?.constant = yOffset
         
+        if  haveDoublePage {
+            
+            let contentWidthSize = pageImageView1.bounds.width * 2
+            let contentHeightSize = pageImageView1.bounds.height
+            
+            pageImageView1CloseRightAnchor?.isActive = true
+            pageImageView1FarRightAnchor?.isActive = false
+            
+            let yOffset = max(0 ,(scrollView.bounds.height - (scrollView.zoomScale * contentHeightSize)) / 2)
+                    
+            imageContainerViewTopAnchor?.constant = yOffset
+            imageContainerViewBottomAnchor?.constant = yOffset
+            
+            let xOffset = max(0, (scrollView.bounds.width - ( scrollView.zoomScale * contentWidthSize)) / 2)
+            pageImageView1CloseRightAnchor?.constant = xOffset
+            pageImageView1LeftAnchor?.constant = xOffset
+            imageContainerViewLeftAnchor?.constant = xOffset
+            imageContainerViewFarRightAnchor?.constant = xOffset
+            
+            print("XOffset is \(xOffset)")
+            print("scroll view content width is \(scrollView.contentSize.width)")
+            print("contentSize width is \(pageImageView1.bounds.width)")
+            print("scroll view bounds width is \(view.frame.width)")
+            
         
-        let xOffset = max(0, (view.bounds.width - pageImageView.frame.width) / 2)
+        }else{
+            
+            let contentWidthSize = pageImageView1.bounds.width
+            let contentHeightSize = pageImageView1.bounds.height
+            
+            pageImageView1CloseRightAnchor?.isActive = false
+            pageImageView1FarRightAnchor?.isActive = true
+            
+            let yOffset = max(0 ,(scrollView.bounds.height - (scrollView.zoomScale * contentHeightSize)) / 2)
+            imageContainerViewTopAnchor?.constant = yOffset
+            pageImageView1BottomAnchor?.constant = yOffset
+            
+            let xOffset = max(0, (scrollView.bounds.width - (scrollView.zoomScale * contentWidthSize)) / 2)
+            pageImageView1FarRightAnchor?.constant = xOffset
+            imageContainerViewFarRightAnchor?.constant = xOffset
+            imageContainerViewLeftAnchor?.constant = xOffset
+            pageImageView1LeftAnchor?.constant = xOffset
+
+        }
         
-        pageImageViewRightAnchor?.constant = xOffset
-        pageImageViewLeftAnchor?.constant = xOffset
         
         view.layoutIfNeeded()
         
-    }
-    
-    @objc func zoomWithDoubleTap() {
-        
-        let minScale = scrollView.minimumZoomScale
-        if scrollView.zoomScale == minScale {
-            scrollView.setZoomScale(minScale * 2.1, animated: true)
-        }else{
-            scrollView.setZoomScale(minScale, animated: true)
-        }
     }
     
     

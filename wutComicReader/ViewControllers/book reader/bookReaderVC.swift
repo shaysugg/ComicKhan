@@ -8,29 +8,67 @@
 
 import UIKit
 
+
 class BookReaderVC: UIViewController {
     
     //MARK:- Variables
     
+    var comicPagesCount: Int = 0
+    
     var comic : Comic? {
         didSet{
-            comicPageNumberLabel.text = String((comic?.imageNames!.count)!)
-            pageSlider.maximumValue = Float((comic?.imageNames!.count)!)
+            guard let _ = comic else { return }
+            comicPagesCount = (comic!.imageNames?.count ?? 0)
+            comicPageNumberLabel.text = String(comicPagesCount)
+            pageSlider.maximumValue = Float(comicPagesCount)
             titleLabel.text = comic?.name
         }
     }
     var lastViewedPage : Int?
-    var menusAreAppeard: Bool = false
     
-    var previousCell : thumbnailCell?
+    var menusAreAppeard: Bool = false
     
     var bookPageViewController : UIPageViewController!
     var bookPages : [BookPage] = []
     
+    var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
+        didSet{
+            
+            if deviceIsLandscaped {
+                let totalImages = comic!.imageNames?.count ?? 0
+                comicPagesCount = (totalImages ) / 2 + (totalImages % 2)
+                
+                
+            }else {
+                comicPagesCount = comic!.imageNames?.count ?? 0 
+                
+            }
+            
+            
+            
+            updatePageViewControllerWhenRotationChanges()
+            
+            guard let currentPage = bookPageViewController.viewControllers?[0] as? BookPage else { return }
+            guard let currentIndex = bookPages.firstIndex(of: currentPage) else { return }
+            
+            thumbnailCollectionView.reloadData()
+            let scrollToIndex = deviceIsLandscaped ? currentIndex / 2 : currentIndex * 2
+            thumbnailCollectionView.selectItem(at: IndexPath(row: scrollToIndex, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+            bookPageViewController.setViewControllers([bookPages[scrollToIndex]], direction: .forward, animated: false, completion: nil)
+            
+            pageSlider.maximumValue = Float(comicPagesCount)
+            pageSlider.setValue(Float(scrollToIndex + 1), animated: false)
+            
+        }
+    }
+    
+    
+    
+    //MARK:- UI Variables
+    
     var thumbnailCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(thumbnailCell.self, forCellWithReuseIdentifier: "thumbnailCell")
@@ -47,6 +85,7 @@ class BookReaderVC: UIViewController {
         slider.tintColor = .appBlue
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 1
+        slider.setValue(1, animated: false)
         slider.setValue(1.00, animated: false)
         slider.addTarget(self, action: #selector(sliderDidChanged), for: .valueChanged)
         slider.addTarget(self, action: #selector(sliderDidFinishedChanging), for: .touchUpInside)
@@ -120,15 +159,20 @@ class BookReaderVC: UIViewController {
         setupPageController()
         disappearMenus(animated: false)
         
+        addGestures()
+        
         setupTopBar()
         setupBottomViewDesign()
-        
-        addGestures()
         
         thumbnailCollectionView.delegate = self
         thumbnailCollectionView.dataSource = self
         
+        deviceIsLandscaped = UIDevice.current.orientation.isLandscape
         
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        deviceIsLandscaped = UIDevice.current.orientation.isLandscape
     }
     
     
@@ -161,8 +205,32 @@ class BookReaderVC: UIViewController {
         for comicPage in comicPages {
             let bookPage = BookPage()
             bookPage.comicPage = UIImage(comic, withImageName: comicPage)
+            bookPage.pageNumber = comicPages.firstIndex(of: comicPage)
             bookPages.append(bookPage)
         }
+    }
+    
+    func updatePageViewControllerWhenRotationChanges() {
+        if deviceIsLandscaped {
+            for bookPage in bookPages {
+                bookPage.haveDoublePage = deviceIsLandscaped
+                if let currentIndex = bookPages.firstIndex(of: bookPage) {
+                    if currentIndex < bookPages.count / 2{
+                        bookPage.pageImageView1.image = bookPages[currentIndex * 2].comicPage
+                            bookPage.pageImageView2.image = bookPages[(currentIndex * 2) + 1].comicPage
+                    }
+                }
+            }
+        }else{
+            for bookPage in bookPages {
+                bookPage.haveDoublePage = deviceIsLandscaped
+                if let currentIndex = bookPages.firstIndex(of: bookPage) {
+                    bookPage.pageImageView1.image = bookPages[currentIndex].comicPage
+                    
+                }
+            }
+        }
+
     }
     
     func setupBottomViewDesign(){
@@ -171,8 +239,19 @@ class BookReaderVC: UIViewController {
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 20).isActive = true
-        #warning("width should handled progromaticly based on device size")
-        bottomView.heightAnchor.constraint(equalToConstant: 340).isActive = true
+        
+        var height :Int?
+        switch deviceType {
+        case .iPhone:
+            height = 310
+        case .smalliPhone:
+            height = 310
+        case .iPad:
+            height = 310
+        case .iPhoneX:
+            <#code#>
+        }
+        bottomView.heightAnchor.constraint(equalToConstant: 310).isActive = true
         
         bottomView.layer.cornerRadius = 20
         bottomView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 25)
@@ -223,11 +302,15 @@ class BookReaderVC: UIViewController {
     }
     
     func addGestures() {
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleMenusGestureTapped))
         tapGesture.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tapGesture)
+        bookPageViewController.view.addGestureRecognizer(tapGesture)
         
+        let doubletapGesture = UITapGestureRecognizer(target: self, action: #selector(zoomBookCurrentPage))
+        doubletapGesture.numberOfTapsRequired = 2
+        bookPageViewController.view.addGestureRecognizer(doubletapGesture)
+        
+        tapGesture.require(toFail: doubletapGesture)
         
     }
     
@@ -238,14 +321,22 @@ class BookReaderVC: UIViewController {
     
     @objc func sliderDidChanged(){
         let value = Int(pageSlider.value)
-        currentPageNumberLabel.text = String(value)
+        currentPageNumberLabel.text = String(value * (deviceIsLandscaped ? 2 : 1))
         thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
     }
     
     @objc func sliderDidFinishedChanging(){
         let value = Int(pageSlider.value)
         thumbnailCollectionView.selectItem(at: IndexPath(row: value - 1, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-        bookPageViewController.setViewControllers([bookPages[value - 1]], direction: .forward, animated: true, completion: nil)
+        let pendingPage = bookPages[value - 1]
+        pendingPage.scrollView.setZoomScale(pendingPage.scrollView.minimumZoomScale, animated: false)
+        bookPageViewController.setViewControllers([pendingPage], direction: .forward, animated: true, completion: nil)
+        
+    }
+    
+    @objc func zoomBookCurrentPage() {
+        let currentPage = bookPageViewController.viewControllers?.first as? BookPage
+        currentPage?.zoomWithDoubleTap()
         
     }
     
@@ -261,21 +352,21 @@ class BookReaderVC: UIViewController {
     
     func disappearMenus(animated: Bool) {
         if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
                 self.titleLabel.alpha = 0.0
                 self.dismissButton.alpha = 0.0
                 self.topBar.alpha = 0.0
                 
                 
                 self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-                self.bottomView.alpha = 0.7
+                self.bottomView.alpha = 0.1
             }) { (_) in
                 self.titleLabel.alpha = 0.0
                 self.dismissButton.alpha = 0.0
                 self.topBar.alpha = 0.0
                 
                 self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-                self.bottomView.alpha = 0.7
+                self.bottomView.alpha = 0.1
                 self.menusAreAppeard = false
             }
         }else{
@@ -292,7 +383,7 @@ class BookReaderVC: UIViewController {
     
     func appearMenus(animated: Bool) {
         if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
                 self.titleLabel.alpha = 1
                 self.dismissButton.alpha = 1
                 self.topBar.alpha = 1
@@ -322,7 +413,7 @@ class BookReaderVC: UIViewController {
     
     
     @objc func closeTheVC(){
-        //        self.modalPresentationStyle = .fullScreen
+        
         dismiss(animated: false, completion: nil)
         //        if let visibleCell = bookCollectionView.visibleCells.first {
         //            lastViewedPage = bookCollectionView.indexPath(for: visibleCell)?.row
@@ -360,19 +451,27 @@ class BookReaderVC: UIViewController {
 extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comic?.imageNames?.count ?? 0
+        return comicPagesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "thumbnailCell", for: indexPath) as! thumbnailCell
-        cell.comicPage  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row])
+        cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row])
         cell.pageNumber = indexPath.row + 1
+        cell.haveDoublePage = deviceIsLandscaped
+        
+        if deviceIsLandscaped{
+            cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2])
+            cell.pageNumber = indexPath.row * 2 - 1
+            cell.comicPage2 = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2 + 1])
+        }
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.height * 0.7, height: collectionView.frame.height)
+        return CGSize(width: collectionView.frame.height * (deviceIsLandscaped ? 1.22 : 0.61), height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -412,10 +511,39 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         return nil
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        let previousPage = previousViewControllers.last as! BookPage
-        previousPage.scrollView.setZoomScale(previousPage.scrollView.minimumZoomScale, animated: false)
+    
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        //zoom out precious pages
+        guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
+        for page in previousPages {
+            page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
+        }
         
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        if completed {
+            
+            guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
+            for page in previousPages {
+                let index = bookPages.firstIndex(of: previousPages[0])
+                print(index)
+                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
+            }
+            
+            //update thumbnail and slider
+            
+            guard let pendingPage = pageViewController.viewControllers?[0] as? BookPage else { return }
+            guard let pendingIndex = bookPages.firstIndex(of: pendingPage) else { return }
+            thumbnailCollectionView.selectItem(at: IndexPath(row: pendingIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+            
+            pageSlider.setValue(Float(pendingIndex + 1), animated: true)
+            currentPageNumberLabel.text = String (pendingIndex + 1)
+            
+        }
+
     }
     
 }

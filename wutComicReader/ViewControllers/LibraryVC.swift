@@ -44,6 +44,12 @@ class LibraryVC: UIViewController {
         
     }
     
+    var deviceIsLandscaped = UIDevice.current.orientation.isLandscape {
+        didSet{
+            updateCollectionViewLayoutBasedScreenSize()
+        }
+    }
+    
     var selectedCell : [IndexPath] = [] {
         didSet{
             groupBarButton.isEnabled = selectedCell.count > 1
@@ -57,63 +63,7 @@ class LibraryVC: UIViewController {
     @IBOutlet weak var bookCollectionView: UICollectionView!
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     
-    //MARK:- actions
     
-    @IBAction func unzipButtonTapped(_ sender: Any) {
-        
-        try? comicExtractor.extractUserComicsIntoComicDiractory()
-        try? appfileManager.writeNewComicsOnCoreData()
-        fetchComics()
-        bookCollectionView.reloadData()
-    }
-    
-    @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-    }
-    @IBAction func groupBarButtonTapped(_ sender: Any) {
-        
-        
-        
-        let alert = UIAlertController(title: "New Group Title", message: "enter the new group title", preferredStyle: .alert)
-        alert.addTextField { (textfield) in
-            textfield.text = ""
-        }
-        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-//            self.makingAnAppGroup(with: alert.textFields![0].text ?? "")
-            self.selectedCell.removeAll()
-            alert.dismiss(animated: true, completion: nil)
-        }
-        
-        alert.addAction(okAction)
-        present(alert , animated: true)
-        
-        bookCollectionView.reloadData()
-        
-        
-    }
-    
-    @IBAction func editButtonTapped(_ sender: Any) {
-        //        let numberOfSections = bookCollectionView.numberOfSections
-        //        if !editingMode {
-        //            for sectionNumber in 0 ... numberOfSections - 1 {
-        //                for _ in 0 ... bookCollectionView.numberOfItems(inSection: sectionNumber) - 1 {
-        bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
-        //                }
-        
-        //            }
-        //        }
-        editingMode = !editingMode
-        selectedCell.removeAll()
-        bookCollectionView.reloadData()
-    }
-    
-    @IBAction func fetchButtonTapped(_ sender: Any) {
-        deleteAllComics()
-    }
-    
-    
-    @IBAction func closeSectionButtonTapped(_ sender: Any) {
-        
-    }
     
     
     //MARK:- Design functions
@@ -127,15 +77,18 @@ class LibraryVC: UIViewController {
         }
         bookCollectionView.allowsMultipleSelection = true
         fetchComics()
-        print(comics)
+//        print(comics)
         setUpDesigns()
         bookCollectionView.reloadData()
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceDidRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
         print(NSHomeDirectory())
         
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        deviceIsLandscaped = UIDevice.current.orientation.isLandscape
+    }
     
     
     func setUpDesigns(){
@@ -148,9 +101,15 @@ class LibraryVC: UIViewController {
         makeCustomNavigationBar()
     }
     
-    @objc func deviceDidRotated() {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        deviceIsLandscaped = UIDevice.current.orientation.isLandscape
+    }
+    
+    
+    
+    func updateCollectionViewLayoutBasedScreenSize() {
         let deviceWidth = UIScreen.main.bounds.width
-        print("device width is : \(UIScreen.main.bounds.width)")
+//        print("device width is : \(UIScreen.main.bounds.width)")
         if deviceWidth < 567 {
             collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 3.9, height: bookCollectionView.frame.width / 2.3)
         }else {
@@ -174,6 +133,64 @@ class LibraryVC: UIViewController {
         
         bottomGradientImage = imageView
     }
+    
+    //MARK:- actions
+        
+        @IBAction func unzipButtonTapped(_ sender: Any) {
+            deleteAllComics()
+            try? comicExtractor.extractUserComicsIntoComicDiractory()
+            try? appfileManager.writeNewComicsOnCoreData()
+            fetchComics()
+            bookCollectionView.reloadData()
+        }
+        
+        @IBAction func DeleteBarButtonTapped(_ sender: Any) {
+        }
+        @IBAction func groupBarButtonTapped(_ sender: Any) {
+            
+            
+            
+            let alert = UIAlertController(title: "New Group Title", message: "enter the new group title", preferredStyle: .alert)
+            alert.addTextField { (textfield) in
+                textfield.text = ""
+            }
+            let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+    //            self.makingAnAppGroup(with: alert.textFields![0].text ?? "")
+                self.selectedCell.removeAll()
+                alert.dismiss(animated: true, completion: nil)
+            }
+            
+            alert.addAction(okAction)
+            present(alert , animated: true)
+            
+            bookCollectionView.reloadData()
+            
+            
+        }
+        
+        @IBAction func editButtonTapped(_ sender: Any) {
+            //        let numberOfSections = bookCollectionView.numberOfSections
+            //        if !editingMode {
+            //            for sectionNumber in 0 ... numberOfSections - 1 {
+            //                for _ in 0 ... bookCollectionView.numberOfItems(inSection: sectionNumber) - 1 {
+            bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+            //                }
+            
+            //            }
+            //        }
+            editingMode = !editingMode
+            selectedCell.removeAll()
+            bookCollectionView.reloadData()
+        }
+        
+        @IBAction func fetchButtonTapped(_ sender: Any) {
+            deleteAllComics()
+        }
+        
+        
+        @IBAction func closeSectionButtonTapped(_ sender: Any) {
+            
+        }
     
     //MARK:- top bar functions
     
@@ -311,7 +328,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! BookCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! LibraryCell
         cell.book = comics[indexPath.row]
         cell.selectionImageView.isHidden = !editingMode
         cell.setUpDesign()

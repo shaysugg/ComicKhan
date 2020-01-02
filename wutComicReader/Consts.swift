@@ -14,5 +14,3 @@ import UIKit
 let appFontBold = "HelveticaNeue-Bold"
 let appFontMeduim = "HelveticaNeue-Bold"
 let appFontRegular = "HelveticaNeue"
-
-
