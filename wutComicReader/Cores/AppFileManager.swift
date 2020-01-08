@@ -34,7 +34,7 @@ class AppFileManager {
     }
     
     func deleteFileInTheAppDiractory(withName fileName : String) throws{
-        try FileManager.default.removeItem(at: comicDirectory.appendingPathComponent(fileName))
+        try FileManager.default.removeItem(at: comicDirectory.appendingPathComponent("Extracted-" + fileName))
     }
     
     func writeNewComicsOnCoreData() throws{
@@ -78,8 +78,26 @@ class AppFileManager {
             print("can't going through subpath of comicDir: " + error.localizedDescription )
         }
     }
+       
+    func syncRemovedComicsInUserDiracory() {
+        
+        guard let filePaths = FileManager.default.subpaths(atPath: userDiractory.path) else { return }
+        //removing format with drop 4 characters in path
+        let userDiractoryfilePaths = filePaths.map({$0.dropLast(4)})
+        print(userDiractoryfilePaths)
+        
+        let comicDiractoriesPaths = try? FileManager.default.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
         
         
+        for path in comicDiractoriesPaths ?? [] {
+            let comicName = makeComicNameFromPath(path: path)
+            if !userDiractoryfilePaths.contains(comicName.dropLast(0)){
+                deleteComicFromCoreData(withName: comicName)
+                try? deleteFileInTheAppDiractory(withName: comicName)
+            }
+        }
+    }
+    
         
     private func comicAlreadyExistedInCoreData(withName comicname: String) -> Bool{
             
@@ -144,6 +162,39 @@ class AppFileManager {
             
         }
     }
+    
+    private func deleteComicFromCoreData(withName name: String){
+        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appdelegate.persistentContainer.viewContext
+        
+        let deletereq = NSFetchRequest<Comic>(entityName: "Comic")
+        let predict = NSPredicate.init(format: "name == %@", name)
+        deletereq.predicate = predict
+        
+        guard let comics = try? managedContext.fetch(deletereq) else { return }
+        for comic in comics {
+            managedContext.delete(comic)
+        }
+        try? managedContext.save()
+    }
+    
+//    private func NameofFileInComicDiractory(fromFilePath path: String) -> String{
+//        guard let dotindex = path.lastIndex(of: ".") else { return ""}
+//
+//        var startIndex: String.Index {
+//            if let slashIndex = path.lastIndex(of: "/"){
+//                return slashIndex
+//            }else{
+//                return path.startIndex
+//            }
+//        }
+//
+//        let nameRange = startIndex..<dotindex
+//        var name = path.substring(with: nameRange)
+////        name.removeFirst(10)
+//
+//        return String(name)
+//    }
     
     func makeAppDirectory() throws{
         try FileManager.default.createDirectory(at: comicDirectory, withIntermediateDirectories: true, attributes: nil)

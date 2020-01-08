@@ -102,9 +102,6 @@ public extension UIDevice {
 
 
 func configureDeviceType() {
-    
-    let deviceWidth = UIScreen.main.bounds.width
-    let deviceHeight = UIScreen.main.bounds.height
     let deviceTypeString = UIDevice.modelName
     
     if deviceTypeString.contains("iPad"){
@@ -112,7 +109,11 @@ func configureDeviceType() {
     }else if deviceTypeString.contains("iPhone SE") {
         deviceType = .smalliPhone
     }else{
-        deviceType = .iPhone
+        if UIScreen.main.bounds.height > 750 {
+            deviceType = .iPhoneX
+        }else{
+            deviceType = .iPhone
+        }
     }
 
     print(deviceTypeString)

@@ -57,9 +57,5 @@ class LibraryCell: UICollectionViewCell {
         self.clipsToBounds = false
     }
     
-    func fullPathofImagePath(imagePath: String){
-        
-    }
-    
     
 }

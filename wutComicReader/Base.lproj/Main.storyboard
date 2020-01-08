@@ -153,13 +153,13 @@
                             </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
-                            <barButtonItem title="UNZIP" id="WTB-XT-6c4">
+                            <barButtonItem title="Sync" id="WTB-XT-6c4">
                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="unzipButtonTapped:" destination="BYZ-38-t0r" id="Tdp-VX-sAh"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="FETCH" id="hdF-FU-FgM">
+                            <barButtonItem title="Fetch" id="hdF-FU-FgM">
                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="fetchButtonTapped:" destination="BYZ-38-t0r" id="c7p-if-DWb"/>

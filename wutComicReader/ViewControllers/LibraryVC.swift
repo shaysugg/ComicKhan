@@ -34,7 +34,7 @@ class LibraryVC: UIViewController {
             }else{
                 groupBarButton.title = ""
                 deleteBarButton.title = ""
-                editBarButton.title = "edit"
+                editBarButton.title = "Edit"
                 deleteBarButton.isEnabled = false
                 groupBarButton.isEnabled = false
                 
@@ -57,6 +57,9 @@ class LibraryVC: UIViewController {
             print(selectedCell)
         }
     }
+    
+    let refreshControll = UIRefreshControl()
+    
     @IBOutlet weak var bottomBar: UIToolbar!
     @IBOutlet weak var groupBarButton: UIBarButtonItem!
     @IBOutlet weak var deleteBarButton: UIBarButtonItem!
@@ -66,7 +69,7 @@ class LibraryVC: UIViewController {
     
     
     
-    //MARK:- Design functions
+    //MARK:- functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,9 +80,10 @@ class LibraryVC: UIViewController {
         }
         bookCollectionView.allowsMultipleSelection = true
         fetchComics()
-//        print(comics)
+        print(comics)
         setUpDesigns()
         bookCollectionView.reloadData()
+        setupPullToRefresh()
         
         print(NSHomeDirectory())
         
@@ -109,13 +113,12 @@ class LibraryVC: UIViewController {
     
     func updateCollectionViewLayoutBasedScreenSize() {
         let deviceWidth = UIScreen.main.bounds.width
-//        print("device width is : \(UIScreen.main.bounds.width)")
+        //        print("device width is : \(UIScreen.main.bounds.width)")
         if deviceWidth < 567 {
             collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 3.9, height: bookCollectionView.frame.width / 2.3)
         }else {
             collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 8.0, height: bookCollectionView.frame.width / 4.2)
         }
-        #warning("configuration for ipad ??(if device with > 1000)")
         bookCollectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -134,14 +137,33 @@ class LibraryVC: UIViewController {
         bottomGradientImage = imageView
     }
     
+    func setupPullToRefresh(){
+        bookCollectionView.refreshControl = refreshControll
+        
+        refreshControll.addTarget(self, action: #selector(unzipButtonTapped(_:)), for: .valueChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+        
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
     //MARK:- actions
         
         @IBAction func unzipButtonTapped(_ sender: Any) {
-            deleteAllComics()
+//            deleteAllComics()
             try? comicExtractor.extractUserComicsIntoComicDiractory()
             try? appfileManager.writeNewComicsOnCoreData()
+            appfileManager.syncRemovedComicsInUserDiracory()
             fetchComics()
             bookCollectionView.reloadData()
+            refreshControll.endRefreshing()
+            
         }
         
         @IBAction func DeleteBarButtonTapped(_ sender: Any) {
@@ -187,10 +209,9 @@ class LibraryVC: UIViewController {
             deleteAllComics()
         }
         
-        
-        @IBAction func closeSectionButtonTapped(_ sender: Any) {
-            
-        }
+
+    
+    
     
     //MARK:- top bar functions
     

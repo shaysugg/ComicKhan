@@ -37,14 +37,9 @@ class BookReaderVC: UIViewController {
             if deviceIsLandscaped {
                 let totalImages = comic!.imageNames?.count ?? 0
                 comicPagesCount = (totalImages ) / 2 + (totalImages % 2)
-                
-                
             }else {
-                comicPagesCount = comic!.imageNames?.count ?? 0 
-                
+                comicPagesCount = comic!.imageNames?.count ?? 0
             }
-            
-            
             
             updatePageViewControllerWhenRotationChanges()
             
@@ -58,6 +53,7 @@ class BookReaderVC: UIViewController {
             
             pageSlider.maximumValue = Float(comicPagesCount)
             pageSlider.setValue(Float(scrollToIndex + 1), animated: false)
+            
             
         }
     }
@@ -183,11 +179,6 @@ class BookReaderVC: UIViewController {
         
     }
     
-    func setupDesign(){
-        
-        
-    }
-    
     func setupPageController() {
         bookPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         bookPageViewController.delegate = self
@@ -239,19 +230,7 @@ class BookReaderVC: UIViewController {
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 20).isActive = true
-        
-        var height :Int?
-        switch deviceType {
-        case .iPhone:
-            height = 310
-        case .smalliPhone:
-            height = 310
-        case .iPad:
-            height = 310
-        case .iPhoneX:
-            <#code#>
-        }
-        bottomView.heightAnchor.constraint(equalToConstant: 310).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: calculateBottomViewHeight()).isActive = true
         
         bottomView.layer.cornerRadius = 20
         bottomView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 25)
@@ -275,6 +254,22 @@ class BookReaderVC: UIViewController {
         thumbnailCollectionView.leftAnchor.constraint(equalTo: bottomView.leftAnchor, constant: 10).isActive = true
         thumbnailCollectionView.rightAnchor.constraint(equalTo: bottomView.rightAnchor, constant: -10).isActive = true
         
+    }
+    
+    func calculateBottomViewHeight() -> CGFloat{
+        var height :CGFloat?
+        switch deviceType {
+        case .iPad:
+            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3.5
+        case .smalliPhone:
+            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3.2
+        case .iPhone:
+            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3
+        case .iPhoneX:
+            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3
+        }
+        print("bounds height is : \(view.bounds.height)")
+        return height!
     }
     
     func setupTopBar(){
@@ -321,8 +316,13 @@ class BookReaderVC: UIViewController {
     
     @objc func sliderDidChanged(){
         let value = Int(pageSlider.value)
-        currentPageNumberLabel.text = String(value * (deviceIsLandscaped ? 2 : 1))
+        
         thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
+        if deviceIsLandscaped{
+            currentPageNumberLabel.text = String(value * 2 - 1) + "-" + String(value * 2)
+        }else{
+            currentPageNumberLabel.text = String(value)
+        }
     }
     
     @objc func sliderDidFinishedChanging(){
@@ -414,16 +414,25 @@ class BookReaderVC: UIViewController {
     
     @objc func closeTheVC(){
         
-        dismiss(animated: false, completion: nil)
-        //        if let visibleCell = bookCollectionView.visibleCells.first {
-        //            lastViewedPage = bookCollectionView.indexPath(for: visibleCell)?.row
-        //
-        //            if let _ = comic {
-        //                let defaults = UserDefaults.standard
-        //                let id = comic!.id + "-lastViewedPage"
-        //                defaults.set(lastViewedPage, forKey: id)
-        //            }
-        //        }
+        
+        
+        dismiss(animated: false, completion: {
+            self.saveTheCurrentPageToCoreData()
+        })
+    }
+    
+    func saveTheCurrentPageToCoreData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        
+        guard let currentPage = bookPageViewController.viewControllers?[0] as? BookPage else { return }
+        let currentIndex = bookPages.firstIndex(of: currentPage) ?? 0
+        comic?.lastVisitedPage = Int16(deviceIsLandscaped ? currentIndex * 2 : currentIndex)
+        do{
+            try context.save()
+        }catch let err{
+            print("problem with saving last page to core data " + err.localizedDescription)
+        }
     }
     
     
@@ -431,16 +440,12 @@ class BookReaderVC: UIViewController {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
         
-        
     }
     
     override var prefersStatusBarHidden: Bool {
-        return false
+        return true
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     
     
     
@@ -461,17 +466,20 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
         cell.pageNumber = indexPath.row + 1
         cell.haveDoublePage = deviceIsLandscaped
         
+        
         if deviceIsLandscaped{
             cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2])
             cell.pageNumber = indexPath.row * 2 - 1
-            cell.comicPage2 = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2 + 1])
+            if indexPath.row * 2 + 1 < comic!.imageNames!.count {
+                cell.comicPage2 = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2 + 1])
+            }
         }
 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.height * (deviceIsLandscaped ? 1.22 : 0.61), height: collectionView.frame.height)
+        return CGSize(width: collectionView.frame.height * (deviceIsLandscaped ? 1.22 : 0.58), height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

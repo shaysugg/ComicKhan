@@ -84,14 +84,10 @@ class ComicExteractor {
                     
                 }catch let error{
                     print("\(comicName) extract failed : \(error.localizedDescription)")
-                    
                     if let _ = error as? ExtractorError {
                         throw error
                     }
                 }
-                
-            }else{
-                throw ExtractorError.fileAlreadyExisted
             }
         }
         
