@@ -37,8 +37,20 @@ extension UIImage{
         let imagename: String = imageName ?? ""
         let appfileManager = AppFileManager()
         
-        let path = appfileManager.comicDirectory.path + "/Extracted-" + comicname  + "/" + imagename
+        let path = appfileManager.comicDirectory.path + "/" + comicname  + "/" + imagename
         self.init(contentsOfFile: path)
+    }
+}
+
+extension UIViewController {
+    func appLaunchedForFirstTime() -> Bool {
+        let didLaunchedBefore = UserDefaults.standard.bool(forKey: "appDidLunchedBefore")
+        if !didLaunchedBefore {
+            UserDefaults.standard.set(true, forKey: "appDidLunchedBefore")
+            return true
+        }else{
+            return false
+        }
     }
 }
 

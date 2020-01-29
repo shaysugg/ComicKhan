@@ -22,12 +22,12 @@ enum ExtractorError : Error {
 
 class ComicExteractor {
     
-    private var appFileManager = AppFileManager()
+    internal var appFileManager = AppFileManager()
     
-    func extractZIP(withFileName fileName : String) throws{
+    private func extractZIP(withFileName fileName : String) throws{
             
             let zipFileURL = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbz")
-            let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent("Extracted-" + fileName)
+            let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
             
             do{
                 try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
@@ -41,14 +41,14 @@ class ComicExteractor {
     
     
     
-    func extractRAR(withFileName fileName : String) throws{
+    private func extractRAR(withFileName fileName : String) throws{
         
         var archive : URKArchive?
         
         print(fileName)
         
         let zipFilePath = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbr")
-        let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent("Extracted-" + fileName)
+        let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
         
         do{
             try FileManager.default.createDirectory(at: extractedComicsURL, withIntermediateDirectories: true, attributes: nil)
@@ -63,33 +63,34 @@ class ComicExteractor {
     }
     
     
-    func extractUserComicsIntoComicDiractory() throws {
-        let filePaths = FileManager.default.subpaths(atPath: appFileManager.userDiractory.path)
-        
-        let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)
-        
-        for path in comicPaths {
-            let comicName = NameofFile(fromFilePath: path)
-            let comicFormat = formatOfFile(fromFilePath: path)
+    func extractUserComicsIntoComicDiractory() {
             
-            if !appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
+            
+            let filePaths = FileManager.default.subpaths(atPath: self.appFileManager.userDiractory.path)
+            
+            let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)
+            
+            for path in comicPaths {
+                let comicName = NameofFile(fromFilePath: path)
+                let comicFormat = formatOfFile(fromFilePath: path)
                 
-                do {
+                if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
                     
-                    if comicFormat == ".cbz" {
-                        try extractZIP(withFileName: comicName)
-                    }else if comicFormat == ".cbr" {
-                        try extractRAR(withFileName: comicName)
-                    }else{}
-                    
-                }catch let error{
-                    print("\(comicName) extract failed : \(error.localizedDescription)")
-                    if let _ = error as? ExtractorError {
-                        throw error
+                    do {
+                        if comicFormat == ".cbz" {
+                            try extractZIP(withFileName: comicName)
+                        }else if comicFormat == ".cbr" {
+                            try extractRAR(withFileName: comicName)
+                        }else{}
+                        
+                    }catch let error{
+                        print("\(comicName) extract failed : \(error.localizedDescription)")
+                        if let _ = error as? ExtractorError {
+                            
+                        }
                     }
                 }
             }
-        }
         
     }
     

@@ -73,6 +73,7 @@ class BookReaderVC: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.allowsSelection = true
+        collectionView.clipsToBounds = true
         return collectionView
     }()
     
@@ -201,14 +202,20 @@ class BookReaderVC: UIViewController {
         }
     }
     
+    func isImageInDoubleSplashSize(image: UIImage) -> Bool {
+        return image.size.height < image.size.width
+    }
+    
     func updatePageViewControllerWhenRotationChanges() {
         if deviceIsLandscaped {
             for bookPage in bookPages {
                 bookPage.haveDoublePage = deviceIsLandscaped
+                
                 if let currentIndex = bookPages.firstIndex(of: bookPage) {
                     if currentIndex < bookPages.count / 2{
+//                        bookPage.isDoupleSplashPage = isImageInDoubleSplashSize(image: bookPages[currentIndex * 2].comicPage!)
                         bookPage.pageImageView1.image = bookPages[currentIndex * 2].comicPage
-                            bookPage.pageImageView2.image = bookPages[(currentIndex * 2) + 1].comicPage
+                        bookPage.pageImageView2.image = bookPages[(currentIndex * 2) + 1].comicPage
                     }
                 }
             }
@@ -283,7 +290,7 @@ class BookReaderVC: UIViewController {
         topBar.addSubview(titleLabel)
         titleLabel.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 60).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: topBar.rightAnchor, constant: -30).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
         
         topBar.addSubview(dismissButton)
         dismissButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
@@ -451,109 +458,5 @@ class BookReaderVC: UIViewController {
     
 }
 
-//MARK:- thumbnailCollectionView Delegates
-
-extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comicPagesCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "thumbnailCell", for: indexPath) as! thumbnailCell
-        cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row])
-        cell.pageNumber = indexPath.row + 1
-        cell.haveDoublePage = deviceIsLandscaped
-        
-        
-        if deviceIsLandscaped{
-            cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2])
-            cell.pageNumber = indexPath.row * 2 - 1
-            if indexPath.row * 2 + 1 < comic!.imageNames!.count {
-                cell.comicPage2 = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2 + 1])
-            }
-        }
-
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.height * (deviceIsLandscaped ? 1.22 : 0.58), height: collectionView.frame.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        thumbnailCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        bookPageViewController.setViewControllers([bookPages[indexPath.row]], direction: .forward, animated: true, completion: nil)
-        updatePageSlider(with: indexPath.row + 1)
-    }
-    
-    
-}
-
-//MARK:- bookPageViewController Delegates
-
-extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDelegate {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController:
-        UIViewController) -> UIViewController? {
-        
-        if let index = bookPages.firstIndex(of: viewController as! BookPage) {
-            if index < bookPages.count - 1 {
-                return bookPages[index + 1]
-            }else{
-                return nil
-            }
-        }
-        return nil
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if let index = bookPages.firstIndex(of: viewController as! BookPage) {
-            if index > 0 {
-                return bookPages[index - 1]
-            }else {
-                return nil
-            }
-        }
-        return nil
-    }
-    
-    
-    
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        //zoom out precious pages
-        guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
-        for page in previousPages {
-            page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
-        }
-        
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        
-        if completed {
-            
-            guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
-            for page in previousPages {
-                let index = bookPages.firstIndex(of: previousPages[0])
-                print(index)
-                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
-            }
-            
-            //update thumbnail and slider
-            
-            guard let pendingPage = pageViewController.viewControllers?[0] as? BookPage else { return }
-            guard let pendingIndex = bookPages.firstIndex(of: pendingPage) else { return }
-            thumbnailCollectionView.selectItem(at: IndexPath(row: pendingIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-            
-            pageSlider.setValue(Float(pendingIndex + 1), animated: true)
-            currentPageNumberLabel.text = String (pendingIndex + 1)
-            
-        }
-
-    }
-    
-}
 
 

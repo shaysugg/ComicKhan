@@ -9,7 +9,7 @@ DEPENDENCIES:
   - ZIPFoundation (~> 0.9)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - UnrarKit
     - ZIPFoundation
 
@@ -17,6 +17,6 @@ SPEC CHECKSUMS:
   UnrarKit: 167602bda6542e575c4cdc068509d6b787f84468
   ZIPFoundation: b1f07e4409baf1641f3fe5948b2a1c3f5c500cb1
 
-PODFILE CHECKSUM: aa454ef37d14612090035af92aeaf08263cb6dc3
+PODFILE CHECKSUM: 1d22ec8d425aa9074f4aafad31e489de264b89d2
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4

@@ -97,29 +97,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bat Woman Series" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qb9-vp-EWn">
-                                            <rect key="frame" x="18" y="17.5" width="340" height="29"/>
+                                            <rect key="frame" x="18" y="17.5" width="378" height="29"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uza-sI-egh">
-                                            <rect key="frame" x="368" y="20.5" width="23" height="23"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="23" id="OJx-y3-eu4"/>
-                                                <constraint firstAttribute="width" constant="23" id="o9v-4r-Aot"/>
-                                            </constraints>
-                                            <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                            <state key="normal" image="back"/>
-                                            <connections>
-                                                <action selector="closeSectionButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9w-Fh-Zew"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="uza-sI-egh" firstAttribute="centerY" secondItem="kao-ft-SyL" secondAttribute="centerY" id="IHS-1B-DfN"/>
                                         <constraint firstItem="qb9-vp-EWn" firstAttribute="leading" secondItem="kao-ft-SyL" secondAttribute="leadingMargin" constant="10" id="TjB-3U-rhr"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="uza-sI-egh" secondAttribute="trailing" constant="15" id="ab4-Jc-4sE"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="qb9-vp-EWn" secondAttribute="trailing" constant="10" id="a0I-0E-5eh"/>
                                         <constraint firstItem="qb9-vp-EWn" firstAttribute="centerY" secondItem="kao-ft-SyL" secondAttribute="centerY" id="pJw-K9-wRV"/>
-                                        <constraint firstItem="uza-sI-egh" firstAttribute="leading" secondItem="qb9-vp-EWn" secondAttribute="trailing" constant="10" id="ruU-Xw-HNE"/>
                                     </constraints>
                                 </collectionReusableView>
                                 <connections>
@@ -221,7 +207,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back" width="45" height="45"/>
         <image name="selected" width="37.5" height="37.5"/>
     </resources>
 </document>

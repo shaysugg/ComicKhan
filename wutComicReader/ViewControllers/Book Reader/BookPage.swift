@@ -44,7 +44,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         let imageView = UIImageView(frame: .zero )
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .cyan
         return imageView
     }()
     
@@ -78,10 +77,12 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
+    var isDoupleSplashPage = false
+    
     var haveDoublePage:Bool = UIDevice.current.orientation.isLandscape {
         didSet{
             
-            if haveDoublePage{
+            if haveDoublePage && !isDoupleSplashPage {
                 imagesContainerView.addSubview(pageImageView2)
                 
                 pageImageView1SingleModeRightAnchor?.isActive = false
@@ -101,6 +102,8 @@ class BookPage: UIViewController , UIScrollViewDelegate {
             
         }
     }
+    
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -151,6 +154,8 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     
     
+    
+    
     //MARK:- Scroll View Delegates
     
     
@@ -179,11 +184,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     func centerTheImage(){
         
         let yOffset = max(0 ,(scrollView.bounds.height - scrollView.contentSize.height) / 2)
-        
-//        print("Offset is \(yOffset) || scroll view content height is \(scrollView.contentSize.height) || scroll view bounds height is \(view.frame.height)")
-        
-//        imageContainerViewTopAnchor?.constant = yOffset
-//        imageContainerViewBottomAnchor?.constant = yOffset
         
         if  haveDoublePage {
             

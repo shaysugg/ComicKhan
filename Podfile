@@ -7,5 +7,13 @@ target 'wutComicReader' do
 
   pod 'ZIPFoundation', '~> 0.9'
   pod "UnrarKit"
+	
+	target 'coreTests' do
+        inherit! :search_paths
+        
+			pod 'ZIPFoundation', '~> 0.9'
+  		pod "UnrarKit"
+			 
+			 end
 
 end

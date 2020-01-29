@@ -2,7 +2,7 @@
 //  ComicGroup+CoreDataClass.swift
 //  
 //
-//  Created by Sha Yan on 12/14/19.
+//  Created by Sha Yan on 1/27/20.
 //
 //
 

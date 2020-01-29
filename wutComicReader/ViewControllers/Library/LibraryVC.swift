@@ -16,8 +16,12 @@ class LibraryVC: UIViewController {
     //MARK:- variables
     
     var bottomGradientImage : UIImageView?
-    var comics : [Comic] = []
-    var comicGroups : [String] = ["New Comics"]
+    //    var comics : [Comic] = []
+    var comicGroups : [ComicGroup] = [] {
+        didSet{
+            print(comicGroups)
+        }
+    }
     var collectionViewCellSize: CGSize?
     
     let appfileManager = AppFileManager()
@@ -50,11 +54,11 @@ class LibraryVC: UIViewController {
         }
     }
     
-    var selectedCell : [IndexPath] = [] {
+    var selectedComics : [Comic] = [] {
         didSet{
-            groupBarButton.isEnabled = selectedCell.count > 1
-            deleteBarButton.isEnabled = !selectedCell.isEmpty
-            print(selectedCell)
+            groupBarButton.isEnabled = selectedComics.count > 1
+            deleteBarButton.isEnabled = !selectedComics.isEmpty
+            print(selectedComics)
         }
     }
     
@@ -74,13 +78,17 @@ class LibraryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //line below is could be wrong!
-        if !UserDefaults.standard.bool(forKey: "hasBeenLaunchedBeforeFlag") {
-//            makeAppDirectory()
+        if appLaunchedForFirstTime() {
+            do {
+                try appfileManager.makeAppDirectory()
+            }catch{
+                fatalError("can't crate app comic diractory")
+            }
+            createAComicGroup(with: "New Comics")
         }
+        fetchGroupComics()
         bookCollectionView.allowsMultipleSelection = true
         fetchComics()
-        print(comics)
         setUpDesigns()
         bookCollectionView.reloadData()
         setupPullToRefresh()
@@ -153,131 +161,132 @@ class LibraryVC: UIViewController {
         return false
     }
     
+    
+    
     //MARK:- actions
-        
-        @IBAction func unzipButtonTapped(_ sender: Any) {
-//            deleteAllComics()
-            try? comicExtractor.extractUserComicsIntoComicDiractory()
-            try? appfileManager.writeNewComicsOnCoreData()
-            appfileManager.syncRemovedComicsInUserDiracory()
-            fetchComics()
-            bookCollectionView.reloadData()
-            refreshControll.endRefreshing()
-            
+    
+    @IBAction func unzipButtonTapped(_ sender: Any) {
+        syncComics {
+            self.fetchComics()
+            self.bookCollectionView.reloadData()
+            self.refreshControll.endRefreshing()
         }
         
-        @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-        }
-        @IBAction func groupBarButtonTapped(_ sender: Any) {
-            
-            
-            
-            let alert = UIAlertController(title: "New Group Title", message: "enter the new group title", preferredStyle: .alert)
-            alert.addTextField { (textfield) in
-                textfield.text = ""
+        
+    }
+    
+    @IBAction func DeleteBarButtonTapped(_ sender: Any) {
+        for comic in selectedComics {
+            do{
+                print(comic.name)
+                try appfileManager.deleteFileInTheAppDiractory(withName: comic.name ?? "")
+                try appfileManager.deleteFileInTheUserDiractory(withName: comic.name ?? "")
+                appfileManager.deleteComicFromCoreData(withName: comic.name ?? "")
+            }catch {
+                #warning("error handeling! of this part")
             }
-            let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
-    //            self.makingAnAppGroup(with: alert.textFields![0].text ?? "")
-                self.selectedCell.removeAll()
-                alert.dismiss(animated: true, completion: nil)
-            }
-            
-            alert.addAction(okAction)
-            present(alert , animated: true)
-            
-            bookCollectionView.reloadData()
-            
-            
         }
         
-        @IBAction func editButtonTapped(_ sender: Any) {
-            //        let numberOfSections = bookCollectionView.numberOfSections
-            //        if !editingMode {
-            //            for sectionNumber in 0 ... numberOfSections - 1 {
-            //                for _ in 0 ... bookCollectionView.numberOfItems(inSection: sectionNumber) - 1 {
-            bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
-            //                }
+        fetchGroupComics()
+        bookCollectionView.reloadData()
+        
+    }
+    
+    @IBAction func groupBarButtonTapped(_ sender: Any) {
+        
+        var nameTextField: UITextField?
+        
+        let alert = UIAlertController(title: "New Group Title", message: "enter the new group title", preferredStyle: .alert)
+        
+        alert.addTextField { (textfield) in
+            textfield.text = ""
+            nameTextField = textfield
+        }
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
             
-            //            }
-            //        }
-            editingMode = !editingMode
-            selectedCell.removeAll()
-            bookCollectionView.reloadData()
+            self.createAComicGroup(with: nameTextField?.text ?? "")
+            self.selectedComics.removeAll()
+            
+            alert.dismiss(animated: true, completion: {
+                
+                self.fetchGroupComics()
+                self.bookCollectionView.reloadData()
+                
+            })
         }
         
-        @IBAction func fetchButtonTapped(_ sender: Any) {
-            deleteAllComics()
-        }
-        
-
+        alert.addAction(okAction)
+        present(alert , animated: true)
+    }
+    
+    @IBAction func editButtonTapped(_ sender: Any) {
+        bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+        editingMode = !editingMode
+        selectedComics.removeAll()
+        bookCollectionView.reloadData()
+    }
+    
+    @IBAction func fetchButtonTapped(_ sender: Any) {
+        deleteAllComics()
+    }
+    
+    
     
     
     
     //MARK:- top bar functions
     
-//    func deleteSelectedComics() {
-//
-//        selectedCell.sort()
-//        selectedCell.reverse()
-//
-//        for index in selectedCell {
-//            comics[index.section].remove(at: index.row)
-//        }
-//
-//        //removing empty section
-//
-//        for comic in comics {
-//            if comic.isEmpty && comic != comics.first {
-//                if let index = comics.firstIndex(of: comic) {
-//                    comics.remove(at: index)
-//                    sectionNames.remove(at: index)
-//                }
-//            }
-//        }
-//
-//        //        bookCollectionView.deleteItems(at: selectedCell)
-//        selectedCell.removeAll()
-//        bookCollectionView.reloadData()
-//    }
-//
-//
-//    func makingAnAppGroup(with name: String){
-//
-//        if selectedCell.count < 2 { return }
-//
-//
-//        //creating a group in array
-//
-//        var selectedComics : [Comic] = []
-//
-//        selectedCell.sort()
-//        selectedCell.reverse()
-//
-//        for indexpath in selectedCell {
-//            let cell = bookCollectionView.cellForItem(at: indexpath) as? BookCell
-//            if let book = cell?.book {
-//                comics[indexpath.section].remove(at: indexpath.row)
-//                selectedComics.append(book)
-//            }
-//        }
-//        comics.append(selectedComics)
-//        sectionNames.append(name)
-//
-//        //removing empty sections that may generate after grouping
-//
-//        for comic in comics {
-//            if comic.isEmpty {
-//                if let index = comics.firstIndex(of: comic) {
-//                    comics.remove(at: index)
-//                    sectionNames.remove(at: index)
-//                }
-//            }
-//        }
-//
-//        bookCollectionView.reloadData()
-//
-//
-//    }
+    //    func deleteSelectedComics() {
+    //
+    //        selectedCell.sort()
+    //        selectedCell.reverse()
+    //
+    //        for index in selectedCell {
+    //            comics[index.section].remove(at: index.row)
+    //        }
+    //
+    //        //removing empty section
+    //
+    //        for comic in comics {
+    //            if comic.isEmpty && comic != comics.first {
+    //                if let index = comics.firstIndex(of: comic) {
+    //                    comics.remove(at: index)
+    //                    sectionNames.remove(at: index)
+    //                }
+    //            }
+    //        }
+    //
+    //        //        bookCollectionView.deleteItems(at: selectedCell)
+    //        selectedCell.removeAll()
+    //        bookCollectionView.reloadData()
+    //    }
+    //
+    
+    func createAComicGroup(with name: String){
+        
+        if selectedComics.count < 2 && name != "New Comics" { return }
+        
+        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appdelegate.persistentContainer.viewContext
+        
+        let newComicGroup = ComicGroup(context: managedContext)
+        newComicGroup.name = name
+        newComicGroup.id = UUID()
+        newComicGroup.comics = NSOrderedSet(array: selectedComics)
+        
+        for comic in selectedComics {
+            comic.ofComicGroup = newComicGroup
+        }
+        
+        do{
+            try managedContext.save()
+        }catch{
+            print("error while creating a comic group")
+        }
+        
+        
+    }
     
     func makeCustomNavigationBar(){
         let navigationBar = navigationController?.navigationBar
@@ -292,7 +301,6 @@ class LibraryVC: UIViewController {
     func deleteAllComics(){
         guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appdelegate.persistentContainer.viewContext
-        
         let deletereq = NSFetchRequest<Comic>(entityName: "Comic")
         
         guard let comics = try? managedContext.fetch(deletereq) else { return }
@@ -302,37 +310,49 @@ class LibraryVC: UIViewController {
         try? managedContext.save()
     }
     
+    func syncComics(completed: @escaping ()->()) {
+        DispatchQueue.global(qos: .background).async {
+            self.comicExtractor.extractUserComicsIntoComicDiractory()
+            self.appfileManager.writeNewComicsOnCoreData()
+            self.appfileManager.syncRemovedComicsInUserDiracory()
+            DispatchQueue.main.async {
+                completed()
+            }
+        }
+    }
+    
     func fetchComics(){
         
         guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appdelegate.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<Comic>(entityName: "Comic")
-        fetchRequest.returnsObjectsAsFaults = false
-        let sortingByName = NSSortDescriptor(key: "name", ascending: true)
-        fetchRequest.sortDescriptors = [sortingByName]
+                fetchRequest.returnsObjectsAsFaults = false
+        //        let sortingByName = NSSortDescriptor(key: "name", ascending: true)
+        //        fetchRequest.sortDescriptors = [sortingByName]
         
         do{
-            comics = try managedContext.fetch(fetchRequest)
+            let comics = try managedContext.fetch(fetchRequest)
+            comicGroups[0].comics = NSOrderedSet(array: comics)
+            print(comics)
             bookCollectionView.reloadData()
         }catch let error{
             print("error happed while fetching from core Data: " + error.localizedDescription)
         }
-
+        
     }
     
     func fetchGroupComics(){
-//        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let managedContext = appdelegate.persistentContainer.viewContext
-//        
-//        let fetchRequest = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
-////        let sortingByName = NSSortDescriptor(key: "name", ascending: true)
-//        
-//        do{
-//        comicGroups = try managedContext.fetch(fetchRequest)
-//        }catch let error{
-//            print("error happed while fetching from core Data: " + error.localizedDescription)
-//        }
+        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appdelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
+        
+        do{
+            comicGroups = try managedContext.fetch(fetchRequest)
+        }catch let error{
+            print("error happed while fetching from core Data: " + error.localizedDescription)
+        }
     }
     
     
@@ -340,17 +360,18 @@ class LibraryVC: UIViewController {
     
 }
 
-    //MARK:- collectionView functions
+//MARK:- collectionView functions
 
 extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comics.count
+        return comicGroups[section].comics?.count ?? 0
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! LibraryCell
-        cell.book = comics[indexPath.row]
+        cell.book = comicGroups[indexPath.section].comics?[indexPath.row] as? Comic
         cell.selectionImageView.isHidden = !editingMode
         cell.setUpDesign()
         return cell
@@ -366,7 +387,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BookHeader", for: indexPath)
         let title = header.viewWithTag(101) as! UILabel
-        title.text = comicGroups[indexPath.section]
+        title.text = comicGroups[indexPath.section].name
         return header
     }
     
@@ -382,17 +403,17 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        let selectedComic = comicGroups[indexPath.section].comics?[indexPath.row] as! Comic
+        
         if editingMode {
-            if !selectedCell.contains(indexPath) {
-                selectedCell.append(indexPath)
+            if !selectedComics.contains(selectedComic) {
+                selectedComics.append(selectedComic)
                 
             }
         }else{
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
-            readerVC.comic = comics[indexPath.row]
-            //            NotificationCenter.default.post(name: NSNotification.Name(scrolltoLastViewedPageNN), object: nil)
+            readerVC.comic = selectedComic
             readerVC.modalPresentationStyle = .fullScreen
             present(readerVC , animated: false)
             
@@ -400,10 +421,14 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
         if editingMode{
-            if selectedCell.contains(indexPath){
-                guard let index = selectedCell.firstIndex(of: indexPath) else { return }
-                selectedCell.remove(at: index)
+            
+            let deSelectedComic = comicGroups[indexPath.section].comics?[indexPath.row] as! Comic
+            
+            if selectedComics.contains(deSelectedComic){
+                guard let comic = selectedComics.firstIndex(of: deSelectedComic) else { return }
+                selectedComics.remove(at: comic)
             }
         }
     }

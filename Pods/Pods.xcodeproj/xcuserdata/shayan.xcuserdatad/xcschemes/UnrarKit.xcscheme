@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3FD97DF531F2C70EE27D5B8F4A6BBE17"
+               BlueprintIdentifier = "248909F398EFC3A1B4964ABE00AA9649"
+               BuildableName = "UnrarKit.framework"
                BlueprintName = "UnrarKit"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "UnrarKit.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4BDF2BBD331553BBA3C82C6A /* Pods_coreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C51CF7465A730840355EB6 /* Pods_coreTests.framework */; };
 		9D41222421E15F361BC95DF5 /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */; };
 		E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C0EB123944A8200D2E561 /* AppFileManager.swift */; };
 		E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */; };
@@ -15,23 +16,44 @@
 		E40C7AA722A1169000D7CD17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */; };
 		E40FD64D22D1239800926CC4 /* thumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40FD64C22D1239800926CC4 /* thumbnailCell.swift */; };
 		E4144F4723B8DE6F00E28770 /* DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4144F4623B8DE6F00E28770 /* DeviceType.swift */; };
+		E426BCD523DECE9700119927 /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
+		E426BCDE23DEF2B900119927 /* 02.png in Resources */ = {isa = PBXBuildFile; fileRef = E426BCDB23DEF2B800119927 /* 02.png */; };
+		E426BCDF23DEF2B900119927 /* 03.png in Resources */ = {isa = PBXBuildFile; fileRef = E426BCDC23DEF2B900119927 /* 03.png */; };
+		E426BCE023DEF2B900119927 /* 01.png in Resources */ = {isa = PBXBuildFile; fileRef = E426BCDD23DEF2B900119927 /* 01.png */; };
+		E4288B4E23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B4D23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift */; };
+		E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */; };
 		E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440DEEE22A1814A00DCF4F7 /* Comic.swift */; };
 		E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45213A822D4927D00216217 /* ComicExteractor.swift */; };
 		E45C842A238DACD700669155 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C8429238DACD700669155 /* Colors.swift */; };
 		E463B29822AC2FCE0094265C /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463B29722AC2FCE0094265C /* Consts.swift */; };
 		E48253EA22D631B1001A0E85 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48253E922D631B1001A0E85 /* Helper.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
-		E4CAE6D922CF88690062DDC2 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAE6D822CF88690062DDC2 /* PageCell.swift */; };
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
 		E4D402EE23AF9DA6008F59EB /* testVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D402ED23AF9DA6008F59EB /* testVC.swift */; };
 		E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E667FC234BAB710050CB8C /* Assets.xcassets */; };
 		E4E8FCED22C28E4700A8B32D /* bookReaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */; };
+		E4EBEDD923DDD6BB000B317D /* Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr in Resources */ = {isa = PBXBuildFile; fileRef = E4EBEDD823DDD6BB000B317D /* Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr */; };
+		E4EBEDDC23DDD6F6000B317D /* ExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBEDDB23DDD6F6000B317D /* ExtractorTests.swift */; };
+		E4EBEDE023DDDF71000B317D /* AppFileManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBEDDF23DDDF71000B317D /* AppFileManagerTest.swift */; };
 		E4FF655A2391684600AAD68B /* BookPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FF65592391684600AAD68B /* BookPage.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E4EBEDD123DD7C49000B317D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E40C7A9122A1168C00D7CD17 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E40C7A9822A1168C00D7CD17;
+			remoteInfo = wutComicReader;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DB8BCC20422014FB642B4DA /* Pods-coreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coreTests/Pods-coreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
+		9947DA5C330685AC6076F5F4 /* Pods-coreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coreTests/Pods-coreTests.release.xcconfig"; sourceTree = "<group>"; };
+		E2C51CF7465A730840355EB6 /* Pods_coreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40C0EB123944A8200D2E561 /* AppFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFileManager.swift; sourceTree = "<group>"; };
 		E40C7A9922A1168C00D7CD17 /* wutComicReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wutComicReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,17 +63,31 @@
 		E40C7AA822A1169000D7CD17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E40FD64C22D1239800926CC4 /* thumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thumbnailCell.swift; sourceTree = "<group>"; };
 		E4144F4623B8DE6F00E28770 /* DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
+		E426BCDB23DEF2B800119927 /* 02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 02.png; sourceTree = "<group>"; };
+		E426BCDC23DEF2B900119927 /* 03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03.png; sourceTree = "<group>"; };
+		E426BCDD23DEF2B900119927 /* 01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01.png; sourceTree = "<group>"; };
+		E426BCE123DF23BE00119927 /* Comic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comic+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E426BCE223DF23BE00119927 /* ComicGroup+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComicGroup+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E426BCE323DF23BE00119927 /* ComicGroup+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComicGroup+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E426BCE423DF23BE00119927 /* Comic+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comic+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E4288B4D23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thumbnailCollectionViewExtensions.swift; sourceTree = "<group>"; };
+		E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookPageControllerExtensions.swift; sourceTree = "<group>"; };
 		E440DEEE22A1814A00DCF4F7 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
 		E45213A822D4927D00216217 /* ComicExteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicExteractor.swift; sourceTree = "<group>"; };
 		E45C8429238DACD700669155 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
-		E4CAE6D822CF88690062DDC2 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
 		E4D402ED23AF9DA6008F59EB /* testVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testVC.swift; sourceTree = "<group>"; };
 		E4E667FC234BAB710050CB8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookReaderVC.swift; sourceTree = "<group>"; };
+		E4EBEDCC23DD7C49000B317D /* coreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4EBEDD023DD7C49000B317D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4EBEDD823DDD6BB000B317D /* Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr"; path = "../Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr"; sourceTree = "<group>"; };
+		E4EBEDDA23DDD6F5000B317D /* coreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coreTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		E4EBEDDB23DDD6F6000B317D /* ExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtractorTests.swift; sourceTree = "<group>"; };
+		E4EBEDDF23DDDF71000B317D /* AppFileManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFileManagerTest.swift; sourceTree = "<group>"; };
 		E4FF65592391684600AAD68B /* BookPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPage.swift; sourceTree = "<group>"; };
 		F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +101,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4EBEDC923DD7C49000B317D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BDF2BBD331553BBA3C82C6A /* Pods_coreTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -72,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */,
+				E2C51CF7465A730840355EB6 /* Pods_coreTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -81,14 +126,25 @@
 			children = (
 				F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */,
 				7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */,
+				2DB8BCC20422014FB642B4DA /* Pods-coreTests.debug.xcconfig */,
+				9947DA5C330685AC6076F5F4 /* Pods-coreTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E406C44223CA49870053056A /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 		E40C7A9022A1168C00D7CD17 = {
 			isa = PBXGroup;
 			children = (
 				E40C7A9B22A1168C00D7CD17 /* wutComicReader */,
+				E4EBEDCD23DD7C49000B317D /* coreTests */,
 				E40C7A9A22A1168C00D7CD17 /* Products */,
 				8A0647C74B61F7E31CE0FDDC /* Pods */,
 				3912A66950EBC8860D574C05 /* Frameworks */,
@@ -99,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				E40C7A9922A1168C00D7CD17 /* wutComicReader.app */,
+				E4EBEDCC23DD7C49000B317D /* coreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,41 +165,76 @@
 			children = (
 				E4CC122523A565E0006CD29E /* CoreData */,
 				E4A1264F23AE99CB00EC1C96 /* Cores */,
-				E4A1264C23AE7DC300EC1C96 /* ViewControllers */,
-				E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */,
-				E48253E922D631B1001A0E85 /* Helper.swift */,
+				E4288B4F23DB311400182E0B /* ViewControllers */,
+				E406C44223CA49870053056A /* AppDelegate */,
+				E49BBAAF23E179CE00E9D1BA /* Extensions */,
 				E463B29722AC2FCE0094265C /* Consts.swift */,
-				E4144F4623B8DE6F00E28770 /* DeviceType.swift */,
 				E45C8429238DACD700669155 /* Colors.swift */,
 				E40C7AA022A1168C00D7CD17 /* Main.storyboard */,
 				E4D402ED23AF9DA6008F59EB /* testVC.swift */,
-				E4E667FC234BAB710050CB8C /* Assets.xcassets */,
 				E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */,
+				E4E667FC234BAB710050CB8C /* Assets.xcassets */,
 				E40C7AA822A1169000D7CD17 /* Info.plist */,
 				E440DEEE22A1814A00DCF4F7 /* Comic.swift */,
-				E4CAE6D822CF88690062DDC2 /* PageCell.swift */,
 			);
 			path = wutComicReader;
 			sourceTree = "<group>";
 		};
-		E45213A722D4902C00216217 /* book reader */ = {
+		E426BCDA23DEEFA300119927 /* testComicPages */ = {
+			isa = PBXGroup;
+			children = (
+				E426BCDD23DEF2B900119927 /* 01.png */,
+				E426BCDB23DEF2B800119927 /* 02.png */,
+				E426BCDC23DEF2B900119927 /* 03.png */,
+			);
+			path = testComicPages;
+			sourceTree = "<group>";
+		};
+		E4288B4F23DB311400182E0B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E45213A722D4902C00216217 /* Book Reader */,
+				E4A1264C23AE7DC300EC1C96 /* Library */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E4288B5023DB314A00182E0B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E4288B4D23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift */,
+				E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E45213A722D4902C00216217 /* Book Reader */ = {
 			isa = PBXGroup;
 			children = (
 				E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */,
 				E4FF65592391684600AAD68B /* BookPage.swift */,
 				E40FD64C22D1239800926CC4 /* thumbnailCell.swift */,
+				E4288B5023DB314A00182E0B /* Extensions */,
 			);
-			path = "book reader";
+			path = "Book Reader";
 			sourceTree = "<group>";
 		};
-		E4A1264C23AE7DC300EC1C96 /* ViewControllers */ = {
+		E49BBAAF23E179CE00E9D1BA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E45213A722D4902C00216217 /* book reader */,
+				E4144F4623B8DE6F00E28770 /* DeviceType.swift */,
+				E48253E922D631B1001A0E85 /* Helper.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E4A1264C23AE7DC300EC1C96 /* Library */ = {
+			isa = PBXGroup;
+			children = (
 				E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */,
 				E4A20D6722D879450067BDF8 /* LibraryCell.swift */,
 			);
-			path = ViewControllers;
+			path = Library;
 			sourceTree = "<group>";
 		};
 		E4A1264F23AE99CB00EC1C96 /* Cores */ = {
@@ -157,9 +249,42 @@
 		E4CC122523A565E0006CD29E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				E426BCE123DF23BE00119927 /* Comic+CoreDataClass.swift */,
+				E426BCE423DF23BE00119927 /* Comic+CoreDataProperties.swift */,
+				E426BCE323DF23BE00119927 /* ComicGroup+CoreDataClass.swift */,
+				E426BCE223DF23BE00119927 /* ComicGroup+CoreDataProperties.swift */,
 				E4CC122223A56099006CD29E /* coredata.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E4EBEDCD23DD7C49000B317D /* coreTests */ = {
+			isa = PBXGroup;
+			children = (
+				E4EBEDDD23DDDDFB000B317D /* ComicExtractorTests */,
+				E4EBEDDE23DDDE22000B317D /* AppFileManagerTest */,
+				E4EBEDD023DD7C49000B317D /* Info.plist */,
+				E4EBEDDA23DDD6F5000B317D /* coreTests-Bridging-Header.h */,
+			);
+			path = coreTests;
+			sourceTree = "<group>";
+		};
+		E4EBEDDD23DDDDFB000B317D /* ComicExtractorTests */ = {
+			isa = PBXGroup;
+			children = (
+				E4EBEDD823DDD6BB000B317D /* Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr */,
+				E4EBEDDB23DDD6F6000B317D /* ExtractorTests.swift */,
+			);
+			path = ComicExtractorTests;
+			sourceTree = "<group>";
+		};
+		E4EBEDDE23DDDE22000B317D /* AppFileManagerTest */ = {
+			isa = PBXGroup;
+			children = (
+				E426BCDA23DEEFA300119927 /* testComicPages */,
+				E4EBEDDF23DDDF71000B317D /* AppFileManagerTest.swift */,
+			);
+			path = AppFileManagerTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,18 +309,43 @@
 			productReference = E40C7A9922A1168C00D7CD17 /* wutComicReader.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E4EBEDCB23DD7C49000B317D /* coreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4EBEDD523DD7C49000B317D /* Build configuration list for PBXNativeTarget "coreTests" */;
+			buildPhases = (
+				93B738BA555183B97B753953 /* [CP] Check Pods Manifest.lock */,
+				E4EBEDC823DD7C49000B317D /* Sources */,
+				E4EBEDC923DD7C49000B317D /* Frameworks */,
+				E4EBEDCA23DD7C49000B317D /* Resources */,
+				3310D172C4E792D83D6FA6C5 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4EBEDD223DD7C49000B317D /* PBXTargetDependency */,
+			);
+			name = coreTests;
+			productName = coreTests;
+			productReference = E4EBEDCC23DD7C49000B317D /* coreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		E40C7A9122A1168C00D7CD17 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = wutup;
 				TargetAttributes = {
 					E40C7A9822A1168C00D7CD17 = {
 						CreatedOnToolsVersion = 10.2.1;
+					};
+					E4EBEDCB23DD7C49000B317D = {
+						CreatedOnToolsVersion = 11.2;
+						LastSwiftMigration = 1120;
+						TestTargetID = E40C7A9822A1168C00D7CD17;
 					};
 				};
 			};
@@ -213,6 +363,7 @@
 			projectRoot = "";
 			targets = (
 				E40C7A9822A1168C00D7CD17 /* wutComicReader */,
+				E4EBEDCB23DD7C49000B317D /* coreTests */,
 			);
 		};
 /* End PBXProject section */
@@ -228,27 +379,74 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4EBEDCA23DD7C49000B317D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E426BCDE23DEF2B900119927 /* 02.png in Resources */,
+				E426BCE023DEF2B900119927 /* 01.png in Resources */,
+				E4EBEDD923DDD6BB000B317D /* Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire).cbr in Resources */,
+				E426BCDF23DEF2B900119927 /* 03.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3310D172C4E792D83D6FA6C5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		93B738BA555183B97B753953 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-coreTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CCE1A8579695161DCBD27811 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/UnrarKit/UnrarKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UnrarKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D572D00559386204283AC4AE /* [CP] Check Pods Manifest.lock */ = {
@@ -288,14 +486,33 @@
 				E48253EA22D631B1001A0E85 /* Helper.swift in Sources */,
 				E4FF655A2391684600AAD68B /* BookPage.swift in Sources */,
 				E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */,
-				E4CAE6D922CF88690062DDC2 /* PageCell.swift in Sources */,
+				E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */,
 				E4144F4723B8DE6F00E28770 /* DeviceType.swift in Sources */,
+				E4288B4E23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
 				E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4EBEDC823DD7C49000B317D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4EBEDDC23DDD6F6000B317D /* ExtractorTests.swift in Sources */,
+				E4EBEDE023DDDF71000B317D /* AppFileManagerTest.swift in Sources */,
+				E426BCD523DECE9700119927 /* coredata.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E4EBEDD223DD7C49000B317D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E40C7A9822A1168C00D7CD17 /* wutComicReader */;
+			targetProxy = E4EBEDD123DD7C49000B317D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E40C7AA022A1168C00D7CD17 /* Main.storyboard */ = {
@@ -475,6 +692,55 @@
 			};
 			name = Release;
 		};
+		E4EBEDD323DD7C49000B317D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DB8BCC20422014FB642B4DA /* Pods-coreTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MCLTVLC;
+				INFOPLIST_FILE = coreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wuttupdev.coreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "coreTests/coreTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wutComicReader.app/wutComicReader";
+			};
+			name = Debug;
+		};
+		E4EBEDD423DD7C49000B317D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9947DA5C330685AC6076F5F4 /* Pods-coreTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3K7MCLTVLC;
+				INFOPLIST_FILE = coreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wuttupdev.coreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "coreTests/coreTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wutComicReader.app/wutComicReader";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -492,6 +758,15 @@
 			buildConfigurations = (
 				E40C7AAC22A1169000D7CD17 /* Debug */,
 				E40C7AAD22A1169000D7CD17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4EBEDD523DD7C49000B317D /* Build configuration list for PBXNativeTarget "coreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4EBEDD323DD7C49000B317D /* Debug */,
+				E4EBEDD423DD7C49000B317D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
