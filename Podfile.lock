@@ -1,22 +1,26 @@
 PODS:
-  - UnrarKit (2.8.1):
-    - UnrarKit/unrar-lib (= 2.8.1)
-  - UnrarKit/unrar-lib (2.8.1)
-  - ZIPFoundation (0.9.8)
+  - UnrarKit (2.9):
+    - UnrarKit/unrar-lib (= 2.9)
+  - UnrarKit/unrar-lib (2.9)
+  - Zip (1.1.0)
+  - ZIPFoundation (0.9.10)
 
 DEPENDENCIES:
   - UnrarKit
+  - Zip (~> 1.1)
   - ZIPFoundation (~> 0.9)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - UnrarKit
+    - Zip
     - ZIPFoundation
 
 SPEC CHECKSUMS:
-  UnrarKit: 167602bda6542e575c4cdc068509d6b787f84468
-  ZIPFoundation: b1f07e4409baf1641f3fe5948b2a1c3f5c500cb1
+  UnrarKit: 99e3f0222a98a212188e1a6975dcf5aa798d26dd
+  Zip: 8877eede3dda76bcac281225c20e71c25270774c
+  ZIPFoundation: 249fa8890597086cd536bb2df5c9804d84e122b0
 
-PODFILE CHECKSUM: 1d22ec8d425aa9074f4aafad31e489de264b89d2
+PODFILE CHECKSUM: e7d2bb65eb9d4957395ecc26c11e1aed840fbb13
 
 COCOAPODS: 1.8.4

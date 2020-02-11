@@ -1,9 +1,9 @@
 <img src="https://user-images.githubusercontent.com/1577319/27564151-1d99e3a0-5ad6-11e7-8ab6-417c5b5a3ff2.png" width="489"/>
 
-[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+[![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ZIPFoundation.svg)](https://cocoapods.org/pods/ZIPFoundation)
-[![Platform](https://img.shields.io/cocoapods/p/ZIPFoundation.svg?style=flat)](http://cocoadocs.org/docsets/ZIPFoundation)
+[![Platform](https://img.shields.io/badge/Platforms-macOS%20|%20iOS%20|%20tvOS%20|%20watchOS%20|%20Linux-lightgrey.svg)](https://github.com/weichsel/ZIPFoundation)
 [![Twitter](https://img.shields.io/badge/twitter-@weichsel-blue.svg?style=flat)](http://twitter.com/weichsel)
 
 ZIP Foundation is a library to create, read and modify ZIP archive files.  
@@ -39,18 +39,17 @@ To learn more about the performance characteristics of the framework, you can re
 
 - iOS 9.0+ / macOS 10.11+ / tvOS 9.0+ / watchOS 2.0+
 - Or Linux with zlib development package
-- Xcode 9.0
+- Xcode 10.0
 - Swift 4.0
 
 ## Installation
 
 ### Swift Package Manager
 Swift Package Manager is a dependency manager currently under active development. To learn how to use the Swift Package Manager for your project, please read the [official documentation](https://github.com/apple/swift-package-manager/blob/master/Documentation/Usage.md).  
-The ZIP Foundation package uses the [V4 Package Description API](https://github.com/apple/swift-package-manager/blob/master/Documentation/PackageDescriptionV4.md).
 To add ZIP Foundation as a dependency, you have to add it to the `dependencies` of your `Package.swift` file and refer to that dependency in your `target`.
 
 ```swift
-// swift-tools-version:4.0
+// swift-tools-version:5.0
 import PackageDescription
 let package = Package(
     name: "<Your Product Name>",
@@ -248,11 +247,10 @@ The `data` passed into the closure contains chunks of the current entry. You can
 You can also add entries from an in-memory data source. To do this you have to provide a closure of type `Provider` to the `addEntry` method:
 
 ```swift
-try archive.addEntry(with: "fromMemory.txt", type: .file, uncompressedSize: 4, provider: { (position, size) -> Data in
-    guard let data = "abcd".data(using: .utf8) else {
-        throw DataProviderError.invalidEncoding
-    }
-    return data
+guard let data = "abcdefghijkl".data(using: .utf8) else { return }
+try? archive.addEntry(with: "fromMemory.txt", type: .file, uncompressedSize: 12, bufferSize:  4, provider: { (position, size) -> Data in
+    // This will be called until `data` is exhausted (3x in this case).
+    return data.subdata(in: position..<position+size)
 })
 ```
 The closure is called until enough data has been provided to create an entry of `uncompressedSize`. The closure receives `position` and `size` arguments 

@@ -2,11 +2,12 @@
 # platform :ios, '9.0'
 
 target 'wutComicReader' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
-  use_frameworks!
+#	use_modular_headers!
+	use_frameworks!
 
   pod 'ZIPFoundation', '~> 0.9'
   pod "UnrarKit"
+	pod 'Zip', '~> 1.1'
 	
 	target 'coreTests' do
         inherit! :search_paths

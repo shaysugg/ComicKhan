@@ -12,26 +12,27 @@ import UIKit
 extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comicPagesCount
+        return deviceIsLandscaped ? bookDoubleImages.count : bookSingleImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "thumbnailCell", for: indexPath) as! thumbnailCell
-        cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row])
-        cell.pageNumber = indexPath.row + 1
-        cell.isDoupleSplashPage = isImageInDoubleSplashSize(image: cell.comicPage1!)
-        cell.haveDoublePage = deviceIsLandscaped
         
+        let resizeSize = resizeSizeforImage(InIndexPath: indexPath, inLandscpeMode: deviceIsLandscaped)
         
         if deviceIsLandscaped{
-            cell.comicPage1  = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2])
             cell.pageNumber = indexPath.row * 2 - 1
-            if indexPath.row * 2 + 1 < comic!.imageNames!.count {
-                cell.comicPage2 = UIImage(comic, withImageName: comic?.imageNames?[indexPath.row * 2 + 1])
-            }
+            cell.pageImageView1.image = bookDoubleImages[indexPath.row].0?.resize(forSize: resizeSize)
+            cell.pageImageView2.image = bookDoubleImages[indexPath.row].1?.resize(forSize: resizeSize)
+            
+        }else {
+            cell.pageImageView1.image  = bookSingleImages[indexPath.row].resize(forSize: resizeSize)
+            cell.pageNumber = indexPath.row + 1
         }
-
+        cell.haveDoublePage = deviceIsLandscaped
+        cell.isDoubleSplashPage = resizeSize.width > resizeSize.height
+        
         return cell
     }
     
@@ -47,4 +48,20 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     }
     
     
+    
+    fileprivate func isImageInDoubleSplashSize(_ image: UIImage) -> Bool {
+        return image.size.height < image.size.width
+    }
+    
+    fileprivate func resizeSizeforImage(InIndexPath indexPath: IndexPath, inLandscpeMode isLandscape: Bool) -> CGSize {
+        if isLandscape {
+            let pageIsDoubleSplash = isImageInDoubleSplashSize(bookDoubleImages[indexPath.row].0 ?? UIImage()) ||
+                                     isImageInDoubleSplashSize(bookDoubleImages[indexPath.row].1 ?? UIImage())
+            return CGSize(width: 87 * (pageIsDoubleSplash ? 2 : 1), height: 150)
+            
+        }else{
+            let pageIsDoubleSplash = isImageInDoubleSplashSize(bookSingleImages[indexPath.row])
+            return CGSize(width: 87 * (pageIsDoubleSplash ? 2 : 1) , height: 150)
+        }
+    }
 }

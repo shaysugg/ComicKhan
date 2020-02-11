@@ -4,8 +4,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UnrarKitMacros.h"
+
+RarosHppIgnore
 #import "raros.hpp"
+#pragma clang diagnostic pop
+
+DllHppIgnore
 #import "dll.hpp"
+#pragma clang diagnostic pop
 
 /* See http://www.forensicswiki.org/wiki/RAR and
    http://www.rarlab.com/technote.htm#filehead for

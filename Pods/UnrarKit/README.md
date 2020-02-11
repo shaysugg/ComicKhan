@@ -61,19 +61,12 @@ if (archive.isPasswordProtected) {
 ```Objective-C
 BOOL extractFilesSuccessful = [archive extractFilesTo:@"some/directory"
                                             overWrite:NO
-                                             progress:
-    ^(URKFileInfo *currentFile, CGFloat percentArchiveDecompressed) {
-        NSLog(@"Extracting %@: %f%% complete", currentFile.filename, percentArchiveDecompressed);
-    }
                                                 error:&error];
 ```
 
 ## Extracting a file into memory
 ```Objective-C
 NSData *extractedData = [archive extractDataFromFile:@"a file in the archive.jpg"
-                                            progress:^(CGFloat percentDecompressed) {
-                                                         NSLog(@"Extracting, %f%% complete", percentDecompressed);
-                                            }
                                                error:&error];
 ```
 
@@ -91,13 +84,148 @@ BOOL success = [archive extractBufferedDataFromFile:@"a file in the archive.jpg"
                 }];
 ```
 
+# Progress Reporting
+
+The following methods support `NSProgress` and `NSProgressReporting`:
+
+* `extractFilesTo:overwrite:error:`
+* `extractData:error:`
+* `extractDataFromFile:error:`
+* `performOnFilesInArchive:error:`
+* `performOnDataInArchive:error:`
+* `extractBufferedDataFromFile:error:action:`
+
+## Using implicit `NSProgress` hierarchy
+
+You can create your own instance of `NSProgress` and observe its `fractionCompleted` property with KVO to monitor progress like so:
+
+```Objective-C
+    static void *ExtractDataContext = &ExtractDataContext;
+
+    URKArchive *archive = [[URKArchive alloc] initWithURL:aFileURL error:nil];
+
+    NSProgress *extractDataProgress = [NSProgress progressWithTotalUnitCount:1];
+    [extractDataProgress becomeCurrentWithPendingUnitCount:1];
+    
+    NSString *observedSelector = NSStringFromSelector(@selector(fractionCompleted));
+    
+    [extractDataProgress addObserver:self
+                          forKeyPath:observedSelector
+                             options:NSKeyValueObservingOptionInitial
+                             context:ExtractDataContext];
+    
+    NSError *extractError = nil;
+    NSData *data = [archive extractDataFromFile:firstFile error:&extractError];
+
+    [extractDataProgress resignCurrent];
+    [extractDataProgress removeObserver:self forKeyPath:observedSelector];
+```
+
+## Using your own explicit `NSProgress` instance
+
+If you don't have a hierarchy of `NSProgress` instances, or if you want to observe more details during progress updates in `extractFilesTo:overwrite:error:`, you can create your own instance of `NSProgress` and set the `URKArchive` instance's `progress` property, like so:
+
+```Objective-C
+    static void *ExtractFilesContext = &ExtractFilesContext;
+
+    URKArchive *archive = [[URKArchive alloc] initWithURL:aFileURL error:nil];
+    
+    NSProgress *extractFilesProgress = [NSProgress progressWithTotalUnitCount:1];
+    archive.progress = extractFilesProgress;
+    
+    NSString *observedSelector = NSStringFromSelector(@selector(localizedDescription));
+    
+    [self.descriptionsReported removeAllObjects];
+    [extractFilesProgress addObserver:self
+                           forKeyPath:observedSelector
+                              options:NSKeyValueObservingOptionInitial
+                              context:ExtractFilesContext];
+    
+    NSError *extractError = nil;
+    BOOL success = [archive extractFilesTo:extractURL.path
+                                 overwrite:NO
+                                     error:&extractError];
+    
+    [extractFilesProgress removeObserver:self forKeyPath:observedSelector];
+```
+
+## Cancellation with `NSProgress`
+
+Using either method above, you can call `[progress cancel]` to stop the operation in progress. It will cause the operation to fail, returning `nil` or `NO` (depending on the return type, and give an error with error code `URKErrorCodeUserCancelled`.
+
+
 # Notes
 
 To open in Xcode, use the [UnrarKit.xcworkspace](UnrarKit.xcworkspace) file, which includes the other projects.
 
-## Documentation
+# Documentation
 
 Full documentation for the project is available on [CocoaDocs](http://cocoadocs.org/docsets/UnrarKit).
+
+
+# Logging
+
+For all OS versions from 2016 onward (macOS 10.12, iOS 10, tvOS 10, watchOS 3), UnzipKit uses the new [Unified Logging framework](https://developer.apple.com/documentation/os/logging) for logging and Activity Tracing. You can view messages at the Info or Debug level to view more details of how UnzipKit is working, and use Activity Tracing to help pinpoint the code path that's causing a particular error.
+
+As a fallback, regular `NSLog` is used on older OSes, with all messages logged at the same level.
+
+When debugging your own code, if you'd like to decrease the verbosity of the UnrarKit framework, you can run the following command:
+
+    sudo log config --mode "level:default" --subsystem com.abbey-code.UnrarKit
+
+The available levels, in order of increasing verbosity, are `default`, `info`, `debug`, with `debug` being the default.
+
+## Logging guidelines
+
+These are the general rules governing the particulars of how activities and log messages are classified and written. They were written after the initial round of log messages were, so there may be some inconsistencies (such as an incorrect log level). If you think you spot one, open an issue or a pull request!
+
+### Logging
+
+Log messages should follow these conventions.
+
+1. Log messages don't have final punctuation (like these list items)
+1. Messages that note a C function is about to be called, rather than a higher level UnrarKit or Cocoa method, end with "...", since it's not expected for them to log any details of their own
+
+#### Default log level
+
+There should be no messages at this level, so that it's possible for a consumer of the API to turn off _all_ diagnostic logging from it, as detailed above. It's only possible to `log config --mode "level:off"` for a process, not a subsystem.
+
+#### Info log level
+
+Info level log statements serve the following specific purposes.
+
+1. Major action is taken, such as initializing an archive object, or deleting a file from an archive
+1. Noting each public method has been called, and the arguments with which it was called
+1. Signposting the major actions a public method takes
+1. Notifying that an atypical condition has occurred (such as an action causing an early stop in a block or a NO return value)
+1. Noting that a loop is about to occur, which will contain debug-level messages for each iteration
+
+#### Debug log level
+
+Most messages fall into this category, making it extremely verbose. All non-error messages that don't fall into either of the other two categories should be debug-level, with some examples of specific cases below.
+
+1. Any log message in a private method
+1. Noting variable and argument values in a method
+1. Indicating that everything is working as expected
+1. Indicating what happens during each iteration of a loop (or documenting that an iteration has happened at all)
+
+#### Error log level
+
+1. Every `NSError` generated should get logged with the same detail message as the `NSError` object itself
+1. `NSError` log messages should contain the string of the error code's enumeration value (e.g. `"URKErrorCodeArchiveNotFound"`) when it is known at design time
+1. Errors should reported everywhere they're encountered, making it easier to trace their flows through the call stack
+1. Early exits that result in desired work not being performed
+
+#### Fault log level
+
+Used when a Cocoa framework method comes back with an error. There are only a handful of uses
+
+### Activities
+1. Public methods have an English activity names with spaces, and are title-case
+1. Private methods each have an activity with the method's name
+1. Sub-activities are created for significant scope changes, such as when inside an action block, but not if no significant work is done before entering that action
+1. Top-level activities within a method have variables named `activity`, with more specific labels given to sub-activities
+1. If a method is strictly an overload that calls out to another overload without doing anything else, it should not define its own activity
 
 # Pushing a new CocoaPods version
 

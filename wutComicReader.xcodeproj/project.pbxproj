@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4BDF2BBD331553BBA3C82C6A /* Pods_coreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C51CF7465A730840355EB6 /* Pods_coreTests.framework */; };
-		9D41222421E15F361BC95DF5 /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */; };
+		67D61E6B5DA8FFE11A4E4420 /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12FB43581E476835D7E87CCF /* Pods_wutComicReader.framework */; };
+		C836B7653673F80041A9FE48 /* Pods_coreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A588F92842633C8890F17641 /* Pods_coreTests.framework */; };
 		E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C0EB123944A8200D2E561 /* AppFileManager.swift */; };
 		E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */; };
 		E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */; };
@@ -23,12 +23,14 @@
 		E4288B4E23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B4D23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift */; };
 		E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */; };
 		E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E440DEEE22A1814A00DCF4F7 /* Comic.swift */; };
+		E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44FA70B23F0015C00338457 /* LibraryReusableView.swift */; };
 		E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45213A822D4927D00216217 /* ComicExteractor.swift */; };
 		E45C842A238DACD700669155 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C8429238DACD700669155 /* Colors.swift */; };
 		E463B29822AC2FCE0094265C /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463B29722AC2FCE0094265C /* Consts.swift */; };
 		E48253EA22D631B1001A0E85 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48253E922D631B1001A0E85 /* Helper.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
+		E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3920023EEA23800E8C873 /* NewGroupVC.swift */; };
 		E4D402EE23AF9DA6008F59EB /* testVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D402ED23AF9DA6008F59EB /* testVC.swift */; };
 		E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E667FC234BAB710050CB8C /* Assets.xcassets */; };
 		E4E8FCED22C28E4700A8B32D /* bookReaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */; };
@@ -49,11 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2DB8BCC20422014FB642B4DA /* Pods-coreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-coreTests/Pods-coreTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
-		9947DA5C330685AC6076F5F4 /* Pods-coreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-coreTests/Pods-coreTests.release.xcconfig"; sourceTree = "<group>"; };
-		E2C51CF7465A730840355EB6 /* Pods_coreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C940788BF360E42CC8FC4D /* Pods-coreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.release.xcconfig"; path = "Target Support Files/Pods-coreTests/Pods-coreTests.release.xcconfig"; sourceTree = "<group>"; };
+		12FB43581E476835D7E87CCF /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3894799E207BCD7BA5FC7C48 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
+		6B324D5BDF51FC22EF0ACD10 /* Pods-coreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.debug.xcconfig"; path = "Target Support Files/Pods-coreTests/Pods-coreTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A588F92842633C8890F17641 /* Pods_coreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B71B30168B00AD5CD96427C4 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
 		E40C0EB123944A8200D2E561 /* AppFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFileManager.swift; sourceTree = "<group>"; };
 		E40C7A9922A1168C00D7CD17 /* wutComicReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wutComicReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,12 +76,14 @@
 		E4288B4D23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thumbnailCollectionViewExtensions.swift; sourceTree = "<group>"; };
 		E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookPageControllerExtensions.swift; sourceTree = "<group>"; };
 		E440DEEE22A1814A00DCF4F7 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		E44FA70B23F0015C00338457 /* LibraryReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryReusableView.swift; sourceTree = "<group>"; };
 		E45213A822D4927D00216217 /* ComicExteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicExteractor.swift; sourceTree = "<group>"; };
 		E45C8429238DACD700669155 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
+		E4D3920023EEA23800E8C873 /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		E4D402ED23AF9DA6008F59EB /* testVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testVC.swift; sourceTree = "<group>"; };
 		E4E667FC234BAB710050CB8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4E8FCEC22C28E4700A8B32D /* bookReaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookReaderVC.swift; sourceTree = "<group>"; };
@@ -89,7 +94,6 @@
 		E4EBEDDB23DDD6F6000B317D /* ExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtractorTests.swift; sourceTree = "<group>"; };
 		E4EBEDDF23DDDF71000B317D /* AppFileManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFileManagerTest.swift; sourceTree = "<group>"; };
 		E4FF65592391684600AAD68B /* BookPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPage.swift; sourceTree = "<group>"; };
-		F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D41222421E15F361BC95DF5 /* Pods_wutComicReader.framework in Frameworks */,
+				67D61E6B5DA8FFE11A4E4420 /* Pods_wutComicReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,31 +109,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BDF2BBD331553BBA3C82C6A /* Pods_coreTests.framework in Frameworks */,
+				C836B7653673F80041A9FE48 /* Pods_coreTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3912A66950EBC8860D574C05 /* Frameworks */ = {
+		6F67DD5253B7F4E09AC17837 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0FB182A0641E6D8C5EB11375 /* Pods_wutComicReader.framework */,
-				E2C51CF7465A730840355EB6 /* Pods_coreTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8A0647C74B61F7E31CE0FDDC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */,
-				7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */,
-				2DB8BCC20422014FB642B4DA /* Pods-coreTests.debug.xcconfig */,
-				9947DA5C330685AC6076F5F4 /* Pods-coreTests.release.xcconfig */,
+				6B324D5BDF51FC22EF0ACD10 /* Pods-coreTests.debug.xcconfig */,
+				01C940788BF360E42CC8FC4D /* Pods-coreTests.release.xcconfig */,
+				3894799E207BCD7BA5FC7C48 /* Pods-wutComicReader.debug.xcconfig */,
+				B71B30168B00AD5CD96427C4 /* Pods-wutComicReader.release.xcconfig */,
 			);
 			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8B8B93FB6D245EB753C04E59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A588F92842633C8890F17641 /* Pods_coreTests.framework */,
+				12FB43581E476835D7E87CCF /* Pods_wutComicReader.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E406C44223CA49870053056A /* AppDelegate */ = {
@@ -146,8 +151,8 @@
 				E40C7A9B22A1168C00D7CD17 /* wutComicReader */,
 				E4EBEDCD23DD7C49000B317D /* coreTests */,
 				E40C7A9A22A1168C00D7CD17 /* Products */,
-				8A0647C74B61F7E31CE0FDDC /* Pods */,
-				3912A66950EBC8860D574C05 /* Frameworks */,
+				6F67DD5253B7F4E09AC17837 /* Pods */,
+				8B8B93FB6D245EB753C04E59 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +198,7 @@
 		E4288B4F23DB311400182E0B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E44FA70D23F003EC00338457 /* New Comic Group */,
 				E45213A722D4902C00216217 /* Book Reader */,
 				E4A1264C23AE7DC300EC1C96 /* Library */,
 			);
@@ -206,6 +212,14 @@
 				E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E44FA70D23F003EC00338457 /* New Comic Group */ = {
+			isa = PBXGroup;
+			children = (
+				E4D3920023EEA23800E8C873 /* NewGroupVC.swift */,
+			);
+			path = "New Comic Group";
 			sourceTree = "<group>";
 		};
 		E45213A722D4902C00216217 /* Book Reader */ = {
@@ -232,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */,
+				E44FA70B23F0015C00338457 /* LibraryReusableView.swift */,
 				E4A20D6722D879450067BDF8 /* LibraryCell.swift */,
 			);
 			path = Library;
@@ -294,11 +309,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E40C7AAB22A1169000D7CD17 /* Build configuration list for PBXNativeTarget "wutComicReader" */;
 			buildPhases = (
-				D572D00559386204283AC4AE /* [CP] Check Pods Manifest.lock */,
+				E138677A9CDE89B761A3AC05 /* [CP] Check Pods Manifest.lock */,
 				E40C7A9522A1168C00D7CD17 /* Sources */,
 				E40C7A9622A1168C00D7CD17 /* Frameworks */,
 				E40C7A9722A1168C00D7CD17 /* Resources */,
-				CCE1A8579695161DCBD27811 /* [CP] Embed Pods Frameworks */,
+				96B9E713751B1026097307AD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -313,11 +328,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E4EBEDD523DD7C49000B317D /* Build configuration list for PBXNativeTarget "coreTests" */;
 			buildPhases = (
-				93B738BA555183B97B753953 /* [CP] Check Pods Manifest.lock */,
+				45AD48A84F36FD148B29A3BE /* [CP] Check Pods Manifest.lock */,
 				E4EBEDC823DD7C49000B317D /* Sources */,
 				E4EBEDC923DD7C49000B317D /* Frameworks */,
 				E4EBEDCA23DD7C49000B317D /* Resources */,
-				3310D172C4E792D83D6FA6C5 /* [CP] Embed Pods Frameworks */,
+				510F292C1A83B95A768B44B6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -393,24 +408,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3310D172C4E792D83D6FA6C5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93B738BA555183B97B753953 /* [CP] Check Pods Manifest.lock */ = {
+		45AD48A84F36FD148B29A3BE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -432,7 +430,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CCE1A8579695161DCBD27811 /* [CP] Embed Pods Frameworks */ = {
+		510F292C1A83B95A768B44B6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-coreTests/Pods-coreTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		96B9E713751B1026097307AD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -449,16 +464,20 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D572D00559386204283AC4AE /* [CP] Check Pods Manifest.lock */ = {
+		E138677A9CDE89B761A3AC05 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-wutComicReader-checkManifestLockResult.txt",
 			);
@@ -483,10 +502,12 @@
 				E463B29822AC2FCE0094265C /* Consts.swift in Sources */,
 				E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */,
 				E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */,
+				E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */,
 				E48253EA22D631B1001A0E85 /* Helper.swift in Sources */,
 				E4FF655A2391684600AAD68B /* BookPage.swift in Sources */,
 				E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */,
 				E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */,
+				E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */,
 				E4144F4723B8DE6F00E28770 /* DeviceType.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
@@ -652,10 +673,10 @@
 		};
 		E40C7AAC22A1169000D7CD17 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8C80489A1802ED6854AA94B /* Pods-wutComicReader.debug.xcconfig */;
+			baseConfigurationReference = 3894799E207BCD7BA5FC7C48 /* Pods-wutComicReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3K7MCLTVLC;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
@@ -673,10 +694,10 @@
 		};
 		E40C7AAD22A1169000D7CD17 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7FB4080DEB66B13BE7EFB318 /* Pods-wutComicReader.release.xcconfig */;
+			baseConfigurationReference = B71B30168B00AD5CD96427C4 /* Pods-wutComicReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3K7MCLTVLC;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
@@ -694,7 +715,7 @@
 		};
 		E4EBEDD323DD7C49000B317D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DB8BCC20422014FB642B4DA /* Pods-coreTests.debug.xcconfig */;
+			baseConfigurationReference = 6B324D5BDF51FC22EF0ACD10 /* Pods-coreTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
@@ -719,7 +740,7 @@
 		};
 		E4EBEDD423DD7C49000B317D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9947DA5C330685AC6076F5F4 /* Pods-coreTests.release.xcconfig */;
+			baseConfigurationReference = 01C940788BF360E42CC8FC4D /* Pods-coreTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;

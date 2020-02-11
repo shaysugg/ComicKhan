@@ -62,7 +62,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return .black
         }else{
-            return #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         }
     }
     

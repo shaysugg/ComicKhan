@@ -10,17 +10,17 @@ import UIKit
 
 class thumbnailCell: UICollectionViewCell {
     
-    var comicPage1: UIImage? {
-        didSet{
-            pageImageView1.image = comicPage1
-        }
-    }
-    
-    var comicPage2: UIImage? {
-        didSet{
-            pageImageView2.image = comicPage2
-        }
-    }
+//    var comicPage1: UIImage? {
+//        didSet{
+//            pageImageView1.image = comicPage1
+//        }
+//    }
+//    
+//    var comicPage2: UIImage? {
+//        didSet{
+//            pageImageView2.image = comicPage2
+//        }
+//    }
     
     var pageNumber: Int? {
         didSet{
@@ -38,10 +38,10 @@ class thumbnailCell: UICollectionViewCell {
         }
     }
     
-    var isDoupleSplashPage = false {
-        didSet {
-            if isDoupleSplashPage {
-                
+    var isDoubleSplashPage = false {
+        didSet{
+            if isDoubleSplashPage {
+                checkForImageNills()
             }
         }
     }
@@ -49,15 +49,17 @@ class thumbnailCell: UICollectionViewCell {
     var haveDoublePage : Bool = false {
         didSet{
             
-            if haveDoublePage && !isDoupleSplashPage {
+            if haveDoublePage {
                 
                 let widthConst = bounds.width / 2
                 
                 imageHolderView.addSubview(pageImageView2)
                 pageImageView2.topAnchor.constraint(equalTo: imageHolderView.topAnchor).isActive = true
                 pageImageView2.bottomAnchor.constraint(equalTo: imageHolderView.bottomAnchor , constant: 0).isActive = true
-                pageImageView2.leftAnchor.constraint(equalTo: imageHolderView.leftAnchor , constant: widthConst).isActive = true
+                pageImageView2leftConstraitInDoublePageMode = pageImageView2.leftAnchor.constraint(equalTo: imageHolderView.leftAnchor , constant: widthConst)
+                pageImageView2leftConstraitInDoublePageMode?.isActive = true
                 pageImageView2.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor).isActive = true
+                
                 
                 pageImageView1rightConstraitInSinglePageMode?.isActive = false
                 pageImageView1rightConstraitInDoublePageMode?.isActive = true
@@ -71,7 +73,7 @@ class thumbnailCell: UICollectionViewCell {
         }
     }
     
-    var pageImageView1 : UIImageView = {
+    lazy var pageImageView1 : UIImageView = {
         let imageview = UIImageView(frame: .zero)
         imageview.contentMode = .scaleAspectFill
         imageview.clipsToBounds = true
@@ -81,15 +83,17 @@ class thumbnailCell: UICollectionViewCell {
     var pageImageView1rightConstraitInDoublePageMode : NSLayoutConstraint?
     var pageImageView1rightConstraitInSinglePageMode : NSLayoutConstraint?
     
-    var pageImageView2 : UIImageView = {
+    lazy var pageImageView2 : UIImageView = {
         let imageview = UIImageView(frame: .zero)
         imageview.contentMode = .scaleAspectFill
         imageview.clipsToBounds = true
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
+    var pageImageView2leftConstraitInDoublePageMode : NSLayoutConstraint?
     
-    var pageNumberLabel : UILabel = {
+    
+    lazy var pageNumberLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .lightGray
@@ -98,7 +102,7 @@ class thumbnailCell: UICollectionViewCell {
         return label
     }()
     
-    var imageHolderView : UIView = {
+    lazy var imageHolderView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0.6
@@ -129,13 +133,16 @@ class thumbnailCell: UICollectionViewCell {
         pageImageView1rightConstraitInSinglePageMode = pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor)
         pageImageView1rightConstraitInSinglePageMode?.isActive = true
         
-         pageImageView1rightConstraitInDoublePageMode = pageImageView1.rightAnchor.constraint(equalTo: pageImageView2.leftAnchor, constant: 0)
-
-        
+        pageImageView1rightConstraitInDoublePageMode = pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor, constant: -(bounds.width * 0.5))
     }
     
-    private func addthumnailImages(){
-        
+    private func checkForImageNills(){
+        if pageImageView1.image == nil {
+            pageImageView2leftConstraitInDoublePageMode?.constant = 0
+        }
+        if pageImageView2.image == nil {
+            pageImageView2leftConstraitInDoublePageMode?.constant = bounds.width
+        }
     }
     
     private func choosePageAsActive() {

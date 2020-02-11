@@ -14,3 +14,8 @@ import UIKit
 let appFontBold = "HelveticaNeue-Bold"
 let appFontMeduim = "HelveticaNeue-Bold"
 let appFontRegular = "HelveticaNeue"
+
+
+extension NSNotification.Name {
+    static let newGroupAdded = NSNotification.Name(rawValue: "new group added")
+}

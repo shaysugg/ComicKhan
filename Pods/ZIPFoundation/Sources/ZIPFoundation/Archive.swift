@@ -112,6 +112,7 @@ public final class Archive: Sequence {
     public let accessMode: AccessMode
     var archiveFile: UnsafeMutablePointer<FILE>
     var endOfCentralDirectoryRecord: EndOfCentralDirectoryRecord
+    var preferredEncoding: String.Encoding?
 
     /// Initializes a new ZIP `Archive`.
     ///
@@ -126,20 +127,20 @@ public final class Archive: Sequence {
     /// - Parameters:
     ///   - url: File URL to the receivers backing file.
     ///   - mode: Access mode of the receiver.
+    ///   - preferredEncoding: Encoding for entry paths. Overrides the encoding specified in the archive.
     ///
     /// - Returns: An archive initialized with a backing file at the passed in file URL and the given access mode
     ///   or `nil` if the following criteria are not met:
     ///   - The file URL _must_ point to an existing file for `AccessMode.read`
     ///   - The file URL _must_ point to a non-existing file for `AccessMode.write`
     ///   - The file URL _must_ point to an existing file for `AccessMode.update`
-    public init?(url: URL, accessMode mode: AccessMode) {
+    public init?(url: URL, accessMode mode: AccessMode, preferredEncoding: String.Encoding? = nil) {
         self.url = url
         self.accessMode = mode
+        self.preferredEncoding = preferredEncoding
         let fileManager = FileManager()
         switch mode {
         case .read:
-            guard fileManager.fileExists(atPath: url.path) else { return nil }
-            guard fileManager.isReadableFile(atPath: url.path) else { return nil }
             let fileSystemRepresentation = fileManager.fileSystemRepresentation(withPath: url.path)
             guard let archiveFile = fopen(fileSystemRepresentation, "rb"),
                 let endOfCentralDirectoryRecord = Archive.scanForEndOfCentralDirectoryRecord(in: archiveFile) else {
@@ -148,7 +149,6 @@ public final class Archive: Sequence {
             self.archiveFile = archiveFile
             self.endOfCentralDirectoryRecord = endOfCentralDirectoryRecord
         case .create:
-            guard !fileManager.fileExists(atPath: url.path) else { return nil }
             let endOfCentralDirectoryRecord = EndOfCentralDirectoryRecord(numberOfDisk: 0, numberOfDiskStart: 0,
                                                                           totalNumberOfEntriesOnDisk: 0,
                                                                           totalNumberOfEntriesInCentralDirectory: 0,
@@ -156,11 +156,13 @@ public final class Archive: Sequence {
                                                                           offsetToStartOfCentralDirectory: 0,
                                                                           zipFileCommentLength: 0,
                                                                           zipFileCommentData: Data())
-            guard fileManager.createFile(atPath: url.path, contents: endOfCentralDirectoryRecord.data,
-                                         attributes: nil) else { return nil }
+            do {
+                try endOfCentralDirectoryRecord.data.write(to: url, options: .withoutOverwriting)
+            } catch {
+                return nil
+            }
             fallthrough
         case .update:
-            guard fileManager.isWritableFile(atPath: url.path) else { return nil }
             let fileSystemRepresentation = fileManager.fileSystemRepresentation(withPath: url.path)
             guard let archiveFile = fopen(fileSystemRepresentation, "rb+"),
                 let endOfCentralDirectoryRecord = Archive.scanForEndOfCentralDirectoryRecord(in: archiveFile) else {
@@ -219,6 +221,9 @@ public final class Archive: Sequence {
     /// - Parameter path: A relative file path identifiying the corresponding `Entry`.
     /// - Returns: An `Entry` with the given `path`. Otherwise, `nil`.
     public subscript(path: String) -> Entry? {
+        if let encoding = preferredEncoding {
+            return self.filter { $0.path(using: encoding) == path }.first
+        }
         return self.filter { $0.path == path }.first
     }
 

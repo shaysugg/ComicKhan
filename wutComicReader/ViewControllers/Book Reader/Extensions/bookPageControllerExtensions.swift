@@ -9,9 +9,114 @@
 import Foundation
 import UIKit
 
+//MARK:- book Pages Setup
+
+extension BookReaderVC {
+    
+    
+    func setupPageController() {
+        bookPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        bookPageViewController.delegate = self
+        bookPageViewController.dataSource = self
+        
+        addChild(bookPageViewController)
+        view.addSubview(bookPageViewController.view)
+        
+        createSingleBookImages()
+        createDoubleBookImages()
+        setPageViewControllers()
+    }
+    
+    
+    fileprivate func createSingleBookImages() {
+        //bookSinglePage Setup
+        guard let comicPages = comic?.imageNames else { return }
+        for comicPage in comicPages {
+            let bookPageImage = UIImage(comic, withImageName: comicPage)
+            bookSingleImages.append(bookPageImage ?? UIImage())
+        }
+        
+    }
+    
+    fileprivate func createDoubleBookImages(){
+        
+        var tempDouble: [UIImage?] = [nil]
+        guard let comicPages = comic?.imageNames else { return }
+        
+        //creating tempDoubles
+        
+        for comicPage in comicPages {
+            let index = comicPages.firstIndex(of: comicPage)!
+            let image = UIImage(comic, withImageName: comicPage) ?? UIImage()
+            if isImageInDoubleSplashSize(image) {
+                if index.isMultiple(of: 2) {
+                    tempDouble.append(contentsOf: [nil , image , nil])
+                }else{
+                    tempDouble.append(contentsOf: [image , nil])
+                }
+            }else{
+                tempDouble.append(image)
+            }
+        }
+        
+        //creating doubleImages
+        
+        for index in 0 ... tempDouble.count - 1 {
+            if index.isMultiple(of: 2){
+                if index < tempDouble.count - 1 {
+                    if tempDouble[index] == nil && tempDouble[index + 1] == nil {} else {
+                        bookDoubleImages.append((tempDouble[index], tempDouble[index + 1]))
+                    }
+                }else{
+                    bookDoubleImages.append((tempDouble[index] , nil))
+                }
+            }
+        }
+        
+    }
+    
+    
+    fileprivate func isImageInDoubleSplashSize(_ image: UIImage) -> Bool {
+        return image.size.height < image.size.width
+    }
+    
+    
+    func setPageViewControllers() {
+        
+        bookPages.removeAll()
+        
+        if deviceIsLandscaped {
+            for bookImages in bookDoubleImages {
+                let bookPage = BookPage()
+                
+                bookPage.pageNumber = bookDoubleImages.firstIndex(where: { $0 == bookImages })
+                bookPage.pageImageView1.image = bookImages.0
+                bookPage.pageImageView2.image = bookImages.1
+                
+                bookPages.append(bookPage)
+            }
+        }else{
+            for bookImage in bookSingleImages {
+                let bookPage = BookPage()
+                bookPage.pageNumber = bookSingleImages.firstIndex(where: { $0 == bookImage })
+                bookPage.pageImageView1.image = bookImage
+                
+                bookPages.append(bookPage)
+            }
+        }
+        
+        bookPageViewController.setViewControllers([bookPages[0]], direction: .forward, animated: false)
+
+    }
+}
+
+//MARK:- book Pages Delegates
+
 extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController:
         UIViewController) -> UIViewController? {
+        
+        
         
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index < bookPages.count - 1 {
@@ -51,8 +156,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
             
             guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
             for page in previousPages {
-                let index = bookPages.firstIndex(of: previousPages[0])
-                print(index)
+                let _ = bookPages.firstIndex(of: previousPages[0])
                 page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
             }
             

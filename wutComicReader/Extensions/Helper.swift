@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 
 
@@ -39,6 +40,14 @@ extension UIImage{
         
         let path = appfileManager.comicDirectory.path + "/" + comicname  + "/" + imagename
         self.init(contentsOfFile: path)
+    }
+    
+    func resize(forSize size: CGSize) -> UIImage {
+        let image = self
+        let render = UIGraphicsImageRenderer(size: size)
+        return render.image { (context) in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 }
 

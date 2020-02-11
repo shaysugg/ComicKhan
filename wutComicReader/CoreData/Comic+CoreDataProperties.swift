@@ -2,7 +2,7 @@
 //  Comic+CoreDataProperties.swift
 //  
 //
-//  Created by Sha Yan on 1/27/20.
+//  Created by Sha Yan on 2/9/20.
 //
 //
 

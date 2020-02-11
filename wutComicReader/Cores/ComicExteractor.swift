@@ -9,6 +9,7 @@ import Foundation
 import ZIPFoundation
 import UnrarKit
 import UIKit
+import Zip
 
 enum ExtractorError : Error {
     case unzipingCBZFailed
@@ -31,7 +32,8 @@ class ComicExteractor {
             
             do{
                 try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
-                try FileManager.default.unzipItem(at: zipFileURL, to: extractedComicURL)
+//                try FileManager.default.unzipItem(at: zipFileURL, to: extractedComicURL)
+                try Zip.unzipFile(zipFileURL, destination: extractedComicURL, overwrite: true, password: nil)
             }catch {
                 throw ExtractorError.unzipingCBZFailed
             }

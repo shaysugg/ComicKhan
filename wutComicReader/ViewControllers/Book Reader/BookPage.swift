@@ -65,7 +65,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pageImageView1.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         scrollView.delegate = self
         setupDesign()
         
@@ -77,30 +76,19 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
-    var isDoupleSplashPage = false
-    
-    var haveDoublePage:Bool = UIDevice.current.orientation.isLandscape {
-        didSet{
-            
-            if haveDoublePage && !isDoupleSplashPage {
-                imagesContainerView.addSubview(pageImageView2)
-                
-                pageImageView1SingleModeRightAnchor?.isActive = false
-                pageImageView1DoubleModeRightAnchor?.isActive = true
-                
-                pageImageView2.leftAnchor.constraint(equalTo: pageImageView1.rightAnchor).isActive = true
-                pageImageView2.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor).isActive = true
-                pageImageView2.bottomAnchor.constraint(equalTo: imagesContainerView.bottomAnchor).isActive = true
-                pageImageView2.topAnchor.constraint(equalTo: imagesContainerView.topAnchor).isActive = true
-                
-            }else{
+    var isDoupleSplashPage = false {
+        didSet {
+            if isDoupleSplashPage {
                 pageImageView2.removeFromSuperview()
                 pageImageView1DoubleModeRightAnchor?.isActive = false
                 pageImageView1SingleModeRightAnchor?.isActive = true
-                
             }
-            
         }
+    }
+    
+    
+    var haveDoublePage:Bool {
+        return UIDevice.current.orientation.isLandscape
     }
     
     
@@ -108,6 +96,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateMinZoomScaleForSize(view.bounds.size)
+        centerTheImage()
     }
     
     
@@ -152,6 +141,41 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         }
     }
     
+    override func viewWillLayoutSubviews() {
+        
+        if haveDoublePage {
+            imagesContainerView.addSubview(pageImageView2)
+            
+            pageImageView1SingleModeRightAnchor?.isActive = false
+            pageImageView1DoubleModeRightAnchor?.isActive = true
+            
+            pageImageView2.leftAnchor.constraint(equalTo: pageImageView1.rightAnchor).isActive = true
+            pageImageView2.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor).isActive = true
+            pageImageView2.bottomAnchor.constraint(equalTo: imagesContainerView.bottomAnchor).isActive = true
+            pageImageView2.topAnchor.constraint(equalTo: imagesContainerView.topAnchor).isActive = true
+            
+        }else{
+            pageImageView2.removeFromSuperview()
+            pageImageView1DoubleModeRightAnchor?.isActive = false
+            pageImageView1SingleModeRightAnchor?.isActive = true
+            
+        }
+        
+//        handleViewsWhereOneImagesIsNill()
+        
+    }
+    
+    private func pagesThatHaveImage() -> [UIImageView] {
+        var imageViews: [UIImageView] = []
+        if let _ = pageImageView2.image {
+            imageViews.append(pageImageView2)
+        }
+        if let _ = pageImageView1.image {
+            imageViews.append(pageImageView1)
+        }
+        return imageViews
+    }
+    
     
     
     
@@ -161,10 +185,12 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     func updateMinZoomScaleForSize(_ size: CGSize) {
         
-        guard let pageImageViewSize = pageImageView1.image?.size else { return }
+        if pagesThatHaveImage().isEmpty { return }
         
-        let widthScale = size.width / pageImageViewSize.width
-        let heightScale = size.height / pageImageViewSize.height
+        let imageViewSize = pagesThatHaveImage()[0].image!.size
+        
+        let widthScale = size.width / imageViewSize.width
+        let heightScale = size.height / imageViewSize.height
         let minScale = min(widthScale, heightScale)
         
         scrollView.minimumZoomScale = minScale
@@ -185,10 +211,15 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
         let yOffset = max(0 ,(scrollView.bounds.height - scrollView.contentSize.height) / 2)
         
+        if pagesThatHaveImage().isEmpty { return }
+        
+        let imageView = pagesThatHaveImage()[0]
+        let numberOfPages = pagesThatHaveImage().count
+        
         if  haveDoublePage {
-            
-            let contentWidthSize = pageImageView1.bounds.width * 2
-            let contentHeightSize = pageImageView1.bounds.height
+
+            let contentWidthSize = imageView.bounds.width * CGFloat(numberOfPages)
+            let contentHeightSize = imageView.bounds.height
             
             pageImageView1DoubleModeRightAnchor?.isActive = true
             pageImageView1SingleModeRightAnchor?.isActive = false
@@ -203,17 +234,11 @@ class BookPage: UIViewController , UIScrollViewDelegate {
             pageImageView1LeftAnchor?.constant = xOffset
             imageContainerViewLeftAnchor?.constant = xOffset
             imageContainerViewRightAnchor?.constant = xOffset
-            
-            print("XOffset is \(xOffset)")
-            print("scroll view content width is \(scrollView.contentSize.width)")
-            print("contentSize width is \(pageImageView1.bounds.width)")
-            print("scroll view bounds width is \(view.frame.width)")
-            
         
         }else{
             
-            let contentWidthSize = pageImageView1.bounds.width
-            let contentHeightSize = pageImageView1.bounds.height
+            let contentWidthSize = imageView.bounds.width
+            let contentHeightSize = imageView.bounds.height
             
             pageImageView1DoubleModeRightAnchor?.isActive = false
             pageImageView1SingleModeRightAnchor?.isActive = true

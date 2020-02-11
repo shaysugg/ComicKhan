@@ -2,18 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:wutComicReader/CoreData/Comic+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:wutComicReader/CoreData/Comic+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
-      location = "group:wutComicReader/CoreData/ComicGroup+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:wutComicReader/CoreData/ComicGroup+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
       location = "group:wutComicReader.xcodeproj">
    </FileRef>
    <FileRef

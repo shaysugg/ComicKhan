@@ -9,11 +9,12 @@
     </entity>
     <entity name="ComicGroup" representedClassName="ComicGroup" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isForNewComics" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="comics" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Comic" inverseName="ofComicGroup" inverseEntity="Comic"/>
+        <relationship name="comics" optional="YES" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="Comic" inverseName="ofComicGroup" inverseEntity="Comic"/>
     </entity>
     <elements>
         <element name="Comic" positionX="-63" positionY="-18" width="128" height="118"/>
-        <element name="ComicGroup" positionX="-54" positionY="18" width="128" height="88"/>
+        <element name="ComicGroup" positionX="-54" positionY="18" width="128" height="103"/>
     </elements>
 </model>

@@ -2,7 +2,7 @@
 //  ComicGroup+CoreDataProperties.swift
 //  
 //
-//  Created by Sha Yan on 1/27/20.
+//  Created by Sha Yan on 2/9/20.
 //
 //
 
@@ -17,6 +17,7 @@ extension ComicGroup {
     }
 
     @NSManaged public var id: UUID?
+    @NSManaged public var isForNewComics: Bool
     @NSManaged public var name: String?
     @NSManaged public var comics: NSOrderedSet?
 

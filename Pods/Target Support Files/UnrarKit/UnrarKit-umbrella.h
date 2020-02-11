@@ -11,6 +11,7 @@
 #endif
 
 #import "UnrarKit.h"
+#import "UnrarKitMacros.h"
 #import "URKArchive.h"
 #import "URKFileInfo.h"
 #import "raros.hpp"

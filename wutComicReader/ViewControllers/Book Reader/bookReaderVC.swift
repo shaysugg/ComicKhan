@@ -29,7 +29,9 @@ class BookReaderVC: UIViewController {
     var menusAreAppeard: Bool = false
     
     var bookPageViewController : UIPageViewController!
-    var bookPages : [BookPage] = []
+    var bookSingleImages : [UIImage] = []
+    var bookDoubleImages : [(UIImage? , UIImage?)] = []
+    var bookPages: [BookPage] = [] 
     
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
         didSet{
@@ -41,7 +43,7 @@ class BookReaderVC: UIViewController {
                 comicPagesCount = comic!.imageNames?.count ?? 0
             }
             
-            updatePageViewControllerWhenRotationChanges()
+            setPageViewControllers()
             
             guard let currentPage = bookPageViewController.viewControllers?[0] as? BookPage else { return }
             guard let currentIndex = bookPages.firstIndex(of: currentPage) else { return }
@@ -62,7 +64,7 @@ class BookReaderVC: UIViewController {
     
     //MARK:- UI Variables
     
-    var thumbnailCollectionView : UICollectionView = {
+    lazy var thumbnailCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
@@ -77,7 +79,7 @@ class BookReaderVC: UIViewController {
         return collectionView
     }()
     
-    var pageSlider : UISlider = {
+    lazy var pageSlider : UISlider = {
         let slider = UISlider(frame: .zero)
         slider.tintColor = .appBlue
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +93,7 @@ class BookReaderVC: UIViewController {
         return slider
     }()
     
-    var currentPageNumberLabel : UILabel = {
+    lazy var currentPageNumberLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont(name: appFontRegular, size: 14)
         label.textColor = .appSeconedlabelColor
@@ -100,7 +102,7 @@ class BookReaderVC: UIViewController {
         return label
     }()
     
-    var comicPageNumberLabel : UILabel = {
+    lazy var comicPageNumberLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont(name: appFontRegular, size: 14)
         label.textColor = .appSeconedlabelColor
@@ -110,7 +112,7 @@ class BookReaderVC: UIViewController {
     }()
     
     
-    var titleLabel : UILabel = {
+    lazy var titleLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont(name: appFontRegular, size: 15)
         label.text = "BLAH!"
@@ -120,7 +122,7 @@ class BookReaderVC: UIViewController {
         return label
     }()
     
-    var topBar: UIView = {
+    lazy var topBar: UIView = {
         let view = UIView()
         view.backgroundColor = .appSystemBackground
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -128,7 +130,7 @@ class BookReaderVC: UIViewController {
         return view
     }()
     
-    var dismissButton : UIButton = {
+    lazy var dismissButton : UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
         button.setImage( UIImage(named: "down") , for: .normal)
@@ -137,7 +139,7 @@ class BookReaderVC: UIViewController {
         return button
     }()
     
-    var bottomView : UIView = {
+    lazy var bottomView : UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         view.backgroundColor = .appSystemBackground
         view.clipsToBounds = false
@@ -180,56 +182,7 @@ class BookReaderVC: UIViewController {
         
     }
     
-    func setupPageController() {
-        bookPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        bookPageViewController.delegate = self
-        bookPageViewController.dataSource = self
-        
-        addChild(bookPageViewController)
-        view.addSubview(bookPageViewController.view)
-        createBookPages()
-        bookPageViewController.setViewControllers([bookPages[0]], direction: .forward, animated: false)
-        
-    }
     
-    func createBookPages() {
-        guard let comicPages = comic?.imageNames else { return }
-        for comicPage in comicPages {
-            let bookPage = BookPage()
-            bookPage.comicPage = UIImage(comic, withImageName: comicPage)
-            bookPage.pageNumber = comicPages.firstIndex(of: comicPage)
-            bookPages.append(bookPage)
-        }
-    }
-    
-    func isImageInDoubleSplashSize(image: UIImage) -> Bool {
-        return image.size.height < image.size.width
-    }
-    
-    func updatePageViewControllerWhenRotationChanges() {
-        if deviceIsLandscaped {
-            for bookPage in bookPages {
-                bookPage.haveDoublePage = deviceIsLandscaped
-                
-                if let currentIndex = bookPages.firstIndex(of: bookPage) {
-                    if currentIndex < bookPages.count / 2{
-//                        bookPage.isDoupleSplashPage = isImageInDoubleSplashSize(image: bookPages[currentIndex * 2].comicPage!)
-                        bookPage.pageImageView1.image = bookPages[currentIndex * 2].comicPage
-                        bookPage.pageImageView2.image = bookPages[(currentIndex * 2) + 1].comicPage
-                    }
-                }
-            }
-        }else{
-            for bookPage in bookPages {
-                bookPage.haveDoublePage = deviceIsLandscaped
-                if let currentIndex = bookPages.firstIndex(of: bookPage) {
-                    bookPage.pageImageView1.image = bookPages[currentIndex].comicPage
-                    
-                }
-            }
-        }
-
-    }
     
     func setupBottomViewDesign(){
         
@@ -420,26 +373,13 @@ class BookReaderVC: UIViewController {
     
     
     @objc func closeTheVC(){
-        
-        
-        
+
         dismiss(animated: false, completion: {
-            self.saveTheCurrentPageToCoreData()
+//            self.saveTheCurrentPageToCoreData()
         })
     }
     
     func saveTheCurrentPageToCoreData() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let context = appDelegate.persistentContainer.viewContext
-        
-        guard let currentPage = bookPageViewController.viewControllers?[0] as? BookPage else { return }
-        let currentIndex = bookPages.firstIndex(of: currentPage) ?? 0
-        comic?.lastVisitedPage = Int16(deviceIsLandscaped ? currentIndex * 2 : currentIndex)
-        do{
-            try context.save()
-        }catch let err{
-            print("problem with saving last page to core data " + err.localizedDescription)
-        }
     }
     
     
