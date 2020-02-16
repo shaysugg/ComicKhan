@@ -33,22 +33,31 @@ extension UIResponder {
 }
 
 extension UIImage{
-    convenience init?(_ comic: Comic? ,withImageName imageName: String?) {
-        let comicname : String = comic?.name ?? ""
-        let imagename: String = imageName ?? ""
-        let appfileManager = AppFileManager()
-        
-        let path = appfileManager.comicDirectory.path + "/" + comicname  + "/" + imagename
-        self.init(contentsOfFile: path)
-    }
+
+}
+
+class ComicImage: UIImage {
     
-    func resize(forSize size: CGSize) -> UIImage {
-        let image = self
-        let render = UIGraphicsImageRenderer(size: size)
-        return render.image { (context) in
-            image.draw(in: CGRect(origin: .zero, size: size))
-        }
-    }
+    var pageNumber: Int?
+    
+    convenience init?(_ comic: Comic? ,withImageName imageName: String?) {
+           let comicname : String = comic?.name ?? ""
+           let imagename: String = imageName ?? ""
+           let appfileManager = AppFileManager()
+           
+           let path = appfileManager.comicDirectory.path + "/" + comicname  + "/" + imagename
+           self.init(contentsOfFile: path)
+       }
+       
+       
+       func resize(forSize size: CGSize) -> UIImage {
+           let image = self
+           let render = UIGraphicsImageRenderer(size: size)
+           return render.image { (context) in
+               image.draw(in: CGRect(origin: .zero, size: size))
+           }
+       }
+    
 }
 
 extension UIViewController {

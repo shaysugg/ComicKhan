@@ -18,9 +18,9 @@ class BookReaderVC: UIViewController {
     var comic : Comic? {
         didSet{
             guard let _ = comic else { return }
-            comicPagesCount = (comic!.imageNames?.count ?? 0)
-            comicPageNumberLabel.text = String(comicPagesCount)
-            pageSlider.maximumValue = Float(comicPagesCount)
+            //            comicPagesCount = (comic!.imageNames?.count ?? 0)
+            //            comicPageNumberLabel.text = String(comicPagesCount)
+            //            pageSlider.maximumValue = Float(comicPagesCount)
             titleLabel.text = comic?.name
         }
     }
@@ -29,34 +29,15 @@ class BookReaderVC: UIViewController {
     var menusAreAppeard: Bool = false
     
     var bookPageViewController : UIPageViewController!
-    var bookSingleImages : [UIImage] = []
-    var bookDoubleImages : [(UIImage? , UIImage?)] = []
+    var bookSingleImages : [ComicImage] = []
+    var bookDoubleImages : [(ComicImage? , ComicImage?)] = []
     var bookPages: [BookPage] = [] 
     
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
         didSet{
-            
-            if deviceIsLandscaped {
-                let totalImages = comic!.imageNames?.count ?? 0
-                comicPagesCount = (totalImages ) / 2 + (totalImages % 2)
-            }else {
-                comicPagesCount = comic!.imageNames?.count ?? 0
-            }
-            
-            setPageViewControllers()
-            
-            guard let currentPage = bookPageViewController.viewControllers?[0] as? BookPage else { return }
-            guard let currentIndex = bookPages.firstIndex(of: currentPage) else { return }
-            
             thumbnailCollectionView.reloadData()
-            let scrollToIndex = deviceIsLandscaped ? currentIndex / 2 : currentIndex * 2
-            thumbnailCollectionView.selectItem(at: IndexPath(row: scrollToIndex, section: 0), animated: false, scrollPosition: .centeredHorizontally)
-            bookPageViewController.setViewControllers([bookPages[scrollToIndex]], direction: .forward, animated: false, completion: nil)
-            
-            pageSlider.maximumValue = Float(comicPagesCount)
-            pageSlider.setValue(Float(scrollToIndex + 1), animated: false)
-            
-            
+            setPageViewControllers()
+            updateBookReaderValues()
         }
     }
     
@@ -68,6 +49,8 @@ class BookReaderVC: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(thumbnailCell.self, forCellWithReuseIdentifier: "thumbnailCell")
         collectionView.restorationIdentifier = "thumbnail"
@@ -147,7 +130,12 @@ class BookReaderVC: UIViewController {
         
         return view
     }()
+    var bottomViewHeightConstrait: NSLayoutConstraint!
     
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     
     //MARK:- Functions
@@ -174,10 +162,17 @@ class BookReaderVC: UIViewController {
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+        
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0
         updatePageSlider(with: Int(truncating: NSNumber(value: LastpageNumber)))
+        updateBookReaderValues()
         
         
     }
@@ -191,6 +186,7 @@ class BookReaderVC: UIViewController {
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 20).isActive = true
         bottomView.heightAnchor.constraint(equalToConstant: calculateBottomViewHeight()).isActive = true
+        
         
         bottomView.layer.cornerRadius = 20
         bottomView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 25)
@@ -269,20 +265,107 @@ class BookReaderVC: UIViewController {
         
     }
     
+    func setLastViewedPageNumber(for currentBookPage: BookPage) {
+        
+        if let image1Number = (currentBookPage.pageImageView1.image as? ComicImage)?.pageNumber {
+            lastViewedPage = bookSingleImages.firstIndex(where: {$0.pageNumber == image1Number})
+        }else if let image2Number = (currentBookPage.pageImageView2.image as? ComicImage)?.pageNumber {
+            lastViewedPage = bookSingleImages.firstIndex(where: {$0.pageNumber == image2Number})
+        }
+        
+        if let _ = lastViewedPage {
+            comic?.lastVisitedPage = Int16(lastViewedPage!)
+        }
+        
+    }
+    
+    func updateBookReaderValues(){
+        
+        let lastVisitedPage = Int(comic?.lastVisitedPage ?? 0)
+        let lastViewedBookPageIndex: Int?
+        
+        if deviceIsLandscaped {
+            lastViewedBookPageIndex = doublePageIndexForPage(withNumber: lastVisitedPage)
+        }else{
+            lastViewedBookPageIndex = lastVisitedPage
+        }
+        
+        
+        
+        if let _ = lastViewedBookPageIndex {
+            thumbnailCollectionView.selectItem(at: IndexPath(row: lastViewedBookPageIndex!, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+            bookPageViewController.setViewControllers([bookPages[lastViewedBookPageIndex!]], direction: .forward, animated: false, completion: nil)
+            
+            pageSlider.minimumValue = 1.0
+            pageSlider.setValue(Float(lastViewedBookPageIndex!), animated: false)
+            pageSlider.maximumValue = Float(bookPages.count)
+            
+            comicPageNumberLabel.text = "\(bookSingleImages.count)"
+            configureCurrentPageLabelText(forBookPageIndex: lastViewedBookPageIndex!)
+            
+            
+            
+            
+        }
+    }
+    
+    func configureCurrentPageLabelText(forBookPageIndex index:Int) {
+        
+        guard index < bookDoubleImages.count else { return }
+        
+        if deviceIsLandscaped {
+            var text = ""
+            if let page1Number = bookDoubleImages[index].0?.pageNumber {
+                text = String(page1Number + 1)
+            }
+            if let page2Number = bookDoubleImages[index].1?.pageNumber {
+                if let _ = bookDoubleImages[index].0?.pageNumber {
+                    text.append("-\(page2Number + 1)")
+                }else{
+                     text.append("\(page2Number + 1)")
+                }
+            }
+            currentPageNumberLabel.text = text
+        }else{
+            currentPageNumberLabel.text = String(index + 1)
+        }
+        
+    }
+    
+    @objc func zoomBookCurrentPage() {
+        let currentPage = bookPageViewController.viewControllers?.first as? BookPage
+        currentPage?.zoomWithDoubleTap()
+        
+    }
+    
+    
+    @objc func closeTheVC(){
+        if let page = lastViewedPage {
+            
+            comic?.lastVisitedPage = Int16(page)
+            let context = AppFileManager().managedContext
+            try? context?.save()
+        }
+        
+        dismiss(animated: false, completion: nil)
+    }
+    
+    
+    
+    
+    //MARK:- Page Slider Functions
+    
     func updatePageSlider(with value: Int){
         pageSlider.setValue(Float(value), animated: true)
-        currentPageNumberLabel.text = String(value)
+        configureCurrentPageLabelText(forBookPageIndex: value - 1)
     }
     
     @objc func sliderDidChanged(){
         let value = Int(pageSlider.value)
         
         thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
-        if deviceIsLandscaped{
-            currentPageNumberLabel.text = String(value * 2 - 1) + "-" + String(value * 2)
-        }else{
-            currentPageNumberLabel.text = String(value)
-        }
+        setLastViewedPageNumber(for: bookPages[value - 1])
+        configureCurrentPageLabelText(forBookPageIndex: value - 1)
     }
     
     @objc func sliderDidFinishedChanging(){
@@ -294,11 +377,9 @@ class BookReaderVC: UIViewController {
         
     }
     
-    @objc func zoomBookCurrentPage() {
-        let currentPage = bookPageViewController.viewControllers?.first as? BookPage
-        currentPage?.zoomWithDoubleTap()
-        
-    }
+    
+    
+    //MARK:- Menues Appearing Handeling
     
     @objc func toggleMenusGestureTapped() {
         if menusAreAppeard {
@@ -308,7 +389,7 @@ class BookReaderVC: UIViewController {
         }
     }
     
-
+    
     
     func disappearMenus(animated: Bool) {
         if animated {
@@ -370,29 +451,6 @@ class BookReaderVC: UIViewController {
         }
         
     }
-    
-    
-    @objc func closeTheVC(){
-
-        dismiss(animated: false, completion: {
-//            self.saveTheCurrentPageToCoreData()
-        })
-    }
-    
-    func saveTheCurrentPageToCoreData() {
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
-        
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     
     
     

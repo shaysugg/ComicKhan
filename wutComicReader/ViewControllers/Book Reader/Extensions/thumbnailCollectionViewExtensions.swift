@@ -44,7 +44,9 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
         
         thumbnailCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         bookPageViewController.setViewControllers([bookPages[indexPath.row]], direction: .forward, animated: true, completion: nil)
+        
         updatePageSlider(with: indexPath.row + 1)
+        setLastViewedPageNumber(for: bookPages[indexPath.row])
     }
     
     

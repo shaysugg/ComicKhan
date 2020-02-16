@@ -67,7 +67,6 @@ class ComicExteractor {
     
     func extractUserComicsIntoComicDiractory() {
             
-            
             let filePaths = FileManager.default.subpaths(atPath: self.appFileManager.userDiractory.path)
             
             let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)

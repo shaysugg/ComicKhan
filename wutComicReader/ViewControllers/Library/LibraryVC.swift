@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import ZIPFoundation
-import UnrarKit
 import CoreData
 
 class LibraryVC: UIViewController {
@@ -16,8 +14,13 @@ class LibraryVC: UIViewController {
     //MARK:- variables
     
     var bottomGradientImage : UIImageView?
-    //    var comics : [Comic] = []
-    var comicGroups : [ComicGroup] = []
+    var comicGroups : [ComicGroup] = [] {
+        didSet{
+            if let _ = emptyGroupsView {} else { designEmptyView() }
+            emptyGroupsView.isHidden = !comicGroups.isEmpty
+            print("comic Group: \(comicGroups)")
+        }
+    }
     var collectionViewCellSize: CGSize?
     
     let appfileManager = AppFileManager()
@@ -25,7 +28,6 @@ class LibraryVC: UIViewController {
     
     var editingMode = false {
         didSet{
-            //            navigationItem.largeTitleDisplayMode =  editingMode ? .never : .always
             if editingMode {
                 groupBarButton.title = "Group"
                 deleteBarButton.title = "Delete"
@@ -60,6 +62,8 @@ class LibraryVC: UIViewController {
     }
     
 //    var selectedSection: [Int] = []
+    
+    var emptyGroupsView: UIView!
     
     let refreshControll = UIRefreshControl()
     
@@ -148,6 +152,47 @@ class LibraryVC: UIViewController {
     func setupPullToRefresh(){
         bookCollectionView.refreshControl = refreshControll
         refreshControll.addTarget(self, action: #selector(unzipButtonTapped(_:)), for: .valueChanged)
+    }
+    
+    func designEmptyView(){
+        emptyGroupsView = UIView()
+        emptyGroupsView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "emptyLibrary")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let label = UILabel()
+        label.text = "Looks like you don’t have any comics here at this moment ..."
+        label.font = UIFont(name: "HelveticaNeue", size: 18)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        let emptyViewWidth = view.bounds.width * (deviceType == .iPad ? 0.5 : 1)
+        
+        view.addSubview(emptyGroupsView)
+        emptyGroupsView.widthAnchor.constraint(equalToConstant: emptyViewWidth).isActive = true
+        emptyGroupsView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        emptyGroupsView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        emptyGroupsView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        emptyGroupsView.addSubview(imageView)
+        imageView.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor).isActive = true
+        imageView.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: emptyGroupsView.topAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        emptyGroupsView.addSubview(label)
+        label.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor).isActive = true
+        label.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor).isActive = true
+        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
+        
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

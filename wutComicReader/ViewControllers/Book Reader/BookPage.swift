@@ -12,15 +12,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     var pageNumber: Int?
     
-    var comicPage : UIImage? {
-        didSet{
-            pageImageView1.image = comicPage
-            updateMinZoomScaleForSize(view.bounds.size)
-            centerTheImage()
-        }
-    }
-    
-    var scrollView : UIScrollView = {
+    lazy var scrollView : UIScrollView = {
         let scrollview = UIScrollView()
         scrollview.showsVerticalScrollIndicator = false
         scrollview.showsHorizontalScrollIndicator = false
@@ -28,7 +20,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         return scrollview
     }()
     
-    var imagesContainerView : UIView = {
+    lazy var imagesContainerView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -39,7 +31,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     var imageContainerViewTopAnchor: NSLayoutConstraint?
     var imageContainerViewBottomAnchor: NSLayoutConstraint?
     
-    var pageImageView1 : UIImageView = {
+    lazy var pageImageView1 : UIImageView = {
         
         let imageView = UIImageView(frame: .zero )
         imageView.contentMode = .scaleAspectFit
@@ -53,7 +45,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     var pageImageView1TopAnchor: NSLayoutConstraint?
     var pageImageView1BottomAnchor: NSLayoutConstraint?
     
-    var pageImageView2 : UIImageView = {
+    lazy var pageImageView2 : UIImageView = {
         
         let imageView = UIImageView(frame: .zero )
         imageView.contentMode = .scaleAspectFit
@@ -126,8 +118,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         pageImageView1.topAnchor.constraint(equalTo: imagesContainerView.topAnchor).isActive = true
         pageImageView1SingleModeRightAnchor?.isActive = true
         
-        
-        //            self.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.4, radius: 25)
         
     }
     

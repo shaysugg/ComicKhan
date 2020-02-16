@@ -32,22 +32,25 @@ extension BookReaderVC {
         //bookSinglePage Setup
         guard let comicPages = comic?.imageNames else { return }
         for comicPage in comicPages {
-            let bookPageImage = UIImage(comic, withImageName: comicPage)
-            bookSingleImages.append(bookPageImage ?? UIImage())
+            let bookPageImage = ComicImage(comic, withImageName: comicPage) ?? ComicImage()
+            bookPageImage.pageNumber = comicPages.firstIndex(of: comicPage)
+            bookSingleImages.append(bookPageImage)
         }
         
     }
     
     fileprivate func createDoubleBookImages(){
         
-        var tempDouble: [UIImage?] = [nil]
+        var tempDouble: [ComicImage?] = [nil]
         guard let comicPages = comic?.imageNames else { return }
         
         //creating tempDoubles
         
         for comicPage in comicPages {
             let index = comicPages.firstIndex(of: comicPage)!
-            let image = UIImage(comic, withImageName: comicPage) ?? UIImage()
+            let image = ComicImage(comic, withImageName: comicPage) ?? ComicImage()
+            image.pageNumber = comicPages.firstIndex(of: comicPage)
+            
             if isImageInDoubleSplashSize(image) {
                 if index.isMultiple(of: 2) {
                     tempDouble.append(contentsOf: [nil , image , nil])
@@ -108,6 +111,19 @@ extension BookReaderVC {
         bookPageViewController.setViewControllers([bookPages[0]], direction: .forward, animated: false)
 
     }
+    
+    func doublePageIndexForPage(withNumber pageNumber:Int) -> Int? {
+        if pageNumber < bookSingleImages.count {
+            let number = bookSingleImages[pageNumber].pageNumber
+            
+            return bookDoubleImages.firstIndex { touple -> Bool in
+                return (touple.0?.pageNumber == number || touple.1?.pageNumber == number)
+            }
+            
+        }
+        return nil
+    }
+    
 }
 
 //MARK:- book Pages Delegates
@@ -147,6 +163,9 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         for page in previousPages {
             page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
         }
+        guard let pendingPages = (pendingViewControllers as? [BookPage]) else { return }
+        setLastViewedPageNumber(for: pendingPages[0])
+        
         
     }
     
@@ -160,6 +179,8 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
                 page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
             }
             
+            
+            
             //update thumbnail and slider
             
             guard let pendingPage = pageViewController.viewControllers?[0] as? BookPage else { return }
@@ -169,9 +190,12 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
             pageSlider.setValue(Float(pendingIndex + 1), animated: true)
             currentPageNumberLabel.text = String (pendingIndex + 1)
             
+            
         }
 
     }
+    
+    
     
     
 }

@@ -62,6 +62,8 @@ class AppFileManager {
             for diractory in comicDiractories {
                 guard let diractorySubPath = FileManager.default.subpaths(atPath: diractory.path) else {return}
                 
+                print("diractory subpaths: \(diractorySubPath)")
+                
                 let comicName = makeComicNameFromPath(path: diractory.path)
                 
                 if !comicAlreadyExistedInCoreData(withName: comicName) {
