@@ -18,14 +18,13 @@ class BookReaderVC: UIViewController {
     var comic : Comic? {
         didSet{
             guard let _ = comic else { return }
-            //            comicPagesCount = (comic!.imageNames?.count ?? 0)
-            //            comicPageNumberLabel.text = String(comicPagesCount)
-            //            pageSlider.maximumValue = Float(comicPagesCount)
             titleLabel.text = comic?.name
         }
     }
-    var lastViewedPage : Int?
     
+    var bookIndexInLibrary: IndexPath?
+    
+    var lastViewedPage : Int?
     var menusAreAppeard: Bool = false
     
     var bookPageViewController : UIPageViewController!
@@ -64,7 +63,7 @@ class BookReaderVC: UIViewController {
     
     lazy var pageSlider : UISlider = {
         let slider = UISlider(frame: .zero)
-        slider.tintColor = .appBlue
+        slider.tintColor = .appBlueColor
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 1
         slider.setValue(1, animated: false)
@@ -346,7 +345,7 @@ class BookReaderVC: UIViewController {
             let context = AppFileManager().managedContext
             try? context?.save()
         }
-        
+        NotificationCenter.default.post(name: .reloadLibraryAtIndex, object: bookIndexInLibrary)
         dismiss(animated: false, completion: nil)
     }
     
@@ -364,7 +363,6 @@ class BookReaderVC: UIViewController {
         let value = Int(pageSlider.value)
         
         thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
-        setLastViewedPageNumber(for: bookPages[value - 1])
         configureCurrentPageLabelText(forBookPageIndex: value - 1)
     }
     
@@ -374,6 +372,7 @@ class BookReaderVC: UIViewController {
         let pendingPage = bookPages[value - 1]
         pendingPage.scrollView.setZoomScale(pendingPage.scrollView.minimumZoomScale, animated: false)
         bookPageViewController.setViewControllers([pendingPage], direction: .forward, animated: true, completion: nil)
+        setLastViewedPageNumber(for: bookPages[value - 1])
         
     }
     

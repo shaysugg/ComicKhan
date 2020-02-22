@@ -18,7 +18,7 @@ class LibraryVC: UIViewController {
         didSet{
             if let _ = emptyGroupsView {} else { designEmptyView() }
             emptyGroupsView.isHidden = !comicGroups.isEmpty
-            print("comic Group: \(comicGroups)")
+            
         }
     }
     var collectionViewCellSize: CGSize?
@@ -63,7 +63,7 @@ class LibraryVC: UIViewController {
     
 //    var selectedSection: [Int] = []
     
-    var emptyGroupsView: UIView!
+
     
     let refreshControll = UIRefreshControl()
     
@@ -73,6 +73,20 @@ class LibraryVC: UIViewController {
     @IBOutlet weak var bookCollectionView: UICollectionView!
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     
+    var emptyGroupsView: UIView!
+    
+    var progressContainerView: UIView!
+    var progressNameLabel: UILabel!
+    var progressNumberLabel: UILabel!
+    var progressView: RoundedProgressView!
+    var progressContainerHeight: CGFloat {
+        switch deviceType {
+        case .iPad: return 130
+        case .iPhone: return 130
+        case .iPhoneX: return 160
+        case .smalliPhone: return 140
+        }
+    }
     
     
     
@@ -87,16 +101,18 @@ class LibraryVC: UIViewController {
             }catch{
                 fatalError("can't crate app comic diractory")
             }
-//            createAComicGroup(with: "New Comics")
         }
+        
+        
         fetchGroupComics()
         bookCollectionView.allowsMultipleSelection = true
-//        fetchNewComics()
         setUpDesigns()
         bookCollectionView.reloadData()
         setupPullToRefresh()
+        comicExtractor.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchGroupComics), name: .newGroupAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
         print(NSHomeDirectory())
         
         
@@ -115,6 +131,9 @@ class LibraryVC: UIViewController {
         deleteBarButton.title = ""
         
         makeCustomNavigationBar()
+        setUpProgressBarDesign()
+        bookCollectionView.backgroundColor = .appSystemBackground
+        view.backgroundColor = .appSystemBackground
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -151,6 +170,8 @@ class LibraryVC: UIViewController {
     
     func setupPullToRefresh(){
         bookCollectionView.refreshControl = refreshControll
+        refreshControll.tintColor = .clear
+        refreshControll.subviews.first?.alpha = 0
         refreshControll.addTarget(self, action: #selector(unzipButtonTapped(_:)), for: .valueChanged)
     }
     
@@ -165,19 +186,19 @@ class LibraryVC: UIViewController {
         
         let label = UILabel()
         label.text = "Looks like you don’t have any comics here at this moment ..."
-        label.font = UIFont(name: "HelveticaNeue", size: 18)
+        label.font = UIFont(name: HelvetincaNeueFont.light.name, size: 20)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
         let emptyViewWidth = view.bounds.width * (deviceType == .iPad ? 0.5 : 1)
         
-        view.addSubview(emptyGroupsView)
+        bookCollectionView.addSubview(emptyGroupsView)
         emptyGroupsView.widthAnchor.constraint(equalToConstant: emptyViewWidth).isActive = true
         emptyGroupsView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-        emptyGroupsView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emptyGroupsView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
+        emptyGroupsView.centerXAnchor.constraint(equalTo: bookCollectionView.centerXAnchor).isActive = true
+        emptyGroupsView.centerYAnchor.constraint(equalTo: bookCollectionView.centerYAnchor).isActive = true
+
         
         emptyGroupsView.addSubview(imageView)
         imageView.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor).isActive = true
@@ -186,12 +207,20 @@ class LibraryVC: UIViewController {
         imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         
         emptyGroupsView.addSubview(label)
-        label.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor).isActive = true
-        label.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor).isActive = true
+        label.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor , constant: 15).isActive = true
+        label.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor , constant: -15).isActive = true
         label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
         
         
         
+        
+    }
+    
+    @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
+        guard let indexPath = notification.object as? IndexPath else { return }
+        let cell = bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
+        cell?.updateProgressValue()
+        print("indexPath: \(indexPath)")
         
     }
     
@@ -354,6 +383,8 @@ class LibraryVC: UIViewController {
             return
         }
         
+        if fetchedComics.isEmpty { return }
+        
         if let group = groupForNewComics {
             group.comics = NSOrderedSet(array: fetchedComics)
         }else{
@@ -441,9 +472,9 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! LibraryCell
-        cell.book = comicGroups[indexPath.section].comics?[indexPath.row] as? Comic
         cell.selectionImageView.isHidden = !editingMode
-        cell.setUpDesign()
+        cell.readProgressView.isHidden = editingMode
+        cell.book = comicGroups[indexPath.section].comics?[indexPath.row] as? Comic
         return cell
     }
     
@@ -486,6 +517,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
             readerVC.comic = selectedComic
+            readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
             present(readerVC , animated: false)
             

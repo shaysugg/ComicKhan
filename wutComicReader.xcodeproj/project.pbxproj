@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		67D61E6B5DA8FFE11A4E4420 /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12FB43581E476835D7E87CCF /* Pods_wutComicReader.framework */; };
 		C836B7653673F80041A9FE48 /* Pods_coreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A588F92842633C8890F17641 /* Pods_coreTests.framework */; };
+		E407CB8323FD3D780056F64D /* RoundedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407CB8223FD3D780056F64D /* RoundedProgressView.swift */; };
+		E407CB8523FD3DD80056F64D /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407CB8423FD3DD80056F64D /* CircleProgressView.swift */; };
+		E40A353323F97C83006FA758 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40A353223F97C83006FA758 /* ProgressBar.swift */; };
 		E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C0EB123944A8200D2E561 /* AppFileManager.swift */; };
 		E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */; };
 		E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */; };
@@ -57,6 +60,9 @@
 		6B324D5BDF51FC22EF0ACD10 /* Pods-coreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coreTests.debug.xcconfig"; path = "Target Support Files/Pods-coreTests/Pods-coreTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A588F92842633C8890F17641 /* Pods_coreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coreTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71B30168B00AD5CD96427C4 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
+		E407CB8223FD3D780056F64D /* RoundedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedProgressView.swift; sourceTree = "<group>"; };
+		E407CB8423FD3DD80056F64D /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
+		E40A353223F97C83006FA758 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		E40C0EB123944A8200D2E561 /* AppFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFileManager.swift; sourceTree = "<group>"; };
 		E40C7A9922A1168C00D7CD17 /* wutComicReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wutComicReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,7 +130,6 @@
 				3894799E207BCD7BA5FC7C48 /* Pods-wutComicReader.debug.xcconfig */,
 				B71B30168B00AD5CD96427C4 /* Pods-wutComicReader.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -143,6 +148,15 @@
 				E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		E407CB8123FD3D2E0056F64D /* ProgressViews */ = {
+			isa = PBXGroup;
+			children = (
+				E407CB8223FD3D780056F64D /* RoundedProgressView.swift */,
+				E407CB8423FD3DD80056F64D /* CircleProgressView.swift */,
+			);
+			path = ProgressViews;
 			sourceTree = "<group>";
 		};
 		E40C7A9022A1168C00D7CD17 = {
@@ -170,6 +184,7 @@
 			children = (
 				E4CC122523A565E0006CD29E /* CoreData */,
 				E4A1264F23AE99CB00EC1C96 /* Cores */,
+				E407CB8123FD3D2E0056F64D /* ProgressViews */,
 				E4288B4F23DB311400182E0B /* ViewControllers */,
 				E406C44223CA49870053056A /* AppDelegate */,
 				E49BBAAF23E179CE00E9D1BA /* Extensions */,
@@ -246,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */,
+				E40A353223F97C83006FA758 /* ProgressBar.swift */,
 				E44FA70B23F0015C00338457 /* LibraryReusableView.swift */,
 				E4A20D6722D879450067BDF8 /* LibraryCell.swift */,
 			);
@@ -501,15 +517,18 @@
 				E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */,
 				E463B29822AC2FCE0094265C /* Consts.swift in Sources */,
 				E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */,
+				E407CB8323FD3D780056F64D /* RoundedProgressView.swift in Sources */,
 				E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */,
 				E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */,
 				E48253EA22D631B1001A0E85 /* Helper.swift in Sources */,
 				E4FF655A2391684600AAD68B /* BookPage.swift in Sources */,
+				E407CB8523FD3DD80056F64D /* CircleProgressView.swift in Sources */,
 				E440DEEF22A1814A00DCF4F7 /* Comic.swift in Sources */,
 				E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */,
 				E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */,
 				E4144F4723B8DE6F00E28770 /* DeviceType.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionViewExtensions.swift in Sources */,
+				E40A353323F97C83006FA758 /* ProgressBar.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
 				E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */,
 			);

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ZIPFoundation
+//import ZIPFoundation
 import UnrarKit
 import UIKit
 import Zip
@@ -20,10 +20,25 @@ enum ExtractorError : Error {
 }
 
 
+protocol ExtractingProgressDelegate {
+    func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int)
+    func percentChanged(to value: Double)
+    func extractingProcessFinished()
+}
 
-class ComicExteractor {
+extension ExtractingProgressDelegate {
+    func extractingProcessFinished(){}
+    func percentChanged(to value: Double){}
+    func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int){}
+}
+
+
+class ComicExteractor: NSObject {
     
     internal var appFileManager = AppFileManager()
+    private var keyPathToObserve = "fractionCompleted"
+    var rarExtractingProgress: Progress?
+    var delegate: ExtractingProgressDelegate?
     
     private func extractZIP(withFileName fileName : String) throws{
             
@@ -33,7 +48,10 @@ class ComicExteractor {
             do{
                 try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
 //                try FileManager.default.unzipItem(at: zipFileURL, to: extractedComicURL)
-                try Zip.unzipFile(zipFileURL, destination: extractedComicURL, overwrite: true, password: nil)
+                try Zip.unzipFile(zipFileURL, destination: extractedComicURL, overwrite: true, password: nil, progress: { percent in
+                    self.delegate?.percentChanged(to: percent)
+                })
+                
             }catch {
                 throw ExtractorError.unzipingCBZFailed
             }
@@ -46,9 +64,6 @@ class ComicExteractor {
     private func extractRAR(withFileName fileName : String) throws{
         
         var archive : URKArchive?
-        
-        print(fileName)
-        
         let zipFilePath = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbr")
         let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
         
@@ -56,7 +71,14 @@ class ComicExteractor {
             try FileManager.default.createDirectory(at: extractedComicsURL, withIntermediateDirectories: true, attributes: nil)
             
             archive = try URKArchive(path: zipFilePath.path)
-            try archive?.extractFiles(to: extractedComicsURL.path, overwrite: true, progress: nil)
+            
+            rarExtractingProgress = Progress(totalUnitCount: 1)
+            archive?.progress = rarExtractingProgress
+            rarExtractingProgress?.addObserver(self, forKeyPath: keyPathToObserve, options: .new, context: nil)
+            
+            try archive?.extractFiles(to: extractedComicsURL.path, overwrite: true)
+            
+            rarExtractingProgress?.removeObserver(self, forKeyPath: keyPathToObserve)
             
         }catch {
             throw ExtractorError.unzipingCBRFailed
@@ -64,6 +86,15 @@ class ComicExteractor {
         
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if keyPath == keyPathToObserve {
+            if let percent = rarExtractingProgress?.fractionCompleted {
+                delegate?.percentChanged(to: percent)
+//                print("Extraction Progress: \(extractProgress?.fractionCompleted)")
+            }
+        }
+    }
     
     func extractUserComicsIntoComicDiractory() {
             
@@ -76,6 +107,10 @@ class ComicExteractor {
                 let comicFormat = formatOfFile(fromFilePath: path)
                 
                 if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
+                    
+                    delegate?.newFileAboutToExtract(withName: comicName,
+                                                    andNumber: comicPaths.firstIndex(of: path)! + 1,
+                                                    inTotalFilesCount: comicPaths.count)
                     
                     do {
                         if comicFormat == ".cbz" {
@@ -92,6 +127,7 @@ class ComicExteractor {
                     }
                 }
             }
+        delegate?.extractingProcessFinished()
         
     }
     

@@ -17,6 +17,7 @@ class LibraryCell: UICollectionViewCell {
             let cover = ComicImage(book, withImageName: imageName)?.resize(forSize: CGSize(width: 174, height: 300))
             
             bookCoverImageView.image = cover
+            updateProgressValue()
         }
     }
     
@@ -24,7 +25,14 @@ class LibraryCell: UICollectionViewCell {
     @IBOutlet weak var selectionImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
     @IBOutlet weak var bookCoverImageView: UIImageView!
-    //    @IBOutlet weak var checkMarkImage: UIImageView!
+    
+    lazy var readProgressView: CircleProgressView = {
+        let progressView = CircleProgressView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.progressCircleColor = UIColor.appBlueColor?.cgColor
+        return progressView
+    }()
+    
     
     override var isSelected: Bool {
         didSet{
@@ -41,11 +49,6 @@ class LibraryCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    override func layoutSubviews() {
-        self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
-        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
-    }
-    
     func setUpDesign(){
         
         bookCoverImageView.layer.cornerRadius = 4
@@ -56,6 +59,45 @@ class LibraryCell: UICollectionViewCell {
         
         self.clipsToBounds = false
     }
+    
+    override func awakeFromNib() {
+        self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
+        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
+        setUpDesign()
+        addReadProgressView()
+    }
+    
+    
+    func updateProgressValue(){
+        
+        if let lastPage = book?.lastVisitedPage,
+        let totalPages = book?.imageNames?.count,
+            lastPage != 0,
+        totalPages > 1 {
+            let value: Double = Double(lastPage) / Double(totalPages - 1)
+            readProgressView.progressValue = CGFloat(value)
+            readProgressView.isHidden = false
+        }
+        if let lastPage = book?.lastVisitedPage,
+            lastPage == 0 {
+            readProgressView.isHidden = true
+        }
+    }
+    
+    private func addReadProgressView(){
+        
+        addSubview(readProgressView)
+        readProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: 2.5).isActive = true
+        readProgressView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2.5).isActive = true
+        readProgressView.widthAnchor.constraint(equalToConstant: 18).isActive = true
+        readProgressView.heightAnchor.constraint(equalToConstant: 18).isActive = true
+        
+        readProgressView.makeDropShadow(shadowOffset: .zero, opacity: 0.7, radius: 1)
+        
+       updateProgressValue()
+    }
+    
+    
     
     
 }

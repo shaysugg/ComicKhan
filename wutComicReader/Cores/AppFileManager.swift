@@ -62,8 +62,6 @@ class AppFileManager {
             for diractory in comicDiractories {
                 guard let diractorySubPath = FileManager.default.subpaths(atPath: diractory.path) else {return}
                 
-                print("diractory subpaths: \(diractorySubPath)")
-                
                 let comicName = makeComicNameFromPath(path: diractory.path)
                 
                 if !comicAlreadyExistedInCoreData(withName: comicName) {
@@ -102,7 +100,6 @@ class AppFileManager {
         guard let filePaths = FileManager.default.subpaths(atPath: userDiractory.path) else { return }
         //removing format with drop 4 characters in path
         let userDiractoryfilePaths = filePaths.map({$0.dropLast(4)})
-        print(userDiractoryfilePaths)
         
         let comicDiractoriesPaths = try? FileManager.default.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
         
@@ -126,7 +123,6 @@ class AppFileManager {
             
             do{
                 let sameComicsName = try context.fetch(fetchRequest)
-                print(sameComicsName)
                 return !sameComicsName.isEmpty
             }catch let error{
                 

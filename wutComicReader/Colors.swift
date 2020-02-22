@@ -34,27 +34,39 @@ extension UIColor {
         }
     }
     
-    static var appSystemBackground : UIColor {
+    static var appSystemBackground : UIColor = {
         if #available(iOS 13.0, *) {
-            return .systemBackground
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    return .secondarySystemBackground
+                }else{
+                    return .systemBackground
+                }
+            }
         }else{
             return .white
         }
-    }
+    }()
     
     static var appSystemSecondaryBackground : UIColor {
         if #available(iOS 13.0, *) {
-            return .secondarySystemBackground
+                return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                    if UITraitCollection.userInterfaceStyle == .dark {
+                        return .systemFill
+                    }else{
+                        return .secondarySystemFill
+                    }
+                }
         }else{
             return #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         }
     }
     
-    static var appBlue : UIColor {
+    static var appSecondaryLabel : UIColor {
         if #available(iOS 13.0, *) {
-            return UIColor(red:0.12, green:0.34, blue:0.63, alpha:1.0)
+            return .secondaryLabel
         }else{
-            return UIColor(red:0.12, green:0.34, blue:0.63, alpha:1.0)
+            return .gray
         }
     }
     
@@ -67,5 +79,5 @@ extension UIColor {
     }
     
     
-    
+    static let appBlueColor = UIColor(named: "appBlueColor")
 }
