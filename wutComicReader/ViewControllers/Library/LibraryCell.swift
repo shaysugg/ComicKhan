@@ -21,6 +21,12 @@ class LibraryCell: UICollectionViewCell {
         }
     }
     
+    var isInEditingMode: Bool = false {
+        didSet{
+            selectionImageView.isHidden = !isInEditingMode
+            readProgressView.isHidden = isInEditingMode
+        }
+    }
     
     @IBOutlet weak var selectionImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
@@ -76,12 +82,13 @@ class LibraryCell: UICollectionViewCell {
         totalPages > 1 {
             let value: Double = Double(lastPage) / Double(totalPages - 1)
             readProgressView.progressValue = CGFloat(value)
-            readProgressView.isHidden = false
+            readProgressView.isHidden = isInEditingMode
         }
         if let lastPage = book?.lastVisitedPage,
             lastPage == 0 {
             readProgressView.isHidden = true
         }
+        
     }
     
     private func addReadProgressView(){

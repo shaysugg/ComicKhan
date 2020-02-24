@@ -48,7 +48,7 @@ extension UIColor {
         }
     }()
     
-    static var appSystemSecondaryBackground : UIColor {
+    static var appSystemSecondaryBackground : UIColor = {
         if #available(iOS 13.0, *) {
                 return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
                     if UITraitCollection.userInterfaceStyle == .dark {
@@ -60,7 +60,7 @@ extension UIColor {
         }else{
             return #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         }
-    }
+    }()
     
     static var appSecondaryLabel : UIColor {
         if #available(iOS 13.0, *) {

@@ -29,14 +29,12 @@ class LibraryVC: UIViewController {
     var editingMode = false {
         didSet{
             if editingMode {
-                groupBarButton.title = "Group"
-                deleteBarButton.title = "Delete"
+                navigationItem.leftBarButtonItems = [deleteBarButton , groupBarButton]
                 editBarButton.title = "Done"
                 
                 
             }else{
-                groupBarButton.title = ""
-                deleteBarButton.title = ""
+                navigationItem.leftBarButtonItems = nil
                 editBarButton.title = "Edit"
                 deleteBarButton.isEnabled = false
                 groupBarButton.isEnabled = false
@@ -46,12 +44,6 @@ class LibraryVC: UIViewController {
             bookCollectionView.reloadData()
         }
         
-    }
-    
-    var deviceIsLandscaped = UIDevice.current.orientation.isLandscape {
-        didSet{
-            updateCollectionViewLayoutBasedScreenSize()
-        }
     }
     
     var selectedComics : [Comic] = [] {
@@ -68,10 +60,11 @@ class LibraryVC: UIViewController {
     let refreshControll = UIRefreshControl()
     
     @IBOutlet weak var bottomBar: UIToolbar!
-    @IBOutlet weak var groupBarButton: UIBarButtonItem!
-    @IBOutlet weak var deleteBarButton: UIBarButtonItem!
+    @IBOutlet var groupBarButton: UIBarButtonItem!
+    @IBOutlet var deleteBarButton: UIBarButtonItem!
     @IBOutlet weak var bookCollectionView: UICollectionView!
     @IBOutlet weak var editBarButton: UIBarButtonItem!
+    
     
     var emptyGroupsView: UIView!
     
@@ -118,39 +111,16 @@ class LibraryVC: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        deviceIsLandscaped = UIDevice.current.orientation.isLandscape
-    }
-    
-    
     func setUpDesigns(){
         
         groupBarButton.isEnabled = false
         deleteBarButton.isEnabled = false
-        groupBarButton.title = ""
-        deleteBarButton.title = ""
+        navigationItem.leftBarButtonItems = nil
         
         makeCustomNavigationBar()
         setUpProgressBarDesign()
         bookCollectionView.backgroundColor = .appSystemBackground
         view.backgroundColor = .appSystemBackground
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        deviceIsLandscaped = UIDevice.current.orientation.isLandscape
-    }
-    
-    
-    
-    func updateCollectionViewLayoutBasedScreenSize() {
-        let deviceWidth = UIScreen.main.bounds.width
-        //        print("device width is : \(UIScreen.main.bounds.width)")
-        if deviceWidth < 567 {
-            collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 3.9, height: bookCollectionView.frame.width / 2.3)
-        }else {
-            collectionViewCellSize = CGSize(width: bookCollectionView.frame.width / 8.0, height: bookCollectionView.frame.width / 4.2)
-        }
-        bookCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     func makeBottomViewGradiant(){
@@ -172,7 +142,7 @@ class LibraryVC: UIViewController {
         bookCollectionView.refreshControl = refreshControll
         refreshControll.tintColor = .clear
         refreshControll.subviews.first?.alpha = 0
-        refreshControll.addTarget(self, action: #selector(unzipButtonTapped(_:)), for: .valueChanged)
+        refreshControll.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .valueChanged)
     }
     
     func designEmptyView(){
@@ -238,7 +208,7 @@ class LibraryVC: UIViewController {
     
     //MARK:- actions
     
-    @IBAction func unzipButtonTapped(_ sender: Any) {
+    @IBAction func refreshButtonTapped(_ sender: Any) {
         syncComics {
             self.fetchNewComics()
             self.bookCollectionView.reloadData()
@@ -387,6 +357,7 @@ class LibraryVC: UIViewController {
         
         if let group = groupForNewComics {
             group.comics = NSOrderedSet(array: fetchedComics)
+            try? managedContext.save()
         }else{
             let group = createAGroupForNewComics()
             group?.comics = NSOrderedSet(array: fetchedComics)
@@ -472,8 +443,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! LibraryCell
-        cell.selectionImageView.isHidden = !editingMode
-        cell.readProgressView.isHidden = editingMode
+        cell.isInEditingMode = editingMode
         cell.book = comicGroups[indexPath.section].comics?[indexPath.row] as? Comic
         return cell
     }

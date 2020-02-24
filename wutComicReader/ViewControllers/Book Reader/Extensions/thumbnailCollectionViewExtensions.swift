@@ -12,7 +12,7 @@ import UIKit
 extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return deviceIsLandscaped ? bookDoubleImages.count : bookSingleImages.count
+        return deviceIsLandscaped ? thumbnailDoublePageViewModels.count : thumbnailSinglePageViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -22,16 +22,13 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
         let resizeSize = resizeSizeforImage(InIndexPath: indexPath, inLandscpeMode: deviceIsLandscaped)
         
         if deviceIsLandscaped{
-            cell.pageNumber = indexPath.row * 2 - 1
-            cell.pageImageView1.image = bookDoubleImages[indexPath.row].0?.resize(forSize: resizeSize)
-            cell.pageImageView2.image = bookDoubleImages[indexPath.row].1?.resize(forSize: resizeSize)
+            cell.thumbnailViewModel = thumbnailDoublePageViewModels[indexPath.row]
             
         }else {
-            cell.pageImageView1.image  = bookSingleImages[indexPath.row].resize(forSize: resizeSize)
-            cell.pageNumber = indexPath.row + 1
+            cell.thumbnailViewModel = thumbnailSinglePageViewModels[indexPath.row]
         }
-        cell.haveDoublePage = deviceIsLandscaped
-        cell.isDoubleSplashPage = resizeSize.width > resizeSize.height
+//        cell.haveDoublePage = deviceIsLandscaped
+//        cell.isDoubleSplashPage = resizeSize.width > resizeSize.height
         
         return cell
     }
@@ -58,12 +55,64 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     fileprivate func resizeSizeforImage(InIndexPath indexPath: IndexPath, inLandscpeMode isLandscape: Bool) -> CGSize {
         if isLandscape {
             let pageIsDoubleSplash = isImageInDoubleSplashSize(bookDoubleImages[indexPath.row].0 ?? UIImage()) ||
-                                     isImageInDoubleSplashSize(bookDoubleImages[indexPath.row].1 ?? UIImage())
+                isImageInDoubleSplashSize(bookDoubleImages[indexPath.row].1 ?? UIImage())
             return CGSize(width: 87 * (pageIsDoubleSplash ? 2 : 1), height: 150)
             
         }else{
             let pageIsDoubleSplash = isImageInDoubleSplashSize(bookSingleImages[indexPath.row])
             return CGSize(width: 87 * (pageIsDoubleSplash ? 2 : 1) , height: 150)
+        }
+    }
+}
+
+class ThumbnailViewModel {
+    let haveDoublePage: Bool
+    var image1: UIImage?
+    var image2: UIImage?
+    var imagesIsDoubleSplash: (Bool, Bool) = (false,false)
+    
+    init(haveDoublePage: Bool, image1: ComicImage?, image2: ComicImage?) {
+        self.haveDoublePage = haveDoublePage
+        self.image1 = image1
+        self.image2 = image2
+        self.imagesIsDoubleSplash = (isImageInDoubleSplashSize(image1), isImageInDoubleSplashSize(image2))
+        
+        let resizeSize = resizeSizeforImages()
+        self.image1 = image1?.resize(forSize: resizeSize)
+        self.image2 = image2?.resize(forSize: resizeSize)
+    }
+    
+    private func resizeSizeforImages() -> CGSize {
+        if haveDoublePage {
+            let pageIsDoubleSplash = isImageInDoubleSplashSize(image1 ?? UIImage()) ||
+                isImageInDoubleSplashSize(image2 ?? UIImage())
+            return CGSize(width: 87 * (pageIsDoubleSplash ? 2 : 1), height: 150)
+        }else{
+            let pageIsDoubleSplash = isImageInDoubleSplashSize(image1 ?? UIImage())
+            return CGSize(width: 87 * (pageIsDoubleSplash ? 2 : 1) , height: 150)
+        }
+    }
+    
+    private func isImageInDoubleSplashSize(_ image: UIImage?) -> Bool {
+        guard let img = image else { return false }
+        return img.size.height < img.size.width
+    }
+    
+}
+
+
+extension BookReaderVC {
+    func initDoublePageThumbnails(){
+        for images in bookDoubleImages {
+            let newThumbnail = ThumbnailViewModel(haveDoublePage: true, image1: images.0, image2: images.1)
+            thumbnailDoublePageViewModels.append(newThumbnail)
+        }
+    }
+    
+    func initSinglePageThumbnails(){
+        for image in bookSingleImages {
+            let newThumbnail = ThumbnailViewModel(haveDoublePage: false, image1: image, image2: nil)
+            thumbnailSinglePageViewModels.append(newThumbnail)
         }
     }
 }

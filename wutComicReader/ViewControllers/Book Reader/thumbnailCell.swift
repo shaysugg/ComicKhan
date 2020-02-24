@@ -9,7 +9,24 @@
 import UIKit
 
 class thumbnailCell: UICollectionViewCell {
-
+    
+    
+    var thumbnailViewModel: ThumbnailViewModel! {
+        didSet{
+            pageImageView1.image = thumbnailViewModel.image1
+            pageImageView2.image = thumbnailViewModel.image2
+            
+            if thumbnailViewModel.haveDoublePage {
+                updateDsignForDoublePages()
+                checkForImagesWithDoubleSplashSize()
+                pageImageView1.contentMode = .scaleAspectFill
+                pageImageView2.contentMode = .scaleAspectFill
+            }else{
+                updateDesignForSinglePage()
+                pageImageView1.contentMode = .scaleAspectFit
+            }
+        }
+    }
     
     var pageNumber: Int? {
         didSet{
@@ -30,7 +47,7 @@ class thumbnailCell: UICollectionViewCell {
     var isDoubleSplashPage = false {
         didSet{
             if isDoubleSplashPage {
-                checkForImageNills()
+                
             }
         }
     }
@@ -38,24 +55,7 @@ class thumbnailCell: UICollectionViewCell {
     var haveDoublePage : Bool = false {
         didSet{
             
-            if haveDoublePage {
-                
-                let widthConst = frame.width / 2
-                
-                imageHolderView.addSubview(pageImageView2)
-                pageImageView2.topAnchor.constraint(equalTo: imageHolderView.topAnchor).isActive = true
-                pageImageView2.bottomAnchor.constraint(equalTo: imageHolderView.bottomAnchor , constant: 0).isActive = true
-                pageImageView2leftConstraitInDoublePageMode = pageImageView2.leftAnchor.constraint(equalTo: imageHolderView.leftAnchor , constant: widthConst)
-                pageImageView2leftConstraitInDoublePageMode?.isActive = true
-                pageImageView2.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor).isActive = true
-                pageImageView1rightConstrait?.constant = -widthConst
-
-                
-            }else{
-                pageImageView2.removeFromSuperview()
-
-                pageImageView1rightConstrait?.constant = 0
-            }
+            
             
         }
     }
@@ -120,15 +120,42 @@ class thumbnailCell: UICollectionViewCell {
         pageImageView1rightConstrait = pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor)
         pageImageView1rightConstrait?.isActive = true
         
-//        pageImageView1rightConstraitInDoublePageMode = pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor, constant: -(bounds.width * 0.5))
+        //        pageImageView1rightConstraitInDoublePageMode = pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor, constant: -(bounds.width * 0.5))
     }
     
-    private func checkForImageNills(){
-        if pageImageView1.image == nil {
-            pageImageView2leftConstraitInDoublePageMode?.constant = 0
-        }
-        if pageImageView2.image == nil {
+    private func updateDsignForDoublePages(){
+        
+        let widthConst = frame.width / 2
+        
+        imageHolderView.addSubview(pageImageView2)
+        pageImageView2.topAnchor.constraint(equalTo: imageHolderView.topAnchor).isActive = true
+        pageImageView2.bottomAnchor.constraint(equalTo: imageHolderView.bottomAnchor , constant: 0).isActive = true
+        pageImageView2leftConstraitInDoublePageMode = pageImageView2.leftAnchor.constraint(equalTo: imageHolderView.leftAnchor , constant: widthConst)
+        pageImageView2leftConstraitInDoublePageMode?.isActive = true
+        pageImageView2.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor).isActive = true
+        pageImageView1rightConstrait?.constant = -widthConst
+    }
+    
+    private func updateDesignForSinglePage(){
+        pageImageView2.removeFromSuperview()
+        pageImageView1rightConstrait?.constant = 0
+    }
+    
+    override func layoutSubviews() {
+        imageHolderView.clipsToBounds = true
+        imageHolderView.layer.cornerRadius = 3
+    }
+    
+    func checkForImagesWithDoubleSplashSize(){
+        if thumbnailViewModel.imagesIsDoubleSplash.0 {
             pageImageView2leftConstraitInDoublePageMode?.constant = bounds.width
+            pageImageView1rightConstrait?.constant = 0
+            return
+        }
+        if thumbnailViewModel.imagesIsDoubleSplash.1 {
+            pageImageView2leftConstraitInDoublePageMode?.constant = 0
+            pageImageView1rightConstrait?.constant = -(bounds.width)
+            return
         }
     }
     

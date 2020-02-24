@@ -45,6 +45,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        //        let bookReaderVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "bookReader")
+        
+        if let navigationController = self.window?.rootViewController as? UINavigationController {
+            if navigationController.visibleViewController is BookReaderVC {
+                return .allButUpsideDown
+            }else{
+                return .portrait
+            }
+        }else{
+            return .portrait
+        }
+    }
+    
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {

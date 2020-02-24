@@ -30,7 +30,10 @@ class BookReaderVC: UIViewController {
     var bookPageViewController : UIPageViewController!
     var bookSingleImages : [ComicImage] = []
     var bookDoubleImages : [(ComicImage? , ComicImage?)] = []
-    var bookPages: [BookPage] = [] 
+    var bookPages: [BookPage] = []
+    
+    var thumbnailDoublePageViewModels: [ThumbnailViewModel] = []
+    var thumbnailSinglePageViewModels: [ThumbnailViewModel] = []
     
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
         didSet{
@@ -141,8 +144,10 @@ class BookReaderVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        setupDesign()
         setupPageController()
+        initSinglePageThumbnails()
+        initDoublePageThumbnails()
+        
         disappearMenus(animated: false)
         
         addGestures()
@@ -310,7 +315,7 @@ class BookReaderVC: UIViewController {
     
     func configureCurrentPageLabelText(forBookPageIndex index:Int) {
         
-        guard index < bookDoubleImages.count else { return }
+        guard index < bookDoubleImages.count, index >= 0 else { return }
         
         if deviceIsLandscaped {
             var text = ""

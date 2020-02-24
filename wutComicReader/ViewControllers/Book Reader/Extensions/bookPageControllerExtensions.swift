@@ -159,13 +159,14 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         //zoom out precious pages
-        guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
-        for page in previousPages {
-            page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
-        }
+//        guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
+//        for page in previousPages {
+//            page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
+//        }
         guard let pendingPages = (pendingViewControllers as? [BookPage]) else { return }
+        pendingPages.first?.centerTheImage()
         setLastViewedPageNumber(for: pendingPages[0])
-        
+//
         
     }
     
@@ -176,7 +177,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
             guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
             for page in previousPages {
                 let _ = bookPages.firstIndex(of: previousPages[0])
-                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
+                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: true)
             }
             
             
