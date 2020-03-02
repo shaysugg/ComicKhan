@@ -12,6 +12,17 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     var pageNumber: Int?
     
+    var image1: ComicImage? {
+        didSet{
+            pageImageView1.image = image1
+        }
+    }
+    var image2: ComicImage? {
+        didSet{
+            pageImageView2.image = image2
+        }
+    }
+    
     lazy var scrollView : UIScrollView = {
         let scrollview = UIScrollView()
         scrollview.showsVerticalScrollIndicator = false
@@ -100,6 +111,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         scrollView.backgroundColor = .appSystemSecondaryBackground
+        view.backgroundColor = .appSystemSecondaryBackground
         
         scrollView.addSubview(imagesContainerView)
         imageContainerViewLeftAnchor = imagesContainerView.leftAnchor.constraint(equalTo: scrollView.leftAnchor)

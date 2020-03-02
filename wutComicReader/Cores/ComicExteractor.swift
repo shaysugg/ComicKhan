@@ -21,7 +21,7 @@ enum ExtractorError : Error {
 
 
 protocol ExtractingProgressDelegate {
-    func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int)
+    func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int?)
     func percentChanged(to value: Double)
     func extractingProcessFinished()
 }
@@ -29,7 +29,7 @@ protocol ExtractingProgressDelegate {
 extension ExtractingProgressDelegate {
     func extractingProcessFinished(){}
     func percentChanged(to value: Double){}
-    func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int){}
+    func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int?){}
 }
 
 
@@ -97,36 +97,38 @@ class ComicExteractor: NSObject {
     }
     
     func extractUserComicsIntoComicDiractory() {
+        
+        let filePaths = FileManager.default.subpaths(atPath: self.appFileManager.userDiractory.path)
+        
+        let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)
+        let comicDiractoriesCount = try? FileManager.default.contentsOfDirectory(at: appFileManager.comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).count
+        let allCounts = comicPaths.count - (comicDiractoriesCount ?? 0)
+        
+        for path in comicPaths {
+            let comicName = NameofFile(fromFilePath: path)
+            let comicFormat = formatOfFile(fromFilePath: path)
             
-            let filePaths = FileManager.default.subpaths(atPath: self.appFileManager.userDiractory.path)
-            
-            let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)
-            
-            for path in comicPaths {
-                let comicName = NameofFile(fromFilePath: path)
-                let comicFormat = formatOfFile(fromFilePath: path)
+            if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
                 
-                if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
+                delegate?.newFileAboutToExtract(withName: comicName,
+                                                andNumber: comicPaths.firstIndex(of: path)! + 1,
+                                                inTotalFilesCount: allCounts > 0 ? allCounts : nil)
+                
+                do {
+                    if comicFormat == ".cbz" {
+                        try extractZIP(withFileName: comicName)
+                    }else if comicFormat == ".cbr" {
+                        try extractRAR(withFileName: comicName)
+                    }else{}
                     
-                    delegate?.newFileAboutToExtract(withName: comicName,
-                                                    andNumber: comicPaths.firstIndex(of: path)! + 1,
-                                                    inTotalFilesCount: comicPaths.count)
-                    
-                    do {
-                        if comicFormat == ".cbz" {
-                            try extractZIP(withFileName: comicName)
-                        }else if comicFormat == ".cbr" {
-                            try extractRAR(withFileName: comicName)
-                        }else{}
+                }catch let error{
+                    print("\(comicName) extract failed : \(error.localizedDescription)")
+                    if let _ = error as? ExtractorError {
                         
-                    }catch let error{
-                        print("\(comicName) extract failed : \(error.localizedDescription)")
-                        if let _ = error as? ExtractorError {
-                            
-                        }
                     }
                 }
             }
+        }
         delegate?.extractingProcessFinished()
         
     }

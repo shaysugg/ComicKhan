@@ -9,18 +9,38 @@
 import UIKit
 
 
+protocol BottomBarDelegate {
+    func newPageBeenSet(pageNumber: Int)
+}
+
+protocol TopBarDelegate {
+    func dismissViewController()
+}
+
+struct ConstraintsForSizeClasses {
+    var sharedConstaints: [NSLayoutConstraint] = []
+    
+    var CVCHConstaints: [NSLayoutConstraint] = []
+    var RVRHConstaints: [NSLayoutConstraint] = []
+    var CVRHConstaints: [NSLayoutConstraint] = []
+    var RVCHConstaints: [NSLayoutConstraint] = []
+    
+    var compactConstaints: [NSLayoutConstraint] = []
+    var regularConstraints: [NSLayoutConstraint] = []
+    
+}
+
 class BookReaderVC: UIViewController {
     
     //MARK:- Variables
     
-    var comicPagesCount: Int = 0
-    
     var comic : Comic? {
         didSet{
             guard let _ = comic else { return }
-            titleLabel.text = comic?.name
+//            topBar.titleLabel.text = comic?.name
         }
     }
+    
     
     var bookIndexInLibrary: IndexPath?
     
@@ -33,13 +53,19 @@ class BookReaderVC: UIViewController {
     var bookPages: [BookPage] = []
     
     var thumbnailDoublePageViewModels: [ThumbnailViewModel] = []
-    var thumbnailSinglePageViewModels: [ThumbnailViewModel] = []
+    var thumbnailViewModels: [ThumbnailViewModel] = []
+    
+    
+    private var compactConstaitns: [NSLayoutConstraint] = []
+    private var regularConstraint: [NSLayoutConstraint] = []
+    private var sharedConstraints: [NSLayoutConstraint] = []
     
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
         didSet{
-            thumbnailCollectionView.reloadData()
             setPageViewControllers()
-            updateBookReaderValues()
+            if let page = lastViewedPage {
+                setLastViewedPage(toPageWithNumber: page, withAnimate: false)
+            }
         }
     }
     
@@ -47,98 +73,35 @@ class BookReaderVC: UIViewController {
     
     //MARK:- UI Variables
     
-    lazy var thumbnailCollectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 12
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(thumbnailCell.self, forCellWithReuseIdentifier: "thumbnailCell")
-        collectionView.restorationIdentifier = "thumbnail"
-        collectionView.backgroundColor = .appSystemBackground
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.allowsSelection = true
-        collectionView.clipsToBounds = true
-        return collectionView
+    lazy var bottomBar: BottomBar = {
+       let bar = BottomBar()
+        bar.translatesAutoresizingMaskIntoConstraints = false
+        return bar
     }()
+    lazy var bottomBarConstraints = ConstraintsForSizeClasses()
     
-    lazy var pageSlider : UISlider = {
-        let slider = UISlider(frame: .zero)
-        slider.tintColor = .appBlueColor
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        slider.minimumValue = 1
-        slider.setValue(1, animated: false)
-        slider.setValue(1.00, animated: false)
-        slider.addTarget(self, action: #selector(sliderDidChanged), for: .valueChanged)
-        slider.addTarget(self, action: #selector(sliderDidFinishedChanging), for: .touchUpInside)
-        slider.addTarget(self, action: #selector(sliderDidFinishedChanging), for: .touchUpOutside)
-        slider.addTarget(self, action: #selector(sliderDidFinishedChanging), for: .touchCancel)
-        return slider
+    lazy var topBar: TopBar = {
+        let view = TopBar()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
+    lazy var topBarConstraint = ConstraintsForSizeClasses()
     
-    lazy var currentPageNumberLabel : UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: appFontRegular, size: 14)
-        label.textColor = .appSeconedlabelColor
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "1"
-        return label
-    }()
-    
-    lazy var comicPageNumberLabel : UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: appFontRegular, size: 14)
-        label.textColor = .appSeconedlabelColor
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "50"
-        return label
-    }()
-    
-    
-    lazy var titleLabel : UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: appFontRegular, size: 15)
-        label.text = "BLAH!"
-        label.textAlignment = .center
-        label.textColor = .appMainLabelColor
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var topBar: UIView = {
+    //this used for fill the space between topBar and top device edge in iphone X
+    lazy var topBarBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .appSystemBackground
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.makeDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 15)
         return view
     }()
-    
-    lazy var dismissButton : UIButton = {
-        let button = UIButton()
-        button.clipsToBounds = true
-        button.setImage( UIImage(named: "down") , for: .normal)
-        button.addTarget(self, action: #selector(closeTheVC), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    lazy var bottomView : UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        view.backgroundColor = .appSystemBackground
-        view.clipsToBounds = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    var bottomViewHeightConstrait: NSLayoutConstraint!
-    
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return !menusAreAppeard
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIDevice.current.orientation.isLandscape ?  .lightContent : .default
+    }
     
     //MARK:- Functions
     
@@ -146,17 +109,18 @@ class BookReaderVC: UIViewController {
         super.viewDidLoad()
         setupPageController()
         initSinglePageThumbnails()
-        initDoublePageThumbnails()
         
         disappearMenus(animated: false)
         
         addGestures()
+        setupDesign()
         
-        setupTopBar()
-        setupBottomViewDesign()
+        bottomBar.thumbnailDelegate = self
+        bottomBar.delegate = self
+        bottomBar.comicPagesCount = comic?.imageNames?.count ?? 1
+        topBar.delegate = self
+        topBar.title = comic?.name
         
-        thumbnailCollectionView.delegate = self
-        thumbnailCollectionView.dataSource = self
         
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
         
@@ -164,95 +128,133 @@ class BookReaderVC: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
+        if deviceType == .iPad {
+            layoutWith(traitCollection: UIScreen.main.traitCollection)
+        }
+//        
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+         layoutWith(traitCollection: UIScreen.main.traitCollection)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
-        
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0
-        updatePageSlider(with: Int(truncating: NSNumber(value: LastpageNumber)))
-        updateBookReaderValues()
-        
-        
+        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: false)
     }
     
     
     
-    func setupBottomViewDesign(){
+    func setupDesign(){
         
-        view.addSubview(bottomView)
-        bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 20).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: calculateBottomViewHeight()).isActive = true
+        view.addSubview(bottomBar)
+        
+        bottomBarConstraints.sharedConstaints.append(contentsOf: [
+            bottomBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        
+        let width = view.bounds.width
+        let height = view.bounds.height
+        
+        bottomBarConstraints.RVRHConstaints.append(contentsOf: [
+            bottomBar.widthAnchor.constraint(equalToConstant: (width > height ? width : height) / 2),
+            bottomBar.heightAnchor.constraint(equalToConstant: (width > height ? height : width) / 3),
+            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -30)
+        ])
+        
+        bottomBarConstraints.CVCHConstaints.append(contentsOf: [
+            bottomBar.widthAnchor.constraint(equalToConstant: (view.bounds.height * 2) / 3),
+            bottomBar.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
+        ])
+        
+        bottomBarConstraints.RVCHConstaints.append(contentsOf: [
+            bottomBar.widthAnchor.constraint(equalToConstant: view.bounds.width),
+            bottomBar.heightAnchor.constraint(equalToConstant: view.bounds.height / 3.8),
+            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 0)
+        ])
+        
+        bottomBarConstraints.CVRHConstaints.append(contentsOf: [
+            bottomBar.widthAnchor.constraint(equalToConstant: view.bounds.height / 2),
+            bottomBar.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
+        ])
         
         
-        bottomView.layer.cornerRadius = 20
-        bottomView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 25)
-        
-        bottomView.addSubview(pageSlider)
-        pageSlider.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.62).isActive = true
-        pageSlider.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor).isActive = true
-        pageSlider.bottomAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.bottomAnchor, constant: -35).isActive = true
-        
-        bottomView.addSubview(currentPageNumberLabel)
-        currentPageNumberLabel.centerYAnchor.constraint(equalTo: pageSlider.centerYAnchor, constant: 0).isActive = true
-        currentPageNumberLabel.rightAnchor.constraint(equalTo: pageSlider.leftAnchor, constant: -17).isActive = true
-        
-        bottomView.addSubview(comicPageNumberLabel)
-        comicPageNumberLabel.centerYAnchor.constraint(equalTo: pageSlider.centerYAnchor, constant: 0).isActive = true
-        comicPageNumberLabel.leftAnchor.constraint(equalTo: pageSlider.rightAnchor, constant: 17).isActive = true
-        
-        bottomView.addSubview(thumbnailCollectionView)
-        thumbnailCollectionView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20).isActive = true
-        thumbnailCollectionView.bottomAnchor.constraint(equalTo: pageSlider.topAnchor, constant: -5).isActive = true
-        thumbnailCollectionView.leftAnchor.constraint(equalTo: bottomView.leftAnchor, constant: 10).isActive = true
-        thumbnailCollectionView.rightAnchor.constraint(equalTo: bottomView.rightAnchor, constant: -10).isActive = true
-        
-    }
-    
-    func calculateBottomViewHeight() -> CGFloat{
-        var height :CGFloat?
-        switch deviceType {
-        case .iPad:
-            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3.5
-        case .smalliPhone:
-            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3.2
-        case .iPhone:
-            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3
-        case .iPhoneX:
-            height = (deviceIsLandscaped ? view.bounds.width : view.bounds.height) / 3
-        }
-        print("bounds height is : \(view.bounds.height)")
-        return height!
-    }
-    
-    func setupTopBar(){
         
         view.addSubview(topBar)
-        topBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        topBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        topBar.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -50).isActive = true
+        let topBarHeight = CGFloat(50)
         
-        topBar.addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 60).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: topBar.rightAnchor, constant: -30).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
+        topBarConstraint.sharedConstaints.append(contentsOf: [
+            topBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            topBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+            topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+        ])
         
-        topBar.addSubview(dismissButton)
-        dismissButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
-        dismissButton.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 20).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 27).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 27).isActive = true
-        dismissButton.clipsToBounds = true
+        topBarConstraint.compactConstaints.append(
+            topBar.heightAnchor.constraint(equalToConstant: (width > height ? height : width) / 5)
+        )
+        
+        topBarConstraint.regularConstraints.append(
+            topBar.heightAnchor.constraint(equalToConstant: topBarHeight)
+        )
         
         
+        NSLayoutConstraint.activate(topBarConstraint.sharedConstaints)
+        NSLayoutConstraint.activate(bottomBarConstraints.sharedConstaints)
+        
+        layoutWith(traitCollection: UIScreen.main.traitCollection)
+        
+        view.addSubview(topBarBackgroundView)
+        topBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topBarBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        topBarBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        topBarBackgroundView.bottomAnchor.constraint(equalTo: topBar.topAnchor).isActive = true
+//        view.sendSubviewToBack(topBarBackgroundView)
+        
+    }
+    
+    func layoutWith(traitCollection: UITraitCollection) {
+        let horizontal = traitCollection.horizontalSizeClass
+        let vertical = traitCollection.verticalSizeClass
+        
+        //bottomBar setup
+        
+        NSLayoutConstraint.deactivate(bottomBarConstraints.CVCHConstaints)
+        NSLayoutConstraint.deactivate(bottomBarConstraints.CVRHConstaints)
+        NSLayoutConstraint.deactivate(bottomBarConstraints.RVCHConstaints)
+        NSLayoutConstraint.deactivate(bottomBarConstraints.RVRHConstaints)
+        
+        if horizontal == .compact && vertical == .compact {
+            NSLayoutConstraint.activate(bottomBarConstraints.CVCHConstaints)
+        }else if horizontal == .compact && vertical == .regular {
+            NSLayoutConstraint.activate(bottomBarConstraints.RVCHConstaints)
+        }else if horizontal == .regular && vertical == .compact {
+            NSLayoutConstraint.activate(bottomBarConstraints.CVRHConstaints)
+        }else {
+            NSLayoutConstraint.activate(bottomBarConstraints.RVRHConstaints)
+        }
+        
+        //topBar setup
+        
+        NSLayoutConstraint.deactivate(topBarConstraint.compactConstaints)
+        NSLayoutConstraint.deactivate(topBarConstraint.regularConstraints)
+        
+        if UIDevice.current.orientation.isLandscape {
+            NSLayoutConstraint.activate(topBarConstraint.compactConstaints)
+        }else {
+            NSLayoutConstraint.activate(topBarConstraint.regularConstraints)
+        }
+        
+        //topBarBackground setup
+        
+        topBarBackgroundView.backgroundColor = UIDevice.current.orientation.isLandscape ? UIColor.black.withAlphaComponent(0.7) : .appSystemBackground
         
     }
     
@@ -269,119 +271,76 @@ class BookReaderVC: UIViewController {
         
     }
     
-    func setLastViewedPageNumber(for currentBookPage: BookPage) {
+    func setLastViewedPage(toPageWithNumber number: Int, withAnimate animate: Bool = true) {
         
-        if let image1Number = (currentBookPage.pageImageView1.image as? ComicImage)?.pageNumber {
-            lastViewedPage = bookSingleImages.firstIndex(where: {$0.pageNumber == image1Number})
-        }else if let image2Number = (currentBookPage.pageImageView2.image as? ComicImage)?.pageNumber {
-            lastViewedPage = bookSingleImages.firstIndex(where: {$0.pageNumber == image2Number})
+        let bookPage = bookPageViewController.viewControllers?.first as! BookPage
+        let page1Number = bookPage.image1?.pageNumber
+        let page2Number = bookPage.image2?.pageNumber
+        
+        if page1Number != number && page2Number != number {
+            
+            let pendingPage = bookPages.first {
+                return $0.image1?.pageNumber == number || $0.image2?.pageNumber == number
+            }
+            
+            if let _ = pendingPage {
+//                var diraction: UIPageViewController.NavigationDirection {
+//                    return page1Number < number ? .reverse : .forward
+//                }
+            bookPageViewController.setViewControllers([pendingPage!], direction: .forward, animated: animate, completion: nil)
+            }
+            
         }
         
+        //update bottomBar variables
+        if number != bottomBar.currentPage {
+            bottomBar.currentPage = number
+        }
+        
+        //update comic.lastvisitedPage
+        lastViewedPage = number
         if let _ = lastViewedPage {
             comic?.lastVisitedPage = Int16(lastViewedPage!)
         }
         
     }
     
-    func updateBookReaderValues(){
-        
-        let lastVisitedPage = Int(comic?.lastVisitedPage ?? 0)
-        let lastViewedBookPageIndex: Int?
-        
-        if deviceIsLandscaped {
-            lastViewedBookPageIndex = doublePageIndexForPage(withNumber: lastVisitedPage)
-        }else{
-            lastViewedBookPageIndex = lastVisitedPage
-        }
-        
-        
-        
-        if let _ = lastViewedBookPageIndex {
-            thumbnailCollectionView.selectItem(at: IndexPath(row: lastViewedBookPageIndex!, section: 0), animated: false, scrollPosition: .centeredHorizontally)
-            bookPageViewController.setViewControllers([bookPages[lastViewedBookPageIndex!]], direction: .forward, animated: false, completion: nil)
-            
-            pageSlider.minimumValue = 1.0
-            pageSlider.setValue(Float(lastViewedBookPageIndex!), animated: false)
-            pageSlider.maximumValue = Float(bookPages.count)
-            
-            comicPageNumberLabel.text = "\(bookSingleImages.count)"
-            configureCurrentPageLabelText(forBookPageIndex: lastViewedBookPageIndex!)
-            
-            
-            
-            
-        }
-    }
+//    func updateBookReaderValues(){
+//
+//        let lastVisitedPage = Int(comic?.lastVisitedPage ?? 0)
+//        let lastViewedBookPageIndex: Int?
+//
+//        if deviceIsLandscaped {
+//            lastViewedBookPageIndex = doublePageIndexForPage(withNumber: lastVisitedPage)
+//        }else{
+//            lastViewedBookPageIndex = lastVisitedPage
+//        }
+//
+//
+//
+//        if let _ = lastViewedBookPageIndex {
+////            thumbnailCollectionView.selectItem(at: IndexPath(row: lastViewedBookPageIndex!, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+//            bookPageViewController.setViewControllers([bookPages[lastViewedBookPageIndex!]], direction: .forward, animated: false, completion: nil)
+//
+////            pageSlider.minimumValue = 1.0
+////            pageSlider.setValue(Float(lastViewedBookPageIndex!), animated: false)
+////            pageSlider.maximumValue = Float(bookPages.count)
+//
+////            comicPageNumberLabel.text = "\(bookSingleImages.count)"
+////            configureCurrentPageLabelText(forBookPageIndex: lastViewedBookPageIndex!)
+//
+//
+//
+//
+//        }
+//    }
     
-    func configureCurrentPageLabelText(forBookPageIndex index:Int) {
-        
-        guard index < bookDoubleImages.count, index >= 0 else { return }
-        
-        if deviceIsLandscaped {
-            var text = ""
-            if let page1Number = bookDoubleImages[index].0?.pageNumber {
-                text = String(page1Number + 1)
-            }
-            if let page2Number = bookDoubleImages[index].1?.pageNumber {
-                if let _ = bookDoubleImages[index].0?.pageNumber {
-                    text.append("-\(page2Number + 1)")
-                }else{
-                     text.append("\(page2Number + 1)")
-                }
-            }
-            currentPageNumberLabel.text = text
-        }else{
-            currentPageNumberLabel.text = String(index + 1)
-        }
-        
-    }
     
     @objc func zoomBookCurrentPage() {
         let currentPage = bookPageViewController.viewControllers?.first as? BookPage
         currentPage?.zoomWithDoubleTap()
         
     }
-    
-    
-    @objc func closeTheVC(){
-        if let page = lastViewedPage {
-            
-            comic?.lastVisitedPage = Int16(page)
-            let context = AppFileManager().managedContext
-            try? context?.save()
-        }
-        NotificationCenter.default.post(name: .reloadLibraryAtIndex, object: bookIndexInLibrary)
-        dismiss(animated: false, completion: nil)
-    }
-    
-    
-    
-    
-    //MARK:- Page Slider Functions
-    
-    func updatePageSlider(with value: Int){
-        pageSlider.setValue(Float(value), animated: true)
-        configureCurrentPageLabelText(forBookPageIndex: value - 1)
-    }
-    
-    @objc func sliderDidChanged(){
-        let value = Int(pageSlider.value)
-        
-        thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
-        configureCurrentPageLabelText(forBookPageIndex: value - 1)
-    }
-    
-    @objc func sliderDidFinishedChanging(){
-        let value = Int(pageSlider.value)
-        thumbnailCollectionView.selectItem(at: IndexPath(row: value - 1, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-        let pendingPage = bookPages[value - 1]
-        pendingPage.scrollView.setZoomScale(pendingPage.scrollView.minimumZoomScale, animated: false)
-        bookPageViewController.setViewControllers([pendingPage], direction: .forward, animated: true, completion: nil)
-        setLastViewedPageNumber(for: bookPages[value - 1])
-        
-    }
-    
-    
     
     //MARK:- Menues Appearing Handeling
     
@@ -396,69 +355,64 @@ class BookReaderVC: UIViewController {
     
     
     func disappearMenus(animated: Bool) {
+        menusAreAppeard = false
+        self.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-                self.titleLabel.alpha = 0.0
-                self.dismissButton.alpha = 0.0
                 self.topBar.alpha = 0.0
-                
-                
-                self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-                self.bottomView.alpha = 0.1
-            }) { (_) in
-                self.titleLabel.alpha = 0.0
-                self.dismissButton.alpha = 0.0
-                self.topBar.alpha = 0.0
-                
-                self.bottomView.transform = CGAffineTransform(translationX: 0, y: self.bottomView.frame.height)
-                self.bottomView.alpha = 0.1
-                self.menusAreAppeard = false
-            }
+                self.topBarBackgroundView.alpha = 0
+                self.bottomBar.transform = CGAffineTransform(translationX: 0, y: self.bottomBar.frame.height + 30)
+                self.bottomBar.alpha = 0.1
+            }, completion: nil)
         }else{
-            self.titleLabel.alpha = 0.0
-            self.dismissButton.alpha = 0.0
-            self.topBar.alpha = 0.0
-            
-            self.bottomView.transform = CGAffineTransform(translationX: 0, y: 500)
-            self.bottomView.alpha = 0.0
-            menusAreAppeard = false
+            topBar.alpha = 0.0
+            topBarBackgroundView.alpha = 0
+            bottomBar.transform = CGAffineTransform(translationX: 0, y: bottomBar.frame.height + 30)
+            bottomBar.alpha = 0.0
         }
-        
     }
     
     func appearMenus(animated: Bool) {
+        menusAreAppeard = true
+        self.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-                self.titleLabel.alpha = 1
-                self.dismissButton.alpha = 1
                 self.topBar.alpha = 1
-                
-                self.bottomView.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.bottomView.alpha = 1
-            }) { (_) in
-                self.titleLabel.alpha = 1
-                self.dismissButton.alpha = 1
-                self.topBar.alpha = 1
-                
-                self.bottomView.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.bottomView.alpha = 1
-                self.menusAreAppeard = true
-            }
+                self.bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.bottomBar.alpha = 1
+                self.topBarBackgroundView.alpha = 1
+            }, completion: nil)
         }else{
-            self.titleLabel.alpha = 1
-            self.dismissButton.alpha = 1
-            self.topBar.alpha = 1
-            
-            self.bottomView.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.bottomView.alpha = 1
-            menusAreAppeard = true
+            topBar.alpha = 1
+            topBarBackgroundView.alpha = 1
+            bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
+            bottomBar.alpha = 1
         }
-        
     }
     
     
     
 }
 
+extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
+    func dismissViewController() {
+        
+        if let page = lastViewedPage {
+            
+            comic?.lastVisitedPage = Int16(page)
+            let context = AppFileManager().managedContext
+            try? context?.save()
+        }
+        NotificationCenter.default.post(name: .reloadLibraryAtIndex, object: bookIndexInLibrary)
+        dismiss(animated: false, completion: nil)
+        
+    }
+    
+    func newPageBeenSet(pageNumber: Int) {
+        setLastViewedPage(toPageWithNumber: pageNumber)
+    }
+    
+    
+}
 
 

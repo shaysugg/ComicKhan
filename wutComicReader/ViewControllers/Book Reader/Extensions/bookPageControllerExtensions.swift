@@ -33,7 +33,7 @@ extension BookReaderVC {
         guard let comicPages = comic?.imageNames else { return }
         for comicPage in comicPages {
             let bookPageImage = ComicImage(comic, withImageName: comicPage) ?? ComicImage()
-            bookPageImage.pageNumber = comicPages.firstIndex(of: comicPage)
+            bookPageImage.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
             bookSingleImages.append(bookPageImage)
         }
         
@@ -49,7 +49,7 @@ extension BookReaderVC {
         for comicPage in comicPages {
             let index = comicPages.firstIndex(of: comicPage)!
             let image = ComicImage(comic, withImageName: comicPage) ?? ComicImage()
-            image.pageNumber = comicPages.firstIndex(of: comicPage)
+            image.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
             
             if isImageInDoubleSplashSize(image) {
                 if index.isMultiple(of: 2) {
@@ -93,8 +93,8 @@ extension BookReaderVC {
                 let bookPage = BookPage()
                 
                 bookPage.pageNumber = bookDoubleImages.firstIndex(where: { $0 == bookImages })
-                bookPage.pageImageView1.image = bookImages.0
-                bookPage.pageImageView2.image = bookImages.1
+                bookPage.image1 = bookImages.0
+                bookPage.image2 = bookImages.1
                 
                 bookPages.append(bookPage)
             }
@@ -102,7 +102,7 @@ extension BookReaderVC {
             for bookImage in bookSingleImages {
                 let bookPage = BookPage()
                 bookPage.pageNumber = bookSingleImages.firstIndex(where: { $0 == bookImage })
-                bookPage.pageImageView1.image = bookImage
+                bookPage.image1 = bookImage
                 
                 bookPages.append(bookPage)
             }
@@ -131,8 +131,6 @@ extension BookReaderVC {
 extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController:
         UIViewController) -> UIViewController? {
-        
-        
         
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index < bookPages.count - 1 {
@@ -165,7 +163,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
 //        }
         guard let pendingPages = (pendingViewControllers as? [BookPage]) else { return }
         pendingPages.first?.centerTheImage()
-        setLastViewedPageNumber(for: pendingPages[0])
+        setLastViewedPage(toPageWithNumber: pendingPages.first?.image1?.pageNumber ?? 0)
 //
         
     }
@@ -186,10 +184,10 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
             
             guard let pendingPage = pageViewController.viewControllers?[0] as? BookPage else { return }
             guard let pendingIndex = bookPages.firstIndex(of: pendingPage) else { return }
-            thumbnailCollectionView.selectItem(at: IndexPath(row: pendingIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-            
-            pageSlider.setValue(Float(pendingIndex + 1), animated: true)
-            currentPageNumberLabel.text = String (pendingIndex + 1)
+//            thumbnailCollectionView.selectItem(at: IndexPath(row: pendingIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+//            
+//            pageSlider.setValue(Float(pendingIndex + 1), animated: true)
+//            currentPageNumberLabel.text = String (pendingIndex + 1)
             
             
         }

@@ -20,33 +20,37 @@ enum fileManagerError : Error {
 
 class AppFileManager {
     
+    //MARK:- Variables
+    
     var comicDirectory : URL!
     var userDiractory : URL!
+    private var fileManager = FileManager.default
     internal var managedContext : NSManagedObjectContext?
     var comicDiractoryName = "ComicFiles"
     
+    //MARK:- Functions
     
     init() {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         managedContext = appDelegate?.persistentContainer.viewContext
         
-        userDiractory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        userDiractory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         
-        let documentDir = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+        let documentDir = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
         comicDirectory = documentDir.appendingPathComponent(comicDiractoryName)
     }
     
     
     func deleteFileInTheUserDiractory(withName fileName : String) throws{
-        if FileManager.default.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbz") {
-            try FileManager.default.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbz"))
-        }else if FileManager.default.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbr") {
-            try FileManager.default.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbr"))
+        if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbz") {
+            try fileManager.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbz"))
+        }else if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbr") {
+            try fileManager.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbr"))
         }
     }
     
     func deleteFileInTheAppDiractory(withName fileName : String) throws{
-        try FileManager.default.removeItem(at: comicDirectory.appendingPathComponent(fileName))
+        try fileManager.removeItem(at: comicDirectory.appendingPathComponent(fileName))
     }
     
     //write extracted comics in the comic diractory on core data
@@ -57,10 +61,10 @@ class AppFileManager {
         guard let context = managedContext else { return }
         
         do{
-            let comicDiractories = try FileManager.default.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            let comicDiractories = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             
             for diractory in comicDiractories {
-                guard let diractorySubPath = FileManager.default.subpaths(atPath: diractory.path) else {return}
+                guard let diractorySubPath = fileManager.subpaths(atPath: diractory.path) else {return}
                 
                 let comicName = makeComicNameFromPath(path: diractory.path)
                 
@@ -97,11 +101,11 @@ class AppFileManager {
        
     func syncRemovedComicsInUserDiracory() {
         
-        guard let filePaths = FileManager.default.subpaths(atPath: userDiractory.path) else { return }
+        guard let filePaths = fileManager.subpaths(atPath: userDiractory.path) else { return }
         //removing format with drop 4 characters in path
         let userDiractoryfilePaths = filePaths.map({$0.dropLast(4)})
         
-        let comicDiractoriesPaths = try? FileManager.default.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
+        let comicDiractoriesPaths = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
         
         
         for path in comicDiractoriesPaths ?? [] {
@@ -111,6 +115,36 @@ class AppFileManager {
                 try? deleteFileInTheAppDiractory(withName: comicName)
             }
         }
+    }
+    
+    func didNewFileAddedToUserDiractory() -> Bool{
+        let userFilePaths = FileManager.default.subpaths(atPath: userDiractory.path)
+        let userComicPaths = filterFilesWithAcceptedFormat(infilePaths: userFilePaths)
+        
+        do {
+            let documentComics = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            return userComicPaths.count > documentComics.count
+        }catch{
+            return false
+        }
+        
+    }
+    
+    //MARK:- private Functions
+    
+    private func filterFilesWithAcceptedFormat(infilePaths paths: [String]?) -> [String] {
+        
+        let acceptedFiles = paths?.filter { (path) -> Bool in
+            guard let dotIndex = path.lastIndex(of: ".") else { return false }
+            let endIndex = path.endIndex
+            let range = dotIndex..<endIndex
+            let formatName = path.substring(with:range)
+            let acceptedFormats = [".cbr" , ".cbz" , ".pdf"]
+            return acceptedFormats.contains(formatName)
+        }
+        
+        return acceptedFiles ?? []
+        
     }
     
         
@@ -175,13 +209,13 @@ class AppFileManager {
     }
     
     func makeAppDirectory() throws{
-        try FileManager.default.createDirectory(at: comicDirectory, withIntermediateDirectories: true, attributes: nil)
+        try fileManager.createDirectory(at: comicDirectory, withIntermediateDirectories: true, attributes: nil)
     }
     
     func DidComicAlreadyExistInComicDiractory(name: String) -> Bool {
         do
         {
-            let appDirectoryComics = try FileManager.default.contentsOfDirectory(atPath: comicDirectory.path)
+            let appDirectoryComics = try fileManager.contentsOfDirectory(atPath: comicDirectory.path)
             return appDirectoryComics.contains(name)
         }catch{
             return false

@@ -52,9 +52,9 @@ extension UIColor {
         if #available(iOS 13.0, *) {
                 return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
                     if UITraitCollection.userInterfaceStyle == .dark {
-                        return .systemFill
+                        return .systemBackground
                     }else{
-                        return .secondarySystemFill
+                        return .secondarySystemBackground
                     }
                 }
         }else{
@@ -70,14 +70,33 @@ extension UIColor {
         }
     }
     
-    static var appShadowColor : UIColor {
+    static var appProgressColor : UIColor = {
         if #available(iOS 13.0, *) {
-            return .black
+            return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                if UITraitCollection.userInterfaceStyle == .dark {
+                    return #colorLiteral(red: 0.03297975659, green: 0.1976064146, blue: 0.2944883406, alpha: 1)
+                }else{
+                    return #colorLiteral(red: 0.4221869409, green: 0.6506024003, blue: 0.8026198745, alpha: 1)
+                }
+            }
         }else{
-            return #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+             return #colorLiteral(red: 0.03297975659, green: 0.1976064146, blue: 0.2944883406, alpha: 1)
         }
-    }
+    }()
     
+    static var appTrackProgressColor : UIColor = {
+           if #available(iOS 13.0, *) {
+               return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
+                   if UITraitCollection.userInterfaceStyle == .dark {
+                       return #colorLiteral(red: 0.2186438143, green: 0.4104945064, blue: 0.5327916145, alpha: 1)
+                   }else{
+                       return #colorLiteral(red: 0.03621871024, green: 0.1935892105, blue: 0.2905158401, alpha: 1)
+                   }
+               }
+           }else{
+                return #colorLiteral(red: 0.03297975659, green: 0.1976064146, blue: 0.2944883406, alpha: 1)
+           }
+       }()
     
     static let appBlueColor = UIColor(named: "appBlueColor")
 }

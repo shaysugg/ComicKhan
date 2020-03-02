@@ -172,6 +172,7 @@
                         <outlet property="deleteBarButton" destination="NVu-bz-Pkk" id="W1v-uP-bei"/>
                         <outlet property="editBarButton" destination="cal-73-qjM" id="BTy-0j-UfQ"/>
                         <outlet property="groupBarButton" destination="4Gm-Z8-lu9" id="uAY-o7-Ykm"/>
+                        <outlet property="refreshButton" destination="WTB-XT-6c4" id="z0f-m4-JZw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

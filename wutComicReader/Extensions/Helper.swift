@@ -15,7 +15,7 @@ import AVFoundation
 extension UIView {
     
     func makeDropShadow(scale: Bool = true , shadowOffset: CGSize , opacity: Float, radius: Int) {
-        layer.shadowColor = UIColor.appShadowColor.cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = shadowOffset
         layer.shadowRadius = 5
         layer.shadowOpacity = opacity
