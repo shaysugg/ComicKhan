@@ -21,7 +21,7 @@ class LibraryVC: UIViewController {
             
         }
     }
-    var collectionViewCellSize: CGSize?
+    var collectionViewCellSize: CGSize!
     
     let appfileManager = AppFileManager()
     let comicExtractor = ComicExteractor()
@@ -80,6 +80,8 @@ class LibraryVC: UIViewController {
         progressConteiner.translatesAutoresizingMaskIntoConstraints = false
         return progressConteiner
     }()
+    var progressContainerHideTopConstrait: NSLayoutConstraint!
+    var progressContainerAppearedTopConstrait: NSLayoutConstraint!
     
     
     
@@ -97,7 +99,7 @@ class LibraryVC: UIViewController {
             }
         }
         
-        
+        configureCellSize(basedOn: UIScreen.main.traitCollection)
         fetchGroupComics()
         bookCollectionView.allowsMultipleSelection = true
         setUpDesigns()
@@ -117,11 +119,9 @@ class LibraryVC: UIViewController {
         }
     }
     
-//     override func viewWillAppear(_ animated: Bool) {
-//        appDelegate.deviceOrientation = .landscapeLeft
-//        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-//        UIDevice.current.setValue(value, forKey: "orientation")
-//    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureCellSize(basedOn: UIScreen.main.traitCollection)
+    }
     
     func setUpDesigns(){
         
@@ -196,6 +196,28 @@ class LibraryVC: UIViewController {
         
         
         
+    }
+    
+    func configureCellSize(basedOn traitcollection: UITraitCollection) {
+        let h = traitCollection.horizontalSizeClass
+        let v = traitCollection.verticalSizeClass
+        
+        let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
+        let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
+        
+        var collectionViewCellWidth: CGFloat {
+            if h == .regular && v == .compact {
+                return larg / 8
+            }else if h == .compact && v == .regular {
+                return short / 4
+            }else if h == .compact && v == .compact {
+                return larg / 6
+            }else {
+                return larg / 9
+            }
+        }
+        
+        collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.7)
     }
     
     @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
@@ -441,48 +463,3 @@ class LibraryVC: UIViewController {
     
 }
 
-//MARK:- collectionView functions
-
-
-
-//extension LibraryVC: CellsEditableWithSectionDelegate {
-//    func selectCellsOfSection(with indexSet: Int) {
-//        guard let comicCount = comicGroups[indexSet].comics?.count, comicCount > 1 else { return }
-//
-//        if !selectedSection.contains(indexSet){
-//            selectedSection.append(indexSet)
-//            bookCollectionView.reloadSections(IndexSet(arrayLiteral: indexSet))
-//        }
-//
-//        for indexRow in 0 ..< comicCount {
-//            let cell = bookCollectionView.cellForItem(at: IndexPath(item: indexRow, section: indexSet))
-//            cell?.isSelected = true
-//        }
-//
-////        let reusableView = bookCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: indexSet)) as! LibraryReusableView
-//
-//
-//    }
-//
-//    func diSelectCellsOfSection(with indexSet: Int) {
-//        guard let comicCount = comicGroups[indexSet].comics?.count, comicCount > 1 else { return }
-//
-//        if selectedSection.contains(indexSet){
-//            selectedSection.remove(at: indexSet)
-//            bookCollectionView.reloadSections(IndexSet(arrayLiteral: indexSet))
-//        }
-//
-//        for indexRow in 0...(comicCount - 1) {
-//           let cell = bookCollectionView.cellForItem(at: IndexPath(item: indexRow, section: indexSet))
-//            cell?.isSelected = false
-//        }
-//
-////        let reusableView = bookCollectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: indexSet)) as! LibraryReusableView
-////
-//
-//    }
-//
-//
-//
-    
-//}

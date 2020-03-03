@@ -47,7 +47,6 @@ class ComicExteractor: NSObject {
             
             do{
                 try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
-//                try FileManager.default.unzipItem(at: zipFileURL, to: extractedComicURL)
                 try Zip.unzipFile(zipFileURL, destination: extractedComicURL, overwrite: true, password: nil, progress: { percent in
                     self.delegate?.percentChanged(to: percent)
                 })
@@ -91,7 +90,6 @@ class ComicExteractor: NSObject {
         if keyPath == keyPathToObserve {
             if let percent = rarExtractingProgress?.fractionCompleted {
                 delegate?.percentChanged(to: percent)
-//                print("Extraction Progress: \(extractProgress?.fractionCompleted)")
             }
         }
     }
@@ -107,11 +105,12 @@ class ComicExteractor: NSObject {
         for path in comicPaths {
             let comicName = NameofFile(fromFilePath: path)
             let comicFormat = formatOfFile(fromFilePath: path)
+            var counter = 1
             
             if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
                 
                 delegate?.newFileAboutToExtract(withName: comicName,
-                                                andNumber: comicPaths.firstIndex(of: path)! + 1,
+                                                andNumber: counter,
                                                 inTotalFilesCount: allCounts > 0 ? allCounts : nil)
                 
                 do {
@@ -128,6 +127,7 @@ class ComicExteractor: NSObject {
                     }
                 }
             }
+            counter += 1
         }
         delegate?.extractingProcessFinished()
         

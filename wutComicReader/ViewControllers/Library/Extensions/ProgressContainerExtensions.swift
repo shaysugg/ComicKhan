@@ -17,9 +17,11 @@ extension LibraryVC {
             view.alpha = 0
         })
         progressContainer.isHidden = false
+        progressContainerHideTopConstrait.isActive = false
+        progressContainerAppearedTopConstrait.isActive = true
         
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
-            self.progressContainer.transform = CGAffineTransform(translationX: 0, y: self.progressContainer.bounds.height * 1.5)
+            self.view.layoutSubviews()
         }, completion: nil)
         
         
@@ -27,16 +29,28 @@ extension LibraryVC {
     
     func setUpProgressBarDesign(){
         view.addSubview(progressContainer)
-        progressContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        progressContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: -100).isActive = true
+        progressContainer.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10).isActive = true
         progressContainer.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        progressContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        progressContainer.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
+        
+        progressContainerHideTopConstrait = progressContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: -100)
+        if let navBottomAnchor = navigationController?.navigationBar.topAnchor {
+        progressContainerAppearedTopConstrait = progressContainer.topAnchor.constraint(equalTo: navBottomAnchor, constant: 10)
+        }else {
+            progressContainerAppearedTopConstrait = progressContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
+        }
+        
+        progressContainerHideTopConstrait.isActive = true
     }
     
     func removeProgressView() {
         
+        progressContainerAppearedTopConstrait.isActive = false
+        progressContainerHideTopConstrait.isActive = true
+        
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-            self.progressContainer.transform = CGAffineTransform(translationX: 0, y: 0)
+//            self.progressContainer.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.layoutSubviews()
         }, completion: { _ in
             self.progressContainer.isHidden = true
             self.navigationController?.navigationBar.subviews.forEach({ view in

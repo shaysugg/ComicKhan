@@ -49,7 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        let bookReaderVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "bookReader")
         
         if let navigationController = self.window?.rootViewController as? UINavigationController {
-            if navigationController.visibleViewController is BookReaderVC {
+            if navigationController.visibleViewController is BookReaderVC ||
+            navigationController.visibleViewController is LibraryVC {
                 return .allButUpsideDown
             }else{
                 return .portrait

@@ -45,11 +45,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if let size = collectionViewCellSize {
-            return size
-        }else{
-            return CGSize(width: collectionView.frame.width / 3.9, height: collectionView.frame.width / 2.3)
-        }
+        return collectionViewCellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -159,30 +159,30 @@ class BookReaderVC: UIViewController {
             bottomBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
-        let width = view.bounds.width
-        let height = view.bounds.height
+        let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
+        let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
         
         bottomBarConstraints.RVRHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: (width > height ? width : height) / 2),
-            bottomBar.heightAnchor.constraint(equalToConstant: (width > height ? height : width) / 3),
+            bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
+            bottomBar.heightAnchor.constraint(equalToConstant: short / 3),
             bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -30)
         ])
         
         bottomBarConstraints.CVCHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: (view.bounds.height * 2) / 3),
-            bottomBar.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            bottomBar.widthAnchor.constraint(equalToConstant: (larg * 2) / 3),
+            bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
             bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
         ])
         
         bottomBarConstraints.RVCHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: view.bounds.width),
-            bottomBar.heightAnchor.constraint(equalToConstant: view.bounds.height / 3.8),
+            bottomBar.widthAnchor.constraint(equalToConstant: short),
+            bottomBar.heightAnchor.constraint(equalToConstant: larg / 3.8),
             bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 0)
         ])
         
         bottomBarConstraints.CVRHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: view.bounds.height / 2),
-            bottomBar.heightAnchor.constraint(equalToConstant: view.bounds.width / 2),
+            bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
+            bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
             bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
         ])
         
@@ -198,7 +198,7 @@ class BookReaderVC: UIViewController {
         ])
         
         topBarConstraint.compactConstaints.append(
-            topBar.heightAnchor.constraint(equalToConstant: (width > height ? height : width) / 5)
+            topBar.heightAnchor.constraint(equalToConstant: short / 5)
         )
         
         topBarConstraint.regularConstraints.append(

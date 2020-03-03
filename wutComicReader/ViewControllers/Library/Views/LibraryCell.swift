@@ -35,7 +35,6 @@ class LibraryCell: UICollectionViewCell {
     lazy var readProgressView: CircleProgressView = {
         let progressView = CircleProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.progressCircleColor = UIColor.appBlueColor?.cgColor
         return progressView
     }()
     
@@ -61,8 +60,6 @@ class LibraryCell: UICollectionViewCell {
         bookCoverImageView.clipsToBounds = true
         whiteView.layer.cornerRadius = 4
         whiteView.clipsToBounds = true
-        
-        
         self.clipsToBounds = false
     }
     
@@ -71,6 +68,10 @@ class LibraryCell: UICollectionViewCell {
         selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
         setUpDesign()
         addReadProgressView()
+    }
+    
+    override func layoutSubviews() {
+        readProgressView.progressCircleColor = UIColor.appBlueColor?.cgColor
     }
     
     
