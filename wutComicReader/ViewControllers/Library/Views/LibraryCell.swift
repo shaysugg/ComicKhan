@@ -97,8 +97,8 @@ class LibraryCell: UICollectionViewCell {
         addSubview(readProgressView)
         readProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: 2.5).isActive = true
         readProgressView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2.5).isActive = true
-        readProgressView.widthAnchor.constraint(equalToConstant: 18).isActive = true
-        readProgressView.heightAnchor.constraint(equalToConstant: 18).isActive = true
+        readProgressView.widthAnchor.constraint(equalToConstant: bounds.width / 8).isActive = true
+        readProgressView.heightAnchor.constraint(equalToConstant: bounds.width / 8).isActive = true
         
         readProgressView.makeDropShadow(shadowOffset: .zero, opacity: 0.7, radius: 1)
         

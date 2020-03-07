@@ -117,13 +117,13 @@ class AppFileManager {
         }
     }
     
-    func didNewFileAddedToUserDiractory() -> Bool{
+    func didUserDiractoryChanged() -> Bool{
         let userFilePaths = FileManager.default.subpaths(atPath: userDiractory.path)
         let userComicPaths = filterFilesWithAcceptedFormat(infilePaths: userFilePaths)
         
         do {
             let documentComics = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            return userComicPaths.count > documentComics.count
+            return userComicPaths.count != documentComics.count
         }catch{
             return false
         }

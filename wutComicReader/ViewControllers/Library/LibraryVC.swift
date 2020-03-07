@@ -57,6 +57,7 @@ class LibraryVC: UIViewController {
     
     let refreshControll = UIRefreshControl()
     
+    @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet weak var bottomBar: UIToolbar!
     @IBOutlet var groupBarButton: UIBarButtonItem!
@@ -106,17 +107,20 @@ class LibraryVC: UIViewController {
         bookCollectionView.reloadData()
         setupPullToRefresh()
         comicExtractor.delegate = self
+            
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchGroupComics), name: .newGroupAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
         print(NSHomeDirectory())
         
+//        refreshButton.image = nil
+        
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if appfileManager.didNewFileAddedToUserDiractory() {
-             
-        }
+        refreshUIIfNewComicAdded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -243,10 +247,16 @@ class LibraryVC: UIViewController {
     //MARK:- actions
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
-        syncComics {
-            self.fetchNewComics()
-            self.bookCollectionView.reloadData()
-            self.refreshControll.endRefreshing()
+        bookCollectionView.setContentOffset(CGPoint(x: 0, y: -(refreshControll.frame.size.height)), animated: true)
+        syncComics { [weak self] in
+            self?.fetchNewComics()
+            self?.bookCollectionView.reloadData()
+            self?.refreshControll.endRefreshing()
+            self?.refreshButton.tintColor = .appSecondaryLabel
+            self?.refreshButton.image = UIImage(named: "refresh")
+            
+            self?.bookCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            
         }
         
     }
@@ -337,6 +347,12 @@ class LibraryVC: UIViewController {
     
     
     //MARK:- file functions
+    
+    func refreshUIIfNewComicAdded() {
+        if appfileManager.didUserDiractoryChanged() {
+        refreshButton.image = UIImage(named: "refreshHighlited")?.withRenderingMode(.alwaysOriginal)
+        }
+    }
     
     func deleteAllComics(){
         guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }

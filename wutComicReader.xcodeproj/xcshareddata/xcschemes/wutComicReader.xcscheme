@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E40C7A9822A1168C00D7CD17"
-               BuildableName = "wutComicReader.app"
+               BuildableName = "ComicKhan.app"
                BlueprintName = "wutComicReader"
                ReferencedContainer = "container:wutComicReader.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E40C7A9822A1168C00D7CD17"
-            BuildableName = "wutComicReader.app"
+            BuildableName = "ComicKhan.app"
             BlueprintName = "wutComicReader"
             ReferencedContainer = "container:wutComicReader.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E40C7A9822A1168C00D7CD17"
-            BuildableName = "wutComicReader.app"
+            BuildableName = "ComicKhan.app"
             BlueprintName = "wutComicReader"
             ReferencedContainer = "container:wutComicReader.xcodeproj">
          </BuildableReference>

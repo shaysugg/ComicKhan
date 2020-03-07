@@ -68,7 +68,7 @@
 		E407CB8423FD3DD80056F64D /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		E40A353223F97C83006FA758 /* ProgressContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressContainerExtensions.swift; sourceTree = "<group>"; };
 		E40C0EB123944A8200D2E561 /* AppFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFileManager.swift; sourceTree = "<group>"; };
-		E40C7A9922A1168C00D7CD17 /* wutComicReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wutComicReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E40C7A9922A1168C00D7CD17 /* ComicKhan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComicKhan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40C7A9C22A1168C00D7CD17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryVC.swift; sourceTree = "<group>"; };
 		E40C7AA122A1168C00D7CD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		E40C7A9A22A1168C00D7CD17 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E40C7A9922A1168C00D7CD17 /* wutComicReader.app */,
+				E40C7A9922A1168C00D7CD17 /* ComicKhan.app */,
 				E4EBEDCC23DD7C49000B317D /* coreTests.xctest */,
 			);
 			name = Products;
@@ -381,7 +381,7 @@
 			);
 			name = wutComicReader;
 			productName = wutComicReader;
-			productReference = E40C7A9922A1168C00D7CD17 /* wutComicReader.app */;
+			productReference = E40C7A9922A1168C00D7CD17 /* ComicKhan.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E4EBEDCB23DD7C49000B317D /* coreTests */ = {
@@ -752,7 +752,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.wutup.wutComicReader;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ComicKhan;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -773,7 +773,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.wutup.wutComicReader;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ComicKhan;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

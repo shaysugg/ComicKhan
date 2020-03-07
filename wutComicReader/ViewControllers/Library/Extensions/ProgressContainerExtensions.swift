@@ -12,10 +12,9 @@ import UIKit
 extension LibraryVC {
     
     func showProgressView() {
+        editBarButton.title = ""
+        navigationItem.setRightBarButtonItems([editBarButton], animated: true)
         
-        navigationController?.navigationBar.subviews.forEach({ view in
-            view.alpha = 0
-        })
         progressContainer.isHidden = false
         progressContainerHideTopConstrait.isActive = false
         progressContainerAppearedTopConstrait.isActive = true
@@ -53,11 +52,14 @@ extension LibraryVC {
             self.view.layoutSubviews()
         }, completion: { _ in
             self.progressContainer.isHidden = true
-            self.navigationController?.navigationBar.subviews.forEach({ view in
-                view.alpha = 1
-            })
+//            self.navigationController?.navigationBar.subviews.forEach({ view in
+//                view.alpha = 1
+//            })
+            
             
         })
+        navigationItem.setRightBarButtonItems([refreshButton , editBarButton], animated: true)
+        editingMode = false
     }
     
     
@@ -67,13 +69,13 @@ extension LibraryVC {
 extension LibraryVC: ExtractingProgressDelegate {
     
     func newFileAboutToExtract(withName name: String, andNumber number: Int, inTotalFilesCount: Int?) {
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [weak self] in
             
-            self.showProgressView()
-            self.progressContainer.setTitleLabel(to: "Extracting: \(name)")
-            self.progressContainer.setProgress(to: 0)
+            self?.showProgressView()
+            self?.progressContainer.setTitleLabel(to: "Extracting: \(name)")
+            self?.progressContainer.setProgress(to: 0)
             if let count = inTotalFilesCount {
-                self.progressContainer.setNumberLabel(to: String(number) + "/" + String(count))
+                self?.progressContainer.setNumberLabel(to: String(number) + "/" + String(count))
             }
             
         }
@@ -82,15 +84,16 @@ extension LibraryVC: ExtractingProgressDelegate {
     }
     
     func percentChanged(to value: Double) {
-        DispatchQueue.main.async { [unowned self] in
-           self.progressContainer.setProgress(to: CGFloat(value))
+        DispatchQueue.main.async { [weak self] in
+           self?.progressContainer.setProgress(to: CGFloat(value))
         }
     }
     
     func extractingProcessFinished() {
         
-        DispatchQueue.main.async {[unowned self] in
-            self.removeProgressView()
+        DispatchQueue.main.async {[weak self] in
+            
+            self?.removeProgressView()
         }
         
     }

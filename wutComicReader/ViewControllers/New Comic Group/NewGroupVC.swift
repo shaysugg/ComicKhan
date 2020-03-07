@@ -23,12 +23,16 @@ class NewGroupVC: UIViewController {
     @IBOutlet weak var newGroupTextField: UITextField!
     @IBOutlet weak var addLabel: UILabel!
     @IBOutlet weak var groupTableView: UITableView!
+    @IBOutlet var addButton: UIButton!
     
 
     @IBAction func addGroupButtonTapped(_ sender: Any) {
         addButtonTapped()
     }
     
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,7 +50,9 @@ class NewGroupVC: UIViewController {
     
     private func setUpDesign(){
         newGroupTextField.clipsToBounds = true
-        newGroupTextField.layer.cornerRadius =  newGroupTextField.bounds.height *  0.5
+        newGroupTextField.layer.cornerRadius =  newGroupTextField.bounds.height *  0.25
+        addButton.clipsToBounds = true
+        addButton.layer.cornerRadius = 10
         
         let rect = CGRect(x: 0, y: 0, width: newGroupTextField.bounds.height *  0.5 , height: 50)
         newGroupTextField.leftView = UIView(frame: rect)
@@ -55,6 +61,10 @@ class NewGroupVC: UIViewController {
         groupTableView.tableFooterView = UIView()
         
         
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
         
     }
     
@@ -109,6 +119,9 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath)
         let label = cell.viewWithTag(101) as! UILabel
         label.text = groups[indexPath.row].name
+        let image = UIImage(named: "addToGroup")?.withRenderingMode(.alwaysTemplate)
+        let imageView = cell.viewWithTag(102) as! UIImageView
+        imageView.image = image
         return cell
     }
     

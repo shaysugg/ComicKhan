@@ -32,11 +32,12 @@ extension ExtractingProgressDelegate {
     func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int?){}
 }
 
+fileprivate var keyPathToObserve = "fractionCompleted"
 
 class ComicExteractor: NSObject {
     
     internal var appFileManager = AppFileManager()
-    private var keyPathToObserve = "fractionCompleted"
+    
     var rarExtractingProgress: Progress?
     var delegate: ExtractingProgressDelegate?
     

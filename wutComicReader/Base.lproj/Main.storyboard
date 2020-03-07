@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +12,7 @@
         <!--TestVC-->
         <scene sceneID="2Av-TQ-dBi">
             <objects>
-                <viewController id="LST-Tt-wTw" customClass="testVC" customModule="wutComicReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LST-Tt-wTw" customClass="testVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kzp-36-BbD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,7 +36,7 @@
         <!--LibraryVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LibraryVC" customModule="wutComicReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LibraryVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -50,7 +51,7 @@
                                     <inset key="sectionInset" minX="25" minY="10" maxX="25" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="center" reuseIdentifier="BookCell" id="i9p-fZ-PJv" customClass="LibraryCell" customModule="wutComicReader" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="center" reuseIdentifier="BookCell" id="i9p-fZ-PJv" customClass="LibraryCell" customModule="ComicKhan" customModuleProvider="target">
                                         <rect key="frame" x="25" y="74" width="169" height="231"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -92,7 +93,7 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="BookHeader" id="kao-ft-SyL" customClass="LibraryReusableView" customModule="wutComicReader" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="BookHeader" id="kao-ft-SyL" customClass="LibraryReusableView" customModule="ComicKhan" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -153,7 +154,7 @@
                             </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
-                            <barButtonItem title="Sync" image="refresh" id="WTB-XT-6c4">
+                            <barButtonItem image="refresh" id="WTB-XT-6c4">
                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="refreshButtonTapped:" destination="BYZ-38-t0r" id="Tdp-VX-sAh"/>
@@ -172,6 +173,7 @@
                         <outlet property="deleteBarButton" destination="NVu-bz-Pkk" id="W1v-uP-bei"/>
                         <outlet property="editBarButton" destination="cal-73-qjM" id="BTy-0j-UfQ"/>
                         <outlet property="groupBarButton" destination="4Gm-Z8-lu9" id="uAY-o7-Ykm"/>
+                        <outlet property="navItem" destination="BQr-Q8-lCA" id="aOv-Ze-6AE"/>
                         <outlet property="refreshButton" destination="WTB-XT-6c4" id="z0f-m4-JZw"/>
                     </connections>
                 </viewController>
@@ -182,46 +184,67 @@
         <!--New GroupVC-->
         <scene sceneID="dzL-lh-d4L">
             <objects>
-                <viewController storyboardIdentifier="NewGroupVC" id="zhU-23-pPI" customClass="NewGroupVC" customModule="wutComicReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewGroupVC" id="zhU-23-pPI" customClass="NewGroupVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="O2I-m7-iPb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter new group name ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vfg-Iu-lPU">
-                                <rect key="frame" x="15" y="69" width="354" height="60"/>
-                                <color key="backgroundColor" systemColor="tertiarySystemFillColor" red="0.46274509800000002" green="0.46274509800000002" blue="0.50196078430000002" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="1df-H2-9Gm"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="DKF-Ry-PBe">
+                                <rect key="frame" x="20" y="104" width="374" height="115"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New group name ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vfg-Iu-lPU">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
+                                        <color key="backgroundColor" systemColor="tertiarySystemFillColor" red="0.46274509800000002" green="0.46274509800000002" blue="0.50196078430000002" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="kdd-ND-HNn"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDi-5C-vF4">
+                                        <rect key="frame" x="0.0" y="75" width="374" height="40"/>
+                                        <color key="backgroundColor" name="appBlueColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="j4E-Um-SS6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" title="Add New Group">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addGroupButtonTapped:" destination="zhU-23-pPI" eventType="touchUpInside" id="FSr-iK-elb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or Add To Existed Comic Group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LE5-aw-TL7">
-                                <rect key="frame" x="20" y="159" width="212.66666666666666" height="18"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="20" y="251" width="374" height="18"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vIb-fh-n82">
-                                <rect key="frame" x="10" y="182" width="394" height="730"/>
+                                <rect key="frame" x="20" y="269" width="374" height="607"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" tag="100" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" rowHeight="61" id="CoJ-z1-OuR">
-                                        <rect key="frame" x="0.0" y="28" width="394" height="61"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CoJ-z1-OuR" id="3da-TA-K2T">
-                                            <rect key="frame" x="0.0" y="0.0" width="394" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Batman" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37E-LC-2qP">
-                                                    <rect key="frame" x="20" y="19" width="318.66666666666669" height="23"/>
+                                                    <rect key="frame" x="20" y="19.333333333333329" width="298.66666666666669" height="22.666666666666671"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folder.fill.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-YQ-WKJ">
-                                                    <rect key="frame" x="349" y="19.333333333333332" width="25" height="22.333333333333339"/>
-                                                    <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addToGroup" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-YQ-WKJ">
+                                                    <rect key="frame" x="329" y="18" width="25" height="25"/>
+                                                    <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="47E-qI-8qb"/>
                                                         <constraint firstAttribute="width" constant="25" id="ImV-zV-Ikz"/>
@@ -239,19 +262,17 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDi-5C-vF4">
-                                <rect key="frame" x="374" y="88" width="25" height="22"/>
-                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" image="plus" catalog="system">
-                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                </state>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ve-qG-YVk">
+                                <rect key="frame" x="20" y="54" width="55" height="33"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <action selector="addGroupButtonTapped:" destination="zhU-23-pPI" eventType="touchUpInside" id="FSr-iK-elb"/>
+                                    <action selector="cancelButtonTapped:" destination="zhU-23-pPI" eventType="touchUpInside" id="ynU-jw-0Fs"/>
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Group with the same name already exist!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9G-Qy-X3r">
-                                <rect key="frame" x="20" y="132" width="214.66666666666666" height="14.333333333333343"/>
+                                <rect key="frame" x="20" y="224" width="214.66666666666666" height="14.333333333333343"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -259,24 +280,25 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Vfg-Iu-lPU" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="15" id="45Q-cR-lIG"/>
-                            <constraint firstItem="Vfg-Iu-lPU" firstAttribute="top" secondItem="LH6-GB-K6e" secondAttribute="top" constant="25" id="5nJ-5f-Bqe"/>
-                            <constraint firstItem="WDi-5C-vF4" firstAttribute="leading" secondItem="Vfg-Iu-lPU" secondAttribute="trailing" constant="5" id="9EI-5v-PT6"/>
-                            <constraint firstItem="LH6-GB-K6e" firstAttribute="trailing" secondItem="vIb-fh-n82" secondAttribute="trailing" constant="10" id="9hi-yJ-8LF"/>
-                            <constraint firstItem="d9G-Qy-X3r" firstAttribute="top" secondItem="Vfg-Iu-lPU" secondAttribute="bottom" constant="3" id="B0i-TH-rEf"/>
-                            <constraint firstItem="d9G-Qy-X3r" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="EzM-cL-VAj"/>
-                            <constraint firstAttribute="trailing" secondItem="WDi-5C-vF4" secondAttribute="trailing" constant="15" id="GkG-1a-A0M"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="vIb-fh-n82" secondAttribute="bottom" constant="-50" id="H97-rp-Dod"/>
-                            <constraint firstItem="vIb-fh-n82" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="10" id="KnL-l7-JBv"/>
-                            <constraint firstItem="LH6-GB-K6e" firstAttribute="trailing" secondItem="Vfg-Iu-lPU" secondAttribute="trailing" constant="45" id="OWa-Ix-5aF"/>
-                            <constraint firstItem="LE5-aw-TL7" firstAttribute="top" secondItem="Vfg-Iu-lPU" secondAttribute="bottom" constant="30" id="wRt-M8-7gD"/>
-                            <constraint firstItem="WDi-5C-vF4" firstAttribute="centerY" secondItem="Vfg-Iu-lPU" secondAttribute="centerY" id="x52-Fj-OIv"/>
-                            <constraint firstItem="vIb-fh-n82" firstAttribute="top" secondItem="LE5-aw-TL7" secondAttribute="bottom" constant="5" id="ydH-6W-XcZ"/>
-                            <constraint firstItem="LE5-aw-TL7" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="ydR-Qh-Glf"/>
+                            <constraint firstItem="LH6-GB-K6e" firstAttribute="trailing" secondItem="LE5-aw-TL7" secondAttribute="trailing" constant="20" id="2CE-7Y-4E2"/>
+                            <constraint firstItem="LH6-GB-K6e" firstAttribute="trailing" secondItem="vIb-fh-n82" secondAttribute="trailing" constant="20" id="44F-YB-1C3"/>
+                            <constraint firstItem="DKF-Ry-PBe" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="AHX-be-49f"/>
+                            <constraint firstItem="2Ve-qG-YVk" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="Ayq-Ke-Sof"/>
+                            <constraint firstItem="vIb-fh-n82" firstAttribute="top" secondItem="LE5-aw-TL7" secondAttribute="bottom" id="ELK-iu-Xlb"/>
+                            <constraint firstAttribute="bottom" secondItem="vIb-fh-n82" secondAttribute="bottom" constant="20" symbolic="YES" id="NMP-QD-GNu"/>
+                            <constraint firstItem="DKF-Ry-PBe" firstAttribute="top" secondItem="LH6-GB-K6e" secondAttribute="top" constant="60" id="Yej-kQ-jN2"/>
+                            <constraint firstItem="LH6-GB-K6e" firstAttribute="trailing" secondItem="DKF-Ry-PBe" secondAttribute="trailing" constant="20" id="kmA-sT-xRN"/>
+                            <constraint firstItem="LE5-aw-TL7" firstAttribute="leading" secondItem="O2I-m7-iPb" secondAttribute="leading" constant="20" id="lba-Dw-4Zc"/>
+                            <constraint firstItem="vIb-fh-n82" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="mNm-gd-qEq"/>
+                            <constraint firstItem="LE5-aw-TL7" firstAttribute="bottom" secondItem="DKF-Ry-PBe" secondAttribute="bottom" constant="50" id="o7y-Jn-cxa"/>
+                            <constraint firstItem="d9G-Qy-X3r" firstAttribute="top" secondItem="DKF-Ry-PBe" secondAttribute="bottom" constant="5" id="pmk-Su-wiK"/>
+                            <constraint firstItem="d9G-Qy-X3r" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="qER-Dc-UtF"/>
+                            <constraint firstItem="2Ve-qG-YVk" firstAttribute="top" secondItem="LH6-GB-K6e" secondAttribute="top" constant="10" id="w0w-KA-fu7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LH6-GB-K6e"/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="WDi-5C-vF4" id="Mrx-cK-0FH"/>
                         <outlet property="addLabel" destination="LE5-aw-TL7" id="AhS-mF-GNc"/>
                         <outlet property="alreadyExistLabel" destination="d9G-Qy-X3r" id="FDX-Eq-0Ab"/>
                         <outlet property="groupTableView" destination="vIb-fh-n82" id="kuE-h1-I50"/>
@@ -290,7 +312,7 @@
         <!--Book ReaderVC-->
         <scene sceneID="bpz-hA-CwV">
             <objects>
-                <viewController storyboardIdentifier="bookReader" id="h7d-RW-WmF" customClass="BookReaderVC" customModule="wutComicReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bookReader" id="h7d-RW-WmF" customClass="BookReaderVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZeX-qG-MUh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -324,11 +346,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="folder.fill.badge.plus" catalog="system" width="64" height="42"/>
-        <image name="plus" catalog="system" width="64" height="56"/>
+        <image name="addToGroup" width="50" height="50"/>
         <image name="plus.square.fill.on.square.fill" catalog="system" width="64" height="56"/>
         <image name="refresh" width="30" height="30"/>
         <image name="selected" width="37.5" height="37.5"/>
         <image name="trash.fill" catalog="system" width="60" height="64"/>
+        <namedColor name="appBlueColor">
+            <color red="0.125" green="0.28600001335144043" blue="0.41200000047683716" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
