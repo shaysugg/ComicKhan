@@ -12,8 +12,13 @@ import UIKit
 extension LibraryVC {
     
     func showProgressView() {
-        editBarButton.title = ""
-        navigationItem.setRightBarButtonItems([editBarButton], animated: true)
+//        editBarButton.title = ""
+//        navigationItem.setRightBarButtonItems([editBarButton], animated: true)
+//        navigationItem.setLeftBarButtonItems([editBarButton], animated: true)
+        
+        self.navigationController?.navigationBar.subviews.forEach({ view in
+            view.alpha = 0
+        })
         
         progressContainer.isHidden = false
         progressContainerHideTopConstrait.isActive = false
@@ -52,13 +57,14 @@ extension LibraryVC {
             self.view.layoutSubviews()
         }, completion: { _ in
             self.progressContainer.isHidden = true
-//            self.navigationController?.navigationBar.subviews.forEach({ view in
-//                view.alpha = 1
-//            })
+            self.navigationController?.navigationBar.subviews.forEach({ view in
+                view.alpha = 1
+            })
             
             
         })
         navigationItem.setRightBarButtonItems([refreshButton , editBarButton], animated: true)
+//        navigationItem.setLeftBarButtonItems([infoButton], animated: true)
         editingMode = false
     }
     

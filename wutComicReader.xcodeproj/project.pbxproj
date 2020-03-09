@@ -32,6 +32,7 @@
 		E4596A07240803A60030DB3E /* ReaderTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4596A06240803A60030DB3E /* ReaderTopBar.swift */; };
 		E45C842A238DACD700669155 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C8429238DACD700669155 /* Colors.swift */; };
 		E463B29822AC2FCE0094265C /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463B29722AC2FCE0094265C /* Consts.swift */; };
+		E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E465B1192413FBAC00A6003D /* InfoVC.swift */; };
 		E48253EA22D631B1001A0E85 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48253E922D631B1001A0E85 /* Helper.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
@@ -92,6 +93,7 @@
 		E4596A06240803A60030DB3E /* ReaderTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTopBar.swift; sourceTree = "<group>"; };
 		E45C8429238DACD700669155 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
+		E465B1192413FBAC00A6003D /* InfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				E44FA70D23F003EC00338457 /* New Comic Group */,
 				E45213A722D4902C00216217 /* Book Reader */,
 				E4A1264C23AE7DC300EC1C96 /* Library */,
+				E465B1182413FB7B00A6003D /* Info */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -272,6 +275,14 @@
 				E4596A06240803A60030DB3E /* ReaderTopBar.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E465B1182413FB7B00A6003D /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				E465B1192413FBAC00A6003D /* InfoVC.swift */,
+			);
+			path = Info;
 			sourceTree = "<group>";
 		};
 		E49BBAAF23E179CE00E9D1BA /* Extensions */ = {
@@ -557,6 +568,7 @@
 				E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */,
 				E40FD64D22D1239800926CC4 /* ThumbnailCell.swift in Sources */,
 				E45C842A238DACD700669155 /* Colors.swift in Sources */,
+				E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */,
 				E4E8FCED22C28E4700A8B32D /* bookReaderVC.swift in Sources */,
 				E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */,
 				E463B29822AC2FCE0094265C /* Consts.swift in Sources */,

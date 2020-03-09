@@ -58,7 +58,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="169" height="231"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vDQ-JN-GqE">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vDQ-JN-GqE">
                                                     <rect key="frame" x="0.0" y="0.0" width="169" height="231"/>
                                                 </imageView>
                                                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0hk-c7-dtw">
@@ -152,6 +152,12 @@
                                     <action selector="groupBarButtonTapped:" destination="BYZ-38-t0r" id="PkE-TG-eyw"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem tag="100" title="Item" image="info.circle.fill" catalog="system" id="ElE-LV-kBR">
+                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="infoButtonTapped:" destination="BYZ-38-t0r" id="diy-Iw-Ufi"/>
+                                </connections>
+                            </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem image="refresh" id="WTB-XT-6c4">
@@ -173,6 +179,7 @@
                         <outlet property="deleteBarButton" destination="NVu-bz-Pkk" id="W1v-uP-bei"/>
                         <outlet property="editBarButton" destination="cal-73-qjM" id="BTy-0j-UfQ"/>
                         <outlet property="groupBarButton" destination="4Gm-Z8-lu9" id="uAY-o7-Ykm"/>
+                        <outlet property="infoButton" destination="ElE-LV-kBR" id="3Rm-G5-Z7e"/>
                         <outlet property="navItem" destination="BQr-Q8-lCA" id="aOv-Ze-6AE"/>
                         <outlet property="refreshButton" destination="WTB-XT-6c4" id="z0f-m4-JZw"/>
                     </connections>
@@ -180,6 +187,156 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="110.49107142857143"/>
+        </scene>
+        <!--InfoVC-->
+        <scene sceneID="J1c-HY-2J0">
+            <objects>
+                <tableViewController storyboardIdentifier="infoVC" id="TND-Hf-hLY" customClass="InfoVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="0Te-21-J3B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <sections>
+                            <tableViewSection id="cBA-QB-8Mm">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="299" id="KmD-fv-lHs">
+                                        <rect key="frame" x="20" y="18" width="374" height="299"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KmD-fv-lHs" id="SF6-rz-8n7">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="299"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qkc-PS-Re5">
+                                                    <rect key="frame" x="20" y="20" width="334" height="259"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attention " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXW-3p-ZX6">
+                                                            <rect key="frame" x="122.33333333333334" y="0.0" width="89.666666666666657" height="24"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izj-36-CSv">
+                                                            <rect key="frame" x="3.3333333333333428" y="62.666666666666664" width="327.66666666666663" height="120.66666666666669"/>
+                                                            <string key="text">This app currently is under betta version. Some features may not work as expected. If you found an issue you can send me feedback through bellow contact informations, that would be much appreciated:)</string>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="UOJ-fx-Osh">
+                                                            <rect key="frame" x="102" y="209" width="130" height="50"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCn-mB-tDJ">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="50" id="0bl-aU-INP"/>
+                                                                        <constraint firstAttribute="height" constant="50" id="rtw-9h-EDQ"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" name="appBlueColor"/>
+                                                                    <state key="normal" image="twitter"/>
+                                                                    <connections>
+                                                                        <action selector="twitterButtonTapped:" destination="TND-Hf-hLY" eventType="touchUpInside" id="emY-Fv-2zI"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VyQ-9d-0DF">
+                                                                    <rect key="frame" x="80" y="0.0" width="50" height="50"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="50" id="GcZ-7A-xnS"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="MyY-oO-w6B"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" name="appBlueColor"/>
+                                                                    <state key="normal" image="email">
+                                                                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="emailButtonTapped:" destination="TND-Hf-hLY" eventType="touchUpInside" id="QC0-nc-Fz7"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qkc-PS-Re5" firstAttribute="top" secondItem="SF6-rz-8n7" secondAttribute="top" constant="20" symbolic="YES" id="IQh-EG-baM"/>
+                                                <constraint firstItem="qkc-PS-Re5" firstAttribute="leading" secondItem="SF6-rz-8n7" secondAttribute="leading" constant="20" symbolic="YES" id="UiE-sd-IIc"/>
+                                                <constraint firstAttribute="bottom" secondItem="qkc-PS-Re5" secondAttribute="bottom" constant="20" symbolic="YES" id="jFG-jb-S6R"/>
+                                                <constraint firstAttribute="trailing" secondItem="qkc-PS-Re5" secondAttribute="trailing" constant="20" symbolic="YES" id="qiR-yT-f2e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="li5-tf-Ijl">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="58" id="SFd-LU-pNv">
+                                        <rect key="frame" x="20" y="353" width="374" height="58"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SFd-LU-pNv" id="eGj-gp-uXR">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How can I add comics?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0Z-MF-frE">
+                                                    <rect key="frame" x="20" y="19" width="334" height="20"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="l0Z-MF-frE" firstAttribute="centerY" secondItem="eGj-gp-uXR" secondAttribute="centerY" id="D8l-Ca-WZu"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="l0Z-MF-frE" secondAttribute="trailing" id="Qgq-CV-gS9"/>
+                                                <constraint firstItem="l0Z-MF-frE" firstAttribute="leading" secondItem="eGj-gp-uXR" secondAttribute="leadingMargin" id="cEr-Si-MJo"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="YTY-UR-Nwi">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="58" id="VVV-mK-7Yq">
+                                        <rect key="frame" x="20" y="447" width="374" height="58"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VVV-mK-7Yq" id="ciy-t7-79T">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.2.2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eO-j8-UTi">
+                                                    <rect key="frame" x="316" y="18.666666666666668" width="38" height="21.000000000000004"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App version:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="orr-wr-DFe">
+                                                    <rect key="frame" x="20" y="19" width="157" height="20"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9eO-j8-UTi" firstAttribute="centerY" secondItem="ciy-t7-79T" secondAttribute="centerY" id="4m3-kv-Ttj"/>
+                                                <constraint firstAttribute="trailing" secondItem="9eO-j8-UTi" secondAttribute="trailing" constant="20" symbolic="YES" id="F8n-dq-UeX"/>
+                                                <constraint firstItem="orr-wr-DFe" firstAttribute="leading" secondItem="ciy-t7-79T" secondAttribute="leadingMargin" id="bg4-Of-Mwi"/>
+                                                <constraint firstItem="orr-wr-DFe" firstAttribute="centerY" secondItem="ciy-t7-79T" secondAttribute="centerY" id="n7L-hJ-4Qb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="orr-wr-DFe" secondAttribute="trailing" multiplier="2" id="vcr-AK-yiY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="TND-Hf-hLY" id="jOV-ge-xdd"/>
+                            <outlet property="delegate" destination="TND-Hf-hLY" id="slK-Wq-cXd"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="emailButton" destination="VyQ-9d-0DF" id="yxP-c2-L3F"/>
+                        <outlet property="twitterButton" destination="SCn-mB-tDJ" id="0c4-dK-yoc"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6hG-J6-apP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1962.3188405797102" y="110.49107142857143"/>
         </scene>
         <!--New GroupVC-->
         <scene sceneID="dzL-lh-d4L">
@@ -237,8 +394,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Batman" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37E-LC-2qP">
-                                                    <rect key="frame" x="20" y="19.333333333333329" width="298.66666666666669" height="22.666666666666671"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="19"/>
+                                                    <rect key="frame" x="20" y="20.666666666666668" width="298.66666666666669" height="20.000000000000004"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -347,10 +504,13 @@
     </scenes>
     <resources>
         <image name="addToGroup" width="50" height="50"/>
-        <image name="plus.square.fill.on.square.fill" catalog="system" width="64" height="56"/>
+        <image name="email" width="50" height="50"/>
+        <image name="info.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="plus.square.fill.on.square.fill" catalog="system" width="32" height="32"/>
         <image name="refresh" width="30" height="30"/>
         <image name="selected" width="37.5" height="37.5"/>
-        <image name="trash.fill" catalog="system" width="60" height="64"/>
+        <image name="trash.fill" catalog="system" width="32" height="32"/>
+        <image name="twitter" width="50" height="50"/>
         <namedColor name="appBlueColor">
             <color red="0.125" green="0.28600001335144043" blue="0.41200000047683716" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

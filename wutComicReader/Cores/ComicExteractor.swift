@@ -117,9 +117,13 @@ class ComicExteractor: NSObject {
                 do {
                     if comicFormat == ".cbz" {
                         try extractZIP(withFileName: comicName)
+                        counter += 1
                     }else if comicFormat == ".cbr" {
                         try extractRAR(withFileName: comicName)
+                        counter += 1
                     }else{}
+                    
+                  
                     
                 }catch let error{
                     print("\(comicName) extract failed : \(error.localizedDescription)")
@@ -128,7 +132,7 @@ class ComicExteractor: NSObject {
                     }
                 }
             }
-            counter += 1
+            
         }
         delegate?.extractingProcessFinished()
         

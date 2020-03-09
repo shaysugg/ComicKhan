@@ -112,7 +112,11 @@ class AppFileManager {
             let comicName = makeComicNameFromPath(path: path)
             if !userDiractoryfilePaths.contains(comicName.dropLast(0)){
                 deleteComicFromCoreData(withName: comicName)
-                try? deleteFileInTheAppDiractory(withName: comicName)
+                do {
+                    try deleteFileInTheAppDiractory(withName: comicName)
+                }catch {
+                    print("delete file error")
+                }
             }
         }
     }
@@ -123,7 +127,7 @@ class AppFileManager {
         
         do {
             let documentComics = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            return userComicPaths.count != documentComics.count
+            return userComicPaths.count > documentComics.count
         }catch{
             return false
         }
@@ -201,11 +205,20 @@ class AppFileManager {
         let predict = NSPredicate.init(format: "name == %@", name)
         deletereq.predicate = predict
         
-        guard let comics = try? context.fetch(deletereq) else { return }
-        for comic in comics {
-            context.delete(comic)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deletereq as! NSFetchRequest<NSFetchRequestResult>)
+        
+//        guard let comics = try? context.fetch(deletereq) else { return }
+//        for comic in comics {
+//            context.delete(comic)
+//        }
+        
+        let cordinator = context.persistentStoreCoordinator!
+        do {
+            try cordinator.execute(deleteRequest, with: context)
+            try context.save()
+        }catch {
+            print("can't save context")
         }
-        try? context.save()
     }
     
     func makeAppDirectory() throws{

@@ -115,6 +115,7 @@ class BookReaderVC: UIViewController {
         addGestures()
         setupDesign()
         
+        
         bottomBar.thumbnailDelegate = self
         bottomBar.delegate = self
         bottomBar.comicPagesCount = comic?.imageNames?.count ?? 1
@@ -122,9 +123,14 @@ class BookReaderVC: UIViewController {
         topBar.title = comic?.name
         
         
+        let LastpageNumber = (comic?.lastVisitedPage) ?? 0
+        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: true)
+        
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
         
     }
+    
+    
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
@@ -146,7 +152,7 @@ class BookReaderVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0
-        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: false)
+        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: true)
     }
     
     
@@ -387,7 +393,11 @@ class BookReaderVC: UIViewController {
             topBarBackgroundView.alpha = 1
             bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
             bottomBar.alpha = 1
+           
         }
+        //this shouldn't be there actually but idk wherever else i can make bottom bar collection view scroll
+        let LastpageNumber = (comic?.lastVisitedPage) ?? 0
+        bottomBar.currentPage = Int(LastpageNumber)
     }
     
     

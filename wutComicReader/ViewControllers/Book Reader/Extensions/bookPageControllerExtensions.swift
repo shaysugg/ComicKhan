@@ -28,7 +28,7 @@ extension BookReaderVC {
     }
     
     
-    fileprivate func createSingleBookImages() {
+    public func createSingleBookImages() {
         //bookSinglePage Setup
         guard let comicPages = comic?.imageNames else { return }
         for comicPage in comicPages {
@@ -39,7 +39,7 @@ extension BookReaderVC {
         
     }
     
-    fileprivate func createDoubleBookImages(){
+    public func createDoubleBookImages(){
         
         var tempDouble: [ComicImage?] = [nil]
         guard let comicPages = comic?.imageNames else { return }
@@ -109,6 +109,7 @@ extension BookReaderVC {
         }
         
         bookPageViewController.setViewControllers([bookPages[0]], direction: .forward, animated: false)
+        
 
     }
     
@@ -156,15 +157,10 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
     
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        //zoom out precious pages
-//        guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
-//        for page in previousPages {
-//            page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: false)
-//        }
+        
         guard let pendingPages = (pendingViewControllers as? [BookPage]) else { return }
         pendingPages.first?.centerTheImage()
         setLastViewedPage(toPageWithNumber: pendingPages.first?.image1?.pageNumber ?? 0)
-//
         
     }
     
@@ -177,18 +173,6 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
                 let _ = bookPages.firstIndex(of: previousPages[0])
                 page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: true)
             }
-            
-            
-            
-            //update thumbnail and slider
-            
-            guard let pendingPage = pageViewController.viewControllers?[0] as? BookPage else { return }
-            guard let pendingIndex = bookPages.firstIndex(of: pendingPage) else { return }
-//            thumbnailCollectionView.selectItem(at: IndexPath(row: pendingIndex, section: 0), animated: true, scrollPosition: .centeredHorizontally)
-//            
-//            pageSlider.setValue(Float(pendingIndex + 1), animated: true)
-//            currentPageNumberLabel.text = String (pendingIndex + 1)
-            
             
         }
 

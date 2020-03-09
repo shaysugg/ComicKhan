@@ -81,7 +81,7 @@ class LibraryCell: UICollectionViewCell {
         let totalPages = book?.imageNames?.count,
             lastPage != 0,
         totalPages > 1 {
-            let value: Double = Double(lastPage) / Double(totalPages - 1)
+            let value: Double = Double(lastPage - 1) / Double(totalPages - 1)
             readProgressView.progressValue = CGFloat(value)
             readProgressView.isHidden = isInEditingMode
         }

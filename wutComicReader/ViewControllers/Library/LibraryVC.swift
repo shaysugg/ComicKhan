@@ -11,14 +11,12 @@ import CoreData
 
 class LibraryVC: UIViewController {
     
-    //MARK:- variables
+    //MARK:- Variables
     
     var bottomGradientImage : UIImageView?
     var comicGroups : [ComicGroup] = [] {
         didSet{
-            if let _ = emptyGroupsView {} else { designEmptyView() }
             emptyGroupsView.isHidden = !comicGroups.isEmpty
-            
         }
     }
     var collectionViewCellSize: CGSize!
@@ -28,16 +26,7 @@ class LibraryVC: UIViewController {
     
     var editingMode = false {
         didSet{
-            if editingMode {
-                navigationItem.leftBarButtonItems = [deleteBarButton , groupBarButton]
-                editBarButton.title = "Done"
-            }else{
-                navigationItem.leftBarButtonItems = nil
-                editBarButton.title = "Edit"
-                deleteBarButton.isEnabled = false
-                groupBarButton.isEnabled = false
-                
-            }
+            updateNavBarWhenEditingChanged()
             refreshControll.isEnabled = !editingMode
             bookCollectionView.reloadData()
         }
@@ -46,20 +35,19 @@ class LibraryVC: UIViewController {
     
     var selectedComics : [Comic] = [] {
         didSet{
-            groupBarButton.isEnabled = selectedComics.count > 1
+            groupBarButton.isEnabled = selectedComics.count > 0
             deleteBarButton.isEnabled = !selectedComics.isEmpty
         }
     }
     
-//    var selectedSection: [Int] = []
-    
-
+    //MARK:- UI Variables
     
     let refreshControll = UIRefreshControl()
     
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet weak var bottomBar: UIToolbar!
+    @IBOutlet weak var infoButton: UIBarButtonItem!
     @IBOutlet var groupBarButton: UIBarButtonItem!
     @IBOutlet var deleteBarButton: UIBarButtonItem!
     @IBOutlet weak var bookCollectionView: UICollectionView!
@@ -85,9 +73,19 @@ class LibraryVC: UIViewController {
     var progressContainerAppearedTopConstrait: NSLayoutConstraint!
     
     
+    lazy var cellFullSizeView: UIImageView = {
+       let view = UIImageView()
+        view.clipsToBounds = true
+        view.contentMode = .scaleAspectFit
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    var cellFullSizeConstraint = [NSLayoutConstraint]()
     
     
-    //MARK:- functions
+    
+    
+    //MARK:- Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,13 +99,15 @@ class LibraryVC: UIViewController {
         }
         
         configureCellSize(basedOn: UIScreen.main.traitCollection)
+        designEmptyView()
         fetchGroupComics()
         bookCollectionView.allowsMultipleSelection = true
         setUpDesigns()
         bookCollectionView.reloadData()
         setupPullToRefresh()
         comicExtractor.delegate = self
-            
+         
+        navigationItem.setLeftBarButtonItems([infoButton], animated: true)
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchGroupComics), name: .newGroupAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
@@ -197,7 +197,7 @@ class LibraryVC: UIViewController {
         label.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor , constant: -15).isActive = true
         label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
         
-        
+        emptyGroupsView.isHidden = true
         
         
     }
@@ -264,9 +264,10 @@ class LibraryVC: UIViewController {
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
         for comic in selectedComics where (comic.name != nil && comic.name != ""){
             do{
+                appfileManager.deleteComicFromCoreData(withName: comic.name!)
                 try appfileManager.deleteFileInTheAppDiractory(withName: comic.name!)
                 try appfileManager.deleteFileInTheUserDiractory(withName: comic.name!)
-                appfileManager.deleteComicFromCoreData(withName: comic.name!)
+                
                 
             }catch let err {
                 #warning("error handeling! of this part")
@@ -292,15 +293,15 @@ class LibraryVC: UIViewController {
         bookCollectionView.reloadData()
     }
     
-    @IBAction func fetchButtonTapped(_ sender: Any) {
-        deleteAllComics()
+    @IBAction func infoButtonTapped(_ sender: Any) {
+        let infoVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "infoVC") as! InfoVC
+        navigationController?.pushViewController(infoVC, animated: true)
     }
     
     
     
     
-    
-    //MARK:- top bar functions
+    //MARK:- Top bar functions
     
     func createAComicGroup(with name: String){
         
@@ -343,6 +344,23 @@ class LibraryVC: UIViewController {
         navigationBar?.shadowImage = UIImage()
         navigationBar?.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+    }
+    
+    func updateNavBarWhenEditingChanged() {
+        if editingMode {
+            navigationItem.setLeftBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
+            infoButton.isEnabled = false
+            infoButton.tintColor = view.backgroundColor
+            editBarButton.title = "Done"
+        }else{
+            navigationItem.setLeftBarButtonItems([infoButton], animated: true)
+            infoButton.isEnabled = true
+            infoButton.tintColor = .appSecondaryLabel
+            editBarButton.title = "Edit"
+            deleteBarButton.isEnabled = false
+            groupBarButton.isEnabled = false
+            
+        }
     }
     
     
@@ -402,17 +420,20 @@ class LibraryVC: UIViewController {
             return
         }
         
-        if fetchedComics.isEmpty { return }
-        
+        //if new comic category exist
         if let group = groupForNewComics {
             group.comics = NSOrderedSet(array: fetchedComics)
             try? managedContext.save()
         }else{
+        //if new comic category doese not exist
+            if fetchedComics.isEmpty { return }
             let group = createAGroupForNewComics()
             group?.comics = NSOrderedSet(array: fetchedComics)
-            fetchGroupComics()
+            
         }
         
+        fetchGroupComics()
+        deleteEmptyGroups()
         bookCollectionView.reloadData()
         
     }
@@ -443,6 +464,7 @@ class LibraryVC: UIViewController {
        
         for group in comicGroups where group.comics?.count == 0 {
             managedContext.delete(group)
+            comicGroups.removeAll(where: {$0 == group})
         }
         
         do{
