@@ -207,14 +207,15 @@ class AppFileManager {
         
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deletereq as! NSFetchRequest<NSFetchRequestResult>)
         
-//        guard let comics = try? context.fetch(deletereq) else { return }
-//        for comic in comics {
-//            context.delete(comic)
-//        }
+        guard let comics = try? context.fetch(deletereq) else { return }
+        for comic in comics {
+            comic.ofComicGroup?.removeFromComics(comic)
+            context.delete(comic)
+        }
         
-        let cordinator = context.persistentStoreCoordinator!
+//        let cordinator = context.persistentStoreCoordinator!
         do {
-            try cordinator.execute(deleteRequest, with: context)
+//            try cordinator.execute(deleteRequest, with: context)
             try context.save()
         }catch {
             print("can't save context")

@@ -28,7 +28,6 @@ class LibraryVC: UIViewController {
         didSet{
             updateNavBarWhenEditingChanged()
             refreshControll.isEnabled = !editingMode
-            bookCollectionView.reloadData()
         }
         
     }
@@ -109,7 +108,7 @@ class LibraryVC: UIViewController {
          
         navigationItem.setLeftBarButtonItems([infoButton], animated: true)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchGroupComics), name: .newGroupAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
         print(NSHomeDirectory())
         
@@ -250,11 +249,12 @@ class LibraryVC: UIViewController {
         bookCollectionView.setContentOffset(CGPoint(x: 0, y: -(refreshControll.frame.size.height)), animated: true)
         syncComics { [weak self] in
             self?.fetchNewComics()
+//            self?.fetchGroupComics()
             self?.bookCollectionView.reloadData()
+            
             self?.refreshControll.endRefreshing()
             self?.refreshButton.tintColor = .appSecondaryLabel
             self?.refreshButton.image = UIImage(named: "refresh")
-            
             self?.bookCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             
         }
@@ -262,16 +262,17 @@ class LibraryVC: UIViewController {
     }
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-        for comic in selectedComics where (comic.name != nil && comic.name != ""){
-            do{
-                appfileManager.deleteComicFromCoreData(withName: comic.name!)
-                try appfileManager.deleteFileInTheAppDiractory(withName: comic.name!)
-                try appfileManager.deleteFileInTheUserDiractory(withName: comic.name!)
-                
-                
-            }catch let err {
-                #warning("error handeling! of this part")
-                print("remove comic error \(err.localizedDescription)")
+        for comic in selectedComics{
+            if let comicName = comic.name, comicName != nil, comicName != "" {
+                do{
+                    appfileManager.deleteComicFromCoreData(withName: comicName)
+                    try appfileManager.deleteFileInTheAppDiractory(withName: comicName)
+                    try appfileManager.deleteFileInTheUserDiractory(withName: comicName)
+                    
+                }catch let err {
+                    #warning("error handeling! of this part")
+                    print("remove comic error \(err.localizedDescription)")
+                }
             }
         }
         
@@ -279,7 +280,7 @@ class LibraryVC: UIViewController {
         bookCollectionView.reloadData()
         
     }
-    
+
     @IBAction func groupBarButtonTapped(_ sender: Any) {
         let newGroupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewGroupVC") as! NewGroupVC
         newGroupVC.comicsAboutToGroup = selectedComics
@@ -372,18 +373,6 @@ class LibraryVC: UIViewController {
         }
     }
     
-    func deleteAllComics(){
-        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appdelegate.persistentContainer.viewContext
-        let deletereq = NSFetchRequest<Comic>(entityName: "Comic")
-        
-        guard let comics = try? managedContext.fetch(deletereq) else { return }
-        for comic in comics {
-            managedContext.delete(comic)
-        }
-        try? managedContext.save()
-    }
-    
     func syncComics(completed: @escaping ()->()) {
         DispatchQueue.global(qos: .background).async {
             self.comicExtractor.extractUserComicsIntoComicDiractory()
@@ -421,20 +410,22 @@ class LibraryVC: UIViewController {
         }
         
         //if new comic category exist
-        if let group = groupForNewComics {
-            group.comics = NSOrderedSet(array: fetchedComics)
+        if let group = groupForNewComics , let comicsOfGroup = group.comics {
+            for comic in fetchedComics where !comicsOfGroup.contains(comic) {
+                group.addToComics(comic)
+            }
             try? managedContext.save()
         }else{
         //if new comic category doese not exist
             if fetchedComics.isEmpty { return }
             let group = createAGroupForNewComics()
-            group?.comics = NSOrderedSet(array: fetchedComics)
+            group?.addToComics(NSOrderedSet(array: fetchedComics))
             
         }
         
         fetchGroupComics()
         deleteEmptyGroups()
-        bookCollectionView.reloadData()
+
         
     }
     
@@ -451,7 +442,7 @@ class LibraryVC: UIViewController {
         do{
             comicGroups = try managedContext.fetch(fetchRequest)
             deleteEmptyGroups()
-            bookCollectionView.reloadData()
+
         }catch let error{
             fatalError("error happed while fetching from core Data: " + error.localizedDescription)
         }
@@ -494,6 +485,11 @@ class LibraryVC: UIViewController {
             #warning("error handeling")
             return nil
         }
+    }
+    
+    @objc private func newGroupVCAddedANewGroup() {
+        fetchGroupComics()
+        bookCollectionView.reloadData()
     }
     
     

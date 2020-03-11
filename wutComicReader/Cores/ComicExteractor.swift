@@ -41,6 +41,7 @@ class ComicExteractor: NSObject {
     var rarExtractingProgress: Progress?
     var delegate: ExtractingProgressDelegate?
     
+    
     private func extractZIP(withFileName fileName : String) throws{
             
             let zipFileURL = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbz")
@@ -51,15 +52,13 @@ class ComicExteractor: NSObject {
                 try Zip.unzipFile(zipFileURL, destination: extractedComicURL, overwrite: true, password: nil, progress: { percent in
                     self.delegate?.percentChanged(to: percent)
                 })
+//                resizeExtractedImages(ofURL: extractedComicURL)
                 
             }catch {
                 throw ExtractorError.unzipingCBZFailed
             }
         
     }
-    
-    
-    
     
     private func extractRAR(withFileName fileName : String) throws{
         
@@ -71,14 +70,16 @@ class ComicExteractor: NSObject {
             try FileManager.default.createDirectory(at: extractedComicsURL, withIntermediateDirectories: true, attributes: nil)
             
             archive = try URKArchive(path: zipFilePath.path)
-            
             rarExtractingProgress = Progress(totalUnitCount: 1)
             archive?.progress = rarExtractingProgress
             rarExtractingProgress?.addObserver(self, forKeyPath: keyPathToObserve, options: .new, context: nil)
             
             try archive?.extractFiles(to: extractedComicsURL.path, overwrite: true)
             
+//            resizeExtractedImages(ofURL: extractedComicsURL)
+            
             rarExtractingProgress?.removeObserver(self, forKeyPath: keyPathToObserve)
+            
             
         }catch {
             throw ExtractorError.unzipingCBRFailed
@@ -117,10 +118,8 @@ class ComicExteractor: NSObject {
                 do {
                     if comicFormat == ".cbz" {
                         try extractZIP(withFileName: comicName)
-                        counter += 1
                     }else if comicFormat == ".cbr" {
                         try extractRAR(withFileName: comicName)
-                        counter += 1
                     }else{}
                     
                   
@@ -136,6 +135,18 @@ class ComicExteractor: NSObject {
         }
         delegate?.extractingProcessFinished()
         
+    }
+    
+    private func resizeExtractedImages(ofURL comicURL: URL){
+        if let imagePaths = try? FileManager.default.subpaths(atPath: comicURL.path) {
+            
+            let thumbnailDirURL = appFileManager.comicDirectory.appendingPathComponent("thumbnails")
+            try? FileManager.default.createDirectory(at: thumbnailDirURL, withIntermediateDirectories: true, attributes: nil)
+            
+            let paths = imagePaths.map({ comicURL.path + "/" + $0 })
+            let resizer = ImageResizer(for: paths , saveTo: thumbnailDirURL)
+            resizer.startResizing()
+        }
     }
     
     private func filterFilesWithAcceptedFormat(infilePaths paths: [String]?) -> [String] {

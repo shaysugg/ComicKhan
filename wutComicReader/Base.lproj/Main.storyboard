@@ -506,10 +506,10 @@
         <image name="addToGroup" width="50" height="50"/>
         <image name="email" width="50" height="50"/>
         <image name="info.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="plus.square.fill.on.square.fill" catalog="system" width="32" height="32"/>
+        <image name="plus.square.fill.on.square.fill" catalog="system" width="64" height="56"/>
         <image name="refresh" width="30" height="30"/>
         <image name="selected" width="37.5" height="37.5"/>
-        <image name="trash.fill" catalog="system" width="32" height="32"/>
+        <image name="trash.fill" catalog="system" width="60" height="64"/>
         <image name="twitter" width="50" height="50"/>
         <namedColor name="appBlueColor">
             <color red="0.125" green="0.28600001335144043" blue="0.41200000047683716" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
