@@ -19,6 +19,20 @@ enum ExtractorError : Error {
     case formatIsNotRight
 }
 
+enum ExtractionFolder {
+    case original
+    case thumbnail
+    
+    var name: String {
+        switch self {
+        case .original:
+            return "original"
+        case .thumbnail:
+            return "thumbnail"
+        }
+    }
+}
+
 
 protocol ExtractingProgressDelegate {
     func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int?)
@@ -43,20 +57,27 @@ class ComicExteractor: NSObject {
     
     
     private func extractZIP(withFileName fileName : String) throws{
+        
+        let zipFileURL = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbz")
+        let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
+        let extractedImagesURL = extractedComicURL.appendingPathComponent(ExtractionFolder.original.name)
+        let extractedThumbnailsURL = extractedComicURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
+        
+        do{
+            try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: extractedImagesURL, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: extractedThumbnailsURL, withIntermediateDirectories: true, attributes: nil)
             
-            let zipFileURL = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbz")
-            let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
+            try Zip.unzipFile(zipFileURL, destination: extractedImagesURL, overwrite: true, password: nil, progress: { percent in
+                /* percent will devide to 2 becuse we only on the halfway of extracting we still
+                 have thumbnail extracting process */
+                self.delegate?.percentChanged(to: percent / 2)
+            })
+            resizeExtractedImages(ofURL: extractedImagesURL, toURL: extractedThumbnailsURL)
             
-            do{
-                try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
-                try Zip.unzipFile(zipFileURL, destination: extractedComicURL, overwrite: true, password: nil, progress: { percent in
-                    self.delegate?.percentChanged(to: percent)
-                })
-//                resizeExtractedImages(ofURL: extractedComicURL)
-                
-            }catch {
-                throw ExtractorError.unzipingCBZFailed
-            }
+        }catch {
+            throw ExtractorError.unzipingCBZFailed
+        }
         
     }
     
@@ -65,20 +86,24 @@ class ComicExteractor: NSObject {
         var archive : URKArchive?
         let zipFilePath = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbr")
         let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
+        let extractedImagesURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.original.name)
+        let extractedThumbnailsURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
         
         do{
             try FileManager.default.createDirectory(at: extractedComicsURL, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: extractedImagesURL, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(at: extractedThumbnailsURL, withIntermediateDirectories: true, attributes: nil)
             
             archive = try URKArchive(path: zipFilePath.path)
             rarExtractingProgress = Progress(totalUnitCount: 1)
             archive?.progress = rarExtractingProgress
             rarExtractingProgress?.addObserver(self, forKeyPath: keyPathToObserve, options: .new, context: nil)
             
-            try archive?.extractFiles(to: extractedComicsURL.path, overwrite: true)
-            
-//            resizeExtractedImages(ofURL: extractedComicsURL)
+            try archive?.extractFiles(to: extractedImagesURL.path, overwrite: true)
             
             rarExtractingProgress?.removeObserver(self, forKeyPath: keyPathToObserve)
+            
+            resizeExtractedImages(ofURL: extractedComicsURL, toURL: extractedThumbnailsURL)
             
             
         }catch {
@@ -91,7 +116,7 @@ class ComicExteractor: NSObject {
         
         if keyPath == keyPathToObserve {
             if let percent = rarExtractingProgress?.fractionCompleted {
-                delegate?.percentChanged(to: percent)
+                delegate?.percentChanged(to: percent / 2)
             }
         }
     }
@@ -103,11 +128,12 @@ class ComicExteractor: NSObject {
         let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)
         let comicDiractoriesCount = try? FileManager.default.contentsOfDirectory(at: appFileManager.comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).count
         let allCounts = comicPaths.count - (comicDiractoriesCount ?? 0)
+        var counter = 1
         
         for path in comicPaths {
             let comicName = NameofFile(fromFilePath: path)
             let comicFormat = formatOfFile(fromFilePath: path)
-            var counter = 1
+            
             
             if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
                 
@@ -118,8 +144,10 @@ class ComicExteractor: NSObject {
                 do {
                     if comicFormat == ".cbz" {
                         try extractZIP(withFileName: comicName)
+                         counter += 1
                     }else if comicFormat == ".cbr" {
                         try extractRAR(withFileName: comicName)
+                         counter += 1
                     }else{}
                     
                   
@@ -131,21 +159,22 @@ class ComicExteractor: NSObject {
                     }
                 }
             }
+           
             
         }
         delegate?.extractingProcessFinished()
         
     }
     
-    private func resizeExtractedImages(ofURL comicURL: URL){
-        if let imagePaths = try? FileManager.default.subpaths(atPath: comicURL.path) {
-            
-            let thumbnailDirURL = appFileManager.comicDirectory.appendingPathComponent("thumbnails")
-            try? FileManager.default.createDirectory(at: thumbnailDirURL, withIntermediateDirectories: true, attributes: nil)
+    private func resizeExtractedImages(ofURL comicURL: URL, toURL desURL: URL){
+        
+        if let imagePaths = FileManager.default.subpaths(atPath: comicURL.path) {
             
             let paths = imagePaths.map({ comicURL.path + "/" + $0 })
-            let resizer = ImageResizer(for: paths , saveTo: thumbnailDirURL)
-            resizer.startResizing()
+            let resizer = ImageResizer(for: paths , saveTo: desURL)
+            resizer.startResizing(progress: { percent in
+                delegate?.percentChanged(to: 0.5 + percent / 2)
+            })
         }
     }
     

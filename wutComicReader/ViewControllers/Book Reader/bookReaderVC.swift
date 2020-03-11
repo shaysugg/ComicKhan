@@ -52,8 +52,7 @@ class BookReaderVC: UIViewController {
     var bookDoubleImages : [(ComicImage? , ComicImage?)] = []
     var bookPages: [BookPage] = []
     
-    var thumbnailDoublePageViewModels: [ThumbnailViewModel] = []
-    var thumbnailViewModels: [ThumbnailViewModel] = []
+    var thumbnailImages: [ComicImage] = []
     
     
     private var compactConstaitns: [NSLayoutConstraint] = []

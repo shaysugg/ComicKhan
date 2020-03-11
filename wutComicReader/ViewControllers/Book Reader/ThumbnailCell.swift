@@ -11,9 +11,9 @@ import UIKit
 class ThumbnailCell: UICollectionViewCell {
     
     
-    var thumbnailViewModel: ThumbnailViewModel! {
+    var thumbnailImage: ComicImage! {
         didSet{
-            pageImageView1.image = thumbnailViewModel.image1
+            pageImageView1.image = thumbnailImage
         }
     }
     

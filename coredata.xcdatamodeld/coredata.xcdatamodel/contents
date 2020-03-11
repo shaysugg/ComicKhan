@@ -5,6 +5,7 @@
         <attribute name="imageNames" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
         <attribute name="lastVisitedPage" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="thumbnailNames" attributeType="Transformable" customClassName="[String]"/>
         <relationship name="ofComicGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ComicGroup" inverseName="comics" inverseEntity="ComicGroup"/>
     </entity>
     <entity name="ComicGroup" representedClassName="ComicGroup" syncable="YES" codeGenerationType="class">
@@ -14,7 +15,7 @@
         <relationship name="comics" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Comic" inverseName="ofComicGroup" inverseEntity="Comic"/>
     </entity>
     <elements>
-        <element name="Comic" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Comic" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="ComicGroup" positionX="-54" positionY="18" width="128" height="103"/>
     </elements>
 </model>

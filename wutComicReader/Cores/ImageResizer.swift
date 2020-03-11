@@ -19,12 +19,17 @@ class ImageResizer {
         self.diractoryForResizedImages = path
     }
     
-    func startResizing() {
+    func startResizing(progress: (Double)->()) {
+        var count: Double = 0
         for path in imagePaths {
+           
             if let image = UIImage(contentsOfFile: path) {
+                let isImageisDoubleSplash = image.size.width > image.size.height
                 resize(image,
                        withName: imageName(fromPath: path),
-                       withSize: CGSize(width: 100, height: 150))
+                       withSize: CGSize(width: (isImageisDoubleSplash ? 200 : 100), height: 150))
+                count += 1
+                progress(count / Double(imagePaths.count))
             }
         }
     }

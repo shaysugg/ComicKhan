@@ -2,7 +2,7 @@
 //  Comic+CoreDataProperties.swift
 //  
 //
-//  Created by Sha Yan on 3/7/20.
+//  Created by Sha Yan on 3/11/20.
 //
 //
 
@@ -20,6 +20,7 @@ extension Comic {
     @NSManaged public var imageNames: [String]?
     @NSManaged public var lastVisitedPage: Int16
     @NSManaged public var name: String?
+    @NSManaged public var thumbnailNames: [String]?
     @NSManaged public var ofComicGroup: ComicGroup?
 
 }

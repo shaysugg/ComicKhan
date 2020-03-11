@@ -249,7 +249,6 @@ class LibraryVC: UIViewController {
         bookCollectionView.setContentOffset(CGPoint(x: 0, y: -(refreshControll.frame.size.height)), animated: true)
         syncComics { [weak self] in
             self?.fetchNewComics()
-//            self?.fetchGroupComics()
             self?.bookCollectionView.reloadData()
             
             self?.refreshControll.endRefreshing()
@@ -438,7 +437,10 @@ class LibraryVC: UIViewController {
         let managedContext = appdelegate.persistentContainer.viewContext
       
         let fetchRequest = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
-
+        let newComicSort = NSSortDescriptor(key: "isForNewComics", ascending: false)
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [newComicSort , nameSort]
+        
         do{
             comicGroups = try managedContext.fetch(fetchRequest)
             deleteEmptyGroups()

@@ -63,20 +63,29 @@ class AppFileManager {
         do{
             let comicDiractories = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             
+            
             for diractory in comicDiractories {
-                guard let diractorySubPath = fileManager.subpaths(atPath: diractory.path) else {return}
+                let originalImagesDir = diractory.appendingPathComponent(ExtractionFolder.original.name)
+                let thumbnailImagesDir = diractory.appendingPathComponent(ExtractionFolder.thumbnail.name)
+                
+                guard
+                    let originalImagesDirSubPaths = fileManager.subpaths(atPath: originalImagesDir.path),
+                    let thumbnailsDirSubPaths = fileManager.subpaths(atPath: thumbnailImagesDir.path)
+                    else {return}
                 
                 let comicName = makeComicNameFromPath(path: diractory.path)
                 
                 if !comicAlreadyExistedInCoreData(withName: comicName) {
                     
-                    let comicImages = imagesPathsInSubPaths(subpaths: diractorySubPath)
+                    let comicImages = imagesPathsInSubPaths(originalImagesDirSubPaths, inExtractionFolder: .original)
+                    let thumbnailImages = imagesPathsInSubPaths(thumbnailsDirSubPaths, inExtractionFolder: .thumbnail)
                     
                     if !comicImages.isEmpty{
                         
                         let newComic = Comic(context: context)
                         newComic.name = comicName
                         newComic.imageNames = comicImages
+                        newComic.thumbnailNames = thumbnailImages
                         newComic.id = UUID()
                         
                     }
@@ -172,13 +181,17 @@ class AppFileManager {
         }
     
     
-    private func imagesPathsInSubPaths(subpaths: [String]) -> [String] {
+    private func imagesPathsInSubPaths(_ subpaths: [String], inExtractionFolder folder: ExtractionFolder) -> [String] {
         
         var comicImagesPaths : [String] = []
         
-        let validFilePaths = subpaths.filter { (fileName) -> Bool in
-            return fileName.contains(".jpg") || fileName.contains(".png")
-            }.dropLast().sorted { $0 < $1 }
+        let validFilePaths =
+            subpaths.filter { (fileName) -> Bool in
+                return fileName.contains(".jpg") || fileName.contains(".png")
+            }
+            .dropLast()
+            .sorted { $0 < $1 }
+            .map({ folder.name + "/" + $0 })
         
         for filePath in validFilePaths{
             comicImagesPaths.append(filePath)

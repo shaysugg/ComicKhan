@@ -12,21 +12,21 @@ import UIKit
 extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return bookSingleImages.count
+        return thumbnailImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "thumbnailCell", for: indexPath) as! ThumbnailCell
         
-        cell.thumbnailViewModel = thumbnailViewModels[indexPath.row]
+        cell.thumbnailImage = thumbnailImages[indexPath.row]
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let isDoubleSplash = thumbnailViewModels[indexPath.row].imagesIsDoubleSplash
+        let isDoubleSplash = thumbnailImages[indexPath.row].isDoubleSplash
         return CGSize(width: collectionView.frame.height * (isDoubleSplash ? 1.22 : 0.58), height: collectionView.frame.height)
     }
     
@@ -39,23 +39,17 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     
 }
 
-class ThumbnailViewModel {
-    var image1: UIImage
-    var imagesIsDoubleSplash: Bool = false
-    
-    init(image1: ComicImage) {
-        self.imagesIsDoubleSplash = image1.size.height < image1.size.width
-        let resizeSize = CGSize(width: 87 * (imagesIsDoubleSplash ? 2 : 1) , height: 150)
-        self.image1 = image1.resize(forSize: resizeSize)
-    }
-}
-
-
 extension BookReaderVC {
     func initSinglePageThumbnails(){
-        for image in bookSingleImages {
-            let newThumbnail = ThumbnailViewModel(image1: image)
-            thumbnailViewModels.append(newThumbnail)
+        if let thumbnails = comic?.thumbnailNames {
+            var pageNumber = 1
+            for thumbnail in thumbnails {
+                if let comicImage = ComicImage(comic, withImageName: thumbnail) {
+                comicImage.pageNumber = pageNumber
+                pageNumber += 1
+                thumbnailImages.append(comicImage)
+                }
+            }
         }
     }
 }
