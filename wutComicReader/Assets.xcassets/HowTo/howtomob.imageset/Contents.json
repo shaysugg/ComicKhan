@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "028.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "howtomob.png",
       "scale" : "2x"
     },
     {

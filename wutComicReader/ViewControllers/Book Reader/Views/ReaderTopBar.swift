@@ -32,7 +32,7 @@ class TopBar: UIView {
     private lazy var dismissButton : UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
-        button.setImage( UIImage(named: "down") , for: .normal)
+        button.setImage( UIImage(named: "dismiss") , for: .normal)
         button.addTarget(self, action: #selector(closeTheVC), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

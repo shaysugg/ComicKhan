@@ -111,15 +111,26 @@ class AppFileManager {
     func syncRemovedComicsInUserDiracory() {
         
         guard let filePaths = fileManager.subpaths(atPath: userDiractory.path) else { return }
-        //removing format with drop 4 characters in path
-        let userDiractoryfilePaths = filePaths.map({$0.dropLast(4)})
+
+        var userDiractoryfilePaths: [String] = filePaths.map({ path in
+                // removing super diractory of file with finding if it has slash index
+                if path.contains("/") {
+                    let slashIndex = path.index(path.lastIndex(of: "/")!, offsetBy: 1)
+                    let endIndex = path.index(path.endIndex, offsetBy: -3)
+                    return path.substring(with: slashIndex..<endIndex)
+                }else{
+                    //removing format with drop 4 characters in path
+                    return String(path.dropLast(4))
+                }
+            })
+            
         
         let comicDiractoriesPaths = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
         
         
         for path in comicDiractoriesPaths ?? [] {
             let comicName = makeComicNameFromPath(path: path)
-            if !userDiractoryfilePaths.contains(comicName.dropLast(0)){
+            if !userDiractoryfilePaths.contains(String(comicName.dropLast(0))){
                 deleteComicFromCoreData(withName: comicName)
                 do {
                     try deleteFileInTheAppDiractory(withName: comicName)
@@ -218,17 +229,13 @@ class AppFileManager {
         let predict = NSPredicate.init(format: "name == %@", name)
         deletereq.predicate = predict
         
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deletereq as! NSFetchRequest<NSFetchRequestResult>)
         
         guard let comics = try? context.fetch(deletereq) else { return }
         for comic in comics {
             comic.ofComicGroup?.removeFromComics(comic)
             context.delete(comic)
         }
-        
-//        let cordinator = context.persistentStoreCoordinator!
         do {
-//            try cordinator.execute(deleteRequest, with: context)
             try context.save()
         }catch {
             print("can't save context")

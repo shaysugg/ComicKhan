@@ -30,6 +30,12 @@ class InfoVC: UITableViewController {
         guard let url = URL(string: "https://twitter.com/shaysu6g") else { return }
         UIApplication.shared.open(url)
     }
+    
+    @IBAction func howToCellTapped(_ sender: Any) {
+        let howToVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HowToVC") as! HowToVC
+        present(howToVC, animated: true)
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()

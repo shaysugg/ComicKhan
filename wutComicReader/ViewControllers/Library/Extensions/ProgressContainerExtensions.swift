@@ -79,6 +79,7 @@ extension LibraryVC: ExtractingProgressDelegate {
             
             self?.showProgressView()
             self?.progressContainer.setTitleLabel(to: "Extracting: \(name)")
+            self?.comicNameThatExtracting = name
             self?.progressContainer.setProgress(to: 0)
             if let count = inTotalFilesCount {
                 self?.progressContainer.setNumberLabel(to: String(number) + "/" + String(count))
@@ -98,7 +99,7 @@ extension LibraryVC: ExtractingProgressDelegate {
     func extractingProcessFinished() {
         
         DispatchQueue.main.async {[weak self] in
-            
+            self?.comicNameThatExtracting = nil
             self?.removeProgressView()
         }
         

@@ -310,36 +310,13 @@ class BookReaderVC: UIViewController {
         
     }
     
-//    func updateBookReaderValues(){
-//
-//        let lastVisitedPage = Int(comic?.lastVisitedPage ?? 0)
-//        let lastViewedBookPageIndex: Int?
-//
-//        if deviceIsLandscaped {
-//            lastViewedBookPageIndex = doublePageIndexForPage(withNumber: lastVisitedPage)
-//        }else{
-//            lastViewedBookPageIndex = lastVisitedPage
-//        }
-//
-//
-//
-//        if let _ = lastViewedBookPageIndex {
-////            thumbnailCollectionView.selectItem(at: IndexPath(row: lastViewedBookPageIndex!, section: 0), animated: false, scrollPosition: .centeredHorizontally)
-//            bookPageViewController.setViewControllers([bookPages[lastViewedBookPageIndex!]], direction: .forward, animated: false, completion: nil)
-//
-////            pageSlider.minimumValue = 1.0
-////            pageSlider.setValue(Float(lastViewedBookPageIndex!), animated: false)
-////            pageSlider.maximumValue = Float(bookPages.count)
-//
-////            comicPageNumberLabel.text = "\(bookSingleImages.count)"
-////            configureCurrentPageLabelText(forBookPageIndex: lastViewedBookPageIndex!)
-//
-//
-//
-//
-//        }
-//    }
-    
+    func saveLastViewedPageToCoreData() {
+        if let page = lastViewedPage {
+            comic?.lastVisitedPage = Int16(page)
+            let context = AppFileManager().managedContext
+            try? context?.save()
+        }
+    }
     
     @objc func zoomBookCurrentPage() {
         let currentPage = bookPageViewController.viewControllers?.first as? BookPage
@@ -406,12 +383,7 @@ class BookReaderVC: UIViewController {
 extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
     func dismissViewController() {
         
-        if let page = lastViewedPage {
-            
-            comic?.lastVisitedPage = Int16(page)
-            let context = AppFileManager().managedContext
-            try? context?.save()
-        }
+        saveLastViewedPageToCoreData()
         NotificationCenter.default.post(name: .reloadLibraryAtIndex, object: bookIndexInLibrary)
         dismiss(animated: false, completion: nil)
         

@@ -9,29 +9,212 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--TestVC-->
-        <scene sceneID="2Av-TQ-dBi">
+        <!--How ToVC-->
+        <scene sceneID="zIa-g5-Smf">
             <objects>
-                <viewController id="LST-Tt-wTw" customClass="testVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Kzp-36-BbD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <viewController storyboardIdentifier="HowToVC" id="45c-6F-2J7" customClass="HowToVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K2H-Qk-40t">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5zh-bv-A7r">
-                                <rect key="frame" x="87" y="230" width="240" height="512"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gh3-gS-j2Q">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="822"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B1c-Dh-rMz">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1400"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQE-Iy-Bvm">
+                                                <rect key="frame" x="15" y="70" width="384" height="79"/>
+                                                <string key="text">Adding comics from your device File app 
+</string>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="id9-Dg-2Ik">
+                                                <rect key="frame" x="15" y="159" width="384" height="139"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="139" id="yVy-bG-4eg"/>
+                                                </constraints>
+                                                <string key="text">1. Find your downloaded comic file in your device File app
+2. Touch and hold on the comic file
+3. Tap on Move
+4. Choose ComicKhan diractory
+5. Tap on Move</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jx4-B1-SNu">
+                                                <rect key="frame" x="15" y="318" width="384" height="380"/>
+                                                <subviews>
+                                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUa-6u-TdI">
+                                                        <rect key="frame" x="0.0" y="0.0" width="384" height="380"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1I-Wd-N5O">
+                                                                <rect key="frame" x="0.0" y="0.0" width="710.33333333333337" height="362"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="howtomob" translatesAutoresizingMaskIntoConstraints="NO" id="Hxt-Xg-pXx">
+                                                                        <rect key="frame" x="10" y="10" width="690.33333333333337" height="342"/>
+                                                                    </imageView>
+                                                                </subviews>
+                                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="Hxt-Xg-pXx" firstAttribute="top" secondItem="b1I-Wd-N5O" secondAttribute="top" constant="10" id="3Q6-eB-yAg"/>
+                                                                    <constraint firstItem="Hxt-Xg-pXx" firstAttribute="leading" secondItem="b1I-Wd-N5O" secondAttribute="leading" constant="10" id="A5t-Km-BwW"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="Hxt-Xg-pXx" secondAttribute="bottom" constant="10" id="HzV-BT-gHS"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="Hxt-Xg-pXx" secondAttribute="trailing" constant="10" id="Z68-25-1n4"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="b1I-Wd-N5O" firstAttribute="width" secondItem="mUa-6u-TdI" secondAttribute="width" multiplier="1.85" id="7gt-eE-Of4"/>
+                                                            <constraint firstAttribute="bottom" secondItem="b1I-Wd-N5O" secondAttribute="bottom" id="Xfr-Au-4KC"/>
+                                                            <constraint firstItem="b1I-Wd-N5O" firstAttribute="leading" secondItem="mUa-6u-TdI" secondAttribute="leading" id="dUy-2v-aNh"/>
+                                                            <constraint firstItem="b1I-Wd-N5O" firstAttribute="top" secondItem="mUa-6u-TdI" secondAttribute="top" id="fDM-Po-Gss"/>
+                                                            <constraint firstAttribute="trailing" secondItem="b1I-Wd-N5O" secondAttribute="trailing" id="jK7-la-Dyd"/>
+                                                        </constraints>
+                                                    </scrollView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="mUa-6u-TdI" secondAttribute="bottom" id="HoC-oE-vGm"/>
+                                                    <constraint firstAttribute="height" constant="380" id="MUU-sc-DZN"/>
+                                                    <constraint firstItem="Hxt-Xg-pXx" firstAttribute="height" secondItem="Jx4-B1-SNu" secondAttribute="height" multiplier="0.9" id="Qmx-08-BEa"/>
+                                                    <constraint firstItem="b1I-Wd-N5O" firstAttribute="height" secondItem="Jx4-B1-SNu" secondAttribute="height" priority="250" id="bEM-NL-TTv"/>
+                                                    <constraint firstItem="mUa-6u-TdI" firstAttribute="leading" secondItem="Jx4-B1-SNu" secondAttribute="leading" id="dF0-Y9-3Lp"/>
+                                                    <constraint firstItem="mUa-6u-TdI" firstAttribute="top" secondItem="Jx4-B1-SNu" secondAttribute="top" id="kqJ-62-sB9"/>
+                                                    <constraint firstAttribute="trailing" secondItem="mUa-6u-TdI" secondAttribute="trailing" id="vyz-qL-PSM"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adding comics from your computer using iTunes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXt-M4-nA1">
+                                                <rect key="frame" x="15" y="738" width="384" height="52.666666666666629"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlW-xv-lVE">
+                                                <rect key="frame" x="15" y="810.66666666666663" width="384" height="139"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="139" id="6CO-L2-LCo"/>
+                                                </constraints>
+                                                <string key="text">1. Connect your device to your computer
+2. Launch iTunes
+3. Select your device
+4. find ComicKhan file sharing
+5. wait for copy to complete</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ekF-ot-Q6l">
+                                                <rect key="frame" x="15" y="969.66666666666652" width="384" height="380"/>
+                                                <subviews>
+                                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ZC-5W-FRY">
+                                                        <rect key="frame" x="0.0" y="0.0" width="384" height="380"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wFx-0k-MXh">
+                                                                <rect key="frame" x="0.0" y="0.0" width="960" height="362"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="howto" translatesAutoresizingMaskIntoConstraints="NO" id="tLC-xM-6DB">
+                                                                        <rect key="frame" x="10" y="10" width="940" height="342"/>
+                                                                    </imageView>
+                                                                </subviews>
+                                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="tLC-xM-6DB" secondAttribute="bottom" constant="10" id="CEV-iB-wK6"/>
+                                                                    <constraint firstItem="tLC-xM-6DB" firstAttribute="leading" secondItem="wFx-0k-MXh" secondAttribute="leading" constant="10" id="Dmq-6M-mc6"/>
+                                                                    <constraint firstItem="tLC-xM-6DB" firstAttribute="top" secondItem="wFx-0k-MXh" secondAttribute="top" constant="10" id="eF2-h6-afc"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="tLC-xM-6DB" secondAttribute="trailing" constant="10" id="n6v-f8-J2e"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="wFx-0k-MXh" secondAttribute="trailing" id="37S-d5-cgj"/>
+                                                            <constraint firstItem="wFx-0k-MXh" firstAttribute="width" secondItem="6ZC-5W-FRY" secondAttribute="width" multiplier="2.5" id="7nW-cn-bO6"/>
+                                                            <constraint firstItem="wFx-0k-MXh" firstAttribute="leading" secondItem="6ZC-5W-FRY" secondAttribute="leading" id="gos-co-0uG"/>
+                                                            <constraint firstAttribute="bottom" secondItem="wFx-0k-MXh" secondAttribute="bottom" id="rmM-vB-Z8d"/>
+                                                            <constraint firstItem="wFx-0k-MXh" firstAttribute="top" secondItem="6ZC-5W-FRY" secondAttribute="top" id="yvn-WS-HUB"/>
+                                                        </constraints>
+                                                    </scrollView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="6ZC-5W-FRY" secondAttribute="trailing" id="2pm-qb-KYe"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="380" id="2tV-A7-qz4"/>
+                                                    <constraint firstAttribute="height" constant="380" id="5Ck-IJ-u05"/>
+                                                    <constraint firstAttribute="bottom" secondItem="6ZC-5W-FRY" secondAttribute="bottom" id="C0l-qh-KsK"/>
+                                                    <constraint firstItem="tLC-xM-6DB" firstAttribute="height" secondItem="ekF-ot-Q6l" secondAttribute="height" multiplier="0.9" id="Fnq-DY-tXw"/>
+                                                    <constraint firstItem="wFx-0k-MXh" firstAttribute="height" secondItem="ekF-ot-Q6l" secondAttribute="height" priority="250" id="GKn-EO-QpS"/>
+                                                    <constraint firstItem="6ZC-5W-FRY" firstAttribute="leading" secondItem="ekF-ot-Q6l" secondAttribute="leading" id="Qvr-px-VeV"/>
+                                                    <constraint firstItem="6ZC-5W-FRY" firstAttribute="top" secondItem="ekF-ot-Q6l" secondAttribute="top" id="oZP-Cm-NTl"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="ekF-ot-Q6l" firstAttribute="leading" secondItem="B1c-Dh-rMz" secondAttribute="leading" constant="15" id="05N-ZO-tuW"/>
+                                            <constraint firstAttribute="trailing" secondItem="Jx4-B1-SNu" secondAttribute="trailing" constant="15" id="0Aw-df-rbS"/>
+                                            <constraint firstItem="Jx4-B1-SNu" firstAttribute="leading" secondItem="B1c-Dh-rMz" secondAttribute="leading" constant="15" id="69r-Wd-W8n"/>
+                                            <constraint firstItem="oQE-Iy-Bvm" firstAttribute="leading" secondItem="B1c-Dh-rMz" secondAttribute="leading" constant="15" id="Cnw-9x-pjC"/>
+                                            <constraint firstItem="QXt-M4-nA1" firstAttribute="leading" secondItem="B1c-Dh-rMz" secondAttribute="leading" constant="15" id="LvJ-wv-TlI"/>
+                                            <constraint firstItem="qlW-xv-lVE" firstAttribute="top" secondItem="QXt-M4-nA1" secondAttribute="bottom" constant="20" id="OxP-Hx-gWJ"/>
+                                            <constraint firstItem="id9-Dg-2Ik" firstAttribute="top" secondItem="oQE-Iy-Bvm" secondAttribute="bottom" constant="10" id="QSq-js-NTV"/>
+                                            <constraint firstItem="qlW-xv-lVE" firstAttribute="leading" secondItem="B1c-Dh-rMz" secondAttribute="leading" constant="15" id="SMH-ZK-cqz"/>
+                                            <constraint firstAttribute="trailing" secondItem="id9-Dg-2Ik" secondAttribute="trailing" constant="15" id="UKF-IT-ekw"/>
+                                            <constraint firstAttribute="trailing" secondItem="QXt-M4-nA1" secondAttribute="trailing" constant="15" id="Zmt-P6-r1L"/>
+                                            <constraint firstItem="QXt-M4-nA1" firstAttribute="top" secondItem="Jx4-B1-SNu" secondAttribute="bottom" constant="40" id="c3n-8Z-Hla"/>
+                                            <constraint firstAttribute="trailing" secondItem="ekF-ot-Q6l" secondAttribute="trailing" constant="15" id="c41-P9-9LD"/>
+                                            <constraint firstItem="id9-Dg-2Ik" firstAttribute="leading" secondItem="B1c-Dh-rMz" secondAttribute="leading" constant="15" id="dji-R0-GX9"/>
+                                            <constraint firstAttribute="height" constant="1400" id="fme-fe-Dto"/>
+                                            <constraint firstAttribute="trailing" secondItem="oQE-Iy-Bvm" secondAttribute="trailing" constant="15" id="j3z-6V-Lh2"/>
+                                            <constraint firstAttribute="trailing" secondItem="qlW-xv-lVE" secondAttribute="trailing" constant="15" id="jhT-JA-SbF"/>
+                                            <constraint firstItem="Jx4-B1-SNu" firstAttribute="top" secondItem="id9-Dg-2Ik" secondAttribute="bottom" constant="20" id="qiO-rB-Jih"/>
+                                            <constraint firstItem="ekF-ot-Q6l" firstAttribute="top" secondItem="qlW-xv-lVE" secondAttribute="bottom" constant="20" id="uHr-eu-eRC"/>
+                                            <constraint firstItem="oQE-Iy-Bvm" firstAttribute="top" secondItem="B1c-Dh-rMz" secondAttribute="top" constant="70" id="zPI-Dk-THo"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="B1c-Dh-rMz" secondAttribute="bottom" id="FJ3-n1-Oqr"/>
+                                    <constraint firstItem="B1c-Dh-rMz" firstAttribute="width" secondItem="Gh3-gS-j2Q" secondAttribute="width" id="Gjf-YG-Cz4"/>
+                                    <constraint firstAttribute="trailing" secondItem="B1c-Dh-rMz" secondAttribute="trailing" id="J2L-U3-ZX3"/>
+                                    <constraint firstItem="B1c-Dh-rMz" firstAttribute="leading" secondItem="Gh3-gS-j2Q" secondAttribute="leading" id="QeP-DS-L7B"/>
+                                    <constraint firstItem="B1c-Dh-rMz" firstAttribute="top" secondItem="Gh3-gS-j2Q" secondAttribute="top" id="lLF-D6-qzu"/>
+                                </constraints>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJc-HS-6Ha">
+                                <rect key="frame" x="15" y="15" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="aiF-Vo-GOT"/>
+                                    <constraint firstAttribute="height" constant="35" id="qaf-jf-5TF"/>
+                                </constraints>
+                                <color key="tintColor" name="appBlueColor"/>
+                                <state key="normal" backgroundImage="dismiss"/>
+                                <connections>
+                                    <action selector="dismissButtonTapped:" destination="45c-6F-2J7" eventType="touchUpInside" id="rl9-61-vbe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="tat-uf-qSm"/>
+                        <constraints>
+                            <constraint firstItem="Gh3-gS-j2Q" firstAttribute="top" secondItem="sRR-pW-AfV" secondAttribute="top" id="CX4-Ym-hFy"/>
+                            <constraint firstItem="Gh3-gS-j2Q" firstAttribute="leading" secondItem="sRR-pW-AfV" secondAttribute="leading" id="MTY-WD-gky"/>
+                            <constraint firstItem="B1c-Dh-rMz" firstAttribute="width" secondItem="K2H-Qk-40t" secondAttribute="width" id="ZkS-fc-TUN"/>
+                            <constraint firstItem="sJc-HS-6Ha" firstAttribute="top" secondItem="sRR-pW-AfV" secondAttribute="top" constant="15" id="hJt-mf-OZK"/>
+                            <constraint firstItem="Gh3-gS-j2Q" firstAttribute="trailing" secondItem="sRR-pW-AfV" secondAttribute="trailing" id="o04-1v-BVb"/>
+                            <constraint firstItem="sJc-HS-6Ha" firstAttribute="leading" secondItem="sRR-pW-AfV" secondAttribute="leading" constant="15" id="ohf-wV-I08"/>
+                            <constraint firstAttribute="bottom" secondItem="Gh3-gS-j2Q" secondAttribute="bottom" constant="20" symbolic="YES" id="vbg-1h-tiT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sRR-pW-AfV"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="imageView" destination="5zh-bv-A7r" id="pEt-80-Kiz"/>
+                        <outlet property="dismissButton" destination="sJc-HS-6Ha" id="Ffo-N4-F0Z"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0HT-Jd-iSI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x3C-Mh-GI5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1021.7391304347827" y="-571.20535714285711"/>
+            <point key="canvasLocation" x="2865.217391304348" y="110.49107142857143"/>
         </scene>
         <!--LibraryVC-->
         <scene sceneID="tne-QT-ifu">
@@ -192,7 +375,7 @@
         <scene sceneID="J1c-HY-2J0">
             <objects>
                 <tableViewController storyboardIdentifier="infoVC" id="TND-Hf-hLY" customClass="InfoVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="0Te-21-J3B">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="0Te-21-J3B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <sections>
@@ -274,17 +457,27 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How can I add comics?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0Z-MF-frE">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How can I add comics?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0Z-MF-frE">
                                                     <rect key="frame" x="20" y="19" width="334" height="20"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKW-OD-Sci">
+                                                    <rect key="frame" x="0.0" y="20" width="374" height="38"/>
+                                                    <connections>
+                                                        <action selector="howToCellTapped:" destination="TND-Hf-hLY" eventType="touchUpInside" id="JQ1-B5-1mq"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="l0Z-MF-frE" firstAttribute="centerY" secondItem="eGj-gp-uXR" secondAttribute="centerY" id="D8l-Ca-WZu"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="l0Z-MF-frE" secondAttribute="trailing" id="Qgq-CV-gS9"/>
+                                                <constraint firstAttribute="trailing" secondItem="hKW-OD-Sci" secondAttribute="trailing" id="RXe-Cq-jRt"/>
                                                 <constraint firstItem="l0Z-MF-frE" firstAttribute="leading" secondItem="eGj-gp-uXR" secondAttribute="leadingMargin" id="cEr-Si-MJo"/>
+                                                <constraint firstItem="hKW-OD-Sci" firstAttribute="top" secondItem="eGj-gp-uXR" secondAttribute="top" constant="20" symbolic="YES" id="gwy-h1-nNr"/>
+                                                <constraint firstAttribute="bottom" secondItem="hKW-OD-Sci" secondAttribute="bottom" id="sEC-Cy-MNH"/>
+                                                <constraint firstItem="hKW-OD-Sci" firstAttribute="leading" secondItem="eGj-gp-uXR" secondAttribute="leading" id="xU5-Lz-Igp"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -504,7 +697,10 @@
     </scenes>
     <resources>
         <image name="addToGroup" width="50" height="50"/>
+        <image name="dismiss" width="32" height="32"/>
         <image name="email" width="50" height="50"/>
+        <image name="howto" width="896.5" height="300"/>
+        <image name="howtomob" width="634.5" height="300"/>
         <image name="info.circle.fill" catalog="system" width="64" height="60"/>
         <image name="plus.square.fill.on.square.fill" catalog="system" width="64" height="56"/>
         <image name="refresh" width="30" height="30"/>

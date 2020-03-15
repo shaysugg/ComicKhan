@@ -61,7 +61,11 @@ class LibraryVC: UIViewController {
         return view
     }()
     
-    var emptyGroupsView: UIView!
+    lazy var emptyGroupsView: EmptyGroupView = {
+       let view = EmptyGroupView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     lazy var progressContainer : ProgressContainerView = {
         let progressConteiner = ProgressContainerView()
@@ -70,6 +74,7 @@ class LibraryVC: UIViewController {
     }()
     var progressContainerHideTopConstrait: NSLayoutConstraint!
     var progressContainerAppearedTopConstrait: NSLayoutConstraint!
+    var comicNameThatExtracting: String?
     
     
     lazy var cellFullSizeView: UIImageView = {
@@ -98,13 +103,13 @@ class LibraryVC: UIViewController {
         }
         
         configureCellSize(basedOn: UIScreen.main.traitCollection)
-        designEmptyView()
         fetchGroupComics()
         bookCollectionView.allowsMultipleSelection = true
         setUpDesigns()
         bookCollectionView.reloadData()
         setupPullToRefresh()
         comicExtractor.delegate = self
+        emptyGroupsView.delegate = self
          
         navigationItem.setLeftBarButtonItems([infoButton], animated: true)
         
@@ -134,6 +139,7 @@ class LibraryVC: UIViewController {
         
         makeCustomNavigationBar()
         setUpProgressBarDesign()
+        designEmptyView()
         bookCollectionView.backgroundColor = .appSystemBackground
         view.backgroundColor = .appSystemBackground
     }
@@ -161,41 +167,13 @@ class LibraryVC: UIViewController {
     }
     
     func designEmptyView(){
-        emptyGroupsView = UIView()
-        emptyGroupsView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "emptyLibrary")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let label = UILabel()
-        label.text = "Looks like you don’t have any comics here at this moment ..."
-        label.font = UIFont(name: HelvetincaNeueFont.light.name, size: 20)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
         let emptyViewWidth = view.bounds.width * (deviceType == .iPad ? 0.5 : 1)
-        
+
         bookCollectionView.addSubview(emptyGroupsView)
         emptyGroupsView.widthAnchor.constraint(equalToConstant: emptyViewWidth).isActive = true
         emptyGroupsView.heightAnchor.constraint(equalToConstant: 400).isActive = true
         emptyGroupsView.centerXAnchor.constraint(equalTo: bookCollectionView.centerXAnchor).isActive = true
         emptyGroupsView.centerYAnchor.constraint(equalTo: bookCollectionView.centerYAnchor).isActive = true
-
-        
-        emptyGroupsView.addSubview(imageView)
-        imageView.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor).isActive = true
-        imageView.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: emptyGroupsView.topAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        
-        emptyGroupsView.addSubview(label)
-        label.leftAnchor.constraint(equalTo: emptyGroupsView.leftAnchor , constant: 15).isActive = true
-        label.rightAnchor.constraint(equalTo: emptyGroupsView.rightAnchor , constant: -15).isActive = true
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
-        
         emptyGroupsView.isHidden = true
         
         
@@ -246,17 +224,27 @@ class LibraryVC: UIViewController {
     //MARK:- actions
     
     @IBAction func refreshButtonTapped(_ sender: Any) {
+        let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
+            //app got killed in background
+            if let name = self?.comicNameThatExtracting {
+                self?.appfileManager.deleteComicFromCoreData(withName: name)
+                try? self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
+            }
+        })
         bookCollectionView.setContentOffset(CGPoint(x: 0, y: -(refreshControll.frame.size.height)), animated: true)
         syncComics { [weak self] in
             self?.fetchNewComics()
             self?.bookCollectionView.reloadData()
             
             self?.refreshControll.endRefreshing()
-            self?.refreshButton.tintColor = .appSecondaryLabel
             self?.refreshButton.image = UIImage(named: "refresh")
             self?.bookCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            
+         
+            if taskID != UIBackgroundTaskIdentifier.invalid {
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
         }
+        
         
     }
     

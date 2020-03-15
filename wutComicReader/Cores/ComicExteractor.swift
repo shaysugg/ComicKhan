@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import ZIPFoundation
 import UnrarKit
 import UIKit
 import Zip
@@ -56,10 +55,10 @@ class ComicExteractor: NSObject {
     var delegate: ExtractingProgressDelegate?
     
     
-    private func extractZIP(withFileName fileName : String) throws{
+    private func extractZIP(withFilePath filePath : String) throws{
         
-        let zipFileURL = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbz")
-        let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
+        let zipFileURL = appFileManager.userDiractory.appendingPathComponent(filePath)
+        let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent(nameofFile(fromFilePath: filePath))
         let extractedImagesURL = extractedComicURL.appendingPathComponent(ExtractionFolder.original.name)
         let extractedThumbnailsURL = extractedComicURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
         
@@ -81,11 +80,11 @@ class ComicExteractor: NSObject {
         
     }
     
-    private func extractRAR(withFileName fileName : String) throws{
+    private func extractRAR(withFilePath filePath : String) throws{
         
         var archive : URKArchive?
-        let zipFilePath = appFileManager.userDiractory.appendingPathComponent(fileName + ".cbr")
-        let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent(fileName)
+        let zipFilePath = appFileManager.userDiractory.appendingPathComponent(filePath)
+        let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent(nameofFile(fromFilePath: filePath))
         let extractedImagesURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.original.name)
         let extractedThumbnailsURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
         
@@ -131,7 +130,7 @@ class ComicExteractor: NSObject {
         var counter = 1
         
         for path in comicPaths {
-            let comicName = NameofFile(fromFilePath: path)
+            let comicName = nameofFile(fromFilePath: path)
             let comicFormat = formatOfFile(fromFilePath: path)
             
             
@@ -143,10 +142,10 @@ class ComicExteractor: NSObject {
                 
                 do {
                     if comicFormat == ".cbz" {
-                        try extractZIP(withFileName: comicName)
+                        try extractZIP(withFilePath: path)
                          counter += 1
                     }else if comicFormat == ".cbr" {
-                        try extractRAR(withFileName: comicName)
+                        try extractRAR(withFilePath: path)
                          counter += 1
                     }else{}
                     
@@ -193,12 +192,12 @@ class ComicExteractor: NSObject {
         
     }
     
-    private func NameofFile(fromFilePath path: String) -> String{
+    private func nameofFile(fromFilePath path: String) -> String{
         guard let dotindex = path.lastIndex(of: ".") else { return ""}
         
         var startIndex: String.Index {
             if let slashIndex = path.lastIndex(of: "/"){
-                return slashIndex
+                return path.index(slashIndex, offsetBy: 1)
             }else{
                 return path.startIndex
             }
