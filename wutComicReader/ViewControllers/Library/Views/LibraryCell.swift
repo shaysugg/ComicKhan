@@ -10,14 +10,15 @@ import UIKit
 
 class LibraryCell: UICollectionViewCell {
     
+    var imageResizer: ImageResizer!
+    
     var book : Comic? {
         didSet{
             #warning("line below would crash if comic has no pages!")
             guard let imageName = book?.imageNames?.first else { return }
             
             let cover = ComicImage(book, withImageName: imageName)
-            
-            bookCoverImageView.image = cover
+            bookCoverImageView.image = imageResizer.resize(cover, to: CGSize(width: 300, height: 450))
             updateProgressValue()
         }
     }
@@ -32,12 +33,7 @@ class LibraryCell: UICollectionViewCell {
     @IBOutlet weak var selectionImageView: UIImageView!
     @IBOutlet weak var whiteView: UIView!
     @IBOutlet weak var bookCoverImageView: UIImageView!
-    
-    lazy var readProgressView: CircleProgressView = {
-        let progressView = CircleProgressView()
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        return progressView
-    }()
+    @IBOutlet weak var readProgressView: CircleProgressView!
     
     
     override var isSelected: Bool {
@@ -57,6 +53,9 @@ class LibraryCell: UICollectionViewCell {
     
     func setUpDesign(){
         
+        self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
+        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
+        readProgressView.strokeWidth = 2
         bookCoverImageView.layer.cornerRadius = 4
         bookCoverImageView.clipsToBounds = true
         whiteView.layer.cornerRadius = 4
@@ -65,10 +64,10 @@ class LibraryCell: UICollectionViewCell {
     }
     
     override func awakeFromNib() {
-        self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
-        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
+        
+        imageResizer = ImageResizer()
         setUpDesign()
-        addReadProgressView()
+        updateProgressValue()
     }
     
     override func layoutSubviews() {
@@ -91,19 +90,6 @@ class LibraryCell: UICollectionViewCell {
             readProgressView.isHidden = true
         }
         
-    }
-    
-    private func addReadProgressView(){
-        
-        addSubview(readProgressView)
-        readProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: 2.5).isActive = true
-        readProgressView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 2.5).isActive = true
-        readProgressView.widthAnchor.constraint(equalToConstant: bounds.width / 8).isActive = true
-        readProgressView.heightAnchor.constraint(equalToConstant: bounds.width / 8).isActive = true
-        
-        readProgressView.makeDropShadow(shadowOffset: .zero, opacity: 0.7, radius: 1)
-        
-       updateProgressValue()
     }
     
     

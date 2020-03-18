@@ -791,6 +791,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = co.wutup.wutComicReader;
 				PRODUCT_NAME = ComicKhan;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -812,6 +813,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = co.wutup.wutComicReader;
 				PRODUCT_NAME = ComicKhan;
 				PROVISIONING_PROFILE_SPECIFIER = "";

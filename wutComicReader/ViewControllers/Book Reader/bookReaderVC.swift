@@ -268,7 +268,7 @@ class BookReaderVC: UIViewController {
         tapGesture.numberOfTapsRequired = 1
         bookPageViewController.view.addGestureRecognizer(tapGesture)
         
-        let doubletapGesture = UITapGestureRecognizer(target: self, action: #selector(zoomBookCurrentPage))
+        let doubletapGesture = ZoomGestureRecognizer(target: self, action: #selector(zoomBookCurrentPage(_:)))
         doubletapGesture.numberOfTapsRequired = 2
         bookPageViewController.view.addGestureRecognizer(doubletapGesture)
         
@@ -318,9 +318,10 @@ class BookReaderVC: UIViewController {
         }
     }
     
-    @objc func zoomBookCurrentPage() {
+    @objc func zoomBookCurrentPage(_ sender: ZoomGestureRecognizer) {
+        guard let point = sender.point else { return }
         let currentPage = bookPageViewController.viewControllers?.first as? BookPage
-        currentPage?.zoomWithDoubleTap()
+        currentPage?.zoomWithDoubleTap(toPoint: point)
         
     }
     

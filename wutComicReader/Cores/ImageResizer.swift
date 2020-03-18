@@ -11,17 +11,24 @@ import UIKit
 import AVFoundation
 
 class ImageResizer {
-    private var imagePaths: [String]
-    private var diractoryForResizedImages: URL
+    private var imagePaths: [String]?
+    private var diractoryForResizedImages: URL?
     
-    init(for imagePaths: [String], saveTo path: URL) {
+    convenience init(for imagePaths: [String], saveTo path: URL) {
+        self.init()
         self.imagePaths = imagePaths
         self.diractoryForResizedImages = path
+        
     }
     
     func startResizing(progress: (Double)->()) {
+        guard
+            let paths = imagePaths,
+            let _ = diractoryForResizedImages
+            else { return }
+        
         var count: Double = 0
-        for path in imagePaths {
+        for path in paths {
            
             if let image = UIImage(contentsOfFile: path) {
                 let isImageisDoubleSplash = image.size.width > image.size.height
@@ -29,7 +36,7 @@ class ImageResizer {
                        withName: imageName(fromPath: path),
                        withSize: CGSize(width: (isImageisDoubleSplash ? 200 : 100), height: 150))
                 count += 1
-                progress(count / Double(imagePaths.count))
+                progress(count / Double(paths.count))
             }
         }
     }
@@ -41,7 +48,7 @@ class ImageResizer {
             image.draw(in: CGRect(origin: .zero, size: resizeSize))
         }
         do{
-            try data.write(to: diractoryForResizedImages.appendingPathComponent(name))
+            try data.write(to: diractoryForResizedImages!.appendingPathComponent(name))
         }catch let error{
             print("error happend in resizing an image" + error.localizedDescription)
         }
@@ -52,5 +59,16 @@ class ImageResizer {
        
         let lastSlashIndex = path.lastIndex(of: "/")!
         return path.substring(from: lastSlashIndex)
+    }
+    
+    
+    func resize(_ image: UIImage?, to size: CGSize) -> UIImage? {
+        guard let img = image else { return nil }
+        
+        let render = UIGraphicsImageRenderer(size: size)
+        let resizedImage = render.image(actions: { _ in
+            img.draw(in: CGRect(origin: .zero, size: size))
+        })
+        return resizedImage
     }
 }

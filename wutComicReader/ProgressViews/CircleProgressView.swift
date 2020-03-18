@@ -35,6 +35,8 @@ class CircleProgressView: UIView {
         }
     }
     
+    var strokeWidth: CGFloat = 0
+    
     //MARK:- Functions
     
     override init(frame: CGRect) {
@@ -48,8 +50,9 @@ class CircleProgressView: UIView {
         }
     }
     
-    convenience init(withProgress value: CGFloat){
+    convenience init(withProgress value: CGFloat, InnerStroke: CGFloat = 0){
         self.init()
+        self.strokeWidth = InnerStroke
         self.progressValue = value
     }
     
@@ -61,7 +64,7 @@ class CircleProgressView: UIView {
         let center = CGPoint(x: bounds.width * 0.5, y: bounds.height * 0.5)
         circle.move(to: center)
         circle.addArc(withCenter: center,
-                      radius: 100,
+                      radius: frame.size.height / 2 - strokeWidth,
                       startAngle: -(CGFloat.pi * 0.5),
                       endAngle: -(CGFloat.pi * 0.5) + 2 * value * CGFloat.pi,
                       clockwise: true)
@@ -74,9 +77,9 @@ class CircleProgressView: UIView {
     }
     
     private func drawBackgroundCircle(){
-        
-        let circle = UIBezierPath(arcCenter: CGPoint(x: bounds.width * 0.5, y: bounds.height * 0.5),
-                                  radius: 100,
+        let center = CGPoint(x: bounds.width * 0.5, y: bounds.height * 0.5)
+        let circle = UIBezierPath(arcCenter: center,
+                                  radius: frame.size.height / 2,
                                   startAngle: 0,
                                   endAngle: 2 * CGFloat.pi,
                                   clockwise: true)
@@ -96,7 +99,7 @@ class CircleProgressView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     

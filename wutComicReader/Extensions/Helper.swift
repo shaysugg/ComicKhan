@@ -32,10 +32,14 @@ extension UIResponder {
     }
 }
 
-extension UIImage{
-
+class ZoomGestureRecognizer: UITapGestureRecognizer {
+    var point: CGPoint?
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesBegan(touches, with: event)
+        point = touches.first?.location(in: view)
+    }
 }
-
 
 
 extension UIViewController {

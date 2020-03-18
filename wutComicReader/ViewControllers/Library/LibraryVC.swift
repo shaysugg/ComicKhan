@@ -174,7 +174,7 @@ class LibraryVC: UIViewController {
         emptyGroupsView.heightAnchor.constraint(equalToConstant: 400).isActive = true
         emptyGroupsView.centerXAnchor.constraint(equalTo: bookCollectionView.centerXAnchor).isActive = true
         emptyGroupsView.centerYAnchor.constraint(equalTo: bookCollectionView.centerYAnchor).isActive = true
-        emptyGroupsView.isHidden = true
+        emptyGroupsView.isHidden = !comicGroups.isEmpty
         
         
     }
@@ -355,7 +355,7 @@ class LibraryVC: UIViewController {
     //MARK:- file functions
     
     func refreshUIIfNewComicAdded() {
-        if appfileManager.didUserDiractoryChanged() {
+        if appfileManager.didUserDiractoryChanged() && progressContainer.isHidden {
         refreshButton.image = UIImage(named: "refreshHighlited")?.withRenderingMode(.alwaysOriginal)
         }
     }

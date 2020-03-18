@@ -133,11 +133,19 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
-    func zoomWithDoubleTap() {
+    func zoomWithDoubleTap(toPoint point:CGPoint) {
         
         let minScale = scrollView.minimumZoomScale
         if scrollView.zoomScale == minScale {
-            scrollView.setZoomScale(minScale * 2.1, animated: true)
+            
+            var zoomRect = CGRect()
+            zoomRect.size.width = imagesContainerView.frame.size.width / scrollView.maximumZoomScale
+            zoomRect.size.height = imagesContainerView.frame.size.height / scrollView.maximumZoomScale
+            let newCenter = scrollView.convert(point, to: imagesContainerView)
+            zoomRect.origin.x = newCenter.x - (zoomRect.size.width / 2)
+            zoomRect.origin.y = newCenter.y - (zoomRect.size.height / 2)
+            
+            scrollView.zoom(to: zoomRect, animated: true)
         }else{
             scrollView.setZoomScale(minScale, animated: true)
         }

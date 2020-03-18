@@ -12,13 +12,7 @@ import UIKit
 extension LibraryVC {
     
     func showProgressView() {
-//        editBarButton.title = ""
-//        navigationItem.setRightBarButtonItems([editBarButton], animated: true)
-//        navigationItem.setLeftBarButtonItems([editBarButton], animated: true)
-        
-        self.navigationController?.navigationBar.subviews.forEach({ view in
-            view.alpha = 0
-        })
+        makeBarButtons(hidden: true)
         
         progressContainer.isHidden = false
         progressContainerHideTopConstrait.isActive = false
@@ -53,21 +47,30 @@ extension LibraryVC {
         progressContainerHideTopConstrait.isActive = true
         
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-//            self.progressContainer.transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.layoutSubviews()
         }, completion: { _ in
             self.progressContainer.isHidden = true
-            self.navigationController?.navigationBar.subviews.forEach({ view in
-                view.alpha = 1
+            self.makeBarButtons(hidden: false)
             })
-            
-            
-        })
-        navigationItem.setRightBarButtonItems([refreshButton , editBarButton], animated: true)
-//        navigationItem.setLeftBarButtonItems([infoButton], animated: true)
         editingMode = false
     }
     
+    
+     func makeBarButtons(hidden: Bool) {
+        if hidden {
+            infoButton.tintColor = UIColor.red.withAlphaComponent(0)
+            refreshButton.tintColor = UIColor.red.withAlphaComponent(0)
+            editBarButton.tintColor = UIColor.red.withAlphaComponent(0)
+        }else {
+            infoButton.tintColor = .appSecondaryLabel
+            refreshButton.tintColor = .appSecondaryLabel
+            editBarButton.tintColor = .appSecondaryLabel
+        }
+        
+        infoButton.isEnabled = !hidden
+        refreshButton.isEnabled = !hidden
+        editBarButton.isEnabled = !hidden
+    }
     
     
 }
