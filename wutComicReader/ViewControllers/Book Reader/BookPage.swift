@@ -14,16 +14,8 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     var pageNumber: Int?
     
-    var image1: ComicImage? {
-        didSet{
-            pageImageView1.image = image1?.image
-        }
-    }
-    var image2: ComicImage? {
-        didSet{
-            pageImageView2.image = image2?.image
-        }
-    }
+    var image1: ComicImage?
+    var image2: ComicImage?
     
     var isDoupleSplashPage = false {
         didSet {
@@ -85,23 +77,29 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDesign()
-        view.backgroundColor = UIColor.blue.withAlphaComponent(CGFloat(Double.random(in: 0.2...1.0)))
+        scrollView.delegate = self
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
 
-        scrollView.delegate = self
+        pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
+        pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
+        
+        
         updateMinZoomScaleForSize(view.bounds.size)
         centerTheImage()
 
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
+        
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        scrollView.delegate = nil
-        
+//        scrollView.delegate = nil
+        pageImageView1.image = UIImage()
+        pageImageView2.image = UIImage()
     }
     
     override func viewWillLayoutSubviews() {
@@ -158,7 +156,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         imageContainerViewRightAnchor?.isActive = true
         imageContainerViewBottomAnchor?.isActive = true
         imageContainerViewTopAnchor?.isActive = true
-        imagesContainerView.backgroundColor = UIColor.red.withAlphaComponent(CGFloat(Double.random(in: 0.2...1.0)))
 
         imagesContainerView.addSubview(pageImageView1)
         pageImageView1.leftAnchor.constraint(equalTo: imagesContainerView.leftAnchor).isActive = true

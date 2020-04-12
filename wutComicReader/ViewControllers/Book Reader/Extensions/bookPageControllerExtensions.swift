@@ -51,7 +51,7 @@ extension BookReaderVC {
             var image = ComicImage(comic, withImageName: comicPage)
             image.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
             
-            if isImageInDoubleSplashSize(image.image) {
+            if isImageInDoubleSplashSize(UIImage(contentsOfFile: image.path) ?? UIImage()) {
                 if index.isMultiple(of: 2) {
                     tempDouble.append(contentsOf: [nil , image , nil])
                 }else{

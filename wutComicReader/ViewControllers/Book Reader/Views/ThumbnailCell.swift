@@ -13,7 +13,7 @@ class ThumbnailCell: UICollectionViewCell {
     
     var thumbnailImage: ComicImage! {
         didSet{
-            pageImageView1.image = thumbnailImage.image
+            pageImageView1.image = UIImage(contentsOfFile: thumbnailImage.path)
         }
     }
     
