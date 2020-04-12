@@ -10,20 +10,36 @@ import UIKit
 
 class BookPage: UIViewController , UIScrollViewDelegate {
     
+    //MARK:- Variables
+    
     var pageNumber: Int?
     
     var image1: ComicImage? {
         didSet{
-            pageImageView1.image = image1
+            pageImageView1.image = image1?.image
         }
     }
     var image2: ComicImage? {
         didSet{
-            pageImageView2.image = image2
+            pageImageView2.image = image2?.image
         }
     }
     
-    lazy var scrollView : UIScrollView = {
+    var isDoupleSplashPage = false {
+        didSet {
+            if isDoupleSplashPage {
+                pageImageView2.removeFromSuperview()
+                pageImageView1DoubleModeRightAnchor?.isActive = false
+                pageImageView1SingleModeRightAnchor?.isActive = true
+            }
+        }
+    }
+    
+    var previousRotation = UIDevice.current.orientation
+    
+    //MARK:- UI Variables
+    
+    lazy var scrollView : UIScrollView! = {
         let scrollview = UIScrollView()
         scrollview.showsVerticalScrollIndicator = false
         scrollview.showsHorizontalScrollIndicator = false
@@ -64,44 +80,64 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         return imageView
     }()
 
+    //MARK:- Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        scrollView.delegate = self
         setupDesign()
+        view.backgroundColor = UIColor.blue.withAlphaComponent(CGFloat(Double.random(in: 0.2...1.0)))
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        scrollView.delegate = self
+        updateMinZoomScaleForSize(view.bounds.size)
+        centerTheImage()
+
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
-        
-        updateMinZoomScaleForSize(view.bounds.size)
-        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        scrollView.delegate = nil
         
     }
     
-    var isDoupleSplashPage = false {
-        didSet {
-            if isDoupleSplashPage {
-                pageImageView2.removeFromSuperview()
-                pageImageView1DoubleModeRightAnchor?.isActive = false
-                pageImageView1SingleModeRightAnchor?.isActive = true
-            }
-        }
+    override func viewWillLayoutSubviews() {
+         
+         let orientation = UIDevice.current.orientation
+         
+         if orientation.isLandscape {
+             makeDoublePageDesign()
+         }else if orientation.isPortrait{
+             makeSinglePageDesign()
+         }else {
+             if previousRotation.isLandscape{
+                 makeDoublePageDesign()
+             }else{
+                 makeSinglePageDesign()
+             }
+         }
+         
+     }
+    
+    deinit {
+        print("BOOK PAGE GOT DEINITED")
     }
-    
-    
-    var haveDoublePage:Bool {
-        return UIDevice.current.orientation.isLandscape
-    }
-    
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updateMinZoomScaleForSize(view.bounds.size)
-        centerTheImage()
+        if scrollView.zoomScale == scrollView.minimumZoomScale {
+            updateMinZoomScaleForSize(view.bounds.size)
+            centerTheImage()
+        }else{
+            centerTheImage()
+        }
+        if !UIDevice.current.orientation.isFlat {
+            previousRotation = UIDevice.current.orientation
+        }
     }
-    
     
     func setupDesign() {
         
@@ -122,7 +158,8 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         imageContainerViewRightAnchor?.isActive = true
         imageContainerViewBottomAnchor?.isActive = true
         imageContainerViewTopAnchor?.isActive = true
-        
+        imagesContainerView.backgroundColor = UIColor.red.withAlphaComponent(CGFloat(Double.random(in: 0.2...1.0)))
+
         imagesContainerView.addSubview(pageImageView1)
         pageImageView1.leftAnchor.constraint(equalTo: imagesContainerView.leftAnchor).isActive = true
         pageImageView1SingleModeRightAnchor = pageImageView1.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor)
@@ -133,46 +170,40 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
-    func zoomWithDoubleTap(toPoint point:CGPoint) {
+    func zoomWithDoubleTap(toPoint point:CGPoint, animated: Bool = true) {
         
         let minScale = scrollView.minimumZoomScale
         if scrollView.zoomScale == minScale {
             
             var zoomRect = CGRect()
-            zoomRect.size.width = imagesContainerView.frame.size.width / scrollView.maximumZoomScale
-            zoomRect.size.height = imagesContainerView.frame.size.height / scrollView.maximumZoomScale
+            zoomRect.size.width = (imagesContainerView.frame.size.width / scrollView.maximumZoomScale) * 2.3
+            zoomRect.size.height = (imagesContainerView.frame.size.height / scrollView.maximumZoomScale) * 2.3
             let newCenter = scrollView.convert(point, to: imagesContainerView)
             zoomRect.origin.x = newCenter.x - (zoomRect.size.width / 2)
             zoomRect.origin.y = newCenter.y - (zoomRect.size.height / 2)
             
-            scrollView.zoom(to: zoomRect, animated: true)
+            scrollView.zoom(to: zoomRect, animated: animated)
         }else{
-            scrollView.setZoomScale(minScale, animated: true)
+            scrollView.setZoomScale(minScale, animated: animated)
         }
     }
     
-    override func viewWillLayoutSubviews() {
+    private func makeDoublePageDesign() {
+        imagesContainerView.addSubview(pageImageView2)
         
-        if haveDoublePage {
-            imagesContainerView.addSubview(pageImageView2)
-            
-            pageImageView1SingleModeRightAnchor?.isActive = false
-            pageImageView1DoubleModeRightAnchor?.isActive = true
-            
-            pageImageView2.leftAnchor.constraint(equalTo: pageImageView1.rightAnchor).isActive = true
-            pageImageView2.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor).isActive = true
-            pageImageView2.bottomAnchor.constraint(equalTo: imagesContainerView.bottomAnchor).isActive = true
-            pageImageView2.topAnchor.constraint(equalTo: imagesContainerView.topAnchor).isActive = true
-            
-        }else{
-            pageImageView2.removeFromSuperview()
-            pageImageView1DoubleModeRightAnchor?.isActive = false
-            pageImageView1SingleModeRightAnchor?.isActive = true
-            
-        }
+        pageImageView1SingleModeRightAnchor?.isActive = false
+        pageImageView1DoubleModeRightAnchor?.isActive = true
         
-//        handleViewsWhereOneImagesIsNill()
-        
+        pageImageView2.leftAnchor.constraint(equalTo: pageImageView1.rightAnchor).isActive = true
+        pageImageView2.rightAnchor.constraint(equalTo: imagesContainerView.rightAnchor).isActive = true
+        pageImageView2.bottomAnchor.constraint(equalTo: imagesContainerView.bottomAnchor).isActive = true
+        pageImageView2.topAnchor.constraint(equalTo: imagesContainerView.topAnchor).isActive = true
+    }
+    
+    private func makeSinglePageDesign() {
+        pageImageView2.removeFromSuperview()
+        pageImageView1DoubleModeRightAnchor?.isActive = false
+        pageImageView1SingleModeRightAnchor?.isActive = true
     }
     
     private func pagesThatHaveImage() -> [UIImageView] {
@@ -185,9 +216,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         }
         return imageViews
     }
-    
-    
-    
     
     
     //MARK:- Scroll View Delegates
@@ -219,50 +247,26 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     func centerTheImage(){
         
-        let yOffset = max(0 ,(scrollView.bounds.height - scrollView.contentSize.height) / 2)
-        
         if pagesThatHaveImage().isEmpty { return }
         
         let imageView = pagesThatHaveImage()[0]
         let numberOfPages = pagesThatHaveImage().count
         
-        if  haveDoublePage {
-
-            let contentWidthSize = imageView.bounds.width * CGFloat(numberOfPages)
-            let contentHeightSize = imageView.bounds.height
-            
-            pageImageView1DoubleModeRightAnchor?.isActive = true
-            pageImageView1SingleModeRightAnchor?.isActive = false
-            
-            let yOffset = max(0 ,(scrollView.bounds.height - (scrollView.zoomScale * contentHeightSize)) / 2)
-                    
-            imageContainerViewTopAnchor?.constant = yOffset
-            imageContainerViewBottomAnchor?.constant = yOffset
-            
-            let xOffset = max(0, (scrollView.bounds.width - ( scrollView.zoomScale * contentWidthSize)) / 2)
-            pageImageView1DoubleModeRightAnchor?.constant = xOffset
-            pageImageView1LeftAnchor?.constant = xOffset
-            imageContainerViewLeftAnchor?.constant = xOffset
-            imageContainerViewRightAnchor?.constant = xOffset
+        let orientation = UIDevice.current.orientation
         
+        if  orientation.isLandscape {
+            centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
+            
+        }else if orientation.isPortrait{
+            centerForPortraitMode(imageView)
+            
+            //when oriantation is flat
         }else{
-            
-            let contentWidthSize = imageView.bounds.width
-            let contentHeightSize = imageView.bounds.height
-            
-            pageImageView1DoubleModeRightAnchor?.isActive = false
-            pageImageView1SingleModeRightAnchor?.isActive = true
-            
-            let yOffset = max(0 ,(scrollView.bounds.height - (scrollView.zoomScale * contentHeightSize)) / 2)
-            imageContainerViewTopAnchor?.constant = yOffset
-            pageImageView1BottomAnchor?.constant = yOffset
-            
-            let xOffset = max(0, (scrollView.bounds.width - (scrollView.zoomScale * contentWidthSize)) / 2)
-            pageImageView1SingleModeRightAnchor?.constant = xOffset
-            imageContainerViewRightAnchor?.constant = xOffset
-            imageContainerViewLeftAnchor?.constant = xOffset
-            pageImageView1LeftAnchor?.constant = xOffset
-
+            if previousRotation.isLandscape{
+                centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
+            }else {
+                centerForPortraitMode(imageView)
+            }
         }
         
         
@@ -270,5 +274,42 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
+    
+    private func centerForLandscapeMode(_ imageView: UIImageView, withNumberOfPages pageNumbers: Int){
+        let contentWidthSize = imageView.bounds.width * CGFloat(pageNumbers)
+        let contentHeightSize = imageView.bounds.height
+        
+        pageImageView1DoubleModeRightAnchor?.isActive = true
+        pageImageView1SingleModeRightAnchor?.isActive = false
+        
+        let yOffset = max(0 ,(scrollView.bounds.height - (scrollView.zoomScale * contentHeightSize)) / 2)
+                
+        imageContainerViewTopAnchor?.constant = yOffset
+        imageContainerViewBottomAnchor?.constant = yOffset
+        
+        let xOffset = max(0, (scrollView.bounds.width - ( scrollView.zoomScale * contentWidthSize)) / 2)
+        pageImageView1DoubleModeRightAnchor?.constant = xOffset
+        pageImageView1LeftAnchor?.constant = xOffset
+        imageContainerViewLeftAnchor?.constant = xOffset
+        imageContainerViewRightAnchor?.constant = xOffset
+    }
+    
+    private func centerForPortraitMode(_ imageView: UIImageView){
+        let contentWidthSize = imageView.bounds.width
+        let contentHeightSize = imageView.bounds.height
+        
+        pageImageView1DoubleModeRightAnchor?.isActive = false
+        pageImageView1SingleModeRightAnchor?.isActive = true
+        
+        let yOffset = max(0 ,(scrollView.bounds.height - (scrollView.zoomScale * contentHeightSize)) / 2)
+        imageContainerViewTopAnchor?.constant = yOffset
+        pageImageView1BottomAnchor?.constant = yOffset
+        
+        let xOffset = max(0, (scrollView.bounds.width - (scrollView.zoomScale * contentWidthSize)) / 2)
+        pageImageView1SingleModeRightAnchor?.constant = xOffset
+        imageContainerViewRightAnchor?.constant = xOffset
+        imageContainerViewLeftAnchor?.constant = xOffset
+        pageImageView1LeftAnchor?.constant = xOffset
+    }
     
 }

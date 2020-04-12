@@ -9,11 +9,11 @@
 import UIKit
 
 
-protocol BottomBarDelegate {
+protocol BottomBarDelegate: AnyObject {
     func newPageBeenSet(pageNumber: Int)
 }
 
-protocol TopBarDelegate {
+protocol TopBarDelegate: AnyObject {
     func dismissViewController()
 }
 
@@ -127,14 +127,28 @@ class BookReaderVC: UIViewController {
         
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
         
+        //force rotate to portrait if orientation was flat
+        if UIDevice.current.orientation.isFlat {
+            let value = UIInterfaceOrientation.portrait.rawValue
+            UIDevice.current.setValue(value, forKey: "orientation")
+        }
+        
     }
     
     
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
-        if deviceType == .iPad {
+        let trait = UIScreen.main.traitCollection
+        
+        //this is because trait change in iPad not work
+        //so we add a func here to tell bookpages that rotation has changed
+        if trait.horizontalSizeClass == .regular,
+            trait.verticalSizeClass == .regular {
             layoutWith(traitCollection: UIScreen.main.traitCollection)
+            let currentBookPage = bookPageViewController.viewControllers?.first as? BookPage
+//            currentBookPage?.updateMinZoomScaleForSize(view.bounds.size)
+//            currentBookPage?.centerTheImage()
         }
 //        
     }
@@ -146,6 +160,8 @@ class BookReaderVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        
+        
     }
     
     
@@ -293,6 +309,7 @@ class BookReaderVC: UIViewController {
 //                    return page1Number < number ? .reverse : .forward
 //                }
             bookPageViewController.setViewControllers([pendingPage!], direction: .forward, animated: animate, completion: nil)
+                pendingPage?.centerTheImage()
             }
             
         }
@@ -357,13 +374,14 @@ class BookReaderVC: UIViewController {
     
     func appearMenus(animated: Bool) {
         menusAreAppeard = true
-        self.setNeedsStatusBarAppearanceUpdate()
+        
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
                 self.topBar.alpha = 1
                 self.bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.bottomBar.alpha = 1
                 self.topBarBackgroundView.alpha = 1
+                
             }, completion: nil)
         }else{
             topBar.alpha = 1
@@ -375,6 +393,10 @@ class BookReaderVC: UIViewController {
         //this shouldn't be there actually but idk wherever else i can make bottom bar collection view scroll
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0
         bottomBar.currentPage = Int(LastpageNumber)
+        
+        // because setNeedsStatusBarAppearanceUpdate force scroll view to zoomout
+        //we check if scrollview was zoomed and if it was then we zoom back to same rect ageain manually
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     
@@ -386,6 +408,10 @@ extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
         
         saveLastViewedPageToCoreData()
         NotificationCenter.default.post(name: .reloadLibraryAtIndex, object: bookIndexInLibrary)
+        
+        bottomBar.delegate = nil
+        topBar.delegate = nil
+        
         dismiss(animated: false, completion: nil)
         
     }

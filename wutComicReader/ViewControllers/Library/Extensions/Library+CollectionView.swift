@@ -56,6 +56,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         if editingMode {
             if !selectedComics.contains(selectedComic) {
                 selectedComics.append(selectedComic)
+                selectedComicsIndexPaths.append(indexPath)
                 
             }
         }else{
@@ -65,13 +66,6 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
             present(readerVC, animated: true)
-//            cellFullSizeView.image = ComicImage(selectedComic, withImageName: selectedComic.imageNames?.first)
-////            cellFullSizeView.backgroundColor = .black
-//            addOveralyView(withFrame: selectedCell.frame, complition: { [weak self] in
-//                self?.present(readerVC , animated: false)
-////                self?.removeCellFullSizeImage()
-//            })
-            
             
         }
     }
@@ -81,10 +75,12 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         if editingMode{
             
             let deSelectedComic = comicGroups[indexPath.section].comics?[indexPath.row] as! Comic
+            let deSelectedIndex = selectedComicsIndexPaths.firstIndex(of: indexPath)
             
-            if selectedComics.contains(deSelectedComic){
+            if selectedComics.contains(deSelectedComic), let _ = deSelectedIndex {
                 guard let comic = selectedComics.firstIndex(of: deSelectedComic) else { return }
                 selectedComics.remove(at: comic)
+                selectedComicsIndexPaths.remove(at: deSelectedIndex!)
             }
         }
     }

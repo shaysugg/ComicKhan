@@ -27,7 +27,7 @@ class LibraryVC: UIViewController {
     var editingMode = false {
         didSet{
             updateNavBarWhenEditingChanged()
-            refreshControll.isEnabled = !editingMode
+            refreshButton.isEnabled = !editingMode
         }
         
     }
@@ -38,10 +38,10 @@ class LibraryVC: UIViewController {
             deleteBarButton.isEnabled = !selectedComics.isEmpty
         }
     }
+    var selectedComicsIndexPaths : [IndexPath] = []
     
     //MARK:- UI Variables
     
-    let refreshControll = UIRefreshControl()
     
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet var refreshButton: UIBarButtonItem!
@@ -69,11 +69,12 @@ class LibraryVC: UIViewController {
     
     lazy var progressContainer : ProgressContainerView = {
         let progressConteiner = ProgressContainerView()
+        progressConteiner.isHidden = true
         progressConteiner.translatesAutoresizingMaskIntoConstraints = false
         return progressConteiner
     }()
-    var progressContainerHideTopConstrait: NSLayoutConstraint!
-    var progressContainerAppearedTopConstrait: NSLayoutConstraint!
+    var progressContainerHideBottomConstrait: NSLayoutConstraint!
+    var progressContainerAppearedBottomConstrait: NSLayoutConstraint!
     var comicNameThatExtracting: String?
     
     
@@ -107,7 +108,6 @@ class LibraryVC: UIViewController {
         bookCollectionView.allowsMultipleSelection = true
         setUpDesigns()
         bookCollectionView.reloadData()
-        setupPullToRefresh()
         comicExtractor.delegate = self
         emptyGroupsView.delegate = self
          
@@ -129,6 +129,7 @@ class LibraryVC: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         configureCellSize(basedOn: UIScreen.main.traitCollection)
+        bookCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     func setUpDesigns(){
@@ -159,12 +160,6 @@ class LibraryVC: UIViewController {
         bottomGradientImage = imageView
     }
     
-    func setupPullToRefresh(){
-        bookCollectionView.refreshControl = refreshControll
-        refreshControll.tintColor = .clear
-        refreshControll.subviews.first?.alpha = 0
-        refreshControll.addTarget(self, action: #selector(refreshButtonTapped(_:)), for: .valueChanged)
-    }
     
     func designEmptyView(){
         let emptyViewWidth = view.bounds.width * (deviceType == .iPad ? 0.5 : 1)
@@ -205,13 +200,15 @@ class LibraryVC: UIViewController {
         guard let indexPath = notification.object as? IndexPath else { return }
         let cell = bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
         cell?.updateProgressValue()
-        print("indexPath: \(indexPath)")
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.barTintColor = .appSystemBackground
+        
+        
         
     }
     
@@ -231,14 +228,11 @@ class LibraryVC: UIViewController {
                 try? self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
             }
         })
-        bookCollectionView.setContentOffset(CGPoint(x: 0, y: -(refreshControll.frame.size.height)), animated: true)
         syncComics { [weak self] in
             self?.fetchNewComics()
-            self?.bookCollectionView.reloadData()
+            self?.bookCollectionView.insertItems(at: [IndexPath(row: (self?.comicGroups.first?.comics!.count)! - 1, section: 0)])
             
-            self?.refreshControll.endRefreshing()
             self?.refreshButton.image = UIImage(named: "refresh")
-            self?.bookCollectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
          
             if taskID != UIBackgroundTaskIdentifier.invalid {
                 UIApplication.shared.endBackgroundTask(taskID)
@@ -263,8 +257,11 @@ class LibraryVC: UIViewController {
             }
         }
         
+        bookCollectionView.deleteItems(at: selectedComicsIndexPaths)
         fetchGroupComics()
-        bookCollectionView.reloadData()
+        
+        selectedComics.removeAll()
+        selectedComicsIndexPaths.removeAll()
         
     }
 
@@ -278,6 +275,7 @@ class LibraryVC: UIViewController {
         bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
         editingMode = !editingMode
         selectedComics.removeAll()
+        selectedComicsIndexPaths.removeAll()
         bookCollectionView.reloadData()
     }
     
@@ -329,8 +327,9 @@ class LibraryVC: UIViewController {
     
     func makeCustomNavigationBar(){
         let navigationBar = navigationController?.navigationBar
-        navigationBar?.shadowImage = UIImage()
+        navigationBar?.barTintColor = .appSystemBackground
         navigationBar?.setBackgroundImage(UIImage(), for: .default)
+        navigationBar?.shadowImage = nil
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
     }
     
@@ -377,6 +376,7 @@ class LibraryVC: UIViewController {
         let managedContext = appdelegate.persistentContainer.viewContext
         
         var fetchedComics: [Comic] = []
+        var newComics: [Comic] = []
         
         let fetchRequest = NSFetchRequest<Comic>(entityName: "Comic")
         fetchRequest.returnsObjectsAsFaults = false
@@ -402,24 +402,24 @@ class LibraryVC: UIViewController {
                 group.addToComics(comic)
             }
             try? managedContext.save()
+            fetchGroupComics()
         }else{
         //if new comic category doese not exist
             if fetchedComics.isEmpty { return }
             let group = createAGroupForNewComics()
             group?.addToComics(NSOrderedSet(array: fetchedComics))
             
+            fetchGroupComics()
+            bookCollectionView.insertSections([0])
         }
         
-        fetchGroupComics()
-        deleteEmptyGroups()
-
         
     }
     
     @objc func fetchGroupComics(){
         
-        deleteEmptyGroups()
-        selectedComics.removeAll()
+//        deleteEmptyGroups()
+//        selectedComics.removeAll()
         
         guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appdelegate.persistentContainer.viewContext
@@ -442,10 +442,15 @@ class LibraryVC: UIViewController {
     private func deleteEmptyGroups(){
         guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appdelegate.persistentContainer.viewContext
+        
+        var groupIndexes: [Int] = []
        
         for group in comicGroups where group.comics?.count == 0 {
-            managedContext.delete(group)
+            groupIndexes.append(comicGroups.firstIndex(of: group)!)
             comicGroups.removeAll(where: {$0 == group})
+            bookCollectionView.deleteSections(IndexSet(groupIndexes))
+            managedContext.delete(group)
+            
         }
         
         do{
@@ -479,6 +484,8 @@ class LibraryVC: UIViewController {
     
     @objc private func newGroupVCAddedANewGroup() {
         fetchGroupComics()
+        selectedComics.removeAll()
+        selectedComicsIndexPaths.removeAll()
         bookCollectionView.reloadData()
     }
     

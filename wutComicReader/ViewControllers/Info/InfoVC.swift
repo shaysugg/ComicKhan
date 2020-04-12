@@ -36,6 +36,10 @@ class InfoVC: UITableViewController {
         present(howToVC, animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barTintColor = .groupTableViewBackground
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()

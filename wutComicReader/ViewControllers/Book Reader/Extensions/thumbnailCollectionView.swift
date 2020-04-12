@@ -26,8 +26,7 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let isDoubleSplash = thumbnailImages[indexPath.row].isDoubleSplash
-        return CGSize(width: collectionView.frame.height * (isDoubleSplash ? 1.22 : 0.58), height: collectionView.frame.height)
+        return CGSize(width: collectionView.frame.height * (0.58), height: collectionView.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -44,11 +43,11 @@ extension BookReaderVC {
         if let thumbnails = comic?.thumbnailNames {
             var pageNumber = 1
             for thumbnail in thumbnails {
-                if let comicImage = ComicImage(comic, withImageName: thumbnail) {
+                var comicImage = ComicImage(comic, withImageName: thumbnail)
                 comicImage.pageNumber = pageNumber
                 pageNumber += 1
                 thumbnailImages.append(comicImage)
-                }
+                
             }
         }
     }

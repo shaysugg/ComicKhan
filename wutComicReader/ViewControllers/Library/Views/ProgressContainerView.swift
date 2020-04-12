@@ -16,7 +16,6 @@ class ProgressContainerView: UIView {
         label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 15)
         label.textColor = UIColor.white.withAlphaComponent(0.9)
         label.textAlignment = .center
-        label.text = "Batman first Edition wich Published in 2008"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -26,7 +25,6 @@ class ProgressContainerView: UIView {
         label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 15)
         label.textColor = UIColor.white.withAlphaComponent(0.9)
         label.textAlignment = .center
-        label.text = "2/12"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureDeviceType()
 //        let appfileManager = AppFileManager()
 //        try? appfileManager.makeAppDirectory()
-        print(deviceType)
         return true
     }
     

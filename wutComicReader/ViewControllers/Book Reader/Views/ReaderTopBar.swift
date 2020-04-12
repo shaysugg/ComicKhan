@@ -17,7 +17,7 @@ class TopBar: UIView {
         }
     }
     
-    var delegate: TopBarDelegate?
+    weak var delegate: TopBarDelegate?
     
     private lazy var titleLabel : UILabel = {
         let label = UILabel()

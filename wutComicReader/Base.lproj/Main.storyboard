@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kyb-M5-WBj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kyb-M5-WBj">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -223,11 +223,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LibraryVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vjD-gc-wg7">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="10" id="qLy-rl-vpP">
                                     <size key="itemSize" width="169" height="231"/>
@@ -690,10 +690,9 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kyb-M5-WBj" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="XPG-91-FGr">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                    <navigationBar key="navigationBar" alpha="0.0" tag="22" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="XPG-91-FGr">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -711,11 +710,11 @@
         <image name="email" width="50" height="50"/>
         <image name="howto" width="896.5" height="300"/>
         <image name="howtomob" width="634.5" height="300"/>
-        <image name="info.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="plus.square.fill.on.square.fill" catalog="system" width="64" height="56"/>
+        <image name="info.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="plus.square.fill.on.square.fill" catalog="system" width="128" height="113"/>
         <image name="refresh" width="30" height="30"/>
         <image name="selected" width="37.5" height="37.5"/>
-        <image name="trash.fill" catalog="system" width="60" height="64"/>
+        <image name="trash.fill" catalog="system" width="121" height="128"/>
         <image name="twitter" width="50" height="50"/>
         <namedColor name="appBlueColor">
             <color red="0.125" green="0.28600001335144043" blue="0.41200000047683716" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

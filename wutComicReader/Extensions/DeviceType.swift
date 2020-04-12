@@ -115,7 +115,5 @@ func configureDeviceType() {
             deviceType = .iPhone
         }
     }
-
-    print(deviceTypeString)
     
 }

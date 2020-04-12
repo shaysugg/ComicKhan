@@ -13,7 +13,7 @@ class ThumbnailCell: UICollectionViewCell {
     
     var thumbnailImage: ComicImage! {
         didSet{
-            pageImageView1.image = thumbnailImage
+            pageImageView1.image = thumbnailImage.image
         }
     }
     
@@ -34,8 +34,6 @@ class ThumbnailCell: UICollectionViewCell {
         imageview.translatesAutoresizingMaskIntoConstraints = false
         return imageview
     }()
-    var pageImageView1rightConstraitInDoublePageMode : NSLayoutConstraint?
-    var pageImageView1rightConstrait : NSLayoutConstraint?
     
     
     lazy var imageHolderView : UIView = {
@@ -66,8 +64,7 @@ class ThumbnailCell: UICollectionViewCell {
         pageImageView1.topAnchor.constraint(equalTo: imageHolderView.topAnchor).isActive = true
         pageImageView1.bottomAnchor.constraint(equalTo: imageHolderView.bottomAnchor , constant: 0).isActive = true
         pageImageView1.leftAnchor.constraint(equalTo: imageHolderView.leftAnchor).isActive = true
-        pageImageView1rightConstrait = pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor)
-        pageImageView1rightConstrait?.isActive = true
+        pageImageView1.rightAnchor.constraint(equalTo: imageHolderView.rightAnchor).isActive = true
         
     }
     

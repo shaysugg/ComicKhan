@@ -44,5 +44,17 @@ enum HelvetincaNeueFont {
     }
 }
 
+var previouseOriantation: UIDeviceOrientation? {
+    didSet{
+        if previouseOriantation!.isLandscape {
+        print("landscaped")
+        }else if previouseOriantation!.isPortrait {
+                print("portriat")
+            }else{
+                print("flat")
+            }
+    }
+}
+
 
 //["HelveticaNeue-UltraLightItalic", "HelveticaNeue-Medium", "HelveticaNeue-MediumItalic", "HelveticaNeue-UltraLight", "HelveticaNeue-Italic", "HelveticaNeue-Light", "HelveticaNeue-ThinItalic", "HelveticaNeue-LightItalic", "HelveticaNeue-Bold", "HelveticaNeue-Thin", "HelveticaNeue-CondensedBlack", "HelveticaNeue", "HelveticaNeue-CondensedBold", "HelveticaNeue-BoldItalic"

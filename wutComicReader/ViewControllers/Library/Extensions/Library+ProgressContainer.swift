@@ -15,8 +15,8 @@ extension LibraryVC {
         makeBarButtons(hidden: true)
         
         progressContainer.isHidden = false
-        progressContainerHideTopConstrait.isActive = false
-        progressContainerAppearedTopConstrait.isActive = true
+        progressContainerHideBottomConstrait.isActive = false
+        progressContainerAppearedBottomConstrait.isActive = true
         
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
             self.view.layoutSubviews()
@@ -31,25 +31,22 @@ extension LibraryVC {
         progressContainer.heightAnchor.constraint(equalToConstant: 100).isActive = true
         progressContainer.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
         
-        progressContainerHideTopConstrait = progressContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: -100)
-        if let navBottomAnchor = navigationController?.navigationBar.topAnchor {
-        progressContainerAppearedTopConstrait = progressContainer.topAnchor.constraint(equalTo: navBottomAnchor, constant: 10)
-        }else {
-            progressContainerAppearedTopConstrait = progressContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
-        }
+        progressContainerHideBottomConstrait = progressContainer.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            progressContainerAppearedBottomConstrait = progressContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         
-        progressContainerHideTopConstrait.isActive = true
+        progressContainerHideBottomConstrait.isActive = true
     }
     
     func removeProgressView() {
         
-        progressContainerAppearedTopConstrait.isActive = false
-        progressContainerHideTopConstrait.isActive = true
+        progressContainerAppearedBottomConstrait.isActive = false
+        progressContainerHideBottomConstrait.isActive = true
         
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.view.layoutSubviews()
         }, completion: { _ in
             self.progressContainer.isHidden = true
+            self.progressContainer.setProgress(to: 0)
             self.makeBarButtons(hidden: false)
             })
         editingMode = false
@@ -57,16 +54,6 @@ extension LibraryVC {
     
     
      func makeBarButtons(hidden: Bool) {
-        if hidden {
-            infoButton.tintColor = UIColor.red.withAlphaComponent(0)
-            refreshButton.tintColor = UIColor.red.withAlphaComponent(0)
-            editBarButton.tintColor = UIColor.red.withAlphaComponent(0)
-        }else {
-            infoButton.tintColor = .appSecondaryLabel
-            refreshButton.tintColor = .appSecondaryLabel
-            editBarButton.tintColor = .appSecondaryLabel
-        }
-        
         infoButton.isEnabled = !hidden
         refreshButton.isEnabled = !hidden
         editBarButton.isEnabled = !hidden

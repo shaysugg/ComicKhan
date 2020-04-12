@@ -22,8 +22,8 @@ class AppFileManager {
     
     //MARK:- Variables
     
-    var comicDirectory : URL!
-    var userDiractory : URL!
+    var comicDirectory = URL.comicDiractory
+    var userDiractory = URL.useDiractory
     private var fileManager = FileManager.default
     internal var managedContext : NSManagedObjectContext?
     var comicDiractoryName = "ComicFiles"
@@ -34,10 +34,10 @@ class AppFileManager {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         managedContext = appDelegate?.persistentContainer.viewContext
         
-        userDiractory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
-        let documentDir = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
-        comicDirectory = documentDir.appendingPathComponent(comicDiractoryName)
+//        userDiractory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+//
+//        let documentDir = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
+//        comicDirectory = documentDir.appendingPathComponent(comicDiractoryName)
     }
     
     
@@ -257,4 +257,23 @@ class AppFileManager {
     }
     
     
+}
+
+//let appDelegate = UIApplication.shared.delegate as? AppDelegate
+//managedContext = appDelegate?.persistentContainer.viewContext
+//
+//userDiractory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+//
+//let documentDir = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
+//comicDirectory = documentDir.appendingPathComponent(comicDiractoryName)
+
+fileprivate var comicDiractoryName = "ComicFiles"
+
+extension URL {
+    static var comicDiractory: URL {
+       return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent(comicDiractoryName)
+    }
+    static var useDiractory: URL {
+      return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    }
 }

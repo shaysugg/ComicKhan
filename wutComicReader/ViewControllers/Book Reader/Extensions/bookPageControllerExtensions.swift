@@ -32,7 +32,7 @@ extension BookReaderVC {
         //bookSinglePage Setup
         guard let comicPages = comic?.imageNames else { return }
         for comicPage in comicPages {
-            let bookPageImage = ComicImage(comic, withImageName: comicPage) ?? ComicImage()
+            var bookPageImage = ComicImage(comic, withImageName: comicPage)
             bookPageImage.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
             bookSingleImages.append(bookPageImage)
         }
@@ -48,10 +48,10 @@ extension BookReaderVC {
         
         for comicPage in comicPages {
             let index = comicPages.firstIndex(of: comicPage)!
-            let image = ComicImage(comic, withImageName: comicPage) ?? ComicImage()
+            var image = ComicImage(comic, withImageName: comicPage)
             image.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
             
-            if isImageInDoubleSplashSize(image) {
+            if isImageInDoubleSplashSize(image.image) {
                 if index.isMultiple(of: 2) {
                     tempDouble.append(contentsOf: [nil , image , nil])
                 }else{
@@ -172,6 +172,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
             for page in previousPages {
                 let _ = bookPages.firstIndex(of: previousPages[0])
                 page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: true)
+                
             }
             
         }

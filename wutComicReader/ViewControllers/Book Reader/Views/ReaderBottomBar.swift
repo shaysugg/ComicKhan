@@ -12,13 +12,13 @@ import UIKit
 
 class BottomBar: UIView {
     
-    var thumbnailDelegate: BookReaderVC? {
+    weak var thumbnailDelegate: BookReaderVC? {
         didSet{
             thumbnailCollectionView.delegate = thumbnailDelegate
             thumbnailCollectionView.dataSource = thumbnailDelegate
         }
     }
-    var delegate: BottomBarDelegate?
+    weak var delegate: BottomBarDelegate?
     
     var currentPage: Int? {
         didSet{

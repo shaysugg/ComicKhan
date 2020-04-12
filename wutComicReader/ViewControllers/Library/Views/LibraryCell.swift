@@ -18,7 +18,7 @@ class LibraryCell: UICollectionViewCell {
             guard let imageName = book?.imageNames?.first else { return }
             
             let cover = ComicImage(book, withImageName: imageName)
-            bookCoverImageView.image = imageResizer.resize(cover, to: CGSize(width: 300, height: 450))
+            bookCoverImageView.image = imageResizer.resize(cover.image, to: CGSize(width: 300, height: 450))
             updateProgressValue()
         }
     }
