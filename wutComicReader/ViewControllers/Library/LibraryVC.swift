@@ -230,7 +230,9 @@ class LibraryVC: UIViewController {
         })
         syncComics { [weak self] in
             self?.fetchNewComics()
-            self?.bookCollectionView.insertItems(at: [IndexPath(row: (self?.comicGroups.first?.comics!.count)! - 1, section: 0)])
+            if let newComicGroup = self?.comicGroups.first {
+            self?.bookCollectionView.insertItems(at: [IndexPath(row: (newComicGroup.comics?.count ?? 1) - 1, section: 0)])
+            }
             
             self?.refreshButton.image = UIImage(named: "refresh")
          

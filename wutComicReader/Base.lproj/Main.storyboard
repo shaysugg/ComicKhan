@@ -503,8 +503,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.2.2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eO-j8-UTi">
-                                                    <rect key="frame" x="316" y="18.666666666666668" width="38" height="21.000000000000004"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="314.66666666666669" y="18.666666666666668" width="39.333333333333314" height="21.000000000000004"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -535,6 +535,7 @@
                     <connections>
                         <outlet property="emailButton" destination="VyQ-9d-0DF" id="yxP-c2-L3F"/>
                         <outlet property="twitterButton" destination="SCn-mB-tDJ" id="0c4-dK-yoc"/>
+                        <outlet property="versionLabel" destination="9eO-j8-UTi" id="1kY-xf-3Ah"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6hG-J6-apP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

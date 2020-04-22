@@ -13,6 +13,7 @@ import MessageUI
 class InfoVC: UITableViewController {
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var twitterButton: UIButton!
+    @IBOutlet weak var versionLabel: UILabel!
     
     
     @IBAction func emailButtonTapped(_ sender: Any) {
@@ -44,6 +45,7 @@ class InfoVC: UITableViewController {
         
         super.viewDidLoad()
         setupDesign()
+        versionLabel.text = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
     
     func setupDesign(){
