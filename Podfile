@@ -8,7 +8,7 @@ target 'wutComicReader' do
   pod "UnrarKit"
 	pod 'Zip', '~> 1.1'
 	
-	target 'coreTests' do
+	target 'ComicKhanTests' do
         inherit! :search_paths
         
 			pod 'Zip', '~> 1.1'

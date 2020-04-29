@@ -24,10 +24,8 @@ enum ExtractionFolder {
     
     var name: String {
         switch self {
-        case .original:
-            return "original"
-        case .thumbnail:
-            return "thumbnail"
+        case .original: return "original"
+        case .thumbnail: return "thumbnail"
         }
     }
 }
@@ -47,9 +45,11 @@ extension ExtractingProgressDelegate {
 
 fileprivate var keyPathToObserve = "fractionCompleted"
 
+
+
+
+
 class ComicExteractor: NSObject {
-    
-    internal var appFileManager = AppFileManager()
     
     var rarExtractingProgress: Progress?
     var delegate: ExtractingProgressDelegate?
@@ -57,8 +57,8 @@ class ComicExteractor: NSObject {
     
     private func extractZIP(withFilePath filePath : String) throws{
         
-        let zipFileURL = appFileManager.userDiractory.appendingPathComponent(filePath)
-        let extractedComicURL = appFileManager.comicDirectory.appendingPathComponent(nameofFile(fromFilePath: filePath))
+        let zipFileURL = URL.userDiractory.appendingPathComponent(filePath)
+        let extractedComicURL = URL.comicDiractory.appendingPathComponent(nameofFile(fromFilePath: filePath))
         let extractedImagesURL = extractedComicURL.appendingPathComponent(ExtractionFolder.original.name)
         let extractedThumbnailsURL = extractedComicURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
         
@@ -83,8 +83,8 @@ class ComicExteractor: NSObject {
     private func extractRAR(withFilePath filePath : String) throws{
         
         var archive : URKArchive?
-        let zipFilePath = appFileManager.userDiractory.appendingPathComponent(filePath)
-        let extractedComicsURL = appFileManager.comicDirectory.appendingPathComponent(nameofFile(fromFilePath: filePath))
+        let zipFilePath = URL.userDiractory.appendingPathComponent(filePath)
+        let extractedComicsURL = URL.comicDiractory.appendingPathComponent(nameofFile(fromFilePath: filePath))
         let extractedImagesURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.original.name)
         let extractedThumbnailsURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
         
@@ -122,10 +122,10 @@ class ComicExteractor: NSObject {
     
     func extractUserComicsIntoComicDiractory() {
         
-        let filePaths = FileManager.default.subpaths(atPath: self.appFileManager.userDiractory.path)
+        let filePaths = FileManager.default.subpaths(atPath: URL.userDiractory.path)
         
         let comicPaths = filterFilesWithAcceptedFormat(infilePaths: filePaths)
-        let comicDiractoriesCount = try? FileManager.default.contentsOfDirectory(at: appFileManager.comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).count
+        let comicDiractoriesCount = try? FileManager.default.contentsOfDirectory(at: URL.comicDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).count
         let allCounts = comicPaths.count - (comicDiractoriesCount ?? 0)
         var counter = 1
         
@@ -134,7 +134,7 @@ class ComicExteractor: NSObject {
             let comicFormat = formatOfFile(fromFilePath: path)
             
             
-            if !self.appFileManager.DidComicAlreadyExistInComicDiractory(name: comicName) {
+            if !DidComicAlreadyExistInComicDiractory(name: comicName) {
                 
                 delegate?.newFileAboutToExtract(withName: comicName,
                                                 andNumber: counter,
@@ -216,6 +216,16 @@ class ComicExteractor: NSObject {
         let formatRange = dotindex..<pathEndIndex
         let formatName = path.substring(with: formatRange)
         return formatName
+    }
+    
+    private func DidComicAlreadyExistInComicDiractory(name: String) -> Bool {
+        do
+        {
+            let appDirectoryComics = try FileManager.default.contentsOfDirectory(atPath: URL.comicDiractory.path)
+            return appDirectoryComics.contains(name)
+        }catch{
+            return false
+        }
     }
     
     

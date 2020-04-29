@@ -120,10 +120,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
          
      }
     
-    deinit {
-        print("BOOK PAGE GOT DEINITED")
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if scrollView.zoomScale == scrollView.minimumZoomScale {

@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         configureDeviceType()
-//        let appfileManager = AppFileManager()
-//        try? appfileManager.makeAppDirectory()
+        
         return true
     }
     

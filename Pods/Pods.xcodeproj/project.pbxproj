@@ -12,11 +12,11 @@
 		0303DE8A2AE56055318F43BA514AE1D0 /* pathfn.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 361BBD5F3EEE714F2625EEA1C3266542 /* pathfn.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		03AAF8789AC8205C18A9AF5547E0F197 /* filefn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86068BE766EF56C2F0ED97B43D8FC561 /* filefn.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		04A089667C195CEBF50BFE89C01BD9CA /* strfn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 35E545FAE7F49F4D258261561B4DDBD1 /* strfn.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
+		06133BD41D56E3A34AD38D74149EEE77 /* Pods-wutComicReader-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D29D174C940A2E99E0D6704B944254 /* Pods-wutComicReader-dummy.m */; };
 		066C8687215F530831D31500B787FC6C /* strlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D68AFD6DDB76C922D7E571F59868217 /* strlist.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		0B59D8FE732DC50552FCEE4F0D7753B2 /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 76167DC721934E10C5115C13FFBF51B7 /* crypt.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0D278AAA825B4DBF2ACBEB0072D06B7B /* version.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 765D9608EB1A956A7089A56CE03DAFD3 /* version.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		0D612167558EAF83DC4B014505080C30 /* crypt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 20176D592C2F0734194570AAA4D74A19 /* crypt.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
-		108D39B03088AB932B8D54DC596B6D3C /* Pods-coreTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8E024543B3E56EBA3420F19CAF8E8137 /* Pods-coreTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1094C8E4D4E166BDBCEEDAB29EEF4C98 /* model.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D60F1FC4A21026E95B07387DCCC951A4 /* model.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		13DD685CD5B89780AAC638E7BBB8F8D7 /* filestr.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3390CF6E07F935A40A7F189F4C618D89 /* filestr.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		14AC82AA3A26D3F4B8C0D73A9DA71C4B /* loclang.hpp in Headers */ = {isa = PBXBuildFile; fileRef = ACBCC9FC5E667B8F41C006899CF0C887 /* loclang.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -47,11 +47,13 @@
 		3CC0397515055C609A9BA9A85118488E /* getbits.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 299834B5EC934CBD309E12FEE676771F /* getbits.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		3DD8E593CD1E9C16A27C316ED398F1EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		3EFD854C34F3E4317E351690453DEACA /* errhnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1607C2752C1AB83C064FB293AA91AF3C /* errhnd.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
+		4075262A1906694B3E2B669EB8AEF77A /* Pods-ComicKhanTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E29CF973DEA36C782E9D529506228691 /* Pods-ComicKhanTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		410EA62871290D1ADFDE61A367AFE313 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		412EEBEB71833B837747DE862E099986 /* suballoc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2139E48D16588886032CE8B56206C964 /* suballoc.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		42202820924CAB3179E3E2506D652909 /* rdwrfn.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B541A6FAAFF5CA13B81B3FA536BDDCA4 /* rdwrfn.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		429DC311A093ED91E331E532FE8BD99A /* extract.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AD12F6292DA087184844FDF7CA8E9739 /* extract.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		431AE302DCD429ABDA44E56EA7CF9802 /* recvol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664B3C582E9D4F973D0CA99C1816CAF9 /* recvol.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
+		4567C8FF67FDE8F03D9482ED8DEC6C51 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		45D85F9864ECB9824489862FCBEFA9F5 /* file.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 28436A37C6D6345DD1F61EA88D9A2B61 /* file.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		466F90E996BB6DC367F575488EA4AAA8 /* archive.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3584EC7C9FE8E6476B8F2AC973115A6E /* archive.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		474C49A3FC539BFD31217A0768A0A84B /* dll.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 30127F3D61AB123ED751063823F0838D /* dll.hpp */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,7 +61,6 @@
 		491109897DFCA3BA5405D9D283A8F0A9 /* encname.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43A7A6835DBF22BAF176F163CBEBFC6D /* encname.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		496A819FA71D3B5B2E3E5FE4436BA207 /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44FB56707AFC5D393880C4C9DFD3245C /* threadpool.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		4B9D69BCB50A3548F839401BF813452A /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = E8B0EEC345A48F0CD1D1B0590B750D85 /* zip.c */; };
-		4EA7C90418099DFC23F504AA172892A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		50661180E29727740D20FEC41CA2FAF0 /* scantree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5D434C4CF774956313657C4DBF509D1 /* scantree.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		5134762C25B7D6716B996427E6F0A8BC /* unpack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E786F6EFBDC2BD868CB95649045D35D4 /* unpack.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		51654449C988B97E995C22F9407F050D /* UnrarKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66548B88A88B2356C48F4BA7438BC456 /* UnrarKit-Info.plist */; };
@@ -71,13 +72,13 @@
 		5CEAABEA64224D5001E9152EF87ECA40 /* global.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 29A94209BA23D47F16383BF7AC402AFC /* global.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		5E6A9325197A27EA08C1BA21F28D8A74 /* ui.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B75D8CF47827CF6EF31C89A771090256 /* ui.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		5EFA3DB723FA776D8F3B81152B2693FC /* recvol.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AEA02F8541546C0F399AB30325D15553 /* recvol.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
-		627C2118802675ECD5BD481DAB463525 /* Pods-wutComicReader-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EA25FDCFE42B7FE1D72CBAD652436B2D /* Pods-wutComicReader-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		62824986A4E08E16D20A3119D35D294E /* rs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C2EE36838B5321E9E850F4173CB38 /* rs.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		653B489882F154CF089B510A2001245C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 4794C67394BBF8B52E6566EECD1D93BC /* unzip.c */; };
 		690A284DFB0BCAFDF271CECEEC5D204E /* rawint.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 48BEDB9EE2921EE034394A9B7F79E772 /* rawint.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		6A6E9ADBBDA63F09745879DDFFAC85F3 /* isnt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A96FD6622F856B202AB00B65BE02D457 /* isnt.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		6C9F823FE7681F21A25A244B0ED22932 /* UnrarKitResources-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7A6A0F397F2C8BFC7ECA23D19543BD09 /* UnrarKitResources-Info.plist */; };
 		6CB1F0BB1FDCF64071785192CADCD8FE /* volume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDCD20B019187D7F16E81B3DFCE43C /* volume.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
+		6F86FC14CA88E35181285AC432F9946B /* Pods-wutComicReader-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BCFA6833B110FD602F55B7F9D96EF04 /* Pods-wutComicReader-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6FD68D482E3D0E82E4B6577E8E34097F /* extinfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 00908AD885482D4E90787120772BC209 /* extinfo.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		72C962285FA152142BEF8F33AB694EAA /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1CBA90DA0E17B764FA73FA8BDC52147 /* options.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		750BBC1B1F253A72ED611589B4EE7F45 /* find.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05A31B2B0A606CD005DFC102DDE4007D /* find.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
@@ -89,11 +90,11 @@
 		834AC52D079EA1D9D8A7FCA9E2300202 /* timefn.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AE4ECD8104A7754C109F6C2B110E8D32 /* timefn.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		83FF7EC1CA6F253ED152C7BEABD68F20 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDDDD92BA7C97240B5B75D67B01FC3B /* sha1.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		87E0B3633886ED53A33763CF129150D2 /* URKFileInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = AD81517F8A118775CA7B58097381A5D6 /* URKFileInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8807A6F88149CE23CB7A49F0591CE3A7 /* Pods-ComicKhanTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 56176AA5A4077EFFE77FB438B1E8E31E /* Pods-ComicKhanTests-dummy.m */; };
 		8823E3B2CA15E4774797BE1CF330B338 /* ZipUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4F54E44EB22CB14FC0965F7C2DF188 /* ZipUtilities.swift */; };
 		89DA6CA279920926BC7A65B18830999A /* URKArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = 579ED320E2E08ADEFDB268B0B54744F1 /* URKArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8A03E77A315AED0962E7F27FB57E26AF /* URKFileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 80DAE1FB6814977BEFB6723BEA51FD2F /* URKFileInfo.m */; };
 		8A67B98D9FEBC1D3F647E48F8702A2BE /* list.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 271A6F2DAFABAA9C74153B9CAB38652B /* list.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
-		8A6CE13CFB8FFB5D458D2422315F03DD /* Pods-coreTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B6326C5462B524921E37A5874B003AEE /* Pods-coreTests-dummy.m */; };
 		8B9729D113181F6DC1FC1B57C44DCC3F /* rijndael.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AE5D165F3CDBDE602C513FD3EB764D85 /* rijndael.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		8DCE5AE40EC700F4433A107DE4284549 /* timefn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 045316FF8C5656197113F2090E01C689 /* timefn.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		8EF0FCE8BD1F21423ED67AA4939F6D01 /* array.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 215BE6CEE1B5501D0F1A776114109A70 /* array.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -132,7 +133,6 @@
 		CDD73EC087411B99892F21E35773428F /* UnrarKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8661DB6E24D6CE044E29CBD1CD819A5A /* UnrarKitResources.bundle */; };
 		D024DBEA4430A7821475701991F009A7 /* os.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 0DE72C101E5A5EA872D2BEB5D4DAE451 /* os.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		D247AAEEBFFEBB0380AC1A995387A82A /* UnrarKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1109FCCF891C5D0E0AD2F14D5C06CE3B /* UnrarKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2A2DD37CEA7E8587CF8DA406855B4D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		D30C7724CEBFE93D69F1DBA0EC206FD9 /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 424BEACC50465AFBF8A7A49DC14DDA3F /* list.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		D58E402C0AD7F760429F8A75B9B6A5AE /* sha1.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D0B26E0B7C220AA8B033077CD7A9BB13 /* sha1.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		D75B9A275C2EF688699D3D57C27CE983 /* Zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728DB70B3F41E86A9FB186CF05354403 /* Zip.swift */; };
@@ -145,11 +145,11 @@
 		DD63D6063EB5DAA46DCE7CF331DEA370 /* Zip.h in Headers */ = {isa = PBXBuildFile; fileRef = D022D2D5F38333115D5173E012C212DF /* Zip.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DE17E59D2D4A78D868BCBE313CF83FF7 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7F920A547ED058AB050C8D98621CFB7 /* hash.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		E19A243B425AC27B63A685037B20E3E0 /* blake2s.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CF5FADF99898A8DE4F373376AA2FC62 /* blake2s.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
+		E4C71EC567C1482A3099DE262502EE80 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		E898349A084D6C814F58E586C5C330E9 /* blake2s.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1784E6E7E0D4BB86A374FB175D1714A5 /* blake2s.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		E9BB05E394F653AF0EF88B06530B6574 /* headers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = CF6A10352D106F9E33097DD2DB479083 /* headers.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		E9BC9EC3708492146AC29C1635844203 /* extinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52B665ABF32EDBAFB5C671EB95B5FE8 /* extinfo.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		EBB5E47CDBACB91057D0A8266CAF0F31 /* dll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97C1A8B19322D6DE3D44FB1493750B10 /* dll.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
-		ED9B60FC0EC3020E8BCA049275826711 /* Pods-wutComicReader-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F024E4DE39600262CB53F4847690A611 /* Pods-wutComicReader-dummy.m */; };
 		F583F69B7D73058110554D0995ED14C8 /* cmddata.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 58DFB31DBD15055C1B86764E2E4143DB /* cmddata.hpp */; settings = {ATTRIBUTES = (Project, ); }; };
 		F704459C10739AE916EEBEFD98061C67 /* filestr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED6ABE11F48E08A193A25947A59C5B2F /* filestr.cpp */; settings = {COMPILER_FLAGS = "-Xanalyzer -analyzer-disable-all-checks -fno-objc-arc"; }; };
 		F862C1CD19A69E8763D35A60F83443C2 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 44A58B20D232E21D0082A7A166A5165C /* ioapi.c */; };
@@ -161,27 +161,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0B2F2A0E87061ADB4C0972E968471140 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 927C5ED98FB746E991B38121EBADD454;
-			remoteInfo = "Pods-wutComicReader";
-		};
-		303F3D462682C68BCAE225F67A1263B1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 31708EE6929C61C0EDA6F5DAE3AF9DB7;
-			remoteInfo = Zip;
-		};
-		30793AA6FBCD63FADCDDE7F11F11DF99 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 31708EE6929C61C0EDA6F5DAE3AF9DB7;
-			remoteInfo = Zip;
-		};
 		30F44AE0D49930104F07544B8E4C5978 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -189,14 +168,35 @@
 			remoteGlobalIDString = 7A01F5CF482201BF0F0156D955B56C24;
 			remoteInfo = "UnrarKit-UnrarKitResources";
 		};
-		7298C72F5DF6228E257AD5F07913CF4F /* PBXContainerItemProxy */ = {
+		616FFC6C5A330DFA3E9D5FC7EAFDADA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 248909F398EFC3A1B4964ABE00AA9649;
 			remoteInfo = UnrarKit;
 		};
-		EFC27C6D17C5B197A9F09D8B35E98DFF /* PBXContainerItemProxy */ = {
+		6BA10FEC35DFEF9416A5DFF3B0617E80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 927C5ED98FB746E991B38121EBADD454;
+			remoteInfo = "Pods-wutComicReader";
+		};
+		D8D2F5D4B879791CDFE94C09147BE81A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31708EE6929C61C0EDA6F5DAE3AF9DB7;
+			remoteInfo = Zip;
+		};
+		E81D20B9022F99E157DB0B1D5D618CF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31708EE6929C61C0EDA6F5DAE3AF9DB7;
+			remoteInfo = Zip;
+		};
+		E82E47360F2FFD53F5515A21898D2BF0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -207,7 +207,6 @@
 
 /* Begin PBXFileReference section */
 		00908AD885482D4E90787120772BC209 /* extinfo.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = extinfo.hpp; path = Libraries/unrar/extinfo.hpp; sourceTree = "<group>"; };
-		00B95547428B908413A674F9D0B5B711 /* Pods-wutComicReader-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wutComicReader-acknowledgements.plist"; sourceTree = "<group>"; };
 		045316FF8C5656197113F2090E01C689 /* timefn.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = timefn.cpp; path = Libraries/unrar/timefn.cpp; sourceTree = "<group>"; };
 		05A31B2B0A606CD005DFC102DDE4007D /* find.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = find.cpp; path = Libraries/unrar/find.cpp; sourceTree = "<group>"; };
 		07DEC3BC04FC3F008610A3B1385EA1BD /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_wutComicReader.framework; path = "Pods-wutComicReader.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,21 +218,18 @@
 		0DB87857FB34AD23F3A25C862D1247F6 /* compress.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = compress.hpp; path = Libraries/unrar/compress.hpp; sourceTree = "<group>"; };
 		0DE72C101E5A5EA872D2BEB5D4DAE451 /* os.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = os.hpp; path = Libraries/unrar/os.hpp; sourceTree = "<group>"; };
 		0E5AC50EA7D7F4644C725014FDE59DB7 /* rs.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rs.hpp; path = Libraries/unrar/rs.hpp; sourceTree = "<group>"; };
-		0F8560A6B9F4EE0AE665AF49278CF20A /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
 		1109FCCF891C5D0E0AD2F14D5C06CE3B /* UnrarKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UnrarKit.h; path = Classes/UnrarKit.h; sourceTree = "<group>"; };
 		13BBC113266DCE42742F38B2274D47D0 /* rarlang.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rarlang.hpp; path = Libraries/unrar/rarlang.hpp; sourceTree = "<group>"; };
 		1607C2752C1AB83C064FB293AA91AF3C /* errhnd.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = errhnd.cpp; path = Libraries/unrar/errhnd.cpp; sourceTree = "<group>"; };
 		16899C1E40B3E11BDB3E86A79807EB12 /* NSString+UnrarKit.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = "NSString+UnrarKit.mm"; path = "Classes/Categories/NSString+UnrarKit.mm"; sourceTree = "<group>"; };
 		1727CD8D425BDFC189318183B391E730 /* find.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = find.hpp; path = Libraries/unrar/find.hpp; sourceTree = "<group>"; };
 		1784E6E7E0D4BB86A374FB175D1714A5 /* blake2s.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = blake2s.hpp; path = Libraries/unrar/blake2s.hpp; sourceTree = "<group>"; };
-		1BD900AB4A1BF67751A63A96E04C4066 /* Pods-coreTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-coreTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1E96676BDCA9D15DCDA3FBCAF13DB467 /* volume.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = volume.hpp; path = Libraries/unrar/volume.hpp; sourceTree = "<group>"; };
 		1F0C61CB37B8A52527C21C30DCFF7045 /* unicode.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = unicode.cpp; path = Libraries/unrar/unicode.cpp; sourceTree = "<group>"; };
 		20176D592C2F0734194570AAA4D74A19 /* crypt.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = crypt.hpp; path = Libraries/unrar/crypt.hpp; sourceTree = "<group>"; };
 		2139E48D16588886032CE8B56206C964 /* suballoc.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = suballoc.hpp; path = Libraries/unrar/suballoc.hpp; sourceTree = "<group>"; };
 		215BE6CEE1B5501D0F1A776114109A70 /* array.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = array.hpp; path = Libraries/unrar/array.hpp; sourceTree = "<group>"; };
 		219482ABAE8F321A18111F22D765004A /* rarvm.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rarvm.cpp; path = Libraries/unrar/rarvm.cpp; sourceTree = "<group>"; };
-		25AC29AD2C754F635A31AB52D16D504D /* Pods-coreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-coreTests.release.xcconfig"; sourceTree = "<group>"; };
 		271A6F2DAFABAA9C74153B9CAB38652B /* list.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = list.hpp; path = Libraries/unrar/list.hpp; sourceTree = "<group>"; };
 		28436A37C6D6345DD1F61EA88D9A2B61 /* file.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = file.hpp; path = Libraries/unrar/file.hpp; sourceTree = "<group>"; };
 		299834B5EC934CBD309E12FEE676771F /* getbits.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = getbits.hpp; path = Libraries/unrar/getbits.hpp; sourceTree = "<group>"; };
@@ -245,16 +241,16 @@
 		3072E8F68884B87D5AABCBF278089B21 /* savepos.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = savepos.hpp; path = Libraries/unrar/savepos.hpp; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3227A348CAE8C2B4CB7EB481B0A38A04 /* rar.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rar.cpp; path = Libraries/unrar/rar.cpp; sourceTree = "<group>"; };
-		3246F48ACDFC987E8D8E2FED08752A2A /* Pods-wutComicReader-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wutComicReader-Info.plist"; sourceTree = "<group>"; };
 		3390CF6E07F935A40A7F189F4C618D89 /* filestr.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = filestr.hpp; path = Libraries/unrar/filestr.hpp; sourceTree = "<group>"; };
 		3446AEE8347E08A2A869A2257B996D4D /* filcreat.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = filcreat.cpp; path = Libraries/unrar/filcreat.cpp; sourceTree = "<group>"; };
+		34D29D174C940A2E99E0D6704B944254 /* Pods-wutComicReader-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-wutComicReader-dummy.m"; sourceTree = "<group>"; };
 		3584EC7C9FE8E6476B8F2AC973115A6E /* archive.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = archive.hpp; path = Libraries/unrar/archive.hpp; sourceTree = "<group>"; };
 		35E545FAE7F49F4D258261561B4DDBD1 /* strfn.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = strfn.cpp; path = Libraries/unrar/strfn.cpp; sourceTree = "<group>"; };
 		361BBD5F3EEE714F2625EEA1C3266542 /* pathfn.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = pathfn.hpp; path = Libraries/unrar/pathfn.hpp; sourceTree = "<group>"; };
 		364DD32F5EFC26DB3A7B462908BB9260 /* unzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = Zip/minizip/unzip.h; sourceTree = "<group>"; };
 		3842CB13F354F2E792697C28F1338B11 /* UnrarKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UnrarKit-dummy.m"; sourceTree = "<group>"; };
 		3A2D5E89CE05BA9F570B3FCD8D6525EA /* Zip.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Zip.modulemap; sourceTree = "<group>"; };
-		3BA864AF07BA607C4C52EF92DB2F5897 /* Pods-wutComicReader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-wutComicReader.modulemap"; sourceTree = "<group>"; };
+		3BCFA6833B110FD602F55B7F9D96EF04 /* Pods-wutComicReader-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-wutComicReader-umbrella.h"; sourceTree = "<group>"; };
 		3C0F7C7FE85E79240DF4325FDB7E484F /* resource.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = resource.cpp; path = Libraries/unrar/resource.cpp; sourceTree = "<group>"; };
 		3CF5FADF99898A8DE4F373376AA2FC62 /* blake2s.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = blake2s.cpp; path = Libraries/unrar/blake2s.cpp; sourceTree = "<group>"; };
 		3E07D6ADEFC2A53156A405E69A82F31B /* threadpool.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = threadpool.hpp; path = Libraries/unrar/threadpool.hpp; sourceTree = "<group>"; };
@@ -265,12 +261,13 @@
 		43A7A6835DBF22BAF176F163CBEBFC6D /* encname.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = encname.cpp; path = Libraries/unrar/encname.cpp; sourceTree = "<group>"; };
 		44A58B20D232E21D0082A7A166A5165C /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = ioapi.c; path = Zip/minizip/ioapi.c; sourceTree = "<group>"; };
 		44FB56707AFC5D393880C4C9DFD3245C /* threadpool.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = threadpool.cpp; path = Libraries/unrar/threadpool.cpp; sourceTree = "<group>"; };
-		45923A12B370D0A7AB3B0CC70CEB8FFC /* Pods-coreTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-coreTests-Info.plist"; sourceTree = "<group>"; };
 		4794C67394BBF8B52E6566EECD1D93BC /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = unzip.c; path = Zip/minizip/unzip.c; sourceTree = "<group>"; };
 		4825DB80CE59BD547FBCB47B42C01C8A /* UnrarKitMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UnrarKitMacros.h; path = Classes/UnrarKitMacros.h; sourceTree = "<group>"; };
 		48BEDB9EE2921EE034394A9B7F79E772 /* rawint.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rawint.hpp; path = Libraries/unrar/rawint.hpp; sourceTree = "<group>"; };
+		49938BF68C3A7C7261126FE1D74856CC /* Pods-ComicKhanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ComicKhanTests.release.xcconfig"; sourceTree = "<group>"; };
 		4E8C6D6A916F0CBEEA8FE95BFC4CD0E0 /* UnrarKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UnrarKit.framework; path = UnrarKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50151B5BC60BABA604F563971E4957E6 /* Pods-wutComicReader-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-wutComicReader-frameworks.sh"; sourceTree = "<group>"; };
+		51AA22AE8BFCFCC77A3C1F20AB6513A7 /* Pods-wutComicReader.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-wutComicReader.modulemap"; sourceTree = "<group>"; };
+		56176AA5A4077EFFE77FB438B1E8E31E /* Pods-ComicKhanTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ComicKhanTests-dummy.m"; sourceTree = "<group>"; };
 		561E8B432952C49B4E71B18DA034159B /* arcread.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = arcread.cpp; path = Libraries/unrar/arcread.cpp; sourceTree = "<group>"; };
 		579ED320E2E08ADEFDB268B0B54744F1 /* URKArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = URKArchive.h; path = Classes/URKArchive.h; sourceTree = "<group>"; };
 		58DFB31DBD15055C1B86764E2E4143DB /* cmddata.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = cmddata.hpp; path = Libraries/unrar/cmddata.hpp; sourceTree = "<group>"; };
@@ -279,27 +276,25 @@
 		5CDB8DA35C127C292A6FF03FD84734B2 /* qopen.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = qopen.cpp; path = Libraries/unrar/qopen.cpp; sourceTree = "<group>"; };
 		5D0890F32F0F031119DE0A3C81B7F08E /* UnrarKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UnrarKit-umbrella.h"; sourceTree = "<group>"; };
 		604B502AF80485177252676B685A7415 /* NSString+UnrarKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+UnrarKit.h"; path = "Classes/Categories/NSString+UnrarKit.h"; sourceTree = "<group>"; };
+		613698EC03DEE902ED70AFE3C999C216 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
 		63B758DC7D9D5E4B442CD9C997433A24 /* scantree.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = scantree.hpp; path = Libraries/unrar/scantree.hpp; sourceTree = "<group>"; };
 		664B3C582E9D4F973D0CA99C1816CAF9 /* recvol.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = recvol.cpp; path = Libraries/unrar/recvol.cpp; sourceTree = "<group>"; };
 		66548B88A88B2356C48F4BA7438BC456 /* UnrarKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "UnrarKit-Info.plist"; path = "Resources/UnrarKit-Info.plist"; sourceTree = "<group>"; };
 		6742C8103C4C89C04B3AC93F80530FBB /* Zip-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Zip-Info.plist"; sourceTree = "<group>"; };
 		6819A78E9AD1A97A83055A97988897F7 /* smallfn.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = smallfn.hpp; path = Libraries/unrar/smallfn.hpp; sourceTree = "<group>"; };
 		6830CE9A6C3FE698890D9E066C375759 /* rawread.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rawread.hpp; path = Libraries/unrar/rawread.hpp; sourceTree = "<group>"; };
-		6A2D8FE8DC575DF88E40314B8127D2D6 /* Pods-coreTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-coreTests-frameworks.sh"; sourceTree = "<group>"; };
+		691C37BEE5A4829CF918F23CEE29F8E0 /* Pods-ComicKhanTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ComicKhanTests-Info.plist"; sourceTree = "<group>"; };
 		6B8BCD0D19302A3C98D64020A9D42AD7 /* rs16.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rs16.hpp; path = Libraries/unrar/rs16.hpp; sourceTree = "<group>"; };
 		6D31FA6EBF81E05E952F41908E0CD008 /* sha256.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = sha256.cpp; path = Libraries/unrar/sha256.cpp; sourceTree = "<group>"; };
 		6D4F54E44EB22CB14FC0965F7C2DF188 /* ZipUtilities.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZipUtilities.swift; path = Zip/ZipUtilities.swift; sourceTree = "<group>"; };
 		6D7A21352CCF188F56172320A6012D59 /* archive.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = archive.cpp; path = Libraries/unrar/archive.cpp; sourceTree = "<group>"; };
-		6F391ACF7EF8698CF6FB6DF762814843 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
 		71FCDD28B895B7D0B4A994E4A6D0DBB2 /* UnrarKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UnrarKit.xcconfig; sourceTree = "<group>"; };
 		728DB70B3F41E86A9FB186CF05354403 /* Zip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Zip.swift; path = Zip/Zip.swift; sourceTree = "<group>"; };
 		76167DC721934E10C5115C13FFBF51B7 /* crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = Zip/minizip/crypt.h; sourceTree = "<group>"; };
 		765D9608EB1A956A7089A56CE03DAFD3 /* version.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = version.hpp; path = Libraries/unrar/version.hpp; sourceTree = "<group>"; };
-		779B170DAE88502D1729F52F449AA0CE /* Pods_coreTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_coreTests.framework; path = "Pods-coreTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7860970D331E46986DB60F19D8C1F1FE /* crc.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = crc.cpp; path = Libraries/unrar/crc.cpp; sourceTree = "<group>"; };
 		7A6A0F397F2C8BFC7ECA23D19543BD09 /* UnrarKitResources-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "UnrarKitResources-Info.plist"; path = "Resources/UnrarKitResources-Info.plist"; sourceTree = "<group>"; };
 		7B5D440307A84ACBB3143893DECFABC5 /* secpassword.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = secpassword.cpp; path = Libraries/unrar/secpassword.cpp; sourceTree = "<group>"; };
-		7DDA63FB6174AB4907382D7F1EA333DF /* Pods-coreTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-coreTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		7F5077D4C14F13F76C7F34FE17E1B0EA /* sha256.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = sha256.hpp; path = Libraries/unrar/sha256.hpp; sourceTree = "<group>"; };
 		80DAE1FB6814977BEFB6723BEA51FD2F /* URKFileInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = URKFileInfo.m; path = Classes/URKFileInfo.m; sourceTree = "<group>"; };
 		81DA77817D09E9086001AA43DD056410 /* strfn.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = strfn.hpp; path = Libraries/unrar/strfn.hpp; sourceTree = "<group>"; };
@@ -312,7 +307,6 @@
 		893C03B20CA37EDB581D9296216959E8 /* strlist.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = strlist.hpp; path = Libraries/unrar/strlist.hpp; sourceTree = "<group>"; };
 		8AABC67219C9E2A8A4031977CCFC4216 /* unpack.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = unpack.hpp; path = Libraries/unrar/unpack.hpp; sourceTree = "<group>"; };
 		8B64EFB0BE9A116BD66029D2B2D35183 /* crc.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = crc.hpp; path = Libraries/unrar/crc.hpp; sourceTree = "<group>"; };
-		8E024543B3E56EBA3420F19CAF8E8137 /* Pods-coreTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-coreTests-umbrella.h"; sourceTree = "<group>"; };
 		8FD81202AC2641605B398BD8091B5797 /* extract.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = extract.cpp; path = Libraries/unrar/extract.cpp; sourceTree = "<group>"; };
 		91D1E07AA1E3CB98B9A47FDD5F382C70 /* UnrarKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UnrarKit-prefix.pch"; sourceTree = "<group>"; };
 		94277BBEC54602468D614A6164D41277 /* raros.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = raros.hpp; path = Libraries/unrar/raros.hpp; sourceTree = "<group>"; };
@@ -328,12 +322,16 @@
 		A845402EF959A57A4640F2A4F5155943 /* Zip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Zip.framework; path = Zip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8C720B11B4C6D3211257E43A3C03B65 /* consio.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = consio.cpp; path = Libraries/unrar/consio.cpp; sourceTree = "<group>"; };
 		A96FD6622F856B202AB00B65BE02D457 /* isnt.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = isnt.hpp; path = Libraries/unrar/isnt.hpp; sourceTree = "<group>"; };
+		A97FE73C06BCC880E8A4CF5491610ABC /* Pods-wutComicReader-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wutComicReader-Info.plist"; sourceTree = "<group>"; };
+		AA843CADB5C1D359BA89EEDDE3C110B3 /* Pods-ComicKhanTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ComicKhanTests.modulemap"; sourceTree = "<group>"; };
+		AB956152AB4B9F09078CAC34343E098F /* Pods-ComicKhanTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ComicKhanTests-frameworks.sh"; sourceTree = "<group>"; };
 		ABA75C7C41E232317DA2461B0AC47A21 /* filefn.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = filefn.hpp; path = Libraries/unrar/filefn.hpp; sourceTree = "<group>"; };
 		AC76C50C0C2D1132CFCD8C1503D212C5 /* smallfn.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = smallfn.cpp; path = Libraries/unrar/smallfn.cpp; sourceTree = "<group>"; };
 		ACBCC9FC5E667B8F41C006899CF0C887 /* loclang.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = loclang.hpp; path = Libraries/unrar/loclang.hpp; sourceTree = "<group>"; };
 		AD12F6292DA087184844FDF7CA8E9739 /* extract.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = extract.hpp; path = Libraries/unrar/extract.hpp; sourceTree = "<group>"; };
 		AD81517F8A118775CA7B58097381A5D6 /* URKFileInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = URKFileInfo.h; path = Classes/URKFileInfo.h; sourceTree = "<group>"; };
 		AD9BD4114F89D2AFBDC9BA129ED8BFAC /* Zip-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-prefix.pch"; sourceTree = "<group>"; };
+		ADF5607F36AE0A30777053CA988B323B /* Pods-ComicKhanTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ComicKhanTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		AE34C8D0FF7267906E3E476AB830CF82 /* zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = zip.h; path = Zip/minizip/zip.h; sourceTree = "<group>"; };
 		AE4ECD8104A7754C109F6C2B110E8D32 /* timefn.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = timefn.hpp; path = Libraries/unrar/timefn.hpp; sourceTree = "<group>"; };
 		AE5D165F3CDBDE602C513FD3EB764D85 /* rijndael.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rijndael.hpp; path = Libraries/unrar/rijndael.hpp; sourceTree = "<group>"; };
@@ -343,11 +341,11 @@
 		B5189DEA8948B64D905E38C1B564A641 /* rardefs.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rardefs.hpp; path = Libraries/unrar/rardefs.hpp; sourceTree = "<group>"; };
 		B541A6FAAFF5CA13B81B3FA536BDDCA4 /* rdwrfn.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rdwrfn.hpp; path = Libraries/unrar/rdwrfn.hpp; sourceTree = "<group>"; };
 		B5D434C4CF774956313657C4DBF509D1 /* scantree.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = scantree.cpp; path = Libraries/unrar/scantree.cpp; sourceTree = "<group>"; };
-		B6326C5462B524921E37A5874B003AEE /* Pods-coreTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-coreTests-dummy.m"; sourceTree = "<group>"; };
 		B75D8CF47827CF6EF31C89A771090256 /* ui.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = ui.hpp; path = Libraries/unrar/ui.hpp; sourceTree = "<group>"; };
 		B79200E80308893D6E8514EFA7CAB3CF /* isnt.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = isnt.cpp; path = Libraries/unrar/isnt.cpp; sourceTree = "<group>"; };
 		B7F920A547ED058AB050C8D98621CFB7 /* hash.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = hash.cpp; path = Libraries/unrar/hash.cpp; sourceTree = "<group>"; };
 		BB82B45EFF4592F1D96C83B44B3CB9D0 /* ui.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = ui.cpp; path = Libraries/unrar/ui.cpp; sourceTree = "<group>"; };
+		BE981DA989760BD0EDC232490068DD06 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
 		C04E9C75D7ABE0D778D548CE050EACAA /* system.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = system.cpp; path = Libraries/unrar/system.cpp; sourceTree = "<group>"; };
 		C29732A303A65A8888430A8909173FE4 /* Zip.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Zip.xcconfig; sourceTree = "<group>"; };
 		C2FEFDAB8DFCE1A1140E650FE0645EB7 /* encname.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = encname.hpp; path = Libraries/unrar/encname.hpp; sourceTree = "<group>"; };
@@ -358,29 +356,31 @@
 		CF6A10352D106F9E33097DD2DB479083 /* headers.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = headers.hpp; path = Libraries/unrar/headers.hpp; sourceTree = "<group>"; };
 		D022D2D5F38333115D5173E012C212DF /* Zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Zip.h; path = Zip/Zip.h; sourceTree = "<group>"; };
 		D0B26E0B7C220AA8B033077CD7A9BB13 /* sha1.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = sha1.hpp; path = Libraries/unrar/sha1.hpp; sourceTree = "<group>"; };
-		D1B3671565F3DB89767EDE0BFAE9FC5D /* Pods-coreTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-coreTests.modulemap"; sourceTree = "<group>"; };
 		D1CBA90DA0E17B764FA73FA8BDC52147 /* options.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = options.cpp; path = Libraries/unrar/options.cpp; sourceTree = "<group>"; };
 		D60F1FC4A21026E95B07387DCCC951A4 /* model.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = model.hpp; path = Libraries/unrar/model.hpp; sourceTree = "<group>"; };
+		D82F8659AAD00CA03073D7D6F7D6F834 /* Pods-ComicKhanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ComicKhanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D8C2D38880D7024A5B1BBF0D33C931DB /* Pods-wutComicReader-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-wutComicReader-frameworks.sh"; sourceTree = "<group>"; };
 		DA10E04C4EEF56778DFC8434C818C5D8 /* match.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = match.hpp; path = Libraries/unrar/match.hpp; sourceTree = "<group>"; };
 		DAA2C31EE0ABF44562E7084794A7AB80 /* rawread.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rawread.cpp; path = Libraries/unrar/rawread.cpp; sourceTree = "<group>"; };
 		DB29DAD8DFB7C10CE00AC8034CE83B5F /* rijndael.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = rijndael.cpp; path = Libraries/unrar/rijndael.cpp; sourceTree = "<group>"; };
 		DD489B675B84208DD1BC301E79B23BE5 /* arcmem.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = arcmem.hpp; path = Libraries/unrar/arcmem.hpp; sourceTree = "<group>"; };
-		DEE865CA38F3A0626BA3BBA2EA3AA83B /* Pods-wutComicReader-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-wutComicReader-acknowledgements.markdown"; sourceTree = "<group>"; };
 		E21F40648BE8C3B8A3B163537687AFDA /* QuickZip.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickZip.swift; path = Zip/QuickZip.swift; sourceTree = "<group>"; };
+		E22462979BA67EE126B03C7E4FE37DC3 /* Pods-wutComicReader-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wutComicReader-acknowledgements.plist"; sourceTree = "<group>"; };
+		E29CF973DEA36C782E9D529506228691 /* Pods-ComicKhanTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ComicKhanTests-umbrella.h"; sourceTree = "<group>"; };
+		E62F98CCBBC5DF31912F439EA0D3AB5C /* Pods-wutComicReader-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-wutComicReader-acknowledgements.markdown"; sourceTree = "<group>"; };
 		E686D21CC58C3E00E32BBE4CFB4234E8 /* global.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = global.cpp; path = Libraries/unrar/global.cpp; sourceTree = "<group>"; };
 		E786F6EFBDC2BD868CB95649045D35D4 /* unpack.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = unpack.cpp; path = Libraries/unrar/unpack.cpp; sourceTree = "<group>"; };
 		E81361EC77AA7077F5054A949ACD569E /* UnrarKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "UnrarKit-Info.plist"; sourceTree = "<group>"; };
 		E8B0EEC345A48F0CD1D1B0590B750D85 /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; name = zip.c; path = Zip/minizip/zip.c; sourceTree = "<group>"; };
 		E90C15794A6937D1E7CD997CCEDD8218 /* system.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = system.hpp; path = Libraries/unrar/system.hpp; sourceTree = "<group>"; };
-		EA25FDCFE42B7FE1D72CBAD652436B2D /* Pods-wutComicReader-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-wutComicReader-umbrella.h"; sourceTree = "<group>"; };
-		EC0C5ADC6BA99AC809A5BC1E3AFE8B4C /* Pods-coreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-coreTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EAF5C800400BF2C610828662B92AB3D1 /* Pods_ComicKhanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ComicKhanTests.framework; path = "Pods-ComicKhanTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC3A47AC77A730E0D394FEB84995E263 /* Zip-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Zip-dummy.m"; sourceTree = "<group>"; };
 		ED2CB52D756071A0F0273BB7631ED676 /* getbits.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = getbits.cpp; path = Libraries/unrar/getbits.cpp; sourceTree = "<group>"; };
 		ED6ABE11F48E08A193A25947A59C5B2F /* filestr.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = filestr.cpp; path = Libraries/unrar/filestr.cpp; sourceTree = "<group>"; };
 		EEDF79E05052FCF439546C741E969316 /* Zip-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Zip-umbrella.h"; sourceTree = "<group>"; };
-		F024E4DE39600262CB53F4847690A611 /* Pods-wutComicReader-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-wutComicReader-dummy.m"; sourceTree = "<group>"; };
 		F1892F1BAA9BC23D30ABD42CFE67F408 /* qopen.hpp */ = {isa = PBXFileReference; includeInIndex = 1; name = qopen.hpp; path = Libraries/unrar/qopen.hpp; sourceTree = "<group>"; };
 		F52B665ABF32EDBAFB5C671EB95B5FE8 /* extinfo.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = extinfo.cpp; path = Libraries/unrar/extinfo.cpp; sourceTree = "<group>"; };
+		FBCDD8330812DD3297B209126ECAD08D /* Pods-ComicKhanTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ComicKhanTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		FCC5618D9E13D11842361E0AD3F2BCC1 /* headers.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = headers.cpp; path = Libraries/unrar/headers.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -400,19 +400,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		527A22127B3036599205832E1DE36BC4 /* Frameworks */ = {
+		7E1AEC78B18E637A5D293FA644E99139 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EA7C90418099DFC23F504AA172892A3 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6B3CA49C76342524C28F315855516548 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D2A2DD37CEA7E8587CF8DA406855B4D3 /* Foundation.framework in Frameworks */,
+				E4C71EC567C1482A3099DE262502EE80 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +413,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DD8E593CD1E9C16A27C316ED398F1EF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DEFA97C801EBFA5C265B83392EB106EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4567C8FF67FDE8F03D9482ED8DEC6C51 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,10 +494,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		7BDF714C03EE03AB9997CFD0B4CB6C96 /* Products */ = {
+		4F111BAAA1BDCB51411E84BA5482149C /* Pods-wutComicReader */ = {
 			isa = PBXGroup;
 			children = (
-				779B170DAE88502D1729F52F449AA0CE /* Pods_coreTests.framework */,
+				51AA22AE8BFCFCC77A3C1F20AB6513A7 /* Pods-wutComicReader.modulemap */,
+				E62F98CCBBC5DF31912F439EA0D3AB5C /* Pods-wutComicReader-acknowledgements.markdown */,
+				E22462979BA67EE126B03C7E4FE37DC3 /* Pods-wutComicReader-acknowledgements.plist */,
+				34D29D174C940A2E99E0D6704B944254 /* Pods-wutComicReader-dummy.m */,
+				D8C2D38880D7024A5B1BBF0D33C931DB /* Pods-wutComicReader-frameworks.sh */,
+				A97FE73C06BCC880E8A4CF5491610ABC /* Pods-wutComicReader-Info.plist */,
+				3BCFA6833B110FD602F55B7F9D96EF04 /* Pods-wutComicReader-umbrella.h */,
+				613698EC03DEE902ED70AFE3C999C216 /* Pods-wutComicReader.debug.xcconfig */,
+				BE981DA989760BD0EDC232490068DD06 /* Pods-wutComicReader.release.xcconfig */,
+			);
+			name = "Pods-wutComicReader";
+			path = "Target Support Files/Pods-wutComicReader";
+			sourceTree = "<group>";
+		};
+		74C6FDA5600EAD51F86AC97365C902A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EAF5C800400BF2C610828662B92AB3D1 /* Pods_ComicKhanTests.framework */,
 				07DEC3BC04FC3F008610A3B1385EA1BD /* Pods_wutComicReader.framework */,
 				4E8C6D6A916F0CBEEA8FE95BFC4CD0E0 /* UnrarKit.framework */,
 				8661DB6E24D6CE044E29CBD1CD819A5A /* UnrarKitResources.bundle */,
@@ -629,47 +646,21 @@
 			name = "unrar-lib";
 			sourceTree = "<group>";
 		};
-		9C202D3858A92199C84BD7EE29B5661F /* Pods-coreTests */ = {
+		AC01F302D8984965649F710B847FF10D /* Pods-ComicKhanTests */ = {
 			isa = PBXGroup;
 			children = (
-				D1B3671565F3DB89767EDE0BFAE9FC5D /* Pods-coreTests.modulemap */,
-				1BD900AB4A1BF67751A63A96E04C4066 /* Pods-coreTests-acknowledgements.markdown */,
-				7DDA63FB6174AB4907382D7F1EA333DF /* Pods-coreTests-acknowledgements.plist */,
-				B6326C5462B524921E37A5874B003AEE /* Pods-coreTests-dummy.m */,
-				6A2D8FE8DC575DF88E40314B8127D2D6 /* Pods-coreTests-frameworks.sh */,
-				45923A12B370D0A7AB3B0CC70CEB8FFC /* Pods-coreTests-Info.plist */,
-				8E024543B3E56EBA3420F19CAF8E8137 /* Pods-coreTests-umbrella.h */,
-				EC0C5ADC6BA99AC809A5BC1E3AFE8B4C /* Pods-coreTests.debug.xcconfig */,
-				25AC29AD2C754F635A31AB52D16D504D /* Pods-coreTests.release.xcconfig */,
+				AA843CADB5C1D359BA89EEDDE3C110B3 /* Pods-ComicKhanTests.modulemap */,
+				ADF5607F36AE0A30777053CA988B323B /* Pods-ComicKhanTests-acknowledgements.markdown */,
+				FBCDD8330812DD3297B209126ECAD08D /* Pods-ComicKhanTests-acknowledgements.plist */,
+				56176AA5A4077EFFE77FB438B1E8E31E /* Pods-ComicKhanTests-dummy.m */,
+				AB956152AB4B9F09078CAC34343E098F /* Pods-ComicKhanTests-frameworks.sh */,
+				691C37BEE5A4829CF918F23CEE29F8E0 /* Pods-ComicKhanTests-Info.plist */,
+				E29CF973DEA36C782E9D529506228691 /* Pods-ComicKhanTests-umbrella.h */,
+				D82F8659AAD00CA03073D7D6F7D6F834 /* Pods-ComicKhanTests.debug.xcconfig */,
+				49938BF68C3A7C7261126FE1D74856CC /* Pods-ComicKhanTests.release.xcconfig */,
 			);
-			name = "Pods-coreTests";
-			path = "Target Support Files/Pods-coreTests";
-			sourceTree = "<group>";
-		};
-		B1BDEF6080B068AEC2A3F83BEE192A2E /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				9C202D3858A92199C84BD7EE29B5661F /* Pods-coreTests */,
-				B83DE4E7C5B87F10EAFA88A8ADA60C3D /* Pods-wutComicReader */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		B83DE4E7C5B87F10EAFA88A8ADA60C3D /* Pods-wutComicReader */ = {
-			isa = PBXGroup;
-			children = (
-				3BA864AF07BA607C4C52EF92DB2F5897 /* Pods-wutComicReader.modulemap */,
-				DEE865CA38F3A0626BA3BBA2EA3AA83B /* Pods-wutComicReader-acknowledgements.markdown */,
-				00B95547428B908413A674F9D0B5B711 /* Pods-wutComicReader-acknowledgements.plist */,
-				F024E4DE39600262CB53F4847690A611 /* Pods-wutComicReader-dummy.m */,
-				50151B5BC60BABA604F563971E4957E6 /* Pods-wutComicReader-frameworks.sh */,
-				3246F48ACDFC987E8D8E2FED08752A2A /* Pods-wutComicReader-Info.plist */,
-				EA25FDCFE42B7FE1D72CBAD652436B2D /* Pods-wutComicReader-umbrella.h */,
-				6F391ACF7EF8698CF6FB6DF762814843 /* Pods-wutComicReader.debug.xcconfig */,
-				0F8560A6B9F4EE0AE665AF49278CF20A /* Pods-wutComicReader.release.xcconfig */,
-			);
-			name = "Pods-wutComicReader";
-			path = "Target Support Files/Pods-wutComicReader";
+			name = "Pods-ComicKhanTests";
+			path = "Target Support Files/Pods-ComicKhanTests";
 			sourceTree = "<group>";
 		};
 		C0834CEBB1379A84116EF29F93051C60 /* iOS */ = {
@@ -686,9 +677,18 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				45ACBD3DA201C824A46390D5B7C1923A /* Pods */,
-				7BDF714C03EE03AB9997CFD0B4CB6C96 /* Products */,
-				B1BDEF6080B068AEC2A3F83BEE192A2E /* Targets Support Files */,
+				74C6FDA5600EAD51F86AC97365C902A2 /* Products */,
+				D0D65E09B2B7B0E141AE16E9D3E39364 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		D0D65E09B2B7B0E141AE16E9D3E39364 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				AC01F302D8984965649F710B847FF10D /* Pods-ComicKhanTests */,
+				4F111BAAA1BDCB51411E84BA5482149C /* Pods-wutComicReader */,
+			);
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
@@ -814,46 +814,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D8D1AD243F663FCFB8051215988A1ED5 /* Headers */ = {
+		3C2F1631B46AFA3BF7066B0D5A973A63 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				627C2118802675ECD5BD481DAB463525 /* Pods-wutComicReader-umbrella.h in Headers */,
+				4075262A1906694B3E2B669EB8AEF77A /* Pods-ComicKhanTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F86892C6677386436D10E582E1C6CF39 /* Headers */ = {
+		BD82940DAAC8A69A6A53F050B5CA827C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				108D39B03088AB932B8D54DC596B6D3C /* Pods-coreTests-umbrella.h in Headers */,
+				6F86FC14CA88E35181285AC432F9946B /* Pods-wutComicReader-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1870F654C0B0A81B7D19443179B539AC /* Pods-coreTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BAC15F0B4CD630609F628DEDF8B5E47E /* Build configuration list for PBXNativeTarget "Pods-coreTests" */;
-			buildPhases = (
-				F86892C6677386436D10E582E1C6CF39 /* Headers */,
-				1B0A2094DA47A0D78CB529F38758A677 /* Sources */,
-				6B3CA49C76342524C28F315855516548 /* Frameworks */,
-				332A89CB55907D21C83835D662AD9E39 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				716A27C5511A5331B92B9AF99B890E1F /* PBXTargetDependency */,
-				3F552EDD3CCA68D0E7FE415BE3AAF07B /* PBXTargetDependency */,
-				DC26B6CCC1EBB4EB5B4603A3A5648B84 /* PBXTargetDependency */,
-			);
-			name = "Pods-coreTests";
-			productName = "Pods-coreTests";
-			productReference = 779B170DAE88502D1729F52F449AA0CE /* Pods_coreTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		248909F398EFC3A1B4964ABE00AA9649 /* UnrarKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F52D00B1F01FA9E8D4EE2DBC2A2893A1 /* Build configuration list for PBXNativeTarget "UnrarKit" */;
@@ -871,6 +850,27 @@
 			name = UnrarKit;
 			productName = UnrarKit;
 			productReference = 4E8C6D6A916F0CBEEA8FE95BFC4CD0E0 /* UnrarKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		30CC4BBC138EBF54CBF2E5F89F3E78E5 /* Pods-ComicKhanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7D4EB620C7474E9EB3771F3B8856DF1 /* Build configuration list for PBXNativeTarget "Pods-ComicKhanTests" */;
+			buildPhases = (
+				3C2F1631B46AFA3BF7066B0D5A973A63 /* Headers */,
+				EACA1A7E1FCF5260DEB573FD6653BD33 /* Sources */,
+				7E1AEC78B18E637A5D293FA644E99139 /* Frameworks */,
+				D093521664B556F78F45273F23CD0AEE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2D597E04D5C1BD23B580B5E4972140A /* PBXTargetDependency */,
+				6E690F988997F66F7F36CB6934AE10ED /* PBXTargetDependency */,
+				DBFFBAD37AB84AF6B1B35851FA0F2A95 /* PBXTargetDependency */,
+			);
+			name = "Pods-ComicKhanTests";
+			productName = "Pods-ComicKhanTests";
+			productReference = EAF5C800400BF2C610828662B92AB3D1 /* Pods_ComicKhanTests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		31708EE6929C61C0EDA6F5DAE3AF9DB7 /* Zip */ = {
@@ -910,18 +910,18 @@
 		};
 		927C5ED98FB746E991B38121EBADD454 /* Pods-wutComicReader */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 85AE90CECC701F987EDD63FAF08EEDBD /* Build configuration list for PBXNativeTarget "Pods-wutComicReader" */;
+			buildConfigurationList = FD15DEFE739E4CBAC3CC311F7784F3DC /* Build configuration list for PBXNativeTarget "Pods-wutComicReader" */;
 			buildPhases = (
-				D8D1AD243F663FCFB8051215988A1ED5 /* Headers */,
-				38A92CFF4992B1657D3B16439E8231ED /* Sources */,
-				527A22127B3036599205832E1DE36BC4 /* Frameworks */,
-				2EA37C4BBE83DF4FF5273964C45DB38E /* Resources */,
+				BD82940DAAC8A69A6A53F050B5CA827C /* Headers */,
+				80021D4CD3526C2CD5DD44CFB7A0209F /* Sources */,
+				DEFA97C801EBFA5C265B83392EB106EE /* Frameworks */,
+				2070799B31CF7AC9A318A5FB7F6E411A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				13126D290DEEE1D00CA7D8DE374C16C1 /* PBXTargetDependency */,
-				C31D29FBB4852ADC0C7CAE323461F838 /* PBXTargetDependency */,
+				E211D52D77CDDB7A0E91290B8C0E5F0F /* PBXTargetDependency */,
+				E63450C86DBD981634C3BFEC45BF1398 /* PBXTargetDependency */,
 			);
 			name = "Pods-wutComicReader";
 			productName = "Pods-wutComicReader";
@@ -946,11 +946,11 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 7BDF714C03EE03AB9997CFD0B4CB6C96 /* Products */;
+			productRefGroup = 74C6FDA5600EAD51F86AC97365C902A2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1870F654C0B0A81B7D19443179B539AC /* Pods-coreTests */,
+				30CC4BBC138EBF54CBF2E5F89F3E78E5 /* Pods-ComicKhanTests */,
 				927C5ED98FB746E991B38121EBADD454 /* Pods-wutComicReader */,
 				248909F398EFC3A1B4964ABE00AA9649 /* UnrarKit */,
 				7A01F5CF482201BF0F0156D955B56C24 /* UnrarKit-UnrarKitResources */,
@@ -967,14 +967,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2EA37C4BBE83DF4FF5273964C45DB38E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		332A89CB55907D21C83835D662AD9E39 /* Resources */ = {
+		2070799B31CF7AC9A318A5FB7F6E411A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -996,6 +989,13 @@
 				51654449C988B97E995C22F9407F050D /* UnrarKit-Info.plist in Resources */,
 				FBF081A93103B2F80591630494228E14 /* UnrarKit.strings in Resources */,
 				6C9F823FE7681F21A25A244B0ED22932 /* UnrarKitResources-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D093521664B556F78F45273F23CD0AEE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,26 +1063,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1B0A2094DA47A0D78CB529F38758A677 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8A6CE13CFB8FFB5D458D2422315F03DD /* Pods-coreTests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		38A92CFF4992B1657D3B16439E8231ED /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ED9B60FC0EC3020E8BCA049275826711 /* Pods-wutComicReader-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7027CA3B7959E61CED855EB386CE2B47 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80021D4CD3526C2CD5DD44CFB7A0209F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06133BD41D56E3A34AD38D74149EEE77 /* Pods-wutComicReader-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EACA1A7E1FCF5260DEB573FD6653BD33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8807A6F88149CE23CB7A49F0591CE3A7 /* Pods-ComicKhanTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,41 +1103,41 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		13126D290DEEE1D00CA7D8DE374C16C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = UnrarKit;
-			target = 248909F398EFC3A1B4964ABE00AA9649 /* UnrarKit */;
-			targetProxy = 7298C72F5DF6228E257AD5F07913CF4F /* PBXContainerItemProxy */;
-		};
-		3F552EDD3CCA68D0E7FE415BE3AAF07B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = UnrarKit;
-			target = 248909F398EFC3A1B4964ABE00AA9649 /* UnrarKit */;
-			targetProxy = EFC27C6D17C5B197A9F09D8B35E98DFF /* PBXContainerItemProxy */;
-		};
 		58A1516754705F6BEB88E70F0CC39914 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "UnrarKit-UnrarKitResources";
 			target = 7A01F5CF482201BF0F0156D955B56C24 /* UnrarKit-UnrarKitResources */;
 			targetProxy = 30F44AE0D49930104F07544B8E4C5978 /* PBXContainerItemProxy */;
 		};
-		716A27C5511A5331B92B9AF99B890E1F /* PBXTargetDependency */ = {
+		6E690F988997F66F7F36CB6934AE10ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UnrarKit;
+			target = 248909F398EFC3A1B4964ABE00AA9649 /* UnrarKit */;
+			targetProxy = 616FFC6C5A330DFA3E9D5FC7EAFDADA3 /* PBXContainerItemProxy */;
+		};
+		D2D597E04D5C1BD23B580B5E4972140A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-wutComicReader";
 			target = 927C5ED98FB746E991B38121EBADD454 /* Pods-wutComicReader */;
-			targetProxy = 0B2F2A0E87061ADB4C0972E968471140 /* PBXContainerItemProxy */;
+			targetProxy = 6BA10FEC35DFEF9416A5DFF3B0617E80 /* PBXContainerItemProxy */;
 		};
-		C31D29FBB4852ADC0C7CAE323461F838 /* PBXTargetDependency */ = {
+		DBFFBAD37AB84AF6B1B35851FA0F2A95 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Zip;
 			target = 31708EE6929C61C0EDA6F5DAE3AF9DB7 /* Zip */;
-			targetProxy = 30793AA6FBCD63FADCDDE7F11F11DF99 /* PBXContainerItemProxy */;
+			targetProxy = D8D2F5D4B879791CDFE94C09147BE81A /* PBXContainerItemProxy */;
 		};
-		DC26B6CCC1EBB4EB5B4603A3A5648B84 /* PBXTargetDependency */ = {
+		E211D52D77CDDB7A0E91290B8C0E5F0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UnrarKit;
+			target = 248909F398EFC3A1B4964ABE00AA9649 /* UnrarKit */;
+			targetProxy = E82E47360F2FFD53F5515A21898D2BF0 /* PBXContainerItemProxy */;
+		};
+		E63450C86DBD981634C3BFEC45BF1398 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Zip;
 			target = 31708EE6929C61C0EDA6F5DAE3AF9DB7 /* Zip */;
-			targetProxy = 303F3D462682C68BCAE225F67A1263B1 /* PBXContainerItemProxy */;
+			targetProxy = E81D20B9022F99E157DB0B1D5D618CF6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1154,45 +1154,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		011EB547D921CF7072D876ED663BB70D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0F8560A6B9F4EE0AE665AF49278CF20A /* Pods-wutComicReader.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		14CE01D93B49CE32EF37D4C406344EBC /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C29732A303A65A8888430A8909173FE4 /* Zip.xcconfig */;
@@ -1245,44 +1206,6 @@
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
-		};
-		1CAAF537B29046681F064A6870EB4ADB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC0C5ADC6BA99AC809A5BC1E3AFE8B4C /* Pods-coreTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-coreTests/Pods-coreTests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-coreTests/Pods-coreTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		204B8AEA4AE90A551A1768B355C2F9F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1345,6 +1268,83 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		2EEA68C37B7B8AACAFBF6B18C42DD12D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49938BF68C3A7C7261126FE1D74856CC /* Pods-ComicKhanTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		349CE0ABCFF1842D59259FA56410B52A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D82F8659AAD00CA03073D7D6F7D6F834 /* Pods-ComicKhanTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -1425,9 +1425,9 @@
 			};
 			name = Debug;
 		};
-		5C0E19D6E5B12751BD8F87442FE3331D /* Release */ = {
+		6AB359BF2332D5865A1A13CD043AEDFB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25AC29AD2C754F635A31AB52D16D504D /* Pods-coreTests.release.xcconfig */;
+			baseConfigurationReference = 613698EC03DEE902ED70AFE3C999C216 /* Pods-wutComicReader.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1440,7 +1440,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-coreTests/Pods-coreTests-Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1449,7 +1449,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-coreTests/Pods-coreTests.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -1458,11 +1458,10 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		7F2AED2D941F434257C1237BF45EE778 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1534,9 +1533,9 @@
 			};
 			name = Debug;
 		};
-		CBCA6A057737A9AB6C3A72C067D9AD61 /* Debug */ = {
+		E5654919B78F19820A784CC920AFED61 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F391ACF7EF8698CF6FB6DF762814843 /* Pods-wutComicReader.debug.xcconfig */;
+			baseConfigurationReference = BE981DA989760BD0EDC232490068DD06 /* Pods-wutComicReader.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -1567,10 +1566,11 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 		EF1B312AB0085091B2904BBA5CEFC254 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1629,24 +1629,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		85AE90CECC701F987EDD63FAF08EEDBD /* Build configuration list for PBXNativeTarget "Pods-wutComicReader" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CBCA6A057737A9AB6C3A72C067D9AD61 /* Debug */,
-				011EB547D921CF7072D876ED663BB70D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BAC15F0B4CD630609F628DEDF8B5E47E /* Build configuration list for PBXNativeTarget "Pods-coreTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1CAAF537B29046681F064A6870EB4ADB /* Debug */,
-				5C0E19D6E5B12751BD8F87442FE3331D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F37184192218664FE3713FAAD7AEEC5A /* Build configuration list for PBXNativeTarget "UnrarKit-UnrarKitResources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1661,6 +1643,24 @@
 			buildConfigurations = (
 				AD47909620834A9C157744EA0250473F /* Debug */,
 				EF1B312AB0085091B2904BBA5CEFC254 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7D4EB620C7474E9EB3771F3B8856DF1 /* Build configuration list for PBXNativeTarget "Pods-ComicKhanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				349CE0ABCFF1842D59259FA56410B52A /* Debug */,
+				2EEA68C37B7B8AACAFBF6B18C42DD12D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD15DEFE739E4CBAC3CC311F7784F3DC /* Build configuration list for PBXNativeTarget "Pods-wutComicReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6AB359BF2332D5865A1A13CD043AEDFB /* Debug */,
+				E5654919B78F19820A784CC920AFED61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

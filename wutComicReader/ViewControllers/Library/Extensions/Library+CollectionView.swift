@@ -14,7 +14,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return comicGroups[section].comics?.count ?? 0
+        return fetchResultController.sections?[section].objects?.count ?? 0
     }
     
     
@@ -22,13 +22,13 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BookCell", for: indexPath) as! LibraryCell
         cell.isInEditingMode = editingMode
-        cell.book = comicGroups[indexPath.section].comics?[indexPath.row] as? Comic
+        cell.book = fetchResultController.object(at: indexPath)
         return cell
     }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return comicGroups.count
+        return fetchResultController.sections?.count ?? 0
     }
     
     
@@ -36,7 +36,8 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BookHeader", for: indexPath) as! LibraryReusableView
-        header.headerLabel.text = comicGroups[indexPath.section].name
+        let firstSectionComic = fetchResultController.sections?[indexPath.section].objects?.first as? Comic
+        header.headerLabel.text = firstSectionComic?.ofComicGroup?.name
         header.isEditing = editingMode
         header.indexSet = indexPath.section
         return header
@@ -50,8 +51,8 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let selectedComic = comicGroups[indexPath.section].comics?[indexPath.row] as! Comic
-        let selectedCell = collectionView.cellForItem(at: indexPath)!
+        let selectedComic = fetchResultController.object(at: indexPath)
+//        let selectedCell = collectionView.cellForItem(at: indexPath)!
         
         if editingMode {
             if !selectedComics.contains(selectedComic) {
@@ -63,6 +64,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
             readerVC.comic = selectedComic
+            readerVC.dataService = dataService
             readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
             present(readerVC, animated: true)
@@ -74,7 +76,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         
         if editingMode{
             
-            let deSelectedComic = comicGroups[indexPath.section].comics?[indexPath.row] as! Comic
+            let deSelectedComic = fetchResultController.object(at: indexPath) as! Comic
             let deSelectedIndex = selectedComicsIndexPaths.firstIndex(of: indexPath)
             
             if selectedComics.contains(deSelectedComic), let _ = deSelectedIndex {

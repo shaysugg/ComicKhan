@@ -29,12 +29,22 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E4EBEDCB23DD7C49000B317D"
-               BuildableName = "coreTests.xctest"
-               BlueprintName = "coreTests"
+               BlueprintIdentifier = "E4DA532124507DB800A244FD"
+               BuildableName = "ComicKhanTests.xctest"
+               BlueprintName = "ComicKhanTests"
+               ReferencedContainer = "container:wutComicReader.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E475D0AA245751D10005CF8F"
+               BuildableName = "ComicKhanUITests.xctest"
+               BlueprintName = "ComicKhanUITests"
                ReferencedContainer = "container:wutComicReader.xcodeproj">
             </BuildableReference>
          </TestableReference>

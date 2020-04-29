@@ -51,6 +51,7 @@ class BookReaderVC: UIViewController {
     var bookSingleImages : [ComicImage] = []
     var bookDoubleImages : [(ComicImage? , ComicImage?)] = []
     var bookPages: [BookPage] = []
+    var dataService: DataService!
     
     var thumbnailImages: [ComicImage] = []
     
@@ -329,9 +330,7 @@ class BookReaderVC: UIViewController {
     
     func saveLastViewedPageToCoreData() {
         if let page = lastViewedPage {
-            comic?.lastVisitedPage = Int16(page)
-            let context = AppFileManager().managedContext
-            try? context?.save()
+            try? dataService.saveLastPageOf(comic: comic!, lastPage: page)
         }
     }
     
@@ -363,7 +362,10 @@ class BookReaderVC: UIViewController {
                 self.topBarBackgroundView.alpha = 0
                 self.bottomBar.transform = CGAffineTransform(translationX: 0, y: self.bottomBar.frame.height + 30)
                 self.bottomBar.alpha = 0.1
-            }, completion: nil)
+                
+            }, completion: { _ in
+                
+            })
         }else{
             topBar.alpha = 0.0
             topBarBackgroundView.alpha = 0
@@ -381,8 +383,10 @@ class BookReaderVC: UIViewController {
                 self.bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.bottomBar.alpha = 1
                 self.topBarBackgroundView.alpha = 1
-                
-            }, completion: nil)
+//
+            }, completion: { _ in
+                self.setNeedsStatusBarAppearanceUpdate()
+            })
         }else{
             topBar.alpha = 1
             topBarBackgroundView.alpha = 1
@@ -394,9 +398,7 @@ class BookReaderVC: UIViewController {
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0
         bottomBar.currentPage = Int(LastpageNumber)
         
-        // because setNeedsStatusBarAppearanceUpdate force scroll view to zoomout
-        //we check if scrollview was zoomed and if it was then we zoom back to same rect ageain manually
-        setNeedsStatusBarAppearanceUpdate()
+        
     }
     
     

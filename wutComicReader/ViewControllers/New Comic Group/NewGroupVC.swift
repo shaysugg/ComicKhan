@@ -12,12 +12,9 @@ import CoreData
 
 class NewGroupVC: UIViewController {
     
+    var dataService: DataService!
     var comicsAboutToGroup: [Comic] = []
-    private var groups: [ComicGroup] = [] {
-        didSet{
-            addLabel.isHidden = groups.isEmpty
-        }
-    }
+    var groups: [ComicGroup]!
     
     @IBOutlet weak var alreadyExistLabel: UILabel!
     @IBOutlet weak var newGroupTextField: UITextField!
@@ -36,7 +33,12 @@ class NewGroupVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchGroupComics()
+        do {
+            try dataService.deleteEmptyGroups()
+            groups = try dataService.fetchComicGroups()
+        }catch{
+            groups = []
+        }
         
         setUpDesign()
         
@@ -64,47 +66,16 @@ class NewGroupVC: UIViewController {
         
     }
     
-    override func viewDidLayoutSubviews() {
-        
-    }
     
     private func addButtonTapped(){
-        if let text = newGroupTextField.text {
-            addComicGroup(withName: text)
-        }
-        NotificationCenter.default.post(name: .newGroupAdded, object: nil)
-        dismiss(animated: true, completion: nil)
-    }
-    
-    private func addComicGroup(withName name:String) {
-        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appdelegate.persistentContainer.viewContext
-        
-        let comicGroup = ComicGroup(context: managedContext)
-        comicGroup.name = name
-        comicGroup.id = UUID()
-        comicGroup.comics = NSOrderedSet(array: comicsAboutToGroup)
-        comicGroup.isForNewComics = false
-        
         do {
-            try managedContext.save()
-        }catch let err{
-            print(err.localizedDescription)
-            #warning("error handeling")
-        }
-    }
-    
-    
-    private func fetchGroupComics(){
-        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appdelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
-        
-        do{
-            groups = try managedContext.fetch(fetchRequest)
-        }catch let error{
-            print("error happed while fetching from core Data: " + error.localizedDescription)
+            if let text = newGroupTextField.text {
+                try dataService.createANewComicGroup(with: text, and: comicsAboutToGroup)
+            }
+            NotificationCenter.default.post(name: .newGroupAdded, object: nil)
+            dismiss(animated: true, completion: nil)
+        }catch let err {
+            showAlert(with: "Oh!", description: "there is a problem with creating your new comic group" + err.localizedDescription)
         }
     }
     
@@ -133,7 +104,7 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
+        return 55
     }
     
     

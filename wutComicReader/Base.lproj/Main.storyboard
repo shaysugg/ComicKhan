@@ -221,7 +221,7 @@
         <!--LibraryVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LibraryVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LibraryVC" id="BYZ-38-t0r" customClass="LibraryVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -580,7 +580,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or Add To Existed Comic Group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LE5-aw-TL7">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or add them to an existed comic group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LE5-aw-TL7">
                                 <rect key="frame" x="20" y="251" width="374" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
@@ -590,25 +590,25 @@
                                 <rect key="frame" x="20" y="269" width="374" height="607"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" tag="100" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" rowHeight="61" id="CoJ-z1-OuR">
-                                        <rect key="frame" x="0.0" y="28" width="374" height="61"/>
+                                    <tableViewCell clipsSubviews="YES" tag="100" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" rowHeight="49" id="CoJ-z1-OuR">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="49"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CoJ-z1-OuR" id="3da-TA-K2T">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Batman" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37E-LC-2qP">
-                                                    <rect key="frame" x="20" y="20.666666666666668" width="298.66666666666669" height="20.000000000000004"/>
+                                                    <rect key="frame" x="20" y="14.666666666666664" width="303.66666666666669" height="20"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addToGroup" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-YQ-WKJ">
-                                                    <rect key="frame" x="329" y="18" width="25" height="25"/>
+                                                    <rect key="frame" x="334" y="14.666666666666664" width="20" height="20"/>
                                                     <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="47E-qI-8qb"/>
-                                                        <constraint firstAttribute="width" constant="25" id="ImV-zV-Ikz"/>
+                                                        <constraint firstAttribute="height" constant="20" id="47E-qI-8qb"/>
+                                                        <constraint firstAttribute="width" constant="20" id="ImV-zV-Ikz"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -649,9 +649,9 @@
                             <constraint firstAttribute="bottom" secondItem="vIb-fh-n82" secondAttribute="bottom" constant="20" symbolic="YES" id="NMP-QD-GNu"/>
                             <constraint firstItem="DKF-Ry-PBe" firstAttribute="top" secondItem="LH6-GB-K6e" secondAttribute="top" constant="60" id="Yej-kQ-jN2"/>
                             <constraint firstItem="LH6-GB-K6e" firstAttribute="trailing" secondItem="DKF-Ry-PBe" secondAttribute="trailing" constant="20" id="kmA-sT-xRN"/>
-                            <constraint firstItem="LE5-aw-TL7" firstAttribute="leading" secondItem="O2I-m7-iPb" secondAttribute="leading" constant="20" id="lba-Dw-4Zc"/>
                             <constraint firstItem="vIb-fh-n82" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="mNm-gd-qEq"/>
                             <constraint firstItem="LE5-aw-TL7" firstAttribute="bottom" secondItem="DKF-Ry-PBe" secondAttribute="bottom" constant="50" id="o7y-Jn-cxa"/>
+                            <constraint firstItem="LE5-aw-TL7" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="pCA-c1-lpa"/>
                             <constraint firstItem="d9G-Qy-X3r" firstAttribute="top" secondItem="DKF-Ry-PBe" secondAttribute="bottom" constant="5" id="pmk-Su-wiK"/>
                             <constraint firstItem="d9G-Qy-X3r" firstAttribute="leading" secondItem="LH6-GB-K6e" secondAttribute="leading" constant="20" id="qER-Dc-UtF"/>
                             <constraint firstItem="2Ve-qG-YVk" firstAttribute="top" secondItem="LH6-GB-K6e" secondAttribute="top" constant="10" id="w0w-KA-fu7"/>

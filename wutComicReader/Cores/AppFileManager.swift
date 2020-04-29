@@ -17,27 +17,35 @@ enum fileManagerError : Error {
 }
 
 
+fileprivate var comicDiractoryName = "ComicFiles"
+
+extension URL {
+    static var comicDiractory: URL {
+       return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent(comicDiractoryName)
+    }
+    static var userDiractory: URL {
+      return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    }
+}
+
 
 class AppFileManager {
     
     //MARK:- Variables
     
     var comicDirectory = URL.comicDiractory
-    var userDiractory = URL.useDiractory
+    var userDiractory = URL.userDiractory
     private var fileManager = FileManager.default
     internal var managedContext : NSManagedObjectContext?
+    var dataService: DataService!
     var comicDiractoryName = "ComicFiles"
     
     //MARK:- Functions
     
-    init() {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        managedContext = appDelegate?.persistentContainer.viewContext
+    init(dataService: DataService) {
+        managedContext = dataService.managedContext
+        self.dataService = dataService
         
-//        userDiractory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//        let documentDir = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
-//        comicDirectory = documentDir.appendingPathComponent(comicDiractoryName)
     }
     
     
@@ -56,7 +64,7 @@ class AppFileManager {
     //write extracted comics in the comic diractory on core data
     //skip comics that already been added to core data
     
-    func writeNewComicsOnCoreData(){
+    func writeNewComicsOnCoreData() throws{
         
         guard let context = managedContext else { return }
         
@@ -75,26 +83,22 @@ class AppFileManager {
                 
                 let comicName = makeComicNameFromPath(path: diractory.path)
                 
-                if !comicAlreadyExistedInCoreData(withName: comicName) {
+                if !dataService.comicAlreadyExistedInCoreData(withName: comicName) {
                     
                     let comicImages = imagesPathsInSubPaths(originalImagesDirSubPaths, inExtractionFolder: .original)
                     let thumbnailImages = imagesPathsInSubPaths(thumbnailsDirSubPaths, inExtractionFolder: .thumbnail)
                     
                     if !comicImages.isEmpty{
                         
-                        let newComic = Comic(context: context)
-                        newComic.name = comicName
-                        newComic.imageNames = comicImages
-                        newComic.thumbnailNames = thumbnailImages
-                        newComic.id = UUID()
-                        
-                    }
-                    do{
-                        try context.save()
-                    }catch let error {
-                        print("erro happend while writing on core data: " + error.localizedDescription)
-                        #warning("error handeling")
-//                        throw error
+                        do{
+                            try dataService.addNewComic(name: comicName,
+                                                        imageNames: comicImages,
+                                                        thumbnailNames: thumbnailImages,
+                                                        to: nil)
+                        }catch let error {
+                            try? deleteFileInTheUserDiractory(withName: comicName)
+                            throw error
+                        }
                     }
                 }
             }
@@ -131,7 +135,7 @@ class AppFileManager {
         for path in comicDiractoriesPaths ?? [] {
             let comicName = makeComicNameFromPath(path: path)
             if !userDiractoryfilePaths.contains(String(comicName.dropLast(0))){
-                deleteComicFromCoreData(withName: comicName)
+//                deleteComicFromCoreData(withName: comicName)
                 do {
                     try deleteFileInTheAppDiractory(withName: comicName)
                 }catch {
@@ -171,26 +175,6 @@ class AppFileManager {
         
     }
     
-        
-    private func comicAlreadyExistedInCoreData(withName comicname: String) -> Bool{
-        
-            guard let context = managedContext else { return true }
-            
-            let fetchRequest = NSFetchRequest<Comic>(entityName: "Comic")
-            fetchRequest.predicate = NSPredicate(format: "name == %@", comicname)
-            
-            do{
-                let sameComicsName = try context.fetch(fetchRequest)
-                return !sameComicsName.isEmpty
-            }catch let error{
-                
-                print("error hapened when fetching from core data: " + error.localizedDescription)
-                //            throw error
-                #warning("error handeling of this part man!")
-                return false
-            }
-        }
-    
     
     private func imagesPathsInSubPaths(_ subpaths: [String], inExtractionFolder folder: ExtractionFolder) -> [String] {
         
@@ -221,26 +205,7 @@ class AppFileManager {
         return subPath
     }
     
-    func deleteComicFromCoreData(withName name: String){
-        
-        guard let context = managedContext else { return }
-        
-        let deletereq = NSFetchRequest<Comic>(entityName: "Comic")
-        let predict = NSPredicate.init(format: "name == %@", name)
-        deletereq.predicate = predict
-        
-        
-        guard let comics = try? context.fetch(deletereq) else { return }
-        for comic in comics {
-            comic.ofComicGroup?.removeFromComics(comic)
-            context.delete(comic)
-        }
-        do {
-            try context.save()
-        }catch {
-            print("can't save context")
-        }
-    }
+    
     
     func makeAppDirectory() throws{
         try fileManager.createDirectory(at: comicDirectory, withIntermediateDirectories: true, attributes: nil)
@@ -259,21 +224,4 @@ class AppFileManager {
     
 }
 
-//let appDelegate = UIApplication.shared.delegate as? AppDelegate
-//managedContext = appDelegate?.persistentContainer.viewContext
-//
-//userDiractory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//let documentDir = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
-//comicDirectory = documentDir.appendingPathComponent(comicDiractoryName)
 
-fileprivate var comicDiractoryName = "ComicFiles"
-
-extension URL {
-    static var comicDiractory: URL {
-       return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent(comicDiractoryName)
-    }
-    static var useDiractory: URL {
-      return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    }
-}

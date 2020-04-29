@@ -8,15 +8,16 @@
 
 import XCTest
 import UIKit
-import ZIPFoundation
+import Zip
 import UnrarKit
 
-@testable import wutComicReader
+@testable import ComicKhan
 
 class ExtractorTests: XCTestCase {
     
     var sut : ComicExteractor!
     var sutAppFileManager : AppFileManager!
+    var dataService: DataService!
     let fileManager = FileManager.default
     
     enum Format {
@@ -42,8 +43,9 @@ class ExtractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        sut = ComicExteractor.init()
-        sutAppFileManager = sut.appFileManager
+        sut = ComicExteractor()
+        dataService = DataService(managedContext: createMockManagedContext()!)
+        sutAppFileManager = AppFileManager(dataService: dataService)
         
         creatTempDiractories()
         
@@ -83,9 +85,9 @@ class ExtractorTests: XCTestCase {
     func testUserComicsDoExtractInComicDiractory(){
         //given
         
-        let comicInfo = ComicInfo(name: "Skulldigger and Skeleton Boy 002 (2020) (digital) (Son of Ultron-Empire)",
-                                  pageCount: 26,
-                                  format: .cbr)
+        let comicInfo = ComicInfo(name: "Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire)",
+                                  pageCount: 20,
+                                  format: .cbz)
         
         let testBundle = Bundle(for: type(of: self))
         let comicFilePath = testBundle.path(forResource: comicInfo.name, ofType: comicInfo.format.string)
@@ -98,9 +100,9 @@ class ExtractorTests: XCTestCase {
         
         //when
         
-        measure {
+//
             sut.extractUserComicsIntoComicDiractory()
-        }
+//
         let extractedPath = sutAppFileManager.comicDirectory.appendingPathComponent(comicInfo.name).path
         let extractedExist = fileManager.fileExists(atPath: extractedPath)
         
@@ -109,22 +111,13 @@ class ExtractorTests: XCTestCase {
         XCTAssertNotNil(comicFilePath)
         
         XCTAssertTrue(didComicCoppied)
-        
+//
         XCTAssertTrue(extractedExist, "file extracted succsesfully")
         
-        let extractedFilesCount = fileManager.subpaths(atPath: extractedPath)!.count
+        let extractedFilesCount = fileManager.subpaths(atPath: extractedPath + "/" + ExtractionFolder.thumbnail.name)!.count
+        
         XCTAssertEqual(extractedFilesCount, comicInfo.pageCount)
         
-    }
-    
-
-    
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
     }
 
 }
