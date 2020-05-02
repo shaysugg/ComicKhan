@@ -147,9 +147,6 @@ class BookReaderVC: UIViewController {
         if trait.horizontalSizeClass == .regular,
             trait.verticalSizeClass == .regular {
             layoutWith(traitCollection: UIScreen.main.traitCollection)
-            let currentBookPage = bookPageViewController.viewControllers?.first as? BookPage
-//            currentBookPage?.updateMinZoomScaleForSize(view.bounds.size)
-//            currentBookPage?.centerTheImage()
         }
 //        
     }
@@ -355,7 +352,7 @@ class BookReaderVC: UIViewController {
     
     func disappearMenus(animated: Bool) {
         menusAreAppeard = false
-        self.setNeedsStatusBarAppearanceUpdate()
+        
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
                 self.topBar.alpha = 0.0
@@ -364,7 +361,7 @@ class BookReaderVC: UIViewController {
                 self.bottomBar.alpha = 0.1
                 
             }, completion: { _ in
-                
+                self.setNeedsStatusBarAppearanceUpdate()
             })
         }else{
             topBar.alpha = 0.0
@@ -376,7 +373,7 @@ class BookReaderVC: UIViewController {
     
     func appearMenus(animated: Bool) {
         menusAreAppeard = true
-        
+        self.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
                 self.topBar.alpha = 1
@@ -385,7 +382,7 @@ class BookReaderVC: UIViewController {
                 self.topBarBackgroundView.alpha = 1
 //
             }, completion: { _ in
-                self.setNeedsStatusBarAppearanceUpdate()
+                
             })
         }else{
             topBar.alpha = 1

@@ -81,17 +81,24 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if pageImageView1.image?.size == .zero ||
+        pageImageView1.image?.size == nil{
 
         pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
         pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
-        
-        
+
         updateMinZoomScaleForSize(view.bounds.size)
         centerTheImage()
+        
+        print("APPEARDE page num : \(image1?.pageNumber)")
 
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
+            
+        }
         
         
     }

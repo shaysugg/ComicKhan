@@ -136,6 +136,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index < bookPages.count - 1 {
                 return bookPages[index + 1]
+                print("+1")
             }else{
                 return nil
             }
@@ -147,6 +148,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index > 0 {
                 return bookPages[index - 1]
+                print("-1")
             }else {
                 return nil
             }
@@ -155,24 +157,19 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
     }
     
     
-    
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+//        setLastViewedPage(toPageWithNumber: pendingPages.first?.image1?.pageNumber ?? 0)
         
-        guard let pendingPages = (pendingViewControllers as? [BookPage]) else { return }
-        pendingPages.first?.centerTheImage()
-        setLastViewedPage(toPageWithNumber: pendingPages.first?.image1?.pageNumber ?? 0)
+//        print("---------  started transition with view size : (\(page.view.bounds.size)")
+        
         
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         if completed {
-            
-            guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
-            for page in previousPages {
-                let _ = bookPages.firstIndex(of: previousPages[0])
-//                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: true)
-                
+            if let currentPage = pageViewController.viewControllers?.first as? BookPage {
+                setLastViewedPage(toPageWithNumber: currentPage.image1!.pageNumber!, withAnimate: true)
             }
             
         }
