@@ -7,7 +7,8 @@ target 'wutComicReader' do
 
   pod "UnrarKit"
 	pod 'Zip', '~> 1.1'
-	
+  pod 'DirectoryWatcher'
+
 	target 'ComicKhanTests' do
         inherit! :search_paths
         

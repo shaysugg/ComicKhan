@@ -1,0 +1,6 @@
+framework module DirectoryWatcher {
+  umbrella header "DirectoryWatcher-umbrella.h"
+
+  export *
+  module * { export * }
+}

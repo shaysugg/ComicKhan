@@ -171,7 +171,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
             guard let previousPages = pageViewController.viewControllers as? [BookPage] else { return }
             for page in previousPages {
                 let _ = bookPages.firstIndex(of: previousPages[0])
-                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: true)
+//                page.scrollView.setZoomScale(page.scrollView.minimumZoomScale, animated: true)
                 
             }
             

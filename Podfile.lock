@@ -1,22 +1,26 @@
 PODS:
+  - DirectoryWatcher (2.4.0)
   - UnrarKit (2.9):
     - UnrarKit/unrar-lib (= 2.9)
   - UnrarKit/unrar-lib (2.9)
   - Zip (1.1.0)
 
 DEPENDENCIES:
+  - DirectoryWatcher
   - UnrarKit
   - Zip (~> 1.1)
 
 SPEC REPOS:
   trunk:
+    - DirectoryWatcher
     - UnrarKit
     - Zip
 
 SPEC CHECKSUMS:
+  DirectoryWatcher: a1c1d838025186d3cfaa9cfc6eee4064093dcec1
   UnrarKit: 99e3f0222a98a212188e1a6975dcf5aa798d26dd
   Zip: 8877eede3dda76bcac281225c20e71c25270774c
 
-PODFILE CHECKSUM: 5d5a75375fce845c0ebc1890836b198567c8eb3c
+PODFILE CHECKSUM: b83217336c232a84b74d52c95274e09fa75c05f7
 
 COCOAPODS: 1.8.4

@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh
+${BUILT_PRODUCTS_DIR}/DirectoryWatcher/DirectoryWatcher.framework
 ${BUILT_PRODUCTS_DIR}/UnrarKit/UnrarKit.framework
 ${BUILT_PRODUCTS_DIR}/Zip/Zip.framework

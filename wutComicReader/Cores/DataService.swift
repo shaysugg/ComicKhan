@@ -69,12 +69,13 @@ class DataService {
         }
     }
     
-    func createANewComicGroup(with name: String, and comics: [Comic]?) throws {
+    func createANewComicGroup(name: String, comics: [Comic]?) throws {
         
         let newComicGroup = ComicGroup(context: managedContext)
         newComicGroup.id = UUID()
         newComicGroup.isForNewComics = false
         newComicGroup.name = name
+        
         if let _ = comics {
             newComicGroup.addToComics(NSOrderedSet(array: comics!))
         }
@@ -90,16 +91,27 @@ class DataService {
     func createGroupForNewComics() throws {
         
         do {
-                let newComicGroup = ComicGroup(context: managedContext)
-                newComicGroup.id = UUID()
-                newComicGroup.isForNewComics = true
-                newComicGroup.name = "New Comics"
-                
-                try managedContext.save()
+            let newComicGroup = ComicGroup(context: managedContext)
+            newComicGroup.id = UUID()
+            newComicGroup.isForNewComics = true
+            newComicGroup.name = "New Comics"
+            
+            try managedContext.save()
         }catch let err {
             throw err
         }
         
+    }
+    
+    func changeGroupOf(comics: [Comic], to group: ComicGroup) throws {
+        let set = NSOrderedSet(array: comics)
+        group.addToComics(set)
+        
+        do{
+            try managedContext.save()
+        }catch let err{
+            throw err
+        }
     }
     
     func deleteEmptyGroups() throws {
@@ -126,13 +138,8 @@ class DataService {
     
     func addNewComic(name: String, imageNames: [String], thumbnailNames: [String], to comicGroup: ComicGroup?) throws {
         
-        let request = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
-        let predicate = NSPredicate(format: "%K == true", #keyPath(ComicGroup.isForNewComics), true)
-        request.predicate = predicate
-        
         do {
-            let groupForNewComics = try managedContext.fetch(request)
-            
+            try fetchGroupForNewComics()
             let comic = Comic(context: managedContext)
             comic.id = UUID()
             comic.name = name
@@ -142,7 +149,7 @@ class DataService {
             if let group = comicGroup {
                 group.addToComics(comic)
             }else{
-                groupForNewComics[0].addToComics(comic)
+                groupForNewComics?.addToComics(comic)
             }
             
             try managedContext.save()
@@ -150,6 +157,19 @@ class DataService {
             throw err
         }
         
+    }
+    
+    private func fetchGroupForNewComics() throws -> ComicGroup? {
+        let request = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
+        let predicate = NSPredicate(format: "%K == true", #keyPath(ComicGroup.isForNewComics))
+        request.predicate = predicate
+        
+        do{
+            groupForNewComics = try managedContext.fetch(request).first
+            return groupForNewComics
+        }catch let err {
+            throw err
+        }
     }
     
     func saveLastPageOf(comic: Comic, lastPage: Int) throws {

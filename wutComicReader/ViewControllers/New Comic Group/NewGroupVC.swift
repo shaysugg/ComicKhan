@@ -70,7 +70,7 @@ class NewGroupVC: UIViewController {
     private func addButtonTapped(){
         do {
             if let text = newGroupTextField.text {
-                try dataService.createANewComicGroup(with: text, and: comicsAboutToGroup)
+                try dataService.createANewComicGroup(name: text, comics: comicsAboutToGroup)
             }
             NotificationCenter.default.post(name: .newGroupAdded, object: nil)
             dismiss(animated: true, completion: nil)
@@ -97,10 +97,13 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let orderedSet = NSOrderedSet(array: comicsAboutToGroup)
-        groups[indexPath.row].addToComics(orderedSet)
-        NotificationCenter.default.post(name: .newGroupAdded, object: nil)
-        dismiss(animated: true, completion: nil)
+        do {
+            try dataService.changeGroupOf(comics: comicsAboutToGroup, to: groups[indexPath.row])
+            NotificationCenter.default.post(name: .newGroupAdded, object: nil)
+            dismiss(animated: true, completion: nil)
+        }catch {
+            showAlert(with: "Oh!", description: "An issue happend while creating your comic group. Please try again.")
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

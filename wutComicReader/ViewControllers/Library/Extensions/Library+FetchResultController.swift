@@ -47,7 +47,12 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
             break
         }
         
-        emptyGroupsView.isHidden = !(controller.fetchedObjects?.isEmpty ?? true)
+        
+        UIView.animate(withDuration: 0.2) {
+            self.emptyGroupsView.isHidden = !(controller.fetchedObjects?.isEmpty ?? true)
+        }
+        
+        
     }
     
     
@@ -70,6 +75,15 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
             blockOperations.append(BlockOperation(block: { [weak self] in
                 self?.bookCollectionView.deleteSections(indexSet)
             }))
+        case .move:
+            blockOperations.append(BlockOperation(block: { [weak self] in
+                self?.bookCollectionView.reloadData()
+            }))
+        case .update:
+            blockOperations.append(BlockOperation(block: { [weak self] in
+                self?.bookCollectionView.reloadSections(indexSet)
+            }))
+            
         default:
             break
         }
@@ -85,7 +99,6 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
             }
         }) { (_) in
             self.blockOperations.removeAll()
-            
         }
     }
     

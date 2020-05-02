@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DirectoryWatcher
 import CoreData
 
 class LibraryVC: UIViewController {
@@ -16,12 +17,13 @@ class LibraryVC: UIViewController {
     var appfileManager: AppFileManager!
     let comicExtractor = ComicExteractor()
     var dataService: DataService!
+    var diractoryWatcher: DirectoryWatcher?
     
     var fetchResultController: NSFetchedResultsController<Comic>!
     var blockOperations = [BlockOperation]()
     
+    var newFilesCount: Int?
     
-    var bottomGradientImage : UIImageView?
     var collectionViewCellSize: CGSize!
     
     
@@ -99,11 +101,14 @@ class LibraryVC: UIViewController {
         
         dataService = DataService()
         
-        do {
-            try dataService.createGroupForNewComics()
-        }catch {
-            fatalError("new comic group creation failed")
+        if appLaunchedForFirstTime() {
+            do {
+                try dataService.createGroupForNewComics()
+            }catch {
+                fatalError("new comic group creation failed")
+            }
         }
+        
         
         appfileManager = AppFileManager(dataService: dataService)
         
@@ -115,24 +120,16 @@ class LibraryVC: UIViewController {
             }
         }
         
-        if appLaunchedForFirstTime() {
-            do{
-                try dataService.createGroupForNewComics()
-            }catch{
-                fatalError()
-            }
-        }
-        
-        
-        
+
         do {
             fetchResultController = try dataService.configureFetchResultController()
         }catch {
             showAlert(with: "Oh!", description: "there is a problem with fetching your comics")
         }
         
+        setupDiractoryWatcher()
+        
         fetchResultController.delegate = self
-//        fetchGroupComics()
         
         configureCellSize(basedOn: UIScreen.main.traitCollection)
         
@@ -146,16 +143,19 @@ class LibraryVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
+        
         print(NSHomeDirectory())
-        
-//        refreshButton.image = nil
-        
         
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        refreshUIIfNewComicAdded()
+//        refreshUIIfNewComicAdded()
+        let _ = diractoryWatcher?.startWatching()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        let _ = diractoryWatcher?.stopWatching()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -174,21 +174,6 @@ class LibraryVC: UIViewController {
         designEmptyView()
         bookCollectionView.backgroundColor = .appSystemBackground
         view.backgroundColor = .appSystemBackground
-    }
-    
-    func makeBottomViewGradiant(){
-        let imageView = UIImageView(frame: .zero)
-        imageView.contentMode = .scaleToFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "gradient")
-        
-        view.addSubview(imageView)
-        imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        imageView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        imageView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        bottomGradientImage = imageView
     }
     
     
@@ -242,6 +227,50 @@ class LibraryVC: UIViewController {
         
     }
     
+    func setupDiractoryWatcher() {
+        
+        diractoryWatcher = DirectoryWatcher.watch(URL.userDiractory)
+        
+        diractoryWatcher?.onNewFiles = { [weak self] newfiles in
+            self?.newFilesCount = newfiles.count
+            DispatchQueue.global(qos: .background).async {
+                
+                let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
+                    //if app got killed in background
+                    if let name = self?.comicNameThatExtracting {
+                        try? self?.dataService.deleteComicFromCoreData(withName: name)
+                        try? self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
+                    }
+                })
+                
+                
+                do{
+                self?.comicExtractor.extractUserComicsIntoComicDiractory()
+                try self?.appfileManager.writeNewComicsOnCoreData()
+                    try? self?.fetchResultController.performFetch()
+                    for newfile in newfiles {
+                        try? FileManager.default.removeItem(at: newfile)
+                    }
+                    
+                    if taskID != UIBackgroundTaskIdentifier.invalid {
+                        UIApplication.shared.endBackgroundTask(taskID)
+                    }
+                    
+                }catch{
+                    DispatchQueue.main.async {
+                        self?.showAlert(with: "OH!",
+                        description: "there was a problem with your comic file Extraction, please try again.")
+                    }
+                    
+                    if taskID != UIBackgroundTaskIdentifier.invalid {
+                        UIApplication.shared.endBackgroundTask(taskID)
+                    }
+                }
+            }
+        }
+    
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -281,11 +310,9 @@ class LibraryVC: UIViewController {
                 do{
                     try dataService.deleteComicFromCoreData(withName: comicName)
                     try appfileManager.deleteFileInTheAppDiractory(withName: comicName)
-                    try appfileManager.deleteFileInTheUserDiractory(withName: comicName)
                     
-                }catch let err {
-                    #warning("error handeling! of this part")
-                    print("remove comic error \(err.localizedDescription)")
+                }catch {
+                    showAlert(with: "Oh!", description: "There is a problem with removing your comics")
                 }
             }
         }
@@ -319,31 +346,6 @@ class LibraryVC: UIViewController {
     
     
     //MARK:- Top bar functions
-    
-    func createAComicGroup(with name: String){
-        
-        if selectedComics.count < 2 && name != "New Comics" { return }
-        
-        guard let appdelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appdelegate.persistentContainer.viewContext
-        
-        let newComicGroup = ComicGroup(context: managedContext)
-        newComicGroup.name = name
-        newComicGroup.id = UUID()
-        newComicGroup.comics = NSOrderedSet(array: selectedComics)
-        
-        for comic in selectedComics {
-            comic.ofComicGroup = newComicGroup
-        }
-        
-        do{
-            try managedContext.save()
-        }catch{
-            print("error while creating a comic group")
-        }
-        
-        
-    }
     
     private func makeEmptyView(appear isApear:Bool){
         bookCollectionView.isHidden = !isApear

@@ -227,7 +227,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vjD-gc-wg7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="10" id="qLy-rl-vpP">
                                     <size key="itemSize" width="169" height="231"/>
@@ -323,10 +323,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="vjD-gc-wg7" secondAttribute="bottom" id="86E-9p-Nww"/>
                             <constraint firstItem="vjD-gc-wg7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="REw-Ox-IE9"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vjD-gc-wg7" secondAttribute="bottom" id="dNU-4Y-BKC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vjD-gc-wg7" secondAttribute="trailing" id="hOz-zp-Ebo"/>
-                            <constraint firstItem="vjD-gc-wg7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="sy5-B3-e4G"/>
+                            <constraint firstItem="vjD-gc-wg7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wNN-0I-FgT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -575,7 +575,7 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                         </state>
                                         <connections>
-                                            <action selector="addGroupButtonTapped:" destination="zhU-23-pPI" eventType="touchUpInside" id="FSr-iK-elb"/>
+                                            <action selector="addGroupButtonTapped:" destination="zhU-23-pPI" eventType="touchUpInside" id="lua-Gp-YhZ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -659,7 +659,7 @@
                         <viewLayoutGuide key="safeArea" id="LH6-GB-K6e"/>
                     </view>
                     <connections>
-                        <outlet property="addButton" destination="WDi-5C-vF4" id="Mrx-cK-0FH"/>
+                        <outlet property="addButton" destination="WDi-5C-vF4" id="1uN-FT-tHQ"/>
                         <outlet property="addLabel" destination="LE5-aw-TL7" id="AhS-mF-GNc"/>
                         <outlet property="alreadyExistLabel" destination="d9G-Qy-X3r" id="FDX-Eq-0Ab"/>
                         <outlet property="groupTableView" destination="vIb-fh-n82" id="kuE-h1-I50"/>

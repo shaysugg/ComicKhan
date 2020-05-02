@@ -98,13 +98,47 @@ class DataServiceTests: XCTestCase {
                                 imageNames: ["01" , "02"],
                                 thumbnailNames: ["01" , "02"],
                                 to: nil)
+        try! dataService.addNewComic(name: "Black Widow",
+                                     imageNames: ["01" , "02"],
+                                     thumbnailNames: ["01" , "02"],
+                                     to: nil)
+        try! dataService.addNewComic(name: "Hulk",
+                                     imageNames: ["01" , "02"],
+                                     thumbnailNames: ["01" , "02"],
+                                     to: nil)
+        
         let req = NSFetchRequest<Comic>(entityName: "Comic")
-        let predicate = NSPredicate(format: "%K == %@", #keyPath(Comic.name) , "Capitan America")
+        let predicate = NSPredicate(format: "%K IN %@", #keyPath(Comic.name) , ["Capitan America", "Hulk", "Black Widow"])
         req.predicate = predicate
         
         let comics = try! mockManagedContext.fetch(req)
-        XCTAssertTrue(comics.first!.ofComicGroup!.isForNewComics)
+        
+        XCTAssertEqual(comics.count, 3)
+        
+        XCTAssertEqual(comics[0].ofComicGroup?.name, comics[1].ofComicGroup?.name)
+        XCTAssertEqual(comics[1].ofComicGroup?.name, comics[2].ofComicGroup?.name)
+        XCTAssertEqual(comics[0].ofComicGroup?.name, comics[2].ofComicGroup?.name)
     }
+    
+    func testAddingNewGroup() {
+        let frc = try! dataService.configureFetchResultController()
+        try! dataService.createANewComicGroup(name: "new new", comics: [fakeComics[0] , fakeComics[1]])
+        
+        printComics()
+        try! frc.performFetch()
+        XCTAssertEqual(frc.sections?.count, 4)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

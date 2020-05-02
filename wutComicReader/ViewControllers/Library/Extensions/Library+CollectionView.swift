@@ -37,7 +37,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "BookHeader", for: indexPath) as! LibraryReusableView
         let firstSectionComic = fetchResultController.sections?[indexPath.section].objects?.first as? Comic
-        header.headerLabel.text = firstSectionComic?.ofComicGroup?.name
+        header.headerLabel.text = firstSectionComic?.ofComicGroup?.name 
         header.isEditing = editingMode
         header.indexSet = indexPath.section
         return header

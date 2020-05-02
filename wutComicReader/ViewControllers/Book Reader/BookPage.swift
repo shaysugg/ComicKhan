@@ -81,7 +81,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 
         pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
         pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
@@ -97,7 +97,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-//        scrollView.delegate = nil
+
         pageImageView1.image = UIImage()
         pageImageView2.image = UIImage()
     }
