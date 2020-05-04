@@ -51,23 +51,46 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let selectedComic = fetchResultController.object(at: indexPath)
-//        let selectedCell = collectionView.cellForItem(at: indexPath)!
         
+        
+        let selectedComic = fetchResultController.object(at: indexPath)
+
+
         if editingMode {
             if !selectedComics.contains(selectedComic) {
                 selectedComics.append(selectedComic)
                 selectedComicsIndexPaths.append(indexPath)
-                
+
             }
         }else{
+//
+            addLoadingView()
+//
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
             readerVC.comic = selectedComic
             readerVC.dataService = dataService
             readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
-            present(readerVC, animated: true)
+            
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                
+                readerVC.createSingleBookImages()
+                readerVC.createDoubleBookImages()
+                readerVC.initSinglePageThumbnails()
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.present(readerVC, animated: true, completion: { [weak self] in
+
+                        self?.removeLoadingView()
+                    })
+                }
+            }
+//
+            
+            
+           
             
         }
     }
@@ -119,6 +142,32 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         cellFullSizeView.removeFromSuperview()
         NSLayoutConstraint.deactivate(cellFullSizeConstraint)
         cellFullSizeConstraint.removeAll()
+    }
+    
+    fileprivate func addLoadingView() {
+        
+        let loadingView = LoadingView()
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.tag = 110
+        loadingView.isHidden = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            
+            self.bookCollectionView.addSubview(loadingView)
+            loadingView.centerXAnchor.constraint(equalTo: self.bookCollectionView.centerXAnchor).isActive = true
+            loadingView.centerYAnchor.constraint(equalTo: self.bookCollectionView.centerYAnchor).isActive = true
+            loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+        
+        
+        
+    }
+    
+    fileprivate func removeLoadingView() {
+        let view = bookCollectionView.viewWithTag(110)
+        view?.isHidden = true
+        view?.removeFromSuperview()
     }
     
 }

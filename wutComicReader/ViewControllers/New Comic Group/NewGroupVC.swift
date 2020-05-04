@@ -89,10 +89,12 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath)
         let label = cell.viewWithTag(101) as! UILabel
+        let imageView = cell.viewWithTag(102) as! UIImageView
+        
         label.text = groups[indexPath.row].name
         let image = UIImage(named: "addToGroup")?.withRenderingMode(.alwaysTemplate)
-        let imageView = cell.viewWithTag(102) as! UIImageView
         imageView.image = image
+        
         return cell
     }
     

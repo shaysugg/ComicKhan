@@ -19,12 +19,14 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
                 blockOperations.append(BlockOperation(block: { [weak self] in
                     self?.bookCollectionView.insertItems(at: [index])
                 }))
+                print("***********FRC  Item Insert")
             }
         case .delete:
             if let index = indexPath {
                 blockOperations.append(BlockOperation(block: { [weak self] in
                     self?.bookCollectionView.deleteItems(at: [index])
                 }))
+                 print("***********FRC  Item Delete")
             }
         case .update:
             if let updatatdComic = anObject as? Comic,
@@ -33,7 +35,7 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
                     let cell = self?.bookCollectionView.cellForItem(at: index) as? LibraryCell
                     cell?.book = updatatdComic
                 }))
-                    
+                   print("***********FRC  Item Update")
             }
         case .move:
             if let index = indexPath,
@@ -42,6 +44,7 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
                     self?.bookCollectionView.deleteItems(at: [index])
                     self?.bookCollectionView.insertItems(at: [newIndex])
                 }))
+                print("***********FRC  Item Move")
             }
         default:
             break
@@ -70,19 +73,22 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
                 blockOperations.append(BlockOperation(block: { [weak self] in
                     self?.bookCollectionView.insertSections(indexSet)
                 }))
-            
+             print("------FRC Section Insert")
         case .delete:
             blockOperations.append(BlockOperation(block: { [weak self] in
                 self?.bookCollectionView.deleteSections(indexSet)
             }))
+             print("------FRC Section  Delete")
         case .move:
             blockOperations.append(BlockOperation(block: { [weak self] in
                 self?.bookCollectionView.reloadData()
             }))
+            print("------FRC  Section Move")
         case .update:
             blockOperations.append(BlockOperation(block: { [weak self] in
                 self?.bookCollectionView.reloadSections(indexSet)
             }))
+            print("------FRC  Section Update")
             
         default:
             break

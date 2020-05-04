@@ -31,7 +31,7 @@ class LibraryVC: UIViewController {
     var editingMode = false {
         didSet{
             updateNavBarWhenEditingChanged()
-            refreshButton.isEnabled = !editingMode
+//            refreshButton.isEnabled = !editingMode
         }
         
     }
@@ -48,7 +48,7 @@ class LibraryVC: UIViewController {
     
     
     @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet var refreshButton: UIBarButtonItem!
+//    @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet weak var bottomBar: UIToolbar!
     @IBOutlet weak var infoButton: UIBarButtonItem!
     @IBOutlet var groupBarButton: UIBarButtonItem!
@@ -247,7 +247,7 @@ class LibraryVC: UIViewController {
                 do{
                 self?.comicExtractor.extractUserComicsIntoComicDiractory()
                 try self?.appfileManager.writeNewComicsOnCoreData()
-                    try? self?.fetchResultController.performFetch()
+                    
                     for newfile in newfiles {
                         try? FileManager.default.removeItem(at: newfile)
                     }
@@ -278,30 +278,39 @@ class LibraryVC: UIViewController {
     
     
     //MARK:- actions
-    
-    @IBAction func refreshButtonTapped(_ sender: Any) {
-        let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
-            //if app got killed in background
-            if let name = self?.comicNameThatExtracting {
-                do {
-                try self?.dataService.deleteComicFromCoreData(withName: name)
-                try self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
-                }catch {
-                    #warning("error handeling")
-                }
-            }
-        })
-        syncComics { [weak self] in
-            
-            self?.refreshButton.image = UIImage(named: "refresh")
-         
-            if taskID != UIBackgroundTaskIdentifier.invalid {
-                UIApplication.shared.endBackgroundTask(taskID)
-            }
-        }
+    @IBAction func addComicsButtonTapped(_ sender: Any) {
+        let documentVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
+        documentVC.allowsMultipleSelection = true
+        documentVC.delegate = self
+        
+        present(documentVC, animated: true, completion: nil)
         
         
     }
+    
+//    @IBAction func refreshButtonTapped(_ sender: Any) {
+//        let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
+//            //if app got killed in background
+//            if let name = self?.comicNameThatExtracting {
+//                do {
+//                try self?.dataService.deleteComicFromCoreData(withName: name)
+//                try self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
+//                }catch {
+//                    #warning("error handeling")
+//                }
+//            }
+//        })
+//        syncComics { [weak self] in
+//
+//            self?.refreshButton.image = UIImage(named: "refresh")
+//
+//            if taskID != UIBackgroundTaskIdentifier.invalid {
+//                UIApplication.shared.endBackgroundTask(taskID)
+//            }
+//        }
+//
+//
+//    }
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
         for comic in selectedComics{
@@ -386,27 +395,27 @@ class LibraryVC: UIViewController {
     
     //MARK:- file functions
     
-    func refreshUIIfNewComicAdded() {
-        if appfileManager.didUserDiractoryChanged() && progressContainer.isHidden {
-        refreshButton.image = UIImage(named: "refreshHighlited")?.withRenderingMode(.alwaysOriginal)
-        }
-    }
+//    func refreshUIIfNewComicAdded() {
+//        if appfileManager.didUserDiractoryChanged() && progressContainer.isHidden {
+//        refreshButton.image = UIImage(named: "refreshHighlited")?.withRenderingMode(.alwaysOriginal)
+//        }
+//    }
     
-    func syncComics(completed: @escaping ()->()) {
-        DispatchQueue.global(qos: .background).async {
-            do{
-            self.comicExtractor.extractUserComicsIntoComicDiractory()
-            try self.appfileManager.writeNewComicsOnCoreData()
-            self.appfileManager.syncRemovedComicsInUserDiracory()
-            DispatchQueue.main.async {
-                completed()
-                
-            }
-            }catch{
-                self.showAlert(with: "OH!", description: "there was a problem with your comic file Extraction, please try again.")
-            }
-        }
-    }
+//    func syncComics(completed: @escaping ()->()) {
+//        DispatchQueue.global(qos: .background).async {
+//            do{
+//            self.comicExtractor.extractUserComicsIntoComicDiractory()
+//            try self.appfileManager.writeNewComicsOnCoreData()
+//            self.appfileManager.syncRemovedComicsInUserDiracory()
+//            DispatchQueue.main.async {
+//                completed()
+//                
+//            }
+//            }catch{
+//                self.showAlert(with: "OH!", description: "there was a problem with your comic file Extraction, please try again.")
+//            }
+//        }
+//    }
     
     @objc private func newGroupVCAddedANewGroup() {
         selectedComics.removeAll()

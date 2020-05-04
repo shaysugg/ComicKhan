@@ -92,8 +92,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
 
         updateMinZoomScaleForSize(view.bounds.size)
         centerTheImage()
-        
-        print("APPEARDE page num : \(image1?.pageNumber)")
 
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()

@@ -112,51 +112,64 @@ class AppFileManager {
     //if they don't (that means user deleted them manually)
     //then remove them from comic diractory too
        
-    func syncRemovedComicsInUserDiracory() {
-        
-        guard let filePaths = fileManager.subpaths(atPath: userDiractory.path) else { return }
-
-        var userDiractoryfilePaths: [String] = filePaths.map({ path in
-                // removing super diractory of file with finding if it has slash index
-                if path.contains("/") {
-                    let slashIndex = path.index(path.lastIndex(of: "/")!, offsetBy: 1)
-                    let endIndex = path.index(path.endIndex, offsetBy: -3)
-                    return path.substring(with: slashIndex..<endIndex)
-                }else{
-                    //removing format with drop 4 characters in path
-                    return String(path.dropLast(4))
-                }
-            })
-            
-        
-        let comicDiractoriesPaths = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
-        
-        
-        for path in comicDiractoriesPaths ?? [] {
-            let comicName = makeComicNameFromPath(path: path)
-            if !userDiractoryfilePaths.contains(String(comicName.dropLast(0))){
-//                deleteComicFromCoreData(withName: comicName)
-                do {
-                    try deleteFileInTheAppDiractory(withName: comicName)
-                }catch {
-                    print("delete file error")
-                }
+//    func syncRemovedComicsInUserDiracory() {
+//
+//        guard let filePaths = fileManager.subpaths(atPath: userDiractory.path) else { return }
+//
+//        var userDiractoryfilePaths: [String] = filePaths.map({ path in
+//                // removing super diractory of file with finding if it has slash index
+//                if path.contains("/") {
+//                    let slashIndex = path.index(path.lastIndex(of: "/")!, offsetBy: 1)
+//                    let endIndex = path.index(path.endIndex, offsetBy: -3)
+//                    return path.substring(with: slashIndex..<endIndex)
+//                }else{
+//                    //removing format with drop 4 characters in path
+//                    return String(path.dropLast(4))
+//                }
+//            })
+//
+//
+//        let comicDiractoriesPaths = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
+//
+//
+//        for path in comicDiractoriesPaths ?? [] {
+//            let comicName = makeComicNameFromPath(path: path)
+//            if !userDiractoryfilePaths.contains(String(comicName.dropLast(0))){
+////                deleteComicFromCoreData(withName: comicName)
+//                do {
+//                    try deleteFileInTheAppDiractory(withName: comicName)
+//                }catch {
+//                    print("delete file error")
+//                }
+//            }
+//        }
+//    }
+    
+    func moveFilesToUserDiractory(urls: [URL]) throws {
+        do {
+            for url in urls {
+                let comicName = makeComicNameFromPath(path: url.path)
+                
+                try fileManager.moveItem(at: url, to: URL.userDiractory.appendingPathComponent(comicName))
+                
             }
+        }catch let err {
+            throw err
         }
     }
     
-    func didUserDiractoryChanged() -> Bool{
-        let userFilePaths = FileManager.default.subpaths(atPath: userDiractory.path)
-        let userComicPaths = filterFilesWithAcceptedFormat(infilePaths: userFilePaths)
-        
-        do {
-            let documentComics = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            return userComicPaths.count > documentComics.count
-        }catch{
-            return false
-        }
-        
-    }
+//    func didUserDiractoryChanged() -> Bool{
+//        let userFilePaths = FileManager.default.subpaths(atPath: userDiractory.path)
+//        let userComicPaths = filterFilesWithAcceptedFormat(infilePaths: userFilePaths)
+//
+//        do {
+//            let documentComics = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+//            return userComicPaths.count > documentComics.count
+//        }catch{
+//            return false
+//        }
+//
+//    }
     
     //MARK:- private Functions
     

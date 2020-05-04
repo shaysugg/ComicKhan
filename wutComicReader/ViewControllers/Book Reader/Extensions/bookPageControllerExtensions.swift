@@ -22,8 +22,8 @@ extension BookReaderVC {
         addChild(bookPageViewController)
         view.addSubview(bookPageViewController.view)
         
-        createSingleBookImages()
-        createDoubleBookImages()
+//        createSingleBookImages()
+//        createDoubleBookImages()
         setPageViewControllers()
     }
     
@@ -168,8 +168,9 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         if completed {
-            if let currentPage = pageViewController.viewControllers?.first as? BookPage {
-                setLastViewedPage(toPageWithNumber: currentPage.image1!.pageNumber!, withAnimate: true)
+            if let currentPage = pageViewController.viewControllers?.first as? BookPage,
+                let pageNumber = currentPage.image1?.pageNumber{
+                setLastViewedPage(toPageWithNumber: pageNumber, withAnimate: true)
             }
             
         }

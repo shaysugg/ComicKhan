@@ -218,6 +218,140 @@
             </objects>
             <point key="canvasLocation" x="2865.217391304348" y="110.49107142857143"/>
         </scene>
+        <!--Add New ComicVC-->
+        <scene sceneID="nbu-kc-2Ua">
+            <objects>
+                <viewController storyboardIdentifier="AddNewComicVC" id="fy0-uh-WmQ" customClass="AddNewComicVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZGU-dK-4Ij">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="8ub-kk-nzQ">
+                                <rect key="frame" x="15" y="89" width="384" height="773"/>
+                                <subviews>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIJ-V1-IUz">
+                                        <rect key="frame" x="0.0" y="0.0" width="384" height="40"/>
+                                        <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="kTH-Wc-ZhX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" title="Just add them to library">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="justAddThemToLibraryTapped:" destination="fy0-uh-WmQ" eventType="touchUpInside" id="fsd-ne-XnY"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jCG-7K-S8t">
+                                        <rect key="frame" x="0.0" y="73" width="384" height="134"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or create a comic group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBy-f7-Uq2">
+                                                <rect key="frame" x="0.0" y="0.0" width="384" height="18"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New group name ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gt4-1H-y6I">
+                                                <rect key="frame" x="0.0" y="26" width="384" height="60"/>
+                                                <color key="backgroundColor" systemColor="tertiarySystemFillColor" red="0.46274509800000002" green="0.46274509800000002" blue="0.50196078430000002" alpha="0.12" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="Ils-i8-pwn"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            </textField>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3E-nq-YDh">
+                                                <rect key="frame" x="0.0" y="94" width="384" height="40"/>
+                                                <color key="backgroundColor" name="appBlueColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="aVQ-Gi-0cm"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <state key="normal" title="Add them to a new group">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addThemToNewGroupTapped:" destination="fy0-uh-WmQ" eventType="touchUpInside" id="lzg-jD-xep"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cJx-HU-rYn">
+                                        <rect key="frame" x="0.0" y="240" width="384" height="533"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or add them to an existed comic group:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRF-9L-R0N">
+                                                <rect key="frame" x="0.0" y="0.0" width="384" height="18"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W0d-SW-f5G">
+                                                <rect key="frame" x="0.0" y="28" width="384" height="505"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" tag="100" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="groupCell" rowHeight="49" id="A2X-pZ-1nA">
+                                                        <rect key="frame" x="0.0" y="28" width="384" height="49"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A2X-pZ-1nA" id="fkO-UP-stH">
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="49"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Batman" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4v-hQ-H3N">
+                                                                    <rect key="frame" x="20" y="14.666666666666664" width="313.66666666666669" height="20"/>
+                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addToGroup" translatesAutoresizingMaskIntoConstraints="NO" id="H5S-CB-tBX">
+                                                                    <rect key="frame" x="344" y="14.666666666666664" width="20" height="20"/>
+                                                                    <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="20" id="7jy-ta-S5O"/>
+                                                                        <constraint firstAttribute="width" constant="20" id="uKc-AO-WXL"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="V4v-hQ-H3N" firstAttribute="leading" secondItem="fkO-UP-stH" secondAttribute="leadingMargin" id="AwN-s7-wHK"/>
+                                                                <constraint firstItem="V4v-hQ-H3N" firstAttribute="centerY" secondItem="fkO-UP-stH" secondAttribute="centerY" id="G8D-rt-tiN"/>
+                                                                <constraint firstItem="H5S-CB-tBX" firstAttribute="leading" secondItem="V4v-hQ-H3N" secondAttribute="trailing" constant="10.33" id="ccu-QJ-dND"/>
+                                                                <constraint firstItem="H5S-CB-tBX" firstAttribute="trailing" secondItem="fkO-UP-stH" secondAttribute="trailingMargin" id="db5-Le-29K"/>
+                                                                <constraint firstItem="H5S-CB-tBX" firstAttribute="centerY" secondItem="fkO-UP-stH" secondAttribute="centerY" id="i4l-xv-plu"/>
+                                                            </constraints>
+                                                        </tableViewCellContentView>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="8ub-kk-nzQ" firstAttribute="leading" secondItem="6BL-Ti-OUP" secondAttribute="leading" constant="15" id="iB3-92-zKX"/>
+                            <constraint firstItem="6BL-Ti-OUP" firstAttribute="trailing" secondItem="8ub-kk-nzQ" secondAttribute="trailing" constant="15" id="kel-aa-di5"/>
+                            <constraint firstItem="8ub-kk-nzQ" firstAttribute="top" secondItem="6BL-Ti-OUP" secondAttribute="top" constant="45" id="pTd-xK-W66"/>
+                            <constraint firstItem="6BL-Ti-OUP" firstAttribute="bottom" secondItem="8ub-kk-nzQ" secondAttribute="bottom" id="z2J-4w-OCA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6BL-Ti-OUP"/>
+                    </view>
+                    <connections>
+                        <outlet property="addThemToLibraryButton" destination="MIJ-V1-IUz" id="RsD-gT-fpq"/>
+                        <outlet property="addThemtoNewGroupButton" destination="v3E-nq-YDh" id="paw-7f-c52"/>
+                        <outlet property="groupNameTextField" destination="Gt4-1H-y6I" id="wJG-i0-qN6"/>
+                        <outlet property="groupTableView" destination="W0d-SW-f5G" id="ome-vR-NQj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bmr-AD-x8z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1037.68115942029" y="-600"/>
+        </scene>
         <!--LibraryVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -353,10 +487,10 @@
                             </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
-                            <barButtonItem image="refresh" id="WTB-XT-6c4">
+                            <barButtonItem title="Item" image="plus.circle.fill" catalog="system" id="kRw-e4-QWk">
                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
-                                    <action selector="refreshButtonTapped:" destination="BYZ-38-t0r" id="Tdp-VX-sAh"/>
+                                    <action selector="addComicsButtonTapped:" destination="BYZ-38-t0r" id="D4g-QN-mJh"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Edit" id="cal-73-qjM">
@@ -374,7 +508,6 @@
                         <outlet property="groupBarButton" destination="4Gm-Z8-lu9" id="uAY-o7-Ykm"/>
                         <outlet property="infoButton" destination="ElE-LV-kBR" id="3Rm-G5-Z7e"/>
                         <outlet property="navItem" destination="BQr-Q8-lCA" id="aOv-Ze-6AE"/>
-                        <outlet property="refreshButton" destination="WTB-XT-6c4" id="z0f-m4-JZw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -712,8 +845,8 @@
         <image name="howto" width="896.5" height="300"/>
         <image name="howtomob" width="634.5" height="300"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus.square.fill.on.square.fill" catalog="system" width="128" height="113"/>
-        <image name="refresh" width="30" height="30"/>
         <image name="selected" width="37.5" height="37.5"/>
         <image name="trash.fill" catalog="system" width="121" height="128"/>
         <image name="twitter" width="50" height="50"/>

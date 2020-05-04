@@ -14,7 +14,7 @@ class LibraryCell: UICollectionViewCell {
     
     var book : Comic? {
         didSet{
-            #warning("line below would crash if comic has no pages!")
+            
             guard let imageName = book?.imageNames?.first else { return }
             
             let cover = ComicImage(book, withImageName: imageName)

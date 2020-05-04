@@ -108,7 +108,7 @@ class BookReaderVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPageController()
-        initSinglePageThumbnails()
+//        initSinglePageThumbnails()
         
         disappearMenus(animated: false)
         

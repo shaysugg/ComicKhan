@@ -55,7 +55,7 @@ extension LibraryVC {
     
      func makeBarButtons(hidden: Bool) {
         infoButton.isEnabled = !hidden
-        refreshButton.isEnabled = !hidden
+//        refreshButton.isEnabled = !hidden
         editBarButton.isEnabled = !hidden
     }
     
