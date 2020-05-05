@@ -261,8 +261,8 @@ class LibraryVC: UIViewController {
            for sectionNumber in 0 ..< bookCollectionView.numberOfSections {
                for rowNumbers in 0 ..< bookCollectionView.numberOfItems(inSection: sectionNumber) {
                    
-                   let cell = bookCollectionView.cellForItem(at: IndexPath(row: rowNumbers, section: sectionNumber)) as! LibraryCell
-                   cell.isInEditingMode = editingMode
+                   let cell = bookCollectionView.cellForItem(at: IndexPath(row: rowNumbers, section: sectionNumber)) as? LibraryCell
+                   cell?.isInEditingMode = editingMode
 //                   cell.layoutSubviews()
                }
            }

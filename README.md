@@ -3,7 +3,7 @@
 
 ![Image](images/mock.jpg?)
 
-ComicKhan is an app that helps you to read .cbz .cbr files with your iPhone and iPad.
+ComicKhan is an app that helps you to read .cbz .cbr files on your iPhone and iPad.
 
 # Features
 * Auto detect new comic files in the app document directory and extract them and showing their extraction progress
@@ -17,6 +17,6 @@ ComicKhan is an app that helps you to read .cbz .cbr files with your iPhone and 
 
 Thanks to [GianniCarlo](https://github.com/GianniCarlo/DirectoryWatcher) for directory watcher.
 
-Thanks to [abbeycode](https://github.com/abbeycode/UnrarKit) and [marmelroy](https://github.com/marmelroy/Zip) for extraction compressed files. 
+Thanks to [abbeycode](https://github.com/abbeycode/UnrarKit) and [marmelroy](https://github.com/marmelroy/Zip) for compressed files extraction. 
 
 Thanks to [BilekUI](https://twitter.com/BilekUI) for the app icons and [icone8](https://icons8.com) for illustrations.
