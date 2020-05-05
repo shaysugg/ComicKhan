@@ -15,11 +15,12 @@ class LibraryCell: UICollectionViewCell {
     var book : Comic? {
         didSet{
             
-            guard let imageName = book?.imageNames?.first else { return }
+            guard let imageName = book?.thumbnailNames?.first else { return }
             
             let cover = ComicImage(book, withImageName: imageName)
-            bookCoverImageView.image = imageResizer.resize(UIImage(contentsOfFile: cover.path) ,
-                                                           to: CGSize(width: 300, height: 450))
+//            bookCoverImageView.image = imageResizer.resize(UIImage(contentsOfFile: cover.path) ,
+//                                                           to: CGSize(width: 300, height: 450))
+            bookCoverImageView.image = UIImage(contentsOfFile: cover.path)
             updateProgressValue()
         }
     }
@@ -27,7 +28,9 @@ class LibraryCell: UICollectionViewCell {
     var isInEditingMode: Bool = false {
         didSet{
             selectionImageView.isHidden = !isInEditingMode
-            readProgressView.isHidden = isInEditingMode
+            if book?.lastVisitedPage != 0 {
+                readProgressView.isHidden = isInEditingMode
+            }
         }
     }
     

@@ -32,7 +32,9 @@ class TopBar: UIView {
     private lazy var dismissButton : UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
-        button.setImage( UIImage(named: "dismiss") , for: .normal)
+        let img = #imageLiteral(resourceName: "ic-actions-close").withRenderingMode(.alwaysTemplate)
+        button.setImage(img, for: .normal)
+        button.tintColor = .appSeconedlabelColor
         button.addTarget(self, action: #selector(closeTheVC), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -87,16 +89,22 @@ class TopBar: UIView {
             gradient.frame = bounds
             layer.insertSublayer(gradient, at: 0)
             
-            dismissButton.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            dismissButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3).translatedBy(x: 8, y: 0)
+            dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.8, radius: 1)
+            dismissButton.tintColor = .white
+            
             titleLabel.textColor = .white
             titleLabel.makeDropShadow(shadowOffset: .zero, opacity: 0.8, radius: 1)
         }else{
             gradient.removeFromSuperlayer()
             backgroundColor = .appSystemBackground
-            dismissButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+            
+            dismissButton.transform = CGAffineTransform(scaleX: 1, y: 1).translatedBy(x: 0, y: 0)
+            dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.0, radius: 1)
+            dismissButton.tintColor = .appSeconedlabelColor
+            
             titleLabel.textColor = .appMainLabelColor
             titleLabel.makeDropShadow(shadowOffset: .zero, opacity: 0.0, radius: 1)
-
             
         }
         layoutIfNeeded()

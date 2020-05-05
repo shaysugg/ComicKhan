@@ -64,7 +64,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             }
         }else{
 //
-            addLoadingView()
+            
 //
             collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
@@ -73,6 +73,9 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
             
+            if (selectedComic.imageNames?.count ?? 0) > 80 {
+                addLoadingView()
+            }
             
             DispatchQueue.global(qos: .userInitiated).async {
                 
@@ -151,16 +154,11 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         loadingView.tag = 110
         loadingView.isHidden = false
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            
-            self.bookCollectionView.addSubview(loadingView)
-            loadingView.centerXAnchor.constraint(equalTo: self.bookCollectionView.centerXAnchor).isActive = true
-            loadingView.centerYAnchor.constraint(equalTo: self.bookCollectionView.centerYAnchor).isActive = true
-            loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        }
-        
-        
+        bookCollectionView.addSubview(loadingView)
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loadingView.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
     }
     

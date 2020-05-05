@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Comic" representedClassName=".Comic" syncable="YES" codeGenerationType="class">
+        <attribute name="groupName" attributeType="String" defaultValueString="New Comics"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageNames" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
         <attribute name="lastVisitedPage" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
@@ -15,7 +16,7 @@
         <relationship name="comics" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Comic" inverseName="ofComicGroup" inverseEntity="Comic"/>
     </entity>
     <elements>
-        <element name="Comic" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Comic" positionX="-63" positionY="-18" width="128" height="148"/>
         <element name="ComicGroup" positionX="-54" positionY="18" width="128" height="103"/>
     </elements>
 </model>

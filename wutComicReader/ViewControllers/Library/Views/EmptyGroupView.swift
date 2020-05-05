@@ -26,8 +26,25 @@ class EmptyGroupView: UIView {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "Looks like you don’t have any comics here at this moment ..."
-        label.font = UIFont(name: HelvetincaNeueFont.light.name, size: 18)
+        
+        let attributedString = NSMutableAttributedString(string: "Go ahead and import your comics using + button or import them to application directory with iTunes.")
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 1.5
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
+        label.attributedText = attributedString
+        
+        label.font = UIFont(name: HelvetincaNeueFont.light.name, size: 15)
+        label.textColor = .appSeconedlabelColor
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Your Library is Empty ..."
+        label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 18)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -58,16 +75,21 @@ class EmptyGroupView: UIView {
         imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         
-        addSubview(label)
-        label.leftAnchor.constraint(equalTo: leftAnchor , constant: 15).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor , constant: -15).isActive = true
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
+        addSubview(titleLabel)
+        titleLabel.leftAnchor.constraint(equalTo: leftAnchor , constant: 20).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: rightAnchor , constant: -20).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
         
-        addSubview(howToButton)
-        howToButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
-        howToButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        howToButton.widthAnchor.constraint(equalToConstant: 230).isActive = true
-        howToButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        addSubview(label)
+        label.leftAnchor.constraint(equalTo: leftAnchor , constant: 20).isActive = true
+        label.rightAnchor.constraint(equalTo: rightAnchor , constant: -20).isActive = true
+        label.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
+        
+//        addSubview(howToButton)
+//        howToButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
+//        howToButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        howToButton.widthAnchor.constraint(equalToConstant: 230).isActive = true
+//        howToButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         
     }

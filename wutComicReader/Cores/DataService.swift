@@ -22,12 +22,12 @@ class DataService {
         let fetchRequest = NSFetchRequest<Comic>(entityName: "Comic")
         
         let basedOnIsInNewComicGroup = NSSortDescriptor(key: #keyPath(Comic.ofComicGroup.isForNewComics), ascending: false)
-        let basedOnComicGroupName = NSSortDescriptor(key: #keyPath(Comic.ofComicGroup.name), ascending: true)
+        let basedOnComicGroupName = NSSortDescriptor(key: #keyPath(Comic.groupName), ascending: true)
         let basedOnName = NSSortDescriptor(key: #keyPath(Comic.name), ascending: true)
         
         fetchRequest.sortDescriptors = [basedOnIsInNewComicGroup, basedOnComicGroupName , basedOnName]
         
-        comicFetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: #keyPath(Comic.ofComicGroup.name), cacheName: nil)
+        comicFetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: #keyPath(Comic.groupName), cacheName: nil)
         
         do {
             try comicFetchResultController?.performFetch()
@@ -78,6 +78,10 @@ class DataService {
         
         if let _ = comics {
             newComicGroup.addToComics(NSOrderedSet(array: comics!))
+            
+            for comic in comics! {
+                comic.groupName = name
+            }
         }
         
         do {
@@ -106,6 +110,10 @@ class DataService {
     func changeGroupOf(comics: [Comic], to group: ComicGroup) throws {
         let set = NSOrderedSet(array: comics)
         group.addToComics(set)
+        
+        for comic in comics {
+            comic.groupName = group.name
+        }
         
         do{
             try managedContext.save()
@@ -148,8 +156,10 @@ class DataService {
             comic.thumbnailNames = thumbnailNames
             if let group = comicGroup {
                 group.addToComics(comic)
+                comic.groupName = group.name
             }else{
                 groupForNewComics?.addToComics(comic)
+                comic.groupName = groupForNewComics?.name
             }
             
             try managedContext.save()

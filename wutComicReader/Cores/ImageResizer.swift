@@ -31,10 +31,17 @@ class ImageResizer {
         for path in paths {
            
             if let image = UIImage(contentsOfFile: path) {
+                
                 let isImageisDoubleSplash = image.size.width > image.size.height
+                if count == 0 {
                 resize(image,
                        withName: imageName(fromPath: path),
-                       withSize: CGSize(width: (isImageisDoubleSplash ? 200 : 100), height: 150))
+                       withSize: CGSize(width: (isImageisDoubleSplash ? 600 : 300), height: 450))
+                }else{
+                    resize(image,
+                    withName: imageName(fromPath: path),
+                    withSize: CGSize(width: (isImageisDoubleSplash ? 200 : 100), height: 150))
+                }
                 count += 1
                 progress(count / Double(paths.count))
             }

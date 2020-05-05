@@ -28,13 +28,7 @@ class LibraryVC: UIViewController {
     
     
     
-    var editingMode = false {
-        didSet{
-            updateNavBarWhenEditingChanged()
-//            refreshButton.isEnabled = !editingMode
-        }
-        
-    }
+    var editingMode = false 
     
     var selectedComics : [Comic] = [] {
         didSet{
@@ -51,6 +45,7 @@ class LibraryVC: UIViewController {
 //    @IBOutlet var refreshButton: UIBarButtonItem!
     @IBOutlet weak var bottomBar: UIToolbar!
     @IBOutlet weak var infoButton: UIBarButtonItem!
+    @IBOutlet weak var addComicsButton: UIBarButtonItem!
     @IBOutlet var groupBarButton: UIBarButtonItem!
     @IBOutlet var deleteBarButton: UIBarButtonItem!
     @IBOutlet weak var bookCollectionView: UICollectionView!
@@ -91,7 +86,10 @@ class LibraryVC: UIViewController {
     }()
     var cellFullSizeConstraint = [NSLayoutConstraint]()
     
-    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     
     
     //MARK:- Functions
@@ -139,7 +137,7 @@ class LibraryVC: UIViewController {
         emptyGroupsView.delegate = self
         bookCollectionView.allowsMultipleSelection = true
          
-        navigationItem.setLeftBarButtonItems([infoButton], animated: true)
+        navigationItem.setRightBarButtonItems([infoButton], animated: true)
         
         NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
@@ -167,13 +165,25 @@ class LibraryVC: UIViewController {
         
         groupBarButton.isEnabled = false
         deleteBarButton.isEnabled = false
-        navigationItem.leftBarButtonItems = nil
+        navigationItem.rightBarButtonItem = nil
         
         makeCustomNavigationBar()
         setUpProgressBarDesign()
         designEmptyView()
         bookCollectionView.backgroundColor = .appSystemBackground
         view.backgroundColor = .appSystemBackground
+        
+        let infoImage = #imageLiteral(resourceName: "ic-actions-more-2").withRenderingMode(.alwaysTemplate)
+        infoButton.image = infoImage
+        
+        let addComicsImage = #imageLiteral(resourceName: "ic-actions-add").withRenderingMode(.alwaysTemplate)
+        addComicsButton.image = addComicsImage
+        
+        let deleteImage = #imageLiteral(resourceName: "ic-actions-trash").withRenderingMode(.alwaysTemplate)
+        deleteBarButton.image = deleteImage
+        
+        let groupImage = #imageLiteral(resourceName: "ic-actions-add-file").withRenderingMode(.alwaysTemplate)
+        groupBarButton.image = groupImage
     }
     
     
@@ -190,34 +200,7 @@ class LibraryVC: UIViewController {
         
     }
     
-    func configureCellSize(basedOn traitcollection: UITraitCollection) {
-        let h = traitCollection.horizontalSizeClass
-        let v = traitCollection.verticalSizeClass
-        
-        let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
-        let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
-        
-        var collectionViewCellWidth: CGFloat {
-            if h == .regular && v == .compact {
-                return larg / 8
-            }else if h == .compact && v == .regular {
-                return short / 4
-            }else if h == .compact && v == .compact {
-                return larg / 6
-            }else {
-                return larg / 9
-            }
-        }
-        
-        collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.7)
-    }
     
-    @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
-        guard let indexPath = notification.object as? IndexPath else { return }
-        let cell = bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
-        cell?.updateProgressValue()
-        
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -271,10 +254,48 @@ class LibraryVC: UIViewController {
     
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
+        
+    //MARK:- Collection View Functions
+    
+    func updateCollectionViewCellsForEditing() {
+           for sectionNumber in 0 ..< bookCollectionView.numberOfSections {
+               for rowNumbers in 0 ..< bookCollectionView.numberOfItems(inSection: sectionNumber) {
+                   
+                   let cell = bookCollectionView.cellForItem(at: IndexPath(row: rowNumbers, section: sectionNumber)) as! LibraryCell
+                   cell.isInEditingMode = editingMode
+//                   cell.layoutSubviews()
+               }
+           }
+       }
+    
+    func configureCellSize(basedOn traitcollection: UITraitCollection) {
+        let h = traitCollection.horizontalSizeClass
+        let v = traitCollection.verticalSizeClass
+        
+        let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
+        let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
+        
+        var collectionViewCellWidth: CGFloat {
+            if h == .regular && v == .compact {
+                return larg / 8
+            }else if h == .compact && v == .regular {
+                return short / 4
+            }else if h == .compact && v == .compact {
+                return larg / 6
+            }else {
+                return larg / 9
+            }
+        }
+        
+        collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.7)
     }
     
+    @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
+        guard let indexPath = notification.object as? IndexPath else { return }
+        let cell = bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
+        cell?.updateProgressValue()
+        
+    }
     
     
     //MARK:- actions
@@ -343,7 +364,9 @@ class LibraryVC: UIViewController {
         editingMode = !editingMode
         selectedComics.removeAll()
         selectedComicsIndexPaths.removeAll()
-        bookCollectionView.reloadData()
+        updateNavBarWhenEditingChanged()
+        updateCollectionViewCellsForEditing()
+        
     }
     
     @IBAction func infoButtonTapped(_ sender: Any) {
@@ -377,13 +400,15 @@ class LibraryVC: UIViewController {
     
     func updateNavBarWhenEditingChanged() {
         if editingMode {
-            navigationItem.setLeftBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
+            navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
             infoButton.isEnabled = false
+            addComicsButton.isEnabled = false
             infoButton.tintColor = view.backgroundColor
             editBarButton.title = "Done"
         }else{
-            navigationItem.setLeftBarButtonItems([infoButton], animated: true)
+            navigationItem.setRightBarButtonItems([infoButton], animated: true)
             infoButton.isEnabled = true
+            addComicsButton.isEnabled = true
             infoButton.tintColor = .appSecondaryLabel
             editBarButton.title = "Edit"
             deleteBarButton.isEnabled = false

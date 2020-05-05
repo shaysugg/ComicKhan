@@ -467,27 +467,7 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="BQr-Q8-lCA">
                         <nil key="title"/>
                         <leftBarButtonItems>
-                            <barButtonItem title="DELETE" image="trash.fill" catalog="system" id="NVu-bz-Pkk">
-                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="DeleteBarButtonTapped:" destination="BYZ-38-t0r" id="AFL-f7-8xa"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="plus.square.fill.on.square.fill" catalog="system" id="4Gm-Z8-lu9">
-                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="groupBarButtonTapped:" destination="BYZ-38-t0r" id="PkE-TG-eyw"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem tag="100" title="Item" image="info.circle.fill" catalog="system" id="ElE-LV-kBR">
-                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="infoButtonTapped:" destination="BYZ-38-t0r" id="diy-Iw-Ufi"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
-                        <rightBarButtonItems>
-                            <barButtonItem title="Item" image="plus.circle.fill" catalog="system" id="kRw-e4-QWk">
+                            <barButtonItem title="Item" image="ic-actions-add" id="kRw-e4-QWk">
                                 <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="addComicsButtonTapped:" destination="BYZ-38-t0r" id="D4g-QN-mJh"/>
@@ -499,9 +479,30 @@
                                     <action selector="editButtonTapped:" destination="BYZ-38-t0r" id="oIz-vz-9om"/>
                                 </connections>
                             </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem tag="100" title="Item" image="ic-actions-more-2" id="ElE-LV-kBR">
+                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="infoButtonTapped:" destination="BYZ-38-t0r" id="diy-Iw-Ufi"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="ic-actions-add-file" id="4Gm-Z8-lu9">
+                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="groupBarButtonTapped:" destination="BYZ-38-t0r" id="PkE-TG-eyw"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="DELETE" image="ic-actions-trash" id="NVu-bz-Pkk">
+                                <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="DeleteBarButtonTapped:" destination="BYZ-38-t0r" id="AFL-f7-8xa"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addComicsButton" destination="kRw-e4-QWk" id="Mst-ZA-iou"/>
                         <outlet property="bookCollectionView" destination="vjD-gc-wg7" id="veE-v5-pwY"/>
                         <outlet property="deleteBarButton" destination="NVu-bz-Pkk" id="W1v-uP-bei"/>
                         <outlet property="editBarButton" destination="cal-73-qjM" id="BTy-0j-UfQ"/>
@@ -541,8 +542,8 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izj-36-CSv">
-                                                            <rect key="frame" x="3.3333333333333428" y="62.666666666666664" width="327.66666666666663" height="120.66666666666669"/>
-                                                            <string key="text">This app currently is under betta version. Some features may not work as expected. If you found an issue you can send me feedback through bellow contact informations, that would be much appreciated:)</string>
+                                                            <rect key="frame" x="0.0" y="62.666666666666664" width="334" height="120.66666666666669"/>
+                                                            <string key="text">This app currently is under beta version. Some features may not work as be expected. If you found an issue you can send me feedback through bellow contact informations, that would be much appreciated:)</string>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -591,45 +592,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="li5-tf-Ijl">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="58" id="SFd-LU-pNv">
-                                        <rect key="frame" x="20" y="353" width="374" height="58"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SFd-LU-pNv" id="eGj-gp-uXR">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How can I add comics?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0Z-MF-frE">
-                                                    <rect key="frame" x="20" y="19" width="334" height="20"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKW-OD-Sci">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
-                                                    <connections>
-                                                        <action selector="howToCellTapped:" destination="TND-Hf-hLY" eventType="touchUpInside" id="JQ1-B5-1mq"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="l0Z-MF-frE" firstAttribute="centerY" secondItem="eGj-gp-uXR" secondAttribute="centerY" id="D8l-Ca-WZu"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="l0Z-MF-frE" secondAttribute="trailing" id="Qgq-CV-gS9"/>
-                                                <constraint firstAttribute="trailing" secondItem="hKW-OD-Sci" secondAttribute="trailing" id="RXe-Cq-jRt"/>
-                                                <constraint firstItem="l0Z-MF-frE" firstAttribute="leading" secondItem="eGj-gp-uXR" secondAttribute="leadingMargin" id="cEr-Si-MJo"/>
-                                                <constraint firstItem="hKW-OD-Sci" firstAttribute="top" secondItem="eGj-gp-uXR" secondAttribute="top" id="gwy-h1-nNr"/>
-                                                <constraint firstAttribute="bottom" secondItem="hKW-OD-Sci" secondAttribute="bottom" id="sEC-Cy-MNH"/>
-                                                <constraint firstItem="hKW-OD-Sci" firstAttribute="leading" secondItem="eGj-gp-uXR" secondAttribute="leading" id="xU5-Lz-Igp"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="YTY-UR-Nwi">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="58" id="VVV-mK-7Yq">
-                                        <rect key="frame" x="20" y="447" width="374" height="58"/>
+                                        <rect key="frame" x="20" y="353" width="374" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VVV-mK-7Yq" id="ciy-t7-79T">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="58"/>
@@ -736,7 +702,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addToGroup" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-YQ-WKJ">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-actions-add-file" translatesAutoresizingMaskIntoConstraints="NO" id="5Pm-YQ-WKJ">
                                                     <rect key="frame" x="334" y="14.666666666666664" width="20" height="20"/>
                                                     <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -844,11 +810,11 @@
         <image name="email" width="50" height="50"/>
         <image name="howto" width="896.5" height="300"/>
         <image name="howtomob" width="634.5" height="300"/>
-        <image name="info.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="plus.square.fill.on.square.fill" catalog="system" width="128" height="113"/>
+        <image name="ic-actions-add" width="22" height="22"/>
+        <image name="ic-actions-add-file" width="18" height="22"/>
+        <image name="ic-actions-more-2" width="6" height="22"/>
+        <image name="ic-actions-trash" width="20" height="22"/>
         <image name="selected" width="37.5" height="37.5"/>
-        <image name="trash.fill" catalog="system" width="121" height="128"/>
         <image name="twitter" width="50" height="50"/>
         <namedColor name="appBlueColor">
             <color red="0.125" green="0.28600001335144043" blue="0.41200000047683716" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
