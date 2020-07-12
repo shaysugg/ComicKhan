@@ -42,7 +42,7 @@ class BottomBar: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.sectionInset = UIEdgeInsets(top: 6, left: 5, bottom: 6, right: 5)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ThumbnailCell.self, forCellWithReuseIdentifier: "thumbnailCell")

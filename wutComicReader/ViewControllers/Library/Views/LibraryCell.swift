@@ -43,7 +43,7 @@ class LibraryCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet{
             whiteView.alpha = isSelected ? 0.6 : 0
-            selectionImageView.image = isSelected ? #imageLiteral(resourceName: "Mask Copy") : #imageLiteral(resourceName: "selected")
+            selectionImageView.image = isSelected ? #imageLiteral(resourceName: "selected") : #imageLiteral(resourceName: "unselected")
         }
     }
     

@@ -11,12 +11,14 @@ import UIKit
 
 extension LibraryVC {
     
-    func showProgressView() {
+     fileprivate func showProgressView() {
         makeBarButtons(hidden: true)
         
         progressContainer.isHidden = false
         progressContainerHideBottomConstrait.isActive = false
         progressContainerAppearedBottomConstrait.isActive = true
+        
+        progressContainer.spinner.startAnimating()
         
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.35, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
             self.view.layoutSubviews()
@@ -27,15 +29,34 @@ extension LibraryVC {
     
     func setUpProgressBarDesign(){
         view.addSubview(progressContainer)
-        progressContainer.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10).isActive = true
-        progressContainer.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        progressContainer.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
+        
+        RHConstratis.append(
+            progressContainer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6))
+        CHConstratis.append(
+            progressContainer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9))
+        
+        progressContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        progressContainerInExtractingStateHeight = progressContainer.heightAnchor.constraint(equalToConstant: 100)
+        progressContainerInCopyingStateHeight = progressContainer.heightAnchor.constraint(equalToConstant: 60)
         
         progressContainerHideBottomConstrait = progressContainer.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
-            progressContainerAppearedBottomConstrait = progressContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        progressContainerAppearedBottomConstrait = progressContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        
         
         progressContainerHideBottomConstrait.isActive = true
+        progressContainerInCopyingStateHeight.isActive = true
     }
+    
+    
+    fileprivate func redesignForExtractingState() {
+        progressContainerInCopyingStateHeight.isActive = false
+        progressContainerInExtractingStateHeight.isActive = true
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     
     func removeProgressView() {
         
@@ -48,14 +69,17 @@ extension LibraryVC {
             self.progressContainer.isHidden = true
             self.progressContainer.setProgress(to: 0)
             self.makeBarButtons(hidden: false)
+            self.progressContainer.spinner.stopAnimating()
+            
+            self.progressContainerInExtractingStateHeight.isActive = false
+            self.progressContainerInCopyingStateHeight.isActive = true
             })
         editingMode = false
     }
     
     
-     func makeBarButtons(hidden: Bool) {
+     fileprivate func makeBarButtons(hidden: Bool) {
         infoButton.isEnabled = !hidden
-//        refreshButton.isEnabled = !hidden
         addComicsButton.isEnabled = !hidden
         editBarButton.isEnabled = !hidden
     }
@@ -63,12 +87,24 @@ extension LibraryVC {
     
 }
 
-extension LibraryVC: ExtractingProgressDelegate {
+extension LibraryVC: ProgressDelegate {
+    func newFileAboutToCopy(withName name: String) {
+        showProgressView()
+        progressContainer.makeProgressBarFor(state: .copying, animated: false)
+        progressContainer.setTitleLabel(to: "Copying Files ...")
+        progressContainer.setNumberLabel(to: "")
+    }
+    
     
     func newFileAboutToExtract(withName name: String, andNumber number: Int, inTotalFilesCount: Int?) {
         DispatchQueue.main.async { [weak self] in
             
-            self?.showProgressView()
+            ///this is quick fix should consider a betterway later
+            if self?.progressContainerHideBottomConstrait.isActive ?? false {
+                self?.showProgressView()
+            }
+            self?.redesignForExtractingState()
+            self?.progressContainer.makeProgressBarFor(state: .extracting, animated: true)
             self?.progressContainer.setTitleLabel(to: "Extracting: \(name)")
             self?.comicNameThatExtracting = name
             self?.progressContainer.setProgress(to: 0)

@@ -11,6 +11,11 @@ import UIKit
 
 class ProgressContainerView: UIView {
     
+    enum State {
+        case copying
+        case extracting
+    }
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 15)
@@ -28,6 +33,8 @@ class ProgressContainerView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    var nameLabalCopyingLeftConstraint: NSLayoutConstraint!
+    var nameLabalExtractingLeftConstraint: NSLayoutConstraint!
     
     private var progressView: RoundedProgressView = {
         let progressView = RoundedProgressView()
@@ -35,6 +42,14 @@ class ProgressContainerView: UIView {
         progressView.progressViewTint = .appProgressColor
         progressView.trackViewTint = .appTrackProgressColor
         return progressView
+    }()
+    
+    lazy var spinner: UIActivityIndicatorView = {
+       let view = UIActivityIndicatorView()
+        view.color = .white
+        view.hidesWhenStopped = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     
@@ -64,13 +79,20 @@ class ProgressContainerView: UIView {
         
         addSubview(numberLabel)
         numberLabel.leftAnchor.constraint(equalTo: progressView.leftAnchor).isActive = true
-        numberLabel.bottomAnchor.constraint(equalTo: progressView.topAnchor , constant: -10).isActive = true
+        numberLabel.topAnchor.constraint(equalTo: topAnchor , constant: 15).isActive = true
         numberLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
+        addSubview(spinner)
+        spinner.rightAnchor.constraint(equalTo: progressView.rightAnchor).isActive = true
+        spinner.topAnchor.constraint(equalTo: topAnchor , constant: 15).isActive = true
+        
         addSubview(nameLabel)
-        nameLabel.leftAnchor.constraint(equalTo: numberLabel.rightAnchor, constant: 5).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: progressView.topAnchor , constant: -10).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: progressView.rightAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: topAnchor , constant: 15).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: spinner.leftAnchor, constant: -5).isActive = true
+        nameLabalExtractingLeftConstraint = nameLabel.leftAnchor.constraint(equalTo: numberLabel.rightAnchor, constant: 5)
+        nameLabalCopyingLeftConstraint = nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20)
+        
+        nameLabalCopyingLeftConstraint.isActive = true
         
         
     }
@@ -89,6 +111,25 @@ class ProgressContainerView: UIView {
     
     func setNumberLabel(to string: String) {
         numberLabel.text = string
+    }
+    
+    func makeProgressBarFor(state: State, animated: Bool) {
+        
+        if state == .copying {
+            nameLabalExtractingLeftConstraint.isActive = false
+            nameLabalCopyingLeftConstraint.isActive = true
+            
+        }else {
+            nameLabalCopyingLeftConstraint.isActive = false
+            nameLabalExtractingLeftConstraint.isActive = true
+        }
+        self.progressView.alpha = state == .copying ? 0 : 1
+        
+        if animated {
+            UIView.animate(withDuration: 0.1) {
+                self.layoutIfNeeded()
+            }
+        }
     }
     
 }

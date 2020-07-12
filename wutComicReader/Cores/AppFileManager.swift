@@ -39,6 +39,7 @@ class AppFileManager {
     internal var managedContext : NSManagedObjectContext?
     var dataService: DataService!
     var comicDiractoryName = "ComicFiles"
+    var progressDelegate: ProgressDelegate?
     
     //MARK:- Functions
     
@@ -61,12 +62,16 @@ class AppFileManager {
         try fileManager.removeItem(at: comicDirectory.appendingPathComponent(fileName))
     }
     
-    //write extracted comics in the comic diractory on core data
-    //skip comics that already been added to core data
+    func filesInUserDiractory() -> [URL]? {
+        try? fileManager.contentsOfDirectory(at: userDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+    }
+    
+    ///write extracted comics in the comic diractory on core data
+    ///skip comics that already been added to core data
     
     func writeNewComicsOnCoreData() throws{
         
-        guard let context = managedContext else { return }
+        guard let _ = managedContext else { return }
         
         do{
             let comicDiractories = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
@@ -88,7 +93,7 @@ class AppFileManager {
                     let comicImages = imagesPathsInSubPaths(originalImagesDirSubPaths, inExtractionFolder: .original)
                     let thumbnailImages = imagesPathsInSubPaths(thumbnailsDirSubPaths, inExtractionFolder: .thumbnail)
                     
-                    if !comicImages.isEmpty{
+                    if !comicImages.isEmpty {
                         
                         do{
                             try dataService.addNewComic(name: comicName,
@@ -99,6 +104,9 @@ class AppFileManager {
                             try? deleteFileInTheUserDiractory(withName: comicName)
                             throw error
                         }
+                    }else {
+                        try? deleteFileInTheUserDiractory(withName: comicName)
+                        try? deleteFileInTheAppDiractory(withName: comicName)
                     }
                 }
             }
@@ -108,68 +116,22 @@ class AppFileManager {
         }
     }
     
-    //check if every diractory in comic diractory do exsist in user diractory
-    //if they don't (that means user deleted them manually)
-    //then remove them from comic diractory too
-       
-//    func syncRemovedComicsInUserDiracory() {
-//
-//        guard let filePaths = fileManager.subpaths(atPath: userDiractory.path) else { return }
-//
-//        var userDiractoryfilePaths: [String] = filePaths.map({ path in
-//                // removing super diractory of file with finding if it has slash index
-//                if path.contains("/") {
-//                    let slashIndex = path.index(path.lastIndex(of: "/")!, offsetBy: 1)
-//                    let endIndex = path.index(path.endIndex, offsetBy: -3)
-//                    return path.substring(with: slashIndex..<endIndex)
-//                }else{
-//                    //removing format with drop 4 characters in path
-//                    return String(path.dropLast(4))
-//                }
-//            })
-//
-//
-//        let comicDiractoriesPaths = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map({$0.path})
-//
-//
-//        for path in comicDiractoriesPaths ?? [] {
-//            let comicName = makeComicNameFromPath(path: path)
-//            if !userDiractoryfilePaths.contains(String(comicName.dropLast(0))){
-////                deleteComicFromCoreData(withName: comicName)
-//                do {
-//                    try deleteFileInTheAppDiractory(withName: comicName)
-//                }catch {
-//                    print("delete file error")
-//                }
-//            }
-//        }
-//    }
+    
     
     func moveFilesToUserDiractory(urls: [URL]) throws {
         do {
             for url in urls {
-                let comicName = makeComicNameFromPath(path: url.path)
                 
+                let comicName = makeComicNameFromPath(path: url.path)
+                progressDelegate?.newFileAboutToCopy(withName: comicName)
                 try fileManager.moveItem(at: url, to: URL.userDiractory.appendingPathComponent(comicName))
                 
             }
         }catch let err {
+            
             throw err
         }
     }
-    
-//    func didUserDiractoryChanged() -> Bool{
-//        let userFilePaths = FileManager.default.subpaths(atPath: userDiractory.path)
-//        let userComicPaths = filterFilesWithAcceptedFormat(infilePaths: userFilePaths)
-//
-//        do {
-//            let documentComics = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-//            return userComicPaths.count > documentComics.count
-//        }catch{
-//            return false
-//        }
-//
-//    }
     
     //MARK:- private Functions
     
@@ -197,7 +159,6 @@ class AppFileManager {
             subpaths.filter { (fileName) -> Bool in
                 return fileName.contains(".jpg") || fileName.contains(".png")
             }
-            .dropLast()
             .sorted { $0 < $1 }
             .map({ folder.name + "/" + $0 })
         

@@ -12,7 +12,7 @@ import MessageUI
 
 class InfoVC: UITableViewController {
     @IBOutlet weak var emailButton: UIButton!
-    @IBOutlet weak var twitterButton: UIButton!
+    @IBOutlet weak var githubButton: UIButton!
     @IBOutlet weak var versionLabel: UILabel!
     
     
@@ -20,15 +20,15 @@ class InfoVC: UITableViewController {
         if MFMailComposeViewController.canSendMail() {
                  let email = MFMailComposeViewController()
                  email.mailComposeDelegate = self
-                 email.setToRecipients(["wuttupdev@yahoo.com"])
+                 email.setToRecipients(["shayanb@protonmail.com"])
                  
                  present(email, animated: true)
              }
         
     }
     
-    @IBAction func twitterButtonTapped(_ sender: Any) {
-        guard let url = URL(string: "https://twitter.com/shaysu6g") else { return }
+    @IBAction func githubButtonTapped(_ sender: Any) {
+        guard let url = URL(string: "https://github.com/shaysugg/ComicKhan") else { return }
         UIApplication.shared.open(url)
     }
     
@@ -49,10 +49,10 @@ class InfoVC: UITableViewController {
     }
     
     func setupDesign(){
-        let twitterImage = UIImage(named: "twitter")?.withRenderingMode(.alwaysTemplate)
-        twitterButton.setImage(twitterImage, for: .normal)
+        let twitterImage = UIImage(named: "github")?.withRenderingMode(.alwaysTemplate)
+        githubButton.setImage(twitterImage, for: .normal)
         
-        let emailImage = UIImage(named: "email")?.withRenderingMode(.alwaysTemplate)
+        let emailImage = UIImage(named: "mail")?.withRenderingMode(.alwaysTemplate)
         emailButton.setImage(emailImage, for: .normal)
         
         navigationController?.navigationBar.tintColor = .appBlueColor

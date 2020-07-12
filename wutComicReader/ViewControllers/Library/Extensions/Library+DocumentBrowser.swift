@@ -17,6 +17,7 @@ extension LibraryVC: UIDocumentPickerDelegate {
         }catch let err {
             showAlert(with: "Oh! A problem happend while moving your files. Please try again.",
                       description:  " \(err.localizedDescription)")
+            removeProgressView()
         }
     }
 }
