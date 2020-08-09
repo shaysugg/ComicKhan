@@ -1,11 +1,11 @@
 
 # ComicKhan - CBZ/CBR Reader
 
-![Image](images/dlappstore.png?)
+[![App Store](http://cl.ly/WouG/Download_on_the_App_Store_Badge_US-UK_135x40.svg)](https://apps.apple.com/us/app/comickhan/id1516810943)
 ![Image](images/mock.jpg?)
 ComicKhan is an app that helps you to read .cbz .cbr files on your iPhone and iPad.
 
-# Features
+## Features
 * Auto detect new comic files in the app document directory and extract them while showing their extraction progress
 * Allow you to read your comic files in double page (landscape) and single page (portrait)
 * Save the last page that you have read and show that with a circular progress in the left bottom corner of each book in your library
