@@ -26,8 +26,18 @@ class EmptyGroupView: UIView {
     
     private lazy var label: UILabel = {
         let label = UILabel()
+    
+        let attributedString = NSMutableAttributedString(string: "Go ahead and import your comics using ")
         
-        let attributedString = NSMutableAttributedString(string: "Go ahead and import your comics using 􀁌 button or copy them to application directory with iTunes.")
+        if #available(iOS 13.0, *) {
+            let imgAttachment = NSTextAttachment(image: UIImage(systemName: "plus.circle")!)
+            attributedString.append(NSAttributedString(attachment: imgAttachment))
+        } else {
+            attributedString.append(NSAttributedString(string: "+"))
+        }
+        
+        attributedString.append(NSAttributedString(string: " button or copy them into the application directory with iTunes."))
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.5
         attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))

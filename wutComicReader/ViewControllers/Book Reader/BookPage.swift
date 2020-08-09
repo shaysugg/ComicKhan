@@ -36,6 +36,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         scrollview.showsVerticalScrollIndicator = false
         scrollview.showsHorizontalScrollIndicator = false
         scrollview.translatesAutoresizingMaskIntoConstraints = false
+        scrollview.contentInsetAdjustmentBehavior = .never
         return scrollview
     }()
     

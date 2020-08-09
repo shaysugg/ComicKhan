@@ -9,33 +9,17 @@
 import Foundation
 import UIKit
 import MessageUI
+import StoreKit
 
 class InfoVC: UITableViewController {
-    @IBOutlet weak var emailButton: UIButton!
-    @IBOutlet weak var githubButton: UIButton!
+    
+    @IBOutlet weak var mailImageView: UIImageView!
+    @IBOutlet weak var githubImageView: UIImageView!
+    @IBOutlet weak var rateImageView: UIImageView!
     @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var iconImage: UIImageView!
     
     
-    @IBAction func emailButtonTapped(_ sender: Any) {
-        if MFMailComposeViewController.canSendMail() {
-                 let email = MFMailComposeViewController()
-                 email.mailComposeDelegate = self
-                 email.setToRecipients(["shayanb@protonmail.com"])
-                 
-                 present(email, animated: true)
-             }
-        
-    }
-    
-    @IBAction func githubButtonTapped(_ sender: Any) {
-        guard let url = URL(string: "https://github.com/shaysugg/ComicKhan") else { return }
-        UIApplication.shared.open(url)
-    }
-    
-    @IBAction func howToCellTapped(_ sender: Any) {
-        let howToVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HowToVC") as! HowToVC
-        present(howToVC, animated: true)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.barTintColor = .groupTableViewBackground
@@ -45,19 +29,72 @@ class InfoVC: UITableViewController {
         
         super.viewDidLoad()
         setupDesign()
-        versionLabel.text = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        setVersionLabel()
     }
     
     func setupDesign(){
-        let twitterImage = UIImage(named: "github")?.withRenderingMode(.alwaysTemplate)
-        githubButton.setImage(twitterImage, for: .normal)
+        
+        let githubImage = UIImage(named: "github")?.withRenderingMode(.alwaysTemplate)
+        githubImageView.tintColor = .appBlueColor
+        githubImageView.image = githubImage
         
         let emailImage = UIImage(named: "mail")?.withRenderingMode(.alwaysTemplate)
-        emailButton.setImage(emailImage, for: .normal)
+        mailImageView.tintColor = .appBlueColor
+        mailImageView.image = emailImage
+        
+        let rateImage = UIImage(named: "smile")?.withRenderingMode(.alwaysTemplate)
+        rateImageView.tintColor = .appBlueColor
+        rateImageView.image = rateImage
+        
+        iconImage.makeDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 2)
         
         navigationController?.navigationBar.tintColor = .appBlueColor
         
         
+    }
+    
+    func setVersionLabel() {
+        if let versionText = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            versionLabel.text = "version: " + versionText
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 { return }
+        
+        if indexPath.row == 0 {
+            emailCellTapped()
+        }else if indexPath.row == 1 {
+            githubCellTapped()
+        }else if indexPath.row == 2 {
+            rateCellTapped()
+        }else{}
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        indexPath.section != 0 
+    }
+    
+    func emailCellTapped() {
+        if MFMailComposeViewController.canSendMail() {
+                 let email = MFMailComposeViewController()
+                 email.mailComposeDelegate = self
+                 email.setToRecipients(["shaysugg@protonmail.com"])
+                 
+                 present(email, animated: true)
+             }
+        
+    }
+    
+    func githubCellTapped() {
+        guard let url = URL(string: "https://github.com/shaysugg/ComicKhan") else { return }
+        UIApplication.shared.open(url)
+    }
+    
+    func rateCellTapped() {
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "id1516810943") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }
 

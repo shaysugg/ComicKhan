@@ -1,8 +1,8 @@
 
 # ComicKhan - CBZ/CBR Reader
 
+![Image](images/dlappstore.png?)
 ![Image](images/mock.jpg?)
-
 ComicKhan is an app that helps you to read .cbz .cbr files on your iPhone and iPad.
 
 # Features

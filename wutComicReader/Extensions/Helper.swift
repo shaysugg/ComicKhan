@@ -55,3 +55,14 @@ extension UIViewController {
 }
 
 
+extension BookReaderVC {
+    func readerPresentForFirstTime() -> Bool {
+        let didPresentBefore = UserDefaults.standard.bool(forKey: "readerDidPresentedBefore")
+        if !didPresentBefore {
+            UserDefaults.standard.set(true, forKey: "readerDidPresentedBefore")
+            return true
+        }else{
+            return false
+        }
+    }
+}

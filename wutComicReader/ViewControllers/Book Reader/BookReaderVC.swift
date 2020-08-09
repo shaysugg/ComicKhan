@@ -95,6 +95,12 @@ class BookReaderVC: UIViewController {
         return view
     }()
     
+    
+    private lazy var guideView: ReaderGuideView = {
+        let view = ReaderGuideView()
+        return view
+    }()
+    
     override var prefersStatusBarHidden: Bool {
         return !menusAreAppeard
     }
@@ -114,7 +120,7 @@ class BookReaderVC: UIViewController {
         
         addGestures()
         setupDesign()
-        
+        addGuideViewIfNeeded()
         
         bottomBar.thumbnailDelegate = self
         bottomBar.delegate = self
@@ -260,6 +266,12 @@ class BookReaderVC: UIViewController {
             NSLayoutConstraint.activate(bottomBarConstraints.RVRHConstaints)
         }
         
+        
+        if horizontal == .compact && vertical == .regular {
+            bottomBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        }else{
+            bottomBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        }
         //topBar setup
         
         NSLayoutConstraint.deactivate(topBarConstraint.compactConstaints)
@@ -289,6 +301,22 @@ class BookReaderVC: UIViewController {
         tapGesture.require(toFail: doubletapGesture)
         
     }
+    
+    private func addGuideViewIfNeeded() {
+        if readerPresentForFirstTime() {
+            
+            guideView.delegate = self
+            
+            view.addSubview(guideView)
+        
+            guideView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+            guideView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+            guideView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            guideView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            
+        }
+    }
+    
     
     func setLastViewedPage(toPageWithNumber number: Int, withAnimate animate: Bool = true) {
         
@@ -422,4 +450,10 @@ extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
     
 }
 
-
+extension BookReaderVC: GuideViewDelegate {
+    func viewElementsDidDissappeared() {
+        guideView.removeFromSuperview()
+    }
+    
+    
+}

@@ -157,7 +157,7 @@ class AppFileManager {
         
         let validFilePaths =
             subpaths.filter { (fileName) -> Bool in
-                return fileName.contains(".jpg") || fileName.contains(".png")
+                return fileName.lowercased().contains(".jpg") || fileName.lowercased().contains(".png")
             }
             .sorted { $0 < $1 }
             .map({ folder.name + "/" + $0 })
