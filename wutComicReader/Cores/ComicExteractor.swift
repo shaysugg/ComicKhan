@@ -18,17 +18,6 @@ enum ExtractorError : Error {
     case formatIsNotRight
 }
 
-enum ExtractionFolder {
-    case original
-    case thumbnail
-    
-    var name: String {
-        switch self {
-        case .original: return "original"
-        case .thumbnail: return "thumbnail"
-        }
-    }
-}
 
 
 protocol ProgressDelegate {
@@ -58,22 +47,21 @@ class ComicExteractor: NSObject {
     
     private func extractZIP(withFileURL fileURL : URL) throws{
         
-        
-        let extractedComicURL = URL.comicDiractory.appendingPathComponent(nameofFile(fromFilePath: fileURL.path))
-        let extractedImagesURL = extractedComicURL.appendingPathComponent(ExtractionFolder.original.name)
-        let extractedThumbnailsURL = extractedComicURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
-        
         do{
-            try FileManager.default.createDirectory(at: extractedComicURL, withIntermediateDirectories: true, attributes: nil)
-            try FileManager.default.createDirectory(at: extractedImagesURL, withIntermediateDirectories: true, attributes: nil)
-            try FileManager.default.createDirectory(at: extractedThumbnailsURL, withIntermediateDirectories: true, attributes: nil)
+            let extractionDirectory = try createExtractionDirectories(forFileWithURL: fileURL)
             
-            try Zip.unzipFile(fileURL, destination: extractedImagesURL, overwrite: true, password: nil, progress: { percent in
+            try Zip.unzipFile(fileURL,
+                              destination: extractionDirectory.originalImagesDirectoryURL,
+                              overwrite: true,
+                              password: nil,
+                              progress: { percent in
                 /* percent will devide to 2 becuse we only on the halfway of extracting we still
                  have thumbnail extracting process */
                 self.delegate?.percentChanged(to: percent / 2)
             })
-            resizeExtractedImages(ofURL: extractedImagesURL, toURL: extractedThumbnailsURL)
+            
+            resizeExtractedImages(ofURL: extractionDirectory.originalImagesDirectoryURL,
+                                  toURL: extractionDirectory.thumbnailImagesDirectoryURL)
             
         }catch {
             throw ExtractorError.unzipingCBZFailed
@@ -85,25 +73,23 @@ class ComicExteractor: NSObject {
         
         var archive : URKArchive?
         
-        let extractedComicsURL = URL.comicDiractory.appendingPathComponent(nameofFile(fromFilePath: fileURL.path))
-        let extractedImagesURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.original.name)
-        let extractedThumbnailsURL = extractedComicsURL.appendingPathComponent(ExtractionFolder.thumbnail.name)
+        
         
         do{
-            try FileManager.default.createDirectory(at: extractedComicsURL, withIntermediateDirectories: true, attributes: nil)
-            try FileManager.default.createDirectory(at: extractedImagesURL, withIntermediateDirectories: true, attributes: nil)
-            try FileManager.default.createDirectory(at: extractedThumbnailsURL, withIntermediateDirectories: true, attributes: nil)
+            let extractionDirectory = try createExtractionDirectories(forFileWithURL: fileURL)
             
             archive = try URKArchive(path: fileURL.path)
             rarExtractingProgress = Progress(totalUnitCount: 1)
             archive?.progress = rarExtractingProgress
             rarExtractingProgress?.addObserver(self, forKeyPath: keyPathToObserve, options: .new, context: nil)
             
-            try archive?.extractFiles(to: extractedImagesURL.path, overwrite: true)
+            try archive?.extractFiles(to: extractionDirectory.originalImagesDirectoryURL.path,
+                                      overwrite: true)
             
             rarExtractingProgress?.removeObserver(self, forKeyPath: keyPathToObserve)
             
-            resizeExtractedImages(ofURL: extractedComicsURL, toURL: extractedThumbnailsURL)
+            resizeExtractedImages(ofURL: extractionDirectory.originalImagesDirectoryURL,
+                                  toURL: extractionDirectory.thumbnailImagesDirectoryURL)
             
             
         }catch {
@@ -132,8 +118,8 @@ class ComicExteractor: NSObject {
         var counter = 1
         
         for url in comicURLs {
-            let comicName = nameofFile(fromFilePath: url.path)
-            let comicFormat = formatOfFile(fromFilePath: url.path)
+            let comicName = url.fileName()
+            let comicFormat = url.pathExtension
             
             
             if !DidComicAlreadyExistInComicDiractory(name: comicName) {
@@ -143,13 +129,13 @@ class ComicExteractor: NSObject {
                                                 inTotalFilesCount: allCounts > 0 ? allCounts : nil)
                 
                 do {
-                    if comicFormat == ".cbz" {
+                    if comicFormat == "cbz" {
                         try extractZIP(withFileURL: url)
                          counter += 1
-                    }else if comicFormat == ".cbr" {
+                    }else if comicFormat == "cbr" {
                         try extractRAR(withFileURL: url)
                          counter += 1
-                    }else if comicFormat == ".pdf"{
+                    }else if comicFormat == "pdf"{
                         //todo
                     }
                     
@@ -183,43 +169,12 @@ class ComicExteractor: NSObject {
     
     private func filterFilesWithAcceptedFormat(infileURLs urls: [URL]?) -> [URL] {
         
-        let acceptedFiles = urls?.filter { (path) -> Bool in
-            guard let dotIndex = path.path.lastIndex(of: ".") else { return false }
-            let endIndex = path.path.endIndex
-            let range = dotIndex..<endIndex
-            let formatName = path.path.substring(with:range)
-            let acceptedFormats = [".cbr" , ".cbz" , ".pdf"]
-            return acceptedFormats.contains(formatName)
+        guard let unrwappedURLs = urls else { return [] }
+        
+        return unrwappedURLs.filter { (url) -> Bool in
+            ["cbr" , "cbz" , "pdf"].contains(url.pathExtension.lowercased())
         }
         
-        return acceptedFiles ?? []
-        
-    }
-    
-    private func nameofFile(fromFilePath path: String) -> String{
-        guard let dotindex = path.lastIndex(of: ".") else { return ""}
-        
-        var startIndex: String.Index {
-            if let slashIndex = path.lastIndex(of: "/"){
-                return path.index(slashIndex, offsetBy: 1)
-            }else{
-                return path.startIndex
-            }
-        }
-        
-        let nameRange = startIndex..<dotindex
-        let name = path.substring(with: nameRange)
-        
-        return String(name)
-    }
-    
-    private func formatOfFile(fromFilePath path: String) -> String {
-        let pathEndIndex = path.endIndex
-        guard let dotindex = path.lastIndex(of: ".") else { return ""}
-        
-        let formatRange = dotindex..<pathEndIndex
-        let formatName = path.substring(with: formatRange)
-        return formatName
     }
     
     private func DidComicAlreadyExistInComicDiractory(name: String) -> Bool {
@@ -232,7 +187,38 @@ class ComicExteractor: NSObject {
         }
     }
     
+    private func createExtractionDirectories(forFileWithURL fileURL: URL) throws -> ExtractionDirectory {
+        var extractionDirectory: ExtractionDirectory!
+        extractionDirectory = ExtractionDirectory(baseURL: URL.comicDiractory.appendingPathComponent(fileURL.fileName()))
+        
+        try FileManager.default.createDirectory(at: extractionDirectory.baseURL,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
+        try FileManager.default.createDirectory(at: extractionDirectory.originalImagesDirectoryURL,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
+        try FileManager.default.createDirectory(at: extractionDirectory.thumbnailImagesDirectoryURL,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
+        
+        return extractionDirectory
+    }
+    
+    
+    
     
 }
 
 
+struct ExtractionDirectory {
+    let baseURL: URL
+    var originalImagesDirectoryURL: URL {
+        baseURL.appendingPathComponent(ExtractionDirectory.originalImagesDirectoryName)
+    }
+    var thumbnailImagesDirectoryURL: URL {
+        baseURL.appendingPathComponent(ExtractionDirectory.thumbnailImagesDirectoryName)
+    }
+    
+    static var originalImagesDirectoryName = "original"
+    static var thumbnailImagesDirectoryName = "thumbnail"
+}

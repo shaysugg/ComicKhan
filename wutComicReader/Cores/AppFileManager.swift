@@ -17,16 +17,6 @@ enum fileManagerError : Error {
 }
 
 
-fileprivate var comicDiractoryName = "ComicFiles"
-
-extension URL {
-    static var comicDiractory: URL {
-       return FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent(comicDiractoryName)
-    }
-    static var userDiractory: URL {
-      return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    }
-}
 
 
 class AppFileManager {
@@ -38,7 +28,6 @@ class AppFileManager {
     private var fileManager = FileManager.default
     internal var managedContext : NSManagedObjectContext?
     var dataService: DataService!
-    var comicDiractoryName = "ComicFiles"
     var progressDelegate: ProgressDelegate?
     
     //MARK:- Functions
@@ -78,26 +67,24 @@ class AppFileManager {
             
             
             for diractory in comicDiractories {
-                let originalImagesDir = diractory.appendingPathComponent(ExtractionFolder.original.name)
-                let thumbnailImagesDir = diractory.appendingPathComponent(ExtractionFolder.thumbnail.name)
                 
-                guard
-                    let originalImagesDirSubPaths = fileManager.subpaths(atPath: originalImagesDir.path),
-                    let thumbnailsDirSubPaths = fileManager.subpaths(atPath: thumbnailImagesDir.path)
-                    else {return}
+                let extractionDirectory = ExtractionDirectory(baseURL: diractory)
                 
-                let comicName = makeComicNameFromPath(path: diractory.path)
+                let comicName = diractory.fileName()
                 
                 if !dataService.comicAlreadyExistedInCoreData(withName: comicName) {
                     
-                    let comicImages = imagesPathsInSubPaths(originalImagesDirSubPaths, inExtractionFolder: .original)
-                    let thumbnailImages = imagesPathsInSubPaths(thumbnailsDirSubPaths, inExtractionFolder: .thumbnail)
+                    // comicImageNames = [("original" or "thumbnail") + image name]
+                    guard
+                        let comicImageNames = try? sortedOriginalImagesSubpaths(in: extractionDirectory),
+                        let thumbnailImages = try? sortedThumbnailImagesSubpaths(in: extractionDirectory)
+                    else { return }
                     
-                    if !comicImages.isEmpty {
+                    if !comicImageNames.isEmpty {
                         
                         do{
                             try dataService.addNewComic(name: comicName,
-                                                        imageNames: comicImages,
+                                                        imageNames: comicImageNames,
                                                         thumbnailNames: thumbnailImages,
                                                         to: nil)
                         }catch let error {
@@ -122,7 +109,7 @@ class AppFileManager {
         do {
             for url in urls {
                 
-                let comicName = makeComicNameFromPath(path: url.path)
+                let comicName = url.fileName()
                 progressDelegate?.newFileAboutToCopy(withName: comicName)
                 try fileManager.moveItem(at: url, to: URL.userDiractory.appendingPathComponent(comicName))
                 
@@ -135,50 +122,27 @@ class AppFileManager {
     
     //MARK:- private Functions
     
-    private func filterFilesWithAcceptedFormat(infilePaths paths: [String]?) -> [String] {
+    // return an array of original/imageName
+    private func imageSubPaths(InDirectoryWithURL url: URL) throws -> [String] {
+        let acceptedFormats = ["jpg", "png"]
         
-        let acceptedFiles = paths?.filter { (path) -> Bool in
-            guard let dotIndex = path.lastIndex(of: ".") else { return false }
-            let endIndex = path.endIndex
-            let range = dotIndex..<endIndex
-            let formatName = path.substring(with:range)
-            let acceptedFormats = [".cbr" , ".cbz" , ".pdf"]
-            return acceptedFormats.contains(formatName)
-        }
-        
-        return acceptedFiles ?? []
+        return try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+            .filter {acceptedFormats.contains($0.pathExtension.lowercased())}
+            .map {$0.lastPathComponent}
         
     }
     
-    
-    private func imagesPathsInSubPaths(_ subpaths: [String], inExtractionFolder folder: ExtractionFolder) -> [String] {
-        
-        var comicImagesPaths : [String] = []
-        
-        let validFilePaths =
-            subpaths.filter { (fileName) -> Bool in
-                return fileName.lowercased().contains(".jpg") || fileName.lowercased().contains(".png")
-            }
-            .sorted { $0 < $1 }
-            .map({ folder.name + "/" + $0 })
-        
-        for filePath in validFilePaths{
-            comicImagesPaths.append(filePath)
-        }
-        return comicImagesPaths
+    private func sortedOriginalImagesSubpaths(in extractonDirectory: ExtractionDirectory) throws -> [String] {
+        return try imageSubPaths(InDirectoryWithURL: extractonDirectory.originalImagesDirectoryURL)
+            .map {ExtractionDirectory.originalImagesDirectoryName + "/" + $0}
+            .sorted()
     }
     
-    
-    private func makeComicNameFromPath(path: String) -> String {
-        let startIndex = path.startIndex
-        let slashIndex = path.lastIndex(of: "/")
-        
-        var subPath = path
-        let range = startIndex ... slashIndex!
-        subPath.removeSubrange(range)
-        return subPath
+    private func sortedThumbnailImagesSubpaths(in extractonDirectory: ExtractionDirectory) throws -> [String] {
+        return try imageSubPaths(InDirectoryWithURL: extractonDirectory.thumbnailImagesDirectoryURL)
+            .map {ExtractionDirectory.thumbnailImagesDirectoryName + "/" + $0}
+            .sorted()
     }
-    
     
     
     func makeAppDirectory() throws{

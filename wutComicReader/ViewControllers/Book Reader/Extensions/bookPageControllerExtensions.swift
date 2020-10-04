@@ -137,7 +137,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index < bookPages.count - 1 {
                 return bookPages[index + 1]
-                print("+1")
+                
             }else{
                 return nil
             }
@@ -149,7 +149,7 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index > 0 {
                 return bookPages[index - 1]
-                print("-1")
+                
             }else {
                 return nil
             }

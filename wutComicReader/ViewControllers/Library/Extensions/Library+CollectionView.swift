@@ -73,10 +73,11 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
             
+            // showing a spinner if presenting VC is taking some moments
             if (selectedComic.imageNames?.count ?? 0) > 80 {
                 addLoadingView()
             }
-            
+            // doing creation of book images in another thread since they time consuming
             DispatchQueue.global(qos: .userInitiated).async {
                 
                 readerVC.createSingleBookImages()

@@ -104,24 +104,19 @@ class LibraryVC: UIViewController {
         super.viewDidLoad()
         
         dataService = DataService()
-        
-        if appLaunchedForFirstTime() {
-            do {
-                try dataService.createGroupForNewComics()
-            }catch {
-                fatalError("new comic group creation failed")
-            }
-        }
-        
         appfileManager = AppFileManager(dataService: dataService)
         
         if appLaunchedForFirstTime() {
             do {
+                try dataService.createGroupForNewComics()
                 try appfileManager.makeAppDirectory()
-            }catch{
-                fatalError("can't crate app comic diractory")
+                setAppDidLaunched()
+                
+            }catch let error {
+                fatalError("Initialing Values was failed: " + error.localizedDescription)
             }
         }
+        
         
 
         do {

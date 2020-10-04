@@ -45,12 +45,11 @@ class ZoomGestureRecognizer: UITapGestureRecognizer {
 extension UIViewController {
     func appLaunchedForFirstTime() -> Bool {
         let didLaunchedBefore = UserDefaults.standard.bool(forKey: "appDidLunchedBefore")
-        if !didLaunchedBefore {
-            UserDefaults.standard.set(true, forKey: "appDidLunchedBefore")
-            return true
-        }else{
-            return false
-        }
+        return !didLaunchedBefore 
+    }
+    
+    func setAppDidLaunched() {
+        UserDefaults.standard.set(true, forKey: "appDidLunchedBefore")
     }
 }
 

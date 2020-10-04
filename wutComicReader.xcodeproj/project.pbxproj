@@ -22,6 +22,7 @@
 		E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */; };
 		E42B9EA024506CF3007B3803 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B9E9F24506CF3007B3803 /* DataService.swift */; };
 		E430912024CDB8EB00007FD3 /* ReaderGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */; };
+		E443C8B52528A4920060CDFB /* +URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E443C8B42528A4920060CDFB /* +URL.swift */; };
 		E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44FA70B23F0015C00338457 /* LibraryReusableView.swift */; };
 		E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45213A822D4927D00216217 /* ComicExteractor.swift */; };
 		E455AFDF245EA30D003F403D /* Library+DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E455AFDE245EA30D003F403D /* Library+DocumentBrowser.swift */; };
@@ -104,6 +105,7 @@
 		E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookPageControllerExtensions.swift; sourceTree = "<group>"; };
 		E42B9E9F24506CF3007B3803 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderGuideView.swift; sourceTree = "<group>"; };
+		E443C8B42528A4920060CDFB /* +URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+URL.swift"; sourceTree = "<group>"; };
 		E44FA70B23F0015C00338457 /* LibraryReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryReusableView.swift; sourceTree = "<group>"; };
 		E45213A822D4927D00216217 /* ComicExteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicExteractor.swift; sourceTree = "<group>"; };
 		E455AFDE245EA30D003F403D /* Library+DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+DocumentBrowser.swift"; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				E48253E922D631B1001A0E85 /* Helper.swift */,
 				E49C7C142418FEF4004DE82A /* ComicImage.swift */,
 				E462BD04245581940089AD5F /* VCAlert.swift */,
+				E443C8B42528A4920060CDFB /* +URL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -695,6 +698,7 @@
 				E40A353323F97C83006FA758 /* Library+ProgressContainer.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
 				E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */,
+				E443C8B52528A4920060CDFB /* +URL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

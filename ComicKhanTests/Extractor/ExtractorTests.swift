@@ -82,7 +82,7 @@ class ExtractorTests: XCTestCase {
     
     //extractor search through "sutAppfileManager.userDiractory" and extact all the comic files to "sutAppfileManager.comicDiractory" and check files extracted completely or not.
     
-    func testUserComicsDoExtractInComicDiractory(){
+    func testUserComicsDoExtractInComicDiractory() throws{
         //given
         
         let comicInfo = ComicInfo(name: "Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire)",
@@ -92,29 +92,30 @@ class ExtractorTests: XCTestCase {
         let testBundle = Bundle(for: type(of: self))
         let comicFilePath = testBundle.path(forResource: comicInfo.name, ofType: comicInfo.format.string)
         
+        XCTAssertNotNil(comicFilePath)
+        
         //copy test comic to temp folder
         try! fileManager.copyItem(at: URL(fileURLWithPath: comicFilePath!) , to: sutAppFileManager.userDiractory.appendingPathComponent(comicInfo.name + "." + comicInfo.format.string))
         
         let coppiedComicPath = sutAppFileManager.userDiractory.appendingPathComponent(comicInfo.name + "." + comicInfo.format.string).path
         let didComicCoppied = fileManager.fileExists(atPath: coppiedComicPath)
         
-        //when
+        XCTAssertTrue(didComicCoppied)
         
-//
+        //when
+        let expecation = expectation(description: <#T##String#>)
             sut.extractUserComicsIntoComicDiractory()
-//
-        let extractedPath = sutAppFileManager.comicDirectory.appendingPathComponent(comicInfo.name).path
-        let extractedExist = fileManager.fileExists(atPath: extractedPath)
+
+        let extractionURL = sutAppFileManager.comicDirectory.appendingPathComponent(comicInfo.name)
+        let extractedExist = fileManager.fileExists(atPath: extractionURL.path)
         
         //then
         
-        XCTAssertNotNil(comicFilePath)
         
-        XCTAssertTrue(didComicCoppied)
-//
         XCTAssertTrue(extractedExist, "file extracted succsesfully")
         
-        let extractedFilesCount = fileManager.subpaths(atPath: extractedPath + "/" + ExtractionFolder.thumbnail.name)!.count
+        let extractionDirectory = ExtractionDirectory(baseURL: extractionURL)
+        let extractedFilesCount = try fileManager.contentsOfDirectory(atPath: extractionDirectory.originalImagesDirectoryURL.path).count
         
         XCTAssertEqual(extractedFilesCount, comicInfo.pageCount)
         
