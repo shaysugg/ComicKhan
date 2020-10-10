@@ -257,7 +257,7 @@ class LibraryVC: UIViewController {
     
     
     func extractAndWriteNewComicsOnCoreData(_ newfiles: [URL]) {
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             
             let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
                 //if app got killed in background

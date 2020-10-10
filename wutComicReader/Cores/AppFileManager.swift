@@ -111,7 +111,7 @@ class AppFileManager {
                 
                 let comicName = url.fileName()
                 progressDelegate?.newFileAboutToCopy(withName: comicName)
-                try fileManager.moveItem(at: url, to: URL.userDiractory.appendingPathComponent(comicName))
+                try fileManager.moveItem(at: url, to: URL.userDiractory.appendingPathComponent(url.lastPathComponent))
                 
             }
         }catch let err {
@@ -124,10 +124,9 @@ class AppFileManager {
     
     // return an array of original/imageName
     private func imageSubPaths(InDirectoryWithURL url: URL) throws -> [String] {
-        let acceptedFormats = ["jpg", "png"]
         
         return try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-            .filter {acceptedFormats.contains($0.pathExtension.lowercased())}
+            .filter {validImageFormats.contains($0.pathExtension.lowercased())}
             .map {$0.lastPathComponent}
         
     }
