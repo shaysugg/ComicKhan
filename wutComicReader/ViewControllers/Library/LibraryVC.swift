@@ -16,20 +16,18 @@ class LibraryVC: UIViewController {
     
     //MARK:- Variables
     
-    var appfileManager: AppFileManager!
-    let comicExtractor = ComicExteractor()
-    var dataService: DataService!
+    private(set) var appfileManager: AppFileManager!
+    private let comicExtractor = ComicExteractor()
+    private(set) var dataService: DataService!
     
-    var fetchResultController: NSFetchedResultsController<Comic>!
+    private(set) var fetchResultController: NSFetchedResultsController<Comic>!
     var blockOperations = [BlockOperation]()
     
     var newFilesCount: Int?
     
-    var collectionViewCellSize: CGSize!
+    private(set) var collectionViewCellSize: CGSize!
     
-    
-    
-    var editingMode = false 
+    var editingMode = false
     
     var selectedComics : [Comic] = [] {
         didSet{
@@ -110,7 +108,7 @@ class LibraryVC: UIViewController {
             do {
                 try dataService.createGroupForNewComics()
                 try appfileManager.makeAppDirectory()
-                setAppDidLaunched()
+                setAppDidLaunchedFlag()
                 
             }catch let error {
                 fatalError("Initialing Values was failed: " + error.localizedDescription)
@@ -133,10 +131,12 @@ class LibraryVC: UIViewController {
         configureCellSize(basedOn: UIScreen.main.traitCollection)
         
         setUpDesigns()
-        bookCollectionView.reloadData()
+        
         comicExtractor.delegate = self
         appfileManager.progressDelegate = self
         emptyGroupsView.delegate = self
+        
+        bookCollectionView.reloadData()
         bookCollectionView.allowsMultipleSelection = true
          
         navigationItem.setRightBarButtonItems([infoButton], animated: true)
@@ -146,6 +146,14 @@ class LibraryVC: UIViewController {
         
         print(NSHomeDirectory())
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.barTintColor = .appSystemBackground
+        emptyGroupsView.isHidden = !(fetchResultController.fetchedObjects?.isEmpty ?? true)
         
     }
     
@@ -202,7 +210,7 @@ class LibraryVC: UIViewController {
         let deleteImage = #imageLiteral(resourceName: "ic-actions-trash").withRenderingMode(.alwaysTemplate)
         deleteBarButton.image = deleteImage
         
-        let groupImage = #imageLiteral(resourceName: "ic-actions-add-file").withRenderingMode(.alwaysTemplate)
+        let groupImage = #imageLiteral(resourceName: "group2").withRenderingMode(.alwaysTemplate)
         groupBarButton.image = groupImage
     }
     
@@ -221,80 +229,6 @@ class LibraryVC: UIViewController {
             emptyGroupsView.widthAnchor.constraint(equalTo: view.widthAnchor)
         )
         
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
-        navigationController?.navigationBar.barTintColor = .appSystemBackground
-        emptyGroupsView.isHidden = !(fetchResultController.fetchedObjects?.isEmpty ?? true)
-        
-    }
-    
-    
-    // if app killed or terminated in background when did open again
-    // diractory watcher not gonna work again so we check with below function
-    // that is user diractory has file in it or not
-    func didUserAddNewFilesWhileAppWasDeactive() {
-        if let files = appfileManager.filesInUserDiractory(),
-            !files.isEmpty {
-            newFilesCount = files.count
-            extractAndWriteNewComicsOnCoreData(files)
-        }
-    }
-    
-    func setupDiractoryWatcher() {
-        
-        diractoryWatcher = DirectoryWatcher.watch(URL.userDiractory)
-        
-        diractoryWatcher?.onNewFiles = { [weak self] newfiles in
-            self?.newFilesCount = newfiles.count
-            self?.extractAndWriteNewComicsOnCoreData(newfiles)
-        }
-    
-    }
-    
-    
-    func extractAndWriteNewComicsOnCoreData(_ newfiles: [URL]) {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            
-            let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
-                //if app got killed in background
-                if let name = self?.comicNameThatExtracting {
-                    try? self?.dataService.deleteComicFromCoreData(withName: name)
-                    try? self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
-                }
-            })
-            
-            
-            do{
-                /// - Q: how it realize that extracting is finished and should write new comics into coreData ???
-                
-            self?.comicExtractor.extractUserComicsIntoComicDiractory()
-            try self?.appfileManager.writeNewComicsOnCoreData()
-                
-                for newfile in newfiles {
-                    //if this one fail there gonna be aloooots of problems!
-                    try? FileManager.default.removeItem(at: newfile)
-                }
-                
-                if taskID != UIBackgroundTaskIdentifier.invalid {
-                    UIApplication.shared.endBackgroundTask(taskID)
-                }
-                
-            }catch{
-                DispatchQueue.main.async {
-                    self?.showAlert(with: "OH!",
-                    description: "there was a problem with your comic file Extraction, please try again.")
-                    self?.removeProgressView()
-                }
-                
-                if taskID != UIBackgroundTaskIdentifier.invalid {
-                    UIApplication.shared.endBackgroundTask(taskID)
-                }
-            }
-        }
     }
     
         
@@ -446,7 +380,69 @@ class LibraryVC: UIViewController {
         
     }
     
+    // if app killed or terminated in background when did open again
+    // diractory watcher not gonna work again so we check with below function
+    // that is user diractory has file in it or not
+    func didUserAddNewFilesWhileAppWasDeactive() {
+        if let files = appfileManager.filesInUserDiractory(),
+            !files.isEmpty {
+            newFilesCount = files.count
+            extractAndWriteNewComicsOnCoreData(files)
+        }
+    }
     
+    func setupDiractoryWatcher() {
+        
+        diractoryWatcher = DirectoryWatcher.watch(URL.userDiractory)
+        
+        diractoryWatcher?.onNewFiles = { [weak self] newfiles in
+            self?.newFilesCount = newfiles.count
+            self?.extractAndWriteNewComicsOnCoreData(newfiles)
+        }
+    
+    }
+    
+    
+    func extractAndWriteNewComicsOnCoreData(_ newfiles: [URL]) {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            
+            let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
+                //if app got killed in background
+                if let name = self?.comicNameThatExtracting {
+                    try? self?.dataService.deleteComicFromCoreData(withName: name)
+                    try? self?.appfileManager.deleteFileInTheAppDiractory(withName: name)
+                }
+            })
+            
+            
+            do{
+                /// - Q: how it realize that extracting is finished and should write new comics into coreData ???
+                
+            self?.comicExtractor.extractUserComicsIntoComicDiractory()
+            try self?.appfileManager.writeNewComicsOnCoreData()
+                
+                for newfile in newfiles {
+                    //if this one fail there gonna be aloooots of problems!
+                    try? FileManager.default.removeItem(at: newfile)
+                }
+                
+                if taskID != UIBackgroundTaskIdentifier.invalid {
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+                
+            }catch{
+                DispatchQueue.main.async {
+                    self?.showAlert(with: "OH!",
+                    description: "there was a problem with your comic file Extraction, please try again.")
+                    self?.removeProgressView()
+                }
+                
+                if taskID != UIBackgroundTaskIdentifier.invalid {
+                    UIApplication.shared.endBackgroundTask(taskID)
+                }
+            }
+        }
+    }
     
     
 }
