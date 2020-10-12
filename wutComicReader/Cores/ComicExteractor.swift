@@ -9,6 +9,8 @@ import Foundation
 import UnrarKit
 import UIKit
 import Zip
+import CoreGraphics
+import MobileCoreServices
 
 enum ExtractorError : Error {
     case unzipingCBZFailed
@@ -20,7 +22,7 @@ enum ExtractorError : Error {
 
 
 
-protocol ProgressDelegate {
+protocol ProgressDelegate: class {
     func newFileAboutToCopy(withName name: String)
     func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int?)
     func percentChanged(to value: Double)
@@ -36,13 +38,10 @@ extension ProgressDelegate {
 fileprivate var keyPathToObserve = "fractionCompleted"
 
 
-
-
-
 class ComicExteractor: NSObject {
     
     var rarExtractingProgress: Progress?
-    var delegate: ProgressDelegate?
+    weak var delegate: ProgressDelegate?
     
     
     private func extractZIP(withFileURL fileURL : URL) throws{
@@ -66,14 +65,12 @@ class ComicExteractor: NSObject {
         }catch {
             throw ExtractorError.unzipingCBZFailed
         }
-        
     }
+    
     
     private func extractRAR(withFileURL fileURL : URL) throws{
         
         var archive : URKArchive?
-        
-        
         
         do{
             let extractionDirectory = try createExtractionDirectories(forFileWithURL: fileURL)
@@ -95,8 +92,52 @@ class ComicExteractor: NSObject {
         }catch {
             throw ExtractorError.unzipingCBRFailed
         }
-        
     }
+    
+    
+    private func convertPDFToImages(pdfURL: URL) throws {
+        let extractionDirectory = try createExtractionDirectories(forFileWithURL: pdfURL)
+        guard let document = CGPDFDocument(pdfURL as CFURL) else { return }
+            
+        let queue = DispatchQueue(label: "imagetodata", qos: .background, attributes: [], autoreleaseFrequency: .workItem, target: nil)
+        
+        queue.sync {
+        
+        for pageNumber in 1 ... document.numberOfPages {
+            guard let page = document.page(at: pageNumber) else { return }
+            
+            let pageRect = page.getBoxRect(.mediaBox)
+            let renderer = UIGraphicsImageRenderer(size: pageRect.size)
+            let img = renderer.image { ctx in
+                UIColor.white.set()
+                ctx.fill(pageRect)
+
+                ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
+                ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
+
+                ctx.cgContext.drawPDFPage(page)
+                
+            }
+//
+            let imageDestinationURL =
+                extractionDirectory.originalImagesDirectoryURL
+                .appendingPathComponent(make3DigitString(from: pageNumber))
+                .appendingPathExtension("jpeg")
+            
+            guard let imageDestination = CGImageDestinationCreateWithURL(imageDestinationURL as CFURL, kUTTypeJPEG, 1, nil),
+            let cgImage = img.cgImage
+            else { return }
+            
+            CGImageDestinationAddImage(imageDestination, cgImage, nil)
+            CGImageDestinationFinalize(imageDestination)
+            
+            delegate?.percentChanged(to: Double(pageNumber) / Double(document.numberOfPages) / 2)
+        }
+            
+            resizeExtractedImages(ofURL: extractionDirectory.originalImagesDirectoryURL, toURL: extractionDirectory.thumbnailImagesDirectoryURL)
+        }
+    }
+    
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
@@ -107,14 +148,13 @@ class ComicExteractor: NSObject {
         }
     }
     
+    
     func extractUserComicsIntoComicDiractory() {
         
         //change this to use contents of diractory
         guard let fileURLS = try? FileManager.default.contentsOfDirectory(at: URL.userDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else { return }
         
         let comicURLs = filterFilesWithAcceptedFormat(infileURLs: fileURLS)
-        let comicDiractoriesCount = try? FileManager.default.contentsOfDirectory(at: URL.comicDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).count
-        let allCounts = comicURLs.count - (comicDiractoriesCount ?? 0)
         var counter = 1
         
         for url in comicURLs {
@@ -126,20 +166,18 @@ class ComicExteractor: NSObject {
                 
                 delegate?.newFileAboutToExtract(withName: comicName,
                                                 andNumber: counter,
-                                                inTotalFilesCount: allCounts > 0 ? allCounts : nil)
+                                                inTotalFilesCount: comicURLs.count)
                 
                 do {
                     if comicFormat == "cbz" {
                         try extractZIP(withFileURL: url)
-                         counter += 1
                     }else if comicFormat == "cbr" {
                         try extractRAR(withFileURL: url)
-                         counter += 1
                     }else if comicFormat == "pdf"{
-                        //todo
+                        try convertPDFToImages(pdfURL: url)
                     }
                     
-                  
+                    counter += 1
                     
                 }catch let error{
                     print("\(comicName) extract failed : \(error.localizedDescription)")
@@ -148,8 +186,6 @@ class ComicExteractor: NSObject {
                     }
                 }
             }
-           
-            
         }
         delegate?.extractingProcessFinished()
         
@@ -172,7 +208,7 @@ class ComicExteractor: NSObject {
         guard let unrwappedURLs = urls else { return [] }
         
         return unrwappedURLs.filter { (url) -> Bool in
-            ["cbr" , "cbz" , "pdf"].contains(url.pathExtension.lowercased())
+            validComicFormats.contains(url.pathExtension.lowercased())
         }
         
     }
@@ -202,6 +238,13 @@ class ComicExteractor: NSObject {
                                                 attributes: nil)
         
         return extractionDirectory
+    }
+    
+    
+    private func make3DigitString(from number: Int) -> String {
+        if number < 10 { return "00\(number)" }
+        else if number < 100 { return "0\(number)" }
+        else { return "\(number)" }
     }
     
     

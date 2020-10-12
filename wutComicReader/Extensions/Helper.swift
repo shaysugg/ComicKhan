@@ -48,7 +48,7 @@ extension UIViewController {
         return !didLaunchedBefore 
     }
     
-    func setAppDidLaunched() {
+    func setAppDidLaunchedFlag() {
         UserDefaults.standard.set(true, forKey: "appDidLunchedBefore")
     }
 }

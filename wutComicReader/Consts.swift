@@ -16,6 +16,9 @@ let appFontMeduim = "HelveticaNeue-Bold"
 let appFontRegular = "HelveticaNeue"
 
 
+let validComicFormats = ["pdf", "cbz", "cbr"]
+let validImageFormats = ["jpeg", "jpg", "png"]
+
 extension NSNotification.Name {
     static let newGroupAdded = NSNotification.Name(rawValue: "new group added")
     static let reloadLibraryAtIndex = NSNotification.Name(rawValue: "reload library at")
@@ -56,5 +59,3 @@ var previouseOriantation: UIDeviceOrientation? {
     }
 }
 
-
-//["HelveticaNeue-UltraLightItalic", "HelveticaNeue-Medium", "HelveticaNeue-MediumItalic", "HelveticaNeue-UltraLight", "HelveticaNeue-Italic", "HelveticaNeue-Light", "HelveticaNeue-ThinItalic", "HelveticaNeue-LightItalic", "HelveticaNeue-Bold", "HelveticaNeue-Thin", "HelveticaNeue-CondensedBlack", "HelveticaNeue", "HelveticaNeue-CondensedBold", "HelveticaNeue-BoldItalic"

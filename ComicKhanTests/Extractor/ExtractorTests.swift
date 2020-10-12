@@ -81,7 +81,6 @@ class ExtractorTests: XCTestCase {
     }
     
     //extractor search through "sutAppfileManager.userDiractory" and extact all the comic files to "sutAppfileManager.comicDiractory" and check files extracted completely or not.
-    
     func testUserComicsDoExtractInComicDiractory() throws{
         //given
         
@@ -103,7 +102,7 @@ class ExtractorTests: XCTestCase {
         XCTAssertTrue(didComicCoppied)
         
         //when
-        let expecation = expectation(description: <#T##String#>)
+        
             sut.extractUserComicsIntoComicDiractory()
 
         let extractionURL = sutAppFileManager.comicDirectory.appendingPathComponent(comicInfo.name)
