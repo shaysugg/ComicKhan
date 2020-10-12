@@ -18,6 +18,7 @@
 		E40C7AA222A1168C00D7CD17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA022A1168C00D7CD17 /* Main.storyboard */; };
 		E40C7AA722A1169000D7CD17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */; };
 		E40FD64D22D1239800926CC4 /* ThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40FD64C22D1239800926CC4 /* ThumbnailCell.swift */; };
+		E42576AC253458A8000F0D0D /* +NSLayoutContraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42576AB253458A8000F0D0D /* +NSLayoutContraint.swift */; };
 		E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B4D23DB30E000182E0B /* thumbnailCollectionView.swift */; };
 		E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */; };
 		E42B9EA024506CF3007B3803 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B9E9F24506CF3007B3803 /* DataService.swift */; };
@@ -97,6 +98,7 @@
 		E40C7AA622A1169000D7CD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E40C7AA822A1169000D7CD17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E40FD64C22D1239800926CC4 /* ThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCell.swift; sourceTree = "<group>"; };
+		E42576AB253458A8000F0D0D /* +NSLayoutContraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+NSLayoutContraint.swift"; sourceTree = "<group>"; };
 		E426BCE123DF23BE00119927 /* Comic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comic+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E426BCE223DF23BE00119927 /* ComicGroup+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComicGroup+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E426BCE323DF23BE00119927 /* ComicGroup+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComicGroup+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				E48253E922D631B1001A0E85 /* Helper.swift */,
+				E42576AB253458A8000F0D0D /* +NSLayoutContraint.swift */,
 				E49C7C142418FEF4004DE82A /* ComicImage.swift */,
 				E462BD04245581940089AD5F /* VCAlert.swift */,
 				E443C8B42528A4920060CDFB /* +URL.swift */,
@@ -667,6 +670,7 @@
 				E40FD64D22D1239800926CC4 /* ThumbnailCell.swift in Sources */,
 				E45C842A238DACD700669155 /* Colors.swift in Sources */,
 				E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */,
+				E42576AC253458A8000F0D0D /* +NSLayoutContraint.swift in Sources */,
 				E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */,
 				E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */,
 				E40C7A9F22A1168C00D7CD17 /* LibraryVC.swift in Sources */,

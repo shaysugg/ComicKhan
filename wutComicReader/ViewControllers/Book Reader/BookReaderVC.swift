@@ -222,9 +222,10 @@ class BookReaderVC: UIViewController {
             topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
         ])
         
-        topBarConstraint.compactConstaints.append(
-            topBar.heightAnchor.constraint(equalToConstant: short / 5)
-        )
+        topBarConstraint.compactConstaints.append(contentsOf: [
+            topBar.heightAnchor.constraint(equalToConstant: short / 5).withLowPiority(),
+            topBar.heightAnchor.constraint(lessThanOrEqualToConstant: 100).withHighPiority()
+        ])
         
         topBarConstraint.regularConstraints.append(
             topBar.heightAnchor.constraint(equalToConstant: topBarHeight)

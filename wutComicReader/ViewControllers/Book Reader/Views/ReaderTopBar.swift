@@ -42,7 +42,7 @@ class TopBar: UIView {
     
     private lazy var gradient: CAGradientLayer = {
         let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.black.withAlphaComponent(0.7).cgColor, UIColor.clear.cgColor]
+        gradient.colors = [UIColor.black.withAlphaComponent(0.6).cgColor, UIColor.clear.cgColor]
         return gradient
     }()
     
@@ -90,11 +90,11 @@ class TopBar: UIView {
             layer.insertSublayer(gradient, at: 0)
             
             dismissButton.transform = CGAffineTransform(scaleX: 1.3, y: 1.3).translatedBy(x: 8, y: 0)
-            dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.8, radius: 1)
+            dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.8, radius: 2)
             dismissButton.tintColor = .white
             
             titleLabel.textColor = .white
-            titleLabel.makeDropShadow(shadowOffset: .zero, opacity: 0.8, radius: 1)
+            titleLabel.makeDropShadow(shadowOffset: .zero, opacity: 0.8, radius: 2)
         }else{
             gradient.removeFromSuperlayer()
             backgroundColor = .appSystemBackground
