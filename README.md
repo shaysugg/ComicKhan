@@ -15,8 +15,8 @@ ComicKhan is an app that allows you to read your comics (.cbz /.cbr/.pdf) on you
 * Allows you to group your comics in the library.
 * iPhone and iPad support.
 
-##TODO
-- [x] ~~Supports for comics with PDF format~~
+## TODO
+- [x] Supports for comics with PDF format
 - [ ] Ability to sort comic groups based on name, date added, etc.
 - [ ] Supports for extracting directories of comics.
 
