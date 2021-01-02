@@ -54,7 +54,7 @@ class DataServiceTests: XCTestCase {
             return
         }
         
-        XCTAssertTrue(firstSectionName.contains("New Comics"))
+        XCTAssertTrue(firstSectionName.contains(dataService.groupForNewComicsName))
     }
     
     func testDeleteAComic(){
@@ -182,7 +182,7 @@ class DataServiceTests: XCTestCase {
         
 
         let comicGroup1 = ComicGroup(context: mockManagedContext)
-        comicGroup1.name = "New Comics"
+        comicGroup1.name = dataService.groupForNewComicsName
         comicGroup1.isForNewComics = true
         comicGroup1.addToComics(comic1)
         comicGroup1.addToComics(comic2)
