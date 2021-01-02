@@ -17,8 +17,6 @@ enum fileManagerError : Error {
 }
 
 
-
-
 class AppFileManager {
     
     //MARK:- Variables
@@ -70,7 +68,7 @@ class AppFileManager {
                 
                 let extractionDirectory = ExtractionDirectory(baseURL: diractory)
                 
-                let comicName = diractory.fileName()
+                let comicName = diractory.lastPathComponent
                 
                 if !dataService.comicAlreadyExistedInCoreData(withName: comicName) {
                     
@@ -125,9 +123,14 @@ class AppFileManager {
     // return an array of original/imageName
     private func imageSubPaths(InDirectoryWithURL url: URL) throws -> [String] {
         
-        return try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-            .filter {validImageFormats.contains($0.pathExtension.lowercased())}
-            .map {$0.lastPathComponent}
+        return try fileManager.subpathsOfDirectory(atPath: url.path)
+            
+            .filter {string -> Bool in
+                for format in validImageFormats where string.contains("." + format) {
+                    return true
+                }
+                return false
+            }
         
     }
     

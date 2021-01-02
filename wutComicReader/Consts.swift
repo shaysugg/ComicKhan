@@ -19,8 +19,20 @@ let appFontRegular = "HelveticaNeue"
 let validComicFormats = ["pdf", "cbz", "cbr"]
 let validImageFormats = ["jpeg", "jpg", "png"]
 
+enum CollectioViewIDs {
+    case comicCell
+    case comicGroupHeader
+    
+    var id: String {
+        switch self {
+        case .comicCell: return "comic-cell"
+        case .comicGroupHeader: return "comic-group-header"
+        }
+    }
+}
+
 extension NSNotification.Name {
-    static let newGroupAdded = NSNotification.Name(rawValue: "new group added")
+    static let newGroupAboutToAdd = NSNotification.Name(rawValue: "new group added")
     static let reloadLibraryAtIndex = NSNotification.Name(rawValue: "reload library at")
 }
 

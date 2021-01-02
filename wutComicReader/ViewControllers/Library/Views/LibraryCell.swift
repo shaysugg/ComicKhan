@@ -42,8 +42,11 @@ class LibraryCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet{
-            whiteView.alpha = isSelected ? 0.6 : 0
-            selectionImageView.image = isSelected ? #imageLiteral(resourceName: "selected") : #imageLiteral(resourceName: "unselected")
+            if !isInEditingMode { return }
+            UIView.animate(withDuration: 0.2) {
+                self.whiteView.alpha = self.isSelected ? 0.6 : 0
+            }
+            selectionImageView.image = isSelected ?  #imageLiteral(resourceName: "ic-actions-selected").withTintColor(.white) : #imageLiteral(resourceName: "ic-actions-select").withTintColor(.white)
         }
     }
     
@@ -59,6 +62,7 @@ class LibraryCell: UICollectionViewCell {
         
         self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
         selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
+        selectionImageView.image = #imageLiteral(resourceName: "ic-actions-select").withTintColor(.white)
         readProgressView.strokeWidth = 2
         bookCoverImageView.layer.cornerRadius = 4
         bookCoverImageView.clipsToBounds = true
@@ -75,7 +79,7 @@ class LibraryCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        readProgressView.progressCircleColor = UIColor.appBlueColor?.cgColor
+        readProgressView.progressCircleColor = UIColor.appBlueColor.cgColor
     }
     
     

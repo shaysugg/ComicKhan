@@ -48,6 +48,8 @@ class NewGroupVC: UIViewController {
         
         newGroupTextField.becomeFirstResponder()
         
+        addButton.isEnabled = false
+        addButton.alpha = 0.5
     }
     
     private func setUpDesign(){
@@ -69,11 +71,13 @@ class NewGroupVC: UIViewController {
     
     private func addButtonTapped(){
         do {
-            if let text = newGroupTextField.text {
+            if let text = newGroupTextField.text, !text.isEmpty {
                 try dataService.createANewComicGroup(name: text, comics: comicsAboutToGroup)
+                NotificationCenter.default.post(name: .newGroupAboutToAdd, object: nil)
+                dismiss(animated: true, completion: nil)
             }
-            NotificationCenter.default.post(name: .newGroupAdded, object: nil)
-            dismiss(animated: true, completion: nil)
+            
+            
         }catch let err {
             showAlert(with: "Oh!", description: "there is a problem with creating your new comic group" + err.localizedDescription)
         }
@@ -88,14 +92,18 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath)
-        cell.textLabel?.text = groups[indexPath.row].name
+        if groups[indexPath.row].isForNewComics {
+            cell.textLabel?.text = "Untitled"
+        }else {
+            cell.textLabel?.text = groups[indexPath.row].name
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         do {
             try dataService.changeGroupOf(comics: comicsAboutToGroup, to: groups[indexPath.row])
-            NotificationCenter.default.post(name: .newGroupAdded, object: nil)
+            NotificationCenter.default.post(name: .newGroupAboutToAdd, object: nil)
             dismiss(animated: true, completion: nil)
         }catch {
             showAlert(with: "Oh!", description: "An issue happend while creating your comic group. Please try again.")
@@ -123,5 +131,16 @@ extension NewGroupVC: UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if let text = textField.text, !text.isEmpty {
+            addButton.isEnabled = true
+            addButton.alpha = 1
+        }else {
+            addButton.isEnabled = false
+            addButton.alpha = 0.5
+        }
     }
 }

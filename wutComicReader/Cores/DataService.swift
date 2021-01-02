@@ -13,6 +13,7 @@ class DataService {
     var managedContext: NSManagedObjectContext!
     var comicFetchResultController: NSFetchedResultsController<Comic>?
     var groupForNewComics: ComicGroup?
+    var groupForNewComicsName = ""
     
     init(managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext) {
         self.managedContext = managedContext
@@ -21,13 +22,16 @@ class DataService {
     func configureFetchResultController() throws -> NSFetchedResultsController<Comic> {
         let fetchRequest = NSFetchRequest<Comic>(entityName: "Comic")
         
-        let basedOnIsInNewComicGroup = NSSortDescriptor(key: #keyPath(Comic.ofComicGroup.isForNewComics), ascending: false)
-        let basedOnComicGroupName = NSSortDescriptor(key: #keyPath(Comic.groupName), ascending: true)
+        let basedOnComicGroupName = NSSortDescriptor(key: #keyPath(Comic.ofComicGroup.name), ascending: true)
         let basedOnName = NSSortDescriptor(key: #keyPath(Comic.name), ascending: true)
         
-        fetchRequest.sortDescriptors = [basedOnIsInNewComicGroup, basedOnComicGroupName , basedOnName]
         
-        comicFetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: #keyPath(Comic.groupName), cacheName: nil)
+        // Important: sectionNameKeyPath that we using to idenifie sections
+        // SHOULD be in sortDescriptors to group comics correctly!
+        fetchRequest.sortDescriptors = [basedOnComicGroupName ,basedOnName]
+        
+        
+        comicFetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: #keyPath(Comic.ofComicGroup.name), cacheName: nil)
         
         do {
             try comicFetchResultController?.performFetch()
@@ -69,20 +73,14 @@ class DataService {
         }
     }
     
-    func createANewComicGroup(name: String, comics: [Comic]?) throws {
+    func createANewComicGroup(name: String, comics: [Comic]) throws {
         
         let newComicGroup = ComicGroup(context: managedContext)
         newComicGroup.id = UUID()
         newComicGroup.isForNewComics = false
         newComicGroup.name = name
         
-        if let _ = comics {
-            newComicGroup.addToComics(NSOrderedSet(array: comics!))
-            
-            for comic in comics! {
-                comic.groupName = name
-            }
-        }
+        newComicGroup.addToComics(NSOrderedSet(array: comics))
         
         do {
             try managedContext.save()
@@ -98,7 +96,7 @@ class DataService {
             let newComicGroup = ComicGroup(context: managedContext)
             newComicGroup.id = UUID()
             newComicGroup.isForNewComics = true
-            newComicGroup.name = "New Comics"
+            newComicGroup.name = groupForNewComicsName
             
             try managedContext.save()
         }catch let err {

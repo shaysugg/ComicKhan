@@ -11,7 +11,7 @@ import UIKit
 class LoadingView: UIView {
     
     lazy var loadingSpinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        let spinner = UIActivityIndicatorView(style: .large)
         spinner.tintColor = .white
         spinner.translatesAutoresizingMaskIntoConstraints = false
         return spinner
@@ -19,7 +19,7 @@ class LoadingView: UIView {
     
     lazy private var backgroundView: UIView = {
        let view = UIView()
-        view.backgroundColor = UIColor.appBlueColor?.withAlphaComponent(0.85)
+        view.backgroundColor = UIColor.appBlueColor.withAlphaComponent(0.85)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
         return view

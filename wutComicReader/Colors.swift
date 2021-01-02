@@ -98,5 +98,5 @@ extension UIColor {
            }
        }()
     
-    static let appBlueColor = UIColor(named: "appBlueColor")
+    static let appBlueColor = UIColor(named: "appBlueColor")!
 }
