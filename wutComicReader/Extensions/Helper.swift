@@ -14,15 +14,25 @@ import AVFoundation
 
 extension UIView {
     
-    func makeDropShadow(scale: Bool = true , shadowOffset: CGSize , opacity: Float, radius: Int) {
+    func makeDropShadow(scale: Bool = true , shadowOffset: CGSize , opacity: Float, radius: CGFloat) {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = shadowOffset
-        layer.shadowRadius = 5
+        layer.shadowRadius = radius
         layer.shadowOpacity = opacity
         clipsToBounds = true
         layer.masksToBounds = false
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+    
+    func makeBoundsDropShadow(shadowOffset: CGSize , opacity: Float, radius: CGFloat) {
+        let shadowPath = UIBezierPath(rect: bounds)
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = shadowOffset
+        layer.shadowOpacity = opacity
+        layer.shadowRadius = radius
+        layer.shadowPath = shadowPath.cgPath
     }
 }
 

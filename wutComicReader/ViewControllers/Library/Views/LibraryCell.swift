@@ -60,8 +60,6 @@ class LibraryCell: UICollectionViewCell {
     
     func setUpDesign(){
         
-        self.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 15)
-        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
         selectionImageView.image = #imageLiteral(resourceName: "ic-actions-select").withTintColor(.white)
         readProgressView.strokeWidth = 2
         bookCoverImageView.layer.cornerRadius = 4
@@ -79,7 +77,10 @@ class LibraryCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         readProgressView.progressCircleColor = UIColor.appBlueColor.cgColor
+        self.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 5)
+//        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
     }
     
     

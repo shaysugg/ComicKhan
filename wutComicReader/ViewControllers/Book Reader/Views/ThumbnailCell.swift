@@ -58,7 +58,6 @@ class ThumbnailCell: UICollectionViewCell {
         imageHolderView.layer.cornerRadius = 5
         imageHolderView.clipsToBounds = true
         
-        imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.2, radius: 1)
         
         imageHolderView.addSubview(pageImageView1)
         pageImageView1.topAnchor.constraint(equalTo: imageHolderView.topAnchor).isActive = true
@@ -70,14 +69,16 @@ class ThumbnailCell: UICollectionViewCell {
     
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         imageHolderView.clipsToBounds = true
         imageHolderView.layer.cornerRadius = 3
+        imageHolderView.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.2, radius: 3)
     }
     
     private func choosePageAsActive() {
         UIView.animate(withDuration: 0.1, animations: {
             self.imageHolderView.transform = CGAffineTransform(translationX: 0, y: -2.5)
-            self.imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 1)
+            self.imageHolderView.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.7, radius: 3)
             self.imageHolderView.alpha = 1
         }) { (_) in
         }
@@ -86,7 +87,7 @@ class ThumbnailCell: UICollectionViewCell {
     private func choosePageAsDiactive() {
         UIView.animate(withDuration: 0.1, animations: {
             self.imageHolderView.transform = CGAffineTransform(translationX: 0, y: 0)
-            self.imageHolderView.makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.2, radius: 1)
+            self.imageHolderView.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.2, radius: 3)
             self.imageHolderView.alpha = 0.6
         }) { (_) in
         }

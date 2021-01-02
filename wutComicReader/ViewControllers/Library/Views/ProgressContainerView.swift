@@ -69,7 +69,6 @@ class ProgressContainerView: UIView {
         
         backgroundColor = .appBlueColor
         clipsToBounds = true
-        self.makeDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 20)
         
         addSubview(progressView)
         progressView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
@@ -98,7 +97,9 @@ class ProgressContainerView: UIView {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         layer.cornerRadius = bounds.height * 0.3
+        self.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 10)
     }
     
     func setProgress(to value: CGFloat) {

@@ -196,10 +196,6 @@ class ReaderGuideView: UIView  {
         pinchImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         pinchImageView.heightAnchor.constraint(equalTo: pinchImageView.widthAnchor).isActive = true
         
-        pinchImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.4, radius: 2)
-        tapImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.4, radius: 2)
-        doubleTapImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.4, radius: 2)
-        
         
         CHRVConstraints.append(stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9))
         RHRVConstraints.append(stackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5))
@@ -208,6 +204,13 @@ class ReaderGuideView: UIView  {
         
         
         layoutTrait()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        pinchImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.4, radius: 3)
+        tapImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.4, radius: 3)
+        doubleTapImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.4, radius: 3)
     }
     
     func layoutTrait() {

@@ -119,8 +119,9 @@ class BottomBar: UIView {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         layer.cornerRadius = 20
-        makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 15)
+        makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 10)
     }
     
     @objc private func sliderDidChanged(){

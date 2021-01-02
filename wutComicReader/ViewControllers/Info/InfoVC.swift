@@ -46,7 +46,7 @@ class InfoVC: UITableViewController {
         rateImageView.tintColor = .appBlueColor
         rateImageView.image = rateImage
         
-        iconImage.makeDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 2)
+        iconImage.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 3)
         
         navigationController?.navigationBar.tintColor = .appBlueColor
         
