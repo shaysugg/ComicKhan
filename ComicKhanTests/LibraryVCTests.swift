@@ -20,7 +20,7 @@ class LibraryVCTests: XCTestCase {
     
     override func setUpWithError() throws {
         libraryVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryVC") as! LibraryVC
-        let _ = libraryVC.view
+        libraryVC.loadView()
         
         mockContext = createMockManagedContext()!
         libraryVC.dataService = DataService(managedContext: mockContext)
