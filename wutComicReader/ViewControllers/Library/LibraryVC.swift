@@ -9,8 +9,10 @@
 import UIKit
 import DirectoryWatcher
 import CoreData
+import Combine
 
 var diractoryWatcher: DirectoryWatcher?
+
 
 class LibraryVC: UIViewController {
     
@@ -18,9 +20,9 @@ class LibraryVC: UIViewController {
     
     private(set) var appfileManager: AppFileManager!
     private let comicExtractor = ComicExteractor()
-    private(set) var dataService: DataService!
+    var dataService: DataService!
     
-    private(set) var fetchResultController: NSFetchedResultsController<Comic>!
+    var fetchResultController: NSFetchedResultsController<Comic>!
     var blockOperations = [BlockOperation]()
     
     var newFilesCount: Int?
@@ -29,13 +31,8 @@ class LibraryVC: UIViewController {
     
     var editingMode = false
     
-    var selectedComics : [Comic] = [] {
-        didSet{
-            groupBarButton.isEnabled = selectedComics.count > 0
-            deleteBarButton.isEnabled = !selectedComics.isEmpty
-        }
-    }
-    var selectedComicsIndexPaths : [IndexPath] = []
+    let indexSelectionManager = IndexSelectionManager()
+    var indexSelectionCancelabels = [Cancellable]()
     
     //MARK:- UI Variables
     
@@ -114,8 +111,6 @@ class LibraryVC: UIViewController {
                 fatalError("Initialing Values was failed: " + error.localizedDescription)
             }
         }
-        
-        
 
         do {
             fetchResultController = try dataService.configureFetchResultController()
@@ -138,10 +133,12 @@ class LibraryVC: UIViewController {
         
         bookCollectionView.reloadData()
         bookCollectionView.allowsMultipleSelection = true
+        
+        setUpSelectedCellObservers()
          
         navigationItem.setRightBarButtonItems([infoButton], animated: true)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAboutToAdd, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
         
         print(NSHomeDirectory())
@@ -234,17 +231,6 @@ class LibraryVC: UIViewController {
         
     //MARK:- Collection View Functions
     
-    func updateCollectionViewCellsForEditing() {
-           for sectionNumber in 0 ..< bookCollectionView.numberOfSections {
-               for rowNumbers in 0 ..< bookCollectionView.numberOfItems(inSection: sectionNumber) {
-                   
-                   let cell = bookCollectionView.cellForItem(at: IndexPath(row: rowNumbers, section: sectionNumber)) as? LibraryCell
-                   cell?.isInEditingMode = editingMode
-//                   cell.layoutSubviews()
-               }
-           }
-       }
-    
     func configureCellSize(basedOn traitcollection: UITraitCollection) {
         let h = traitCollection.horizontalSizeClass
         let v = traitCollection.verticalSizeClass
@@ -274,6 +260,16 @@ class LibraryVC: UIViewController {
         
     }
     
+    private func setUpSelectedCellObservers() {
+        
+        let barButtonIsEnabled = indexSelectionManager.publisher.tryMap{!$0.isEmpty}.replaceError(with: false)
+        
+        indexSelectionCancelabels = [
+            barButtonIsEnabled.assign(to: \.isEnabled, on: groupBarButton),
+            barButtonIsEnabled.assign(to: \.isEnabled, on: deleteBarButton)
+        ]
+    }
+    
     
     //MARK:- actions
     @IBAction func addComicsButtonTapped(_ sender: Any) {
@@ -288,7 +284,8 @@ class LibraryVC: UIViewController {
     
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-        for comic in selectedComics{
+        for indexPath in indexSelectionManager.indexes{
+            let comic = fetchResultController.object(at: indexPath)
             if let comicName = comic.name,
                 comicName != "" {
                 do{
@@ -300,15 +297,13 @@ class LibraryVC: UIViewController {
                 }
             }
         }
-        
-        selectedComics.removeAll()
-        selectedComicsIndexPaths.removeAll()
+        indexSelectionManager.removeAll()
         
     }
 
     @IBAction func groupBarButtonTapped(_ sender: Any) {
         let newGroupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewGroupVC") as! NewGroupVC
-        newGroupVC.comicsAboutToGroup = selectedComics
+        newGroupVC.comicsAboutToGroup = indexSelectionManager.indexes.map {fetchResultController.object(at: $0)}
         newGroupVC.dataService = dataService
         present(newGroupVC , animated: true)
     }
@@ -316,10 +311,9 @@ class LibraryVC: UIViewController {
     @IBAction func editButtonTapped(_ sender: Any) {
         bookCollectionView.selectItem(at: nil, animated: true, scrollPosition: [])
         editingMode = !editingMode
-        selectedComics.removeAll()
-        selectedComicsIndexPaths.removeAll()
+        indexSelectionManager.removeAll()
         updateNavBarWhenEditingChanged()
-        updateCollectionViewCellsForEditing()
+        bookCollectionView.reloadData()
         
     }
     
@@ -375,9 +369,7 @@ class LibraryVC: UIViewController {
     //MARK:- file functions
     
     @objc private func newGroupVCAddedANewGroup() {
-        selectedComics.removeAll()
-        selectedComicsIndexPaths.removeAll()
-        
+        indexSelectionManager.removeAll()
     }
     
     // if app killed or terminated in background when did open again
