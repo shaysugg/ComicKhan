@@ -336,7 +336,6 @@ class BookReaderVC: UIViewController {
 //                    return page1Number < number ? .reverse : .forward
 //                }
             bookPageViewController.setViewControllers([pendingPage!], direction: .forward, animated: animate, completion: nil)
-                pendingPage?.centerTheImage()
             }
             
         }
@@ -347,6 +346,7 @@ class BookReaderVC: UIViewController {
         }
         
         //update comic.lastvisitedPage
+        //FIXME: In double splash pages the number is smh NIL and not getting stored as the lastPage
         lastViewedPage = number
         if let _ = lastViewedPage {
             comic?.lastVisitedPage = Int16(lastViewedPage!)
