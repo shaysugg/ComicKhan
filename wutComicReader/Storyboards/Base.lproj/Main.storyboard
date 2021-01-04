@@ -219,18 +219,18 @@
             </objects>
             <point key="canvasLocation" x="3480" y="375"/>
         </scene>
-        <!--LibraryVC-->
+        <!--Library-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="LibraryVC" id="BYZ-38-t0r" customClass="LibraryVC" customModule="ComicKhan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vjD-gc-wg7">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="10" id="qLy-rl-vpP">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="15" id="qLy-rl-vpP">
                                     <size key="itemSize" width="169" height="231"/>
                                     <size key="headerReferenceSize" width="50" height="55"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -316,22 +316,21 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="vjD-gc-wg7" secondAttribute="bottom" id="86E-9p-Nww"/>
-                            <constraint firstItem="vjD-gc-wg7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="REw-Ox-IE9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vjD-gc-wg7" secondAttribute="trailing" id="hOz-zp-Ebo"/>
+                            <constraint firstItem="vjD-gc-wg7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="nIo-5T-aRe"/>
                             <constraint firstItem="vjD-gc-wg7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wNN-0I-FgT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="BQr-Q8-lCA">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Library" largeTitleDisplayMode="always" id="BQr-Q8-lCA">
                         <leftBarButtonItems>
                             <barButtonItem title="Item" image="ic-actions-add" id="kRw-e4-QWk">
-                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
                                     <action selector="addComicsButtonTapped:" destination="BYZ-38-t0r" id="D4g-QN-mJh"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Edit" id="cal-73-qjM">
-                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
                                     <action selector="editButtonTapped:" destination="BYZ-38-t0r" id="oIz-vz-9om"/>
                                 </connections>
@@ -339,19 +338,19 @@
                         </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem tag="100" title="Item" image="ic-actions-more-2" id="ElE-LV-kBR">
-                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
                                     <action selector="infoButtonTapped:" destination="BYZ-38-t0r" id="diy-Iw-Ufi"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="group2" id="4Gm-Z8-lu9">
-                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
                                     <action selector="groupBarButtonTapped:" destination="BYZ-38-t0r" id="PkE-TG-eyw"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="DELETE" image="ic-actions-trash" id="NVu-bz-Pkk">
-                                <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <connections>
                                     <action selector="DeleteBarButtonTapped:" destination="BYZ-38-t0r" id="AFL-f7-8xa"/>
                                 </connections>
@@ -660,8 +659,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kyb-M5-WBj" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" alpha="0.0" tag="22" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="XPG-91-FGr">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" alpha="0.0" tag="22" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="XPG-91-FGr">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
