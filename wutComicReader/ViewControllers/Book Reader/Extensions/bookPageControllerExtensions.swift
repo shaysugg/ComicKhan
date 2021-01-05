@@ -31,7 +31,7 @@ extension BookReaderVC {
     
     public func createSingleBookImages() {
         //bookSinglePage Setup
-        guard let comicPages = comic?.imageNames else { return }
+        guard let comicPages = comic?.imageNames as? [String] else { return }
         for comicPage in comicPages {
             var bookPageImage = ComicImage(comic, withImageName: comicPage)
             bookPageImage.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
@@ -43,7 +43,7 @@ extension BookReaderVC {
     public func createDoubleBookImages(){
         
         var tempDouble: [ComicImage?] = [nil]
-        guard let comicPages = comic?.imageNames else { return }
+        guard let comicPages = comic?.imageNames as? [String] else { return }
         
         //creating tempDoubles
         

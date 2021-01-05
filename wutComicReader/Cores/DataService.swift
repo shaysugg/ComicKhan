@@ -150,8 +150,8 @@ class DataService {
             comic.id = UUID()
             comic.name = name
             comic.lastVisitedPage = 0
-            comic.imageNames = imageNames
-            comic.thumbnailNames = thumbnailNames
+            comic.imageNames = NSArray(array: imageNames)
+            comic.thumbnailNames = NSArray(array: thumbnailNames)
             if let group = comicGroup {
                 group.addToComics(comic)
                 comic.groupName = group.name
