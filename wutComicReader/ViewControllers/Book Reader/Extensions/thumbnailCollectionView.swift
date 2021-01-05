@@ -25,8 +25,8 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: collectionView.frame.height * (0.58), height: collectionView.frame.height)
+        let height = collectionView.frame.height - 15
+        return CGSize(width: height * (0.58), height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
