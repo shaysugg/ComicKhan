@@ -169,9 +169,11 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         if completed {
-            if let currentPage = pageViewController.viewControllers?.first as? BookPage,
-                let pageNumber = currentPage.image1?.pageNumber{
-                setLastViewedPage(toPageWithNumber: pageNumber, withAnimate: true)
+            let currentPage = pageViewController.viewControllers?.first as! BookPage
+            if let pageNumber1 = currentPage.image1?.pageNumber{
+                setLastViewedPage(toPageWithNumber: pageNumber1, withAnimate: true)
+            }else if let pageNumber2 = currentPage.image2?.pageNumber {
+                setLastViewedPage(toPageWithNumber: pageNumber2, withAnimate: true)
             }
             
         }
