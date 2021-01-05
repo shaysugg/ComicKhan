@@ -34,7 +34,7 @@ class TopBar: UIView {
         button.clipsToBounds = true
         let img = #imageLiteral(resourceName: "ic-actions-close").withRenderingMode(.alwaysTemplate)
         button.setImage(img, for: .normal)
-        button.tintColor = .appSeconedlabelColor
+        button.tintColor = .label
         button.addTarget(self, action: #selector(closeTheVC), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -71,8 +71,8 @@ class TopBar: UIView {
         addSubview(dismissButton)
         dismissButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         dismissButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        dismissButton.widthAnchor.constraint(equalToConstant: 27).isActive = true
-        dismissButton.heightAnchor.constraint(equalToConstant: 27).isActive = true
+        dismissButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        dismissButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
         dismissButton.clipsToBounds = true
 
     }
@@ -101,7 +101,7 @@ class TopBar: UIView {
             
             dismissButton.transform = CGAffineTransform(scaleX: 1, y: 1).translatedBy(x: 0, y: 0)
             dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.0, radius: 1)
-            dismissButton.tintColor = .appSeconedlabelColor
+            dismissButton.tintColor = .label
             
             titleLabel.textColor = .appMainLabelColor
             titleLabel.makeDropShadow(shadowOffset: .zero, opacity: 0.0, radius: 1)
