@@ -282,7 +282,10 @@ class LibraryVC: UIViewController {
     
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-        for indexPath in indexSelectionManager.indexes{
+        //if they don't sorted like this then we have a crash
+        let highToLowIndexes = indexSelectionManager.indexes.sorted()
+        
+        for indexPath in highToLowIndexes{
             let comic = fetchResultController.object(at: indexPath)
             if let comicName = comic.name,
                 comicName != "" {
