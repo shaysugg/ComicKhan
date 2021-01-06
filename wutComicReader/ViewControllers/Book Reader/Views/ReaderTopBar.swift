@@ -62,7 +62,7 @@ class TopBar: UIView {
         backgroundColor = .appSystemBackground
         
         addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 60).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 65).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
         titleLabelCenterYConstraints = titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         titleLabelCenterYConstraints.isActive = true
@@ -70,7 +70,7 @@ class TopBar: UIView {
         
         addSubview(dismissButton)
         dismissButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        dismissButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        dismissButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         dismissButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
         dismissButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
         dismissButton.clipsToBounds = true
