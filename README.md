@@ -1,24 +1,23 @@
 
-# ComicKhan - CBZ/CBR Reader
+# ComicKhan - CBZ/CBR/PDF Reader
 
 ![Header Image](images/mock.jpg?)
 
 [![App Store](http://cl.ly/WouG/Download_on_the_App_Store_Badge_US-UK_135x40.svg)](https://apps.apple.com/us/app/comickhan/id1516810943)
 
-ComicKhan is an app that allows you to read your comics (.cbz /.cbr/.pdf) on your iPhone and iPad.
+ComicKhan is an app for reading your comic files (.cbz /.cbr/.pdf) on your iPhone and iPad.
 
 ## Features
-* Auto detect new comic files in the app document directory and extract them while showing their extraction progress.
-* Allows you to read your comic files in double page (landscape) and single page (portrait).
-* Save the last page that you have read and show that with a circular progress on the left bottom corner of each book in your library.
-* Resize comic images for better performance.
-* Allows you to group your comics in the library.
-* iPhone and iPad support.
+* Detect new comic files in the app document directory, extract them and showing their extraction progress.
+* Read your comics in double page when your device orientation is landscape and single page when your device orientation is portrait.
+* Save the last page that you have read and show that with a circular progress view on the left bottom corner of each book in your library.
+* Resize comic images for smooth scrolling and better performance.
+* Ability to group your comics in the library.
 
 ## TODO
-- [x] Supports for comics with PDF format
+- [x] Support for comics with PDF format
 - [ ] Ability to sort comic groups based on name, date added, etc.
-- [ ] Supports for extracting directories of comics.
+- [ ] Support for extracting directories of comics.
 
 
 ## Credits
