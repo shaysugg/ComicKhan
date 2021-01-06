@@ -113,12 +113,8 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if scrollView.zoomScale == scrollView.minimumZoomScale {
             updateMinZoomScaleForSize(view.bounds.size)
             centerTheImage()
-        }else{
-            centerTheImage()
-        }
         if !UIDevice.current.orientation.isFlat {
             previousRotation = UIDevice.current.orientation
         }
