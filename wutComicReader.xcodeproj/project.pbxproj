@@ -51,6 +51,7 @@
 		E4EB1E392569762800C56632 /* IndexSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EB1E382569762800C56632 /* IndexSelectionManager.swift */; };
 		E4EBC304241E886600F558AF /* EmptyGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC303241E886600F558AF /* EmptyGroupView.swift */; };
 		E4EBC306241E8D4C00F558AF /* EmptyViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC305241E8D4C00F558AF /* EmptyViewDelegate.swift */; };
+		E4EC58B225A47150004D6190 /* ArrayOfStringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */; };
 		E4FD092924542439004D0A53 /* FileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092824542439004D0A53 /* FileManagerTests.swift */; };
 		E4FD092B245426E7004D0A53 /* ExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092A245426E7004D0A53 /* ExtractorTests.swift */; };
 		E4FD092D245427FA004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz in Resources */ = {isa = PBXBuildFile; fileRef = E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */; };
@@ -141,6 +142,8 @@
 		E4EB1E382569762800C56632 /* IndexSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSelectionManager.swift; sourceTree = "<group>"; };
 		E4EBC303241E886600F558AF /* EmptyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGroupView.swift; sourceTree = "<group>"; };
 		E4EBC305241E8D4C00F558AF /* EmptyViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewDelegate.swift; sourceTree = "<group>"; };
+		E4EC58B025A45631004D6190 /* coredata v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "coredata v2.xcdatamodel"; sourceTree = "<group>"; };
+		E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOfStringTransformer.swift; sourceTree = "<group>"; };
 		E4FD092824542439004D0A53 /* FileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerTests.swift; sourceTree = "<group>"; };
 		E4FD092A245426E7004D0A53 /* ExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtractorTests.swift; sourceTree = "<group>"; };
 		E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz"; sourceTree = "<group>"; };
@@ -377,6 +380,7 @@
 				E426BCE323DF23BE00119927 /* ComicGroup+CoreDataClass.swift */,
 				E426BCE223DF23BE00119927 /* ComicGroup+CoreDataProperties.swift */,
 				E4CC122223A56099006CD29E /* coredata.xcdatamodeld */,
+				E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -697,6 +701,7 @@
 				E407CB8523FD3DD80056F64D /* CircleProgressView.swift in Sources */,
 				E430912024CDB8EB00007FD3 /* ReaderGuideView.swift in Sources */,
 				E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */,
+				E4EC58B225A47150004D6190 /* ArrayOfStringTransformer.swift in Sources */,
 				E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */,
 				E4EBC304241E886600F558AF /* EmptyGroupView.swift in Sources */,
 				E4EBC306241E8D4C00F558AF /* EmptyViewDelegate.swift in Sources */,
@@ -886,19 +891,19 @@
 			baseConfigurationReference = E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = WU5FXL4LFY;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9.5;
+				MARKETING_VERSION = 0.9.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wutup.wutComicReader;
 				PRODUCT_NAME = ComicKhan;
-				PROVISIONING_PROFILE_SPECIFIER = comickhan_default;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -909,19 +914,19 @@
 			baseConfigurationReference = BA3AE4D05ABFE887ADCFCC8C /* Pods-wutComicReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1.7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = WU5FXL4LFY;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9.5;
+				MARKETING_VERSION = 0.9.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wutup.wutComicReader;
 				PRODUCT_NAME = ComicKhan;
-				PROVISIONING_PROFILE_SPECIFIER = comickhan_default;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1056,9 +1061,10 @@
 		E4CC122223A56099006CD29E /* coredata.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E4EC58B025A45631004D6190 /* coredata v2.xcdatamodel */,
 				E4CC122323A56099006CD29E /* coredata.xcdatamodel */,
 			);
-			currentVersion = E4CC122323A56099006CD29E /* coredata.xcdatamodel */;
+			currentVersion = E4EC58B025A45631004D6190 /* coredata v2.xcdatamodel */;
 			path = coredata.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

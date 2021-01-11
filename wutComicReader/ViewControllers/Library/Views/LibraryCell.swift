@@ -15,7 +15,7 @@ class LibraryCell: UICollectionViewCell {
     var book : Comic? {
         didSet{
             
-            guard let imageName = book?.thumbnailNames?.first else { return }
+            guard let imageName = book?.thumbnailNames?[0] as? String else { return }
             
             let cover = ComicImage(book, withImageName: imageName)
 //            bookCoverImageView.image = imageResizer.resize(UIImage(contentsOfFile: cover.path) ,

@@ -190,7 +190,6 @@ class LibraryVC: UIViewController {
         deleteBarButton.isEnabled = false
         navigationItem.rightBarButtonItem = nil
         
-        makeCustomNavigationBar()
         setUpProgressBarDesign()
         designEmptyView()
         layoutTrait(traitCollection: traitCollection)
@@ -249,8 +248,7 @@ class LibraryVC: UIViewController {
                 return larg / 9
             }
         }
-        
-        collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.7)
+        collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.53)
     }
     
     @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
@@ -284,7 +282,11 @@ class LibraryVC: UIViewController {
     
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-        for indexPath in indexSelectionManager.indexes{
+        //if we don't sorted high to low then we have a crash
+        let lowToHighIndexes = indexSelectionManager.indexes.sorted()
+        let highToLowIndexes = lowToHighIndexes.reversed()
+        
+        for indexPath in highToLowIndexes{
             let comic = fetchResultController.object(at: indexPath)
             if let comicName = comic.name,
                 comicName != "" {
@@ -338,26 +340,19 @@ class LibraryVC: UIViewController {
         }
     }
     
-    func makeCustomNavigationBar(){
-        let navigationBar = navigationController?.navigationBar
-        navigationBar?.barTintColor = .appSystemBackground
-        navigationBar?.setBackgroundImage(UIImage(), for: .default)
-        navigationBar?.shadowImage = nil
-        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-    }
     
     func updateNavBarWhenEditingChanged() {
         if editingMode {
             navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
             infoButton.isEnabled = false
             addComicsButton.isEnabled = false
-            infoButton.tintColor = view.backgroundColor
+            infoButton.tintColor = .clear
             editBarButton.title = "Done"
         }else{
             navigationItem.setRightBarButtonItems([infoButton], animated: true)
             infoButton.isEnabled = true
             addComicsButton.isEnabled = true
-            infoButton.tintColor = .appSecondaryLabel
+            infoButton.tintColor = addComicsButton.tintColor
             editBarButton.title = "Edit"
             deleteBarButton.isEnabled = false
             groupBarButton.isEnabled = false
