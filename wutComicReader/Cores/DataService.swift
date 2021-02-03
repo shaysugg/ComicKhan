@@ -73,7 +73,7 @@ class DataService {
         }
     }
     
-    func createANewComicGroup(name: String, comics: [Comic]) throws {
+    func createANewComicGroup(name: String, comics: [Comic]) throws -> ComicGroup {
         
         let newComicGroup = ComicGroup(context: managedContext)
         newComicGroup.id = UUID()
@@ -84,6 +84,7 @@ class DataService {
         
         do {
             try managedContext.save()
+            return newComicGroup
         }catch let err {
             throw err
         }
@@ -142,9 +143,36 @@ class DataService {
         
     }
     
+    func addNewComic(name: String, imageNames: [String], thumbnailNames: [String], toComicGroupWithName groupName: String?) throws {
+        
+        //check if we have a groupName or not
+        if groupName == nil {
+            try addNewComic(name: name, imageNames: imageNames, thumbnailNames: thumbnailNames, to: nil)
+            return
+        }
+        
+        //see if a group with groupName already exist
+        let request = NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
+        let predicate = NSPredicate(format: "%K == %@", #keyPath(ComicGroup.name), groupName!)
+        request.predicate = predicate
+        
+        let matchedGroups = try? managedContext.fetch(request)
+        
+        //if it is so, add comics to that group
+        if let group = matchedGroups?.first {
+            try addNewComic(name: name, imageNames: imageNames, thumbnailNames: thumbnailNames, to: group)
+            
+        }else {
+            //otherwise create a new group with groupName and add comics to it
+            let group = try? createANewComicGroup(name: groupName!, comics: [])
+            try addNewComic(name: name, imageNames: imageNames, thumbnailNames: thumbnailNames, to: group)
+        }
+    }
+    
     func addNewComic(name: String, imageNames: [String], thumbnailNames: [String], to comicGroup: ComicGroup?) throws {
         
         do {
+            //FIXME: why fetch?
             try fetchGroupForNewComics()
             let comic = Comic(context: managedContext)
             comic.id = UUID()
