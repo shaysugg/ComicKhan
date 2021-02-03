@@ -108,8 +108,8 @@ extension LibraryVC: ProgressDelegate {
             self?.progressContainer.setTitleLabel(to: "Extracting: \(name)")
             self?.comicNameThatExtracting = name
             self?.progressContainer.setProgress(to: 0)
-            if let count = self?.newFilesCount {
-                self?.progressContainer.setNumberLabel(to: String(number) + "/" + String(count))
+            if let totalNumber = inTotalFilesCount {
+                self?.progressContainer.setNumberLabel(to: String(number) + "/" + String(totalNumber))
             }
             
         }
