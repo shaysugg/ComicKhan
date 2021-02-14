@@ -269,11 +269,17 @@ class LibraryVC: UIViewController {
     
     //MARK:- actions
     @IBAction func addComicsButtonTapped(_ sender: Any) {
-        let documentVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
-        documentVC.allowsMultipleSelection = true
-        documentVC.delegate = self
+        let documentPickerVC: UIDocumentPickerViewController!
         
-        present(documentVC, animated: true, completion: nil)
+        if #available(iOS 14.0, *) {
+            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: [.directory, .pdf , .archive , .init(exportedAs: "com.wutup.cbr")], asCopy: true)
+        } else {
+            documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
+        }
+        documentPickerVC.allowsMultipleSelection = true
+        documentPickerVC.delegate = self
+        
+        present(documentPickerVC, animated: true, completion: nil)
         
         
     }
