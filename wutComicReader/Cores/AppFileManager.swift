@@ -36,6 +36,12 @@ class AppFileManager {
         
     }
     
+    func deleteAllUserDirectoryContent() throws {
+        try fileManager.contentsOfDirectory(at: userDiractory, includingPropertiesForKeys: nil)
+            .forEach({ (url) in
+                try fileManager.removeItem(at: url)
+            })
+    }
     
     func deleteFileInTheUserDiractory(withName fileName : String) throws{
         if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbz") {
@@ -66,7 +72,7 @@ class AppFileManager {
             
             for diractory in comicDiractories {
                 
-                let extractionDirectory = ExtractionDirectory(baseURL: diractory)
+                let extractionDirectory = ExtractionDirectory(directoryName: diractory.fileName())
                 
                 let comicName = diractory.lastPathComponent
                 
@@ -81,10 +87,11 @@ class AppFileManager {
                     if !comicImageNames.isEmpty {
                         
                         do{
+                            let groupName = try? extractionDirectory.readMetaData().groupName
                             try dataService.addNewComic(name: comicName,
                                                         imageNames: comicImageNames,
                                                         thumbnailNames: thumbnailImages,
-                                                        to: nil)
+                                                        toComicGroupWithName: groupName)
                         }catch let error {
                             try? deleteFileInTheUserDiractory(withName: comicName)
                             throw error

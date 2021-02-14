@@ -25,8 +25,6 @@ class LibraryVC: UIViewController {
     var fetchResultController: NSFetchedResultsController<Comic>!
     var blockOperations = [BlockOperation]()
     
-    var newFilesCount: Int?
-    
     private(set) var collectionViewCellSize: CGSize!
     
     var editingMode = false
@@ -271,11 +269,17 @@ class LibraryVC: UIViewController {
     
     //MARK:- actions
     @IBAction func addComicsButtonTapped(_ sender: Any) {
-        let documentVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
-        documentVC.allowsMultipleSelection = true
-        documentVC.delegate = self
+        let documentPickerVC: UIDocumentPickerViewController!
         
-        present(documentVC, animated: true, completion: nil)
+        if #available(iOS 14.0, *) {
+            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: [.directory, .pdf , .archive , .init(exportedAs: "com.wutup.cbr")], asCopy: true)
+        } else {
+            documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
+        }
+        documentPickerVC.allowsMultipleSelection = true
+        documentPickerVC.delegate = self
+        
+        present(documentPickerVC, animated: true, completion: nil)
         
         
     }
@@ -373,8 +377,7 @@ class LibraryVC: UIViewController {
     func didUserAddNewFilesWhileAppWasDeactive() {
         if let files = appfileManager.filesInUserDiractory(),
             !files.isEmpty {
-            newFilesCount = files.count
-            extractAndWriteNewComicsOnCoreData(files)
+            extractAndWriteNewComicsOnCoreData()
         }
     }
     
@@ -382,15 +385,14 @@ class LibraryVC: UIViewController {
         
         diractoryWatcher = DirectoryWatcher.watch(URL.userDiractory)
         
-        diractoryWatcher?.onNewFiles = { [weak self] newfiles in
-            self?.newFilesCount = newfiles.count
-            self?.extractAndWriteNewComicsOnCoreData(newfiles)
+        diractoryWatcher?.onNewFiles = { [weak self] _ in
+            self?.extractAndWriteNewComicsOnCoreData()
         }
     
     }
     
     
-    func extractAndWriteNewComicsOnCoreData(_ newfiles: [URL]) {
+    func extractAndWriteNewComicsOnCoreData() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             
             let taskID = UIApplication.shared.beginBackgroundTask(expirationHandler: { [weak self] in
@@ -405,13 +407,11 @@ class LibraryVC: UIViewController {
             do{
                 /// - Q: how it realize that extracting is finished and should write new comics into coreData ???
                 
-            self?.comicExtractor.extractUserComicsIntoComicDiractory()
-            try self?.appfileManager.writeNewComicsOnCoreData()
+                self?.comicExtractor.extractUserComicsIntoComicDiractory()
+                try self?.appfileManager.writeNewComicsOnCoreData()
+                try self?.appfileManager.deleteAllUserDirectoryContent()
+//                
                 
-                for newfile in newfiles {
-                    //if this one fail there gonna be aloooots of problems!
-                    try? FileManager.default.removeItem(at: newfile)
-                }
                 
                 if taskID != UIBackgroundTaskIdentifier.invalid {
                     UIApplication.shared.endBackgroundTask(taskID)
@@ -420,7 +420,7 @@ class LibraryVC: UIViewController {
             }catch{
                 DispatchQueue.main.async {
                     self?.showAlert(with: "OH!",
-                    description: "there was a problem with your comic file Extraction, please try again.")
+                                    description: "there was a problem with your comic file Extraction, please try again.")
                     self?.removeProgressView()
                 }
                 
