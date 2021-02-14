@@ -18,10 +18,16 @@
 		E40C7AA222A1168C00D7CD17 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA022A1168C00D7CD17 /* Main.storyboard */; };
 		E40C7AA722A1169000D7CD17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E40C7AA522A1169000D7CD17 /* LaunchScreen.storyboard */; };
 		E40FD64D22D1239800926CC4 /* ThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40FD64C22D1239800926CC4 /* ThumbnailCell.swift */; };
+		E411C7F525BF44F9006D45A5 /* ExtractionDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E411C7F425BF44F9006D45A5 /* ExtractionDirectory.swift */; };
 		E42576AC253458A8000F0D0D /* +NSLayoutContraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42576AB253458A8000F0D0D /* +NSLayoutContraint.swift */; };
 		E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B4D23DB30E000182E0B /* thumbnailCollectionView.swift */; };
 		E4288B5423DB31D600182E0B /* bookPageControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */; };
 		E42B9EA024506CF3007B3803 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42B9E9F24506CF3007B3803 /* DataService.swift */; };
+		E42BF30925C0152900724C11 /* 2-dogs.cbz in Resources */ = {isa = PBXBuildFile; fileRef = E42BF30525C0152800724C11 /* 2-dogs.cbz */; };
+		E42BF30A25C0152900724C11 /* 4-dogs.cbz in Resources */ = {isa = PBXBuildFile; fileRef = E42BF30625C0152800724C11 /* 4-dogs.cbz */; };
+		E42BF30B25C0152900724C11 /* 1-fish.cbz in Resources */ = {isa = PBXBuildFile; fileRef = E42BF30725C0152800724C11 /* 1-fish.cbz */; };
+		E42BF30C25C0152900724C11 /* 3-fish.cbz in Resources */ = {isa = PBXBuildFile; fileRef = E42BF30825C0152800724C11 /* 3-fish.cbz */; };
+		E43017FF25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43017FE25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift */; };
 		E430912024CDB8EB00007FD3 /* ReaderGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */; };
 		E443C8B52528A4920060CDFB /* +URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E443C8B42528A4920060CDFB /* +URL.swift */; };
 		E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44FA70B23F0015C00338457 /* LibraryReusableView.swift */; };
@@ -100,6 +106,7 @@
 		E40C7AA622A1169000D7CD17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E40C7AA822A1169000D7CD17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E40FD64C22D1239800926CC4 /* ThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCell.swift; sourceTree = "<group>"; };
+		E411C7F425BF44F9006D45A5 /* ExtractionDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractionDirectory.swift; sourceTree = "<group>"; };
 		E42576AB253458A8000F0D0D /* +NSLayoutContraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+NSLayoutContraint.swift"; sourceTree = "<group>"; };
 		E426BCE123DF23BE00119927 /* Comic+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comic+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E426BCE223DF23BE00119927 /* ComicGroup+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComicGroup+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -108,6 +115,11 @@
 		E4288B4D23DB30E000182E0B /* thumbnailCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thumbnailCollectionView.swift; sourceTree = "<group>"; };
 		E4288B5323DB31D600182E0B /* bookPageControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookPageControllerExtensions.swift; sourceTree = "<group>"; };
 		E42B9E9F24506CF3007B3803 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		E42BF30525C0152800724C11 /* 2-dogs.cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2-dogs.cbz"; sourceTree = "<group>"; };
+		E42BF30625C0152800724C11 /* 4-dogs.cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "4-dogs.cbz"; sourceTree = "<group>"; };
+		E42BF30725C0152800724C11 /* 1-fish.cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "1-fish.cbz"; sourceTree = "<group>"; };
+		E42BF30825C0152800724C11 /* 3-fish.cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "3-fish.cbz"; sourceTree = "<group>"; };
+		E43017FE25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractionDirectoriesTests.swift; sourceTree = "<group>"; };
 		E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderGuideView.swift; sourceTree = "<group>"; };
 		E443C8B42528A4920060CDFB /* +URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+URL.swift"; sourceTree = "<group>"; };
 		E44FA70B23F0015C00338457 /* LibraryReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryReusableView.swift; sourceTree = "<group>"; };
@@ -368,6 +380,7 @@
 				E49C7C122417EBED004DE82A /* ImageResizer.swift */,
 				E40C0EB123944A8200D2E561 /* AppFileManager.swift */,
 				E4EB1E382569762800C56632 /* IndexSelectionManager.swift */,
+				E411C7F425BF44F9006D45A5 /* ExtractionDirectory.swift */,
 			);
 			path = Cores;
 			sourceTree = "<group>";
@@ -433,8 +446,13 @@
 		E4FD0923245423F2004D0A53 /* Extractor */ = {
 			isa = PBXGroup;
 			children = (
+				E42BF30725C0152800724C11 /* 1-fish.cbz */,
+				E42BF30525C0152800724C11 /* 2-dogs.cbz */,
+				E42BF30825C0152800724C11 /* 3-fish.cbz */,
+				E42BF30625C0152800724C11 /* 4-dogs.cbz */,
 				E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */,
 				E4FD092A245426E7004D0A53 /* ExtractorTests.swift */,
+				E43017FE25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift */,
 			);
 			path = Extractor;
 			sourceTree = "<group>";
@@ -582,6 +600,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4FD092D245427FA004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz in Resources */,
+				E42BF30925C0152900724C11 /* 2-dogs.cbz in Resources */,
+				E42BF30A25C0152900724C11 /* 4-dogs.cbz in Resources */,
+				E42BF30C25C0152900724C11 /* 3-fish.cbz in Resources */,
+				E42BF30B25C0152900724C11 /* 1-fish.cbz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +729,7 @@
 				E4EBC306241E8D4C00F558AF /* EmptyViewDelegate.swift in Sources */,
 				E42B9EA024506CF3007B3803 /* DataService.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */,
+				E411C7F525BF44F9006D45A5 /* ExtractionDirectory.swift in Sources */,
 				E4596A042407E7650030DB3E /* ReaderBottomBar.swift in Sources */,
 				E40A353323F97C83006FA758 /* Library+ProgressContainer.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
@@ -727,6 +750,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43017FF25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift in Sources */,
 				E4FD092B245426E7004D0A53 /* ExtractorTests.swift in Sources */,
 				E4FD092F245435A1004D0A53 /* MockCoreDataStack.swift in Sources */,
 				E462BD092455FA6D0089AD5F /* LibraryVCTests.swift in Sources */,
