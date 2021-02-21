@@ -18,7 +18,7 @@ class ExtractorTests: XCTestCase {
     var extractor : ComicExteractor!
     var tempComicDirectory: URL!
     var tempUserDirectory: URL!
-    let fileManager = FileManager.default
+    let fileManager = FileManager()
     var testBundle: Bundle!
     
     enum Format {
