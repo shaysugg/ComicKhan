@@ -29,6 +29,8 @@ class LibraryVC: UIViewController {
     
     var editingMode = false
     
+    var newComicsErrorsDescription = ""
+    
     let indexSelectionManager = IndexSelectionManager()
     var indexSelectionCancelabels = [Cancellable]()
     
@@ -126,8 +128,11 @@ class LibraryVC: UIViewController {
         setUpDesigns()
         
         comicExtractor.delegate = self
+        comicExtractor.errorDelegate = self
         appfileManager.progressDelegate = self
+        appfileManager.errorDelegate = self
         emptyGroupsView.delegate = self
+        
         
         bookCollectionView.reloadData()
         bookCollectionView.allowsMultipleSelection = true
@@ -404,29 +409,17 @@ class LibraryVC: UIViewController {
             })
             
             
-            do{
-                /// - Q: how it realize that extracting is finished and should write new comics into coreData ???
-                
-                self?.comicExtractor.extractUserComicsIntoComicDiractory()
-                try self?.appfileManager.writeNewComicsOnCoreData()
-                try self?.appfileManager.deleteAllUserDirectoryContent()
-//                
-                
-                
-                if taskID != UIBackgroundTaskIdentifier.invalid {
-                    UIApplication.shared.endBackgroundTask(taskID)
-                }
-                
-            }catch{
-                DispatchQueue.main.async {
-                    self?.showAlert(with: "OH!",
-                                    description: "there was a problem with your comic file Extraction, please try again.")
-                    self?.removeProgressView()
-                }
-                
-                if taskID != UIBackgroundTaskIdentifier.invalid {
-                    UIApplication.shared.endBackgroundTask(taskID)
-                }
+            
+            /// - Q: how it realize that extracting is finished and should write new comics into coreData ???
+            
+            self?.comicExtractor.extractUserComicsIntoComicDiractory()
+            self?.appfileManager.writeNewComicsOnCoreData()
+            try? self?.appfileManager.deleteAllUserDirectoryContent()
+            DispatchQueue.main.async { self?.showExtractionErrorsIfExist() }
+            
+            
+            if taskID != UIBackgroundTaskIdentifier.invalid {
+                UIApplication.shared.endBackgroundTask(taskID)
             }
         }
     }
