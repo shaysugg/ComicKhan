@@ -20,7 +20,7 @@ extension LibraryVC: ExtractorErrorDelegate, AppFileManagerErrorDelegate {
                 messages.append("Unvalid File Format: cant extract \(error.fileName), only .cbz, .cbr, .pdf is supported.")
                 
             case .comicAlreadyExtracted:
-                messages.append("File Already Exists: Comic with name of \(error.fileName) already exist.")
+                messages.append("File Already Exists: Comic with name of \(error.fileName) already exists.")
                 
             case .createExtractionDirectories:
                 messages.append("Can't create a directory for \(error.fileName)")
@@ -42,7 +42,7 @@ extension LibraryVC: ExtractorErrorDelegate, AppFileManagerErrorDelegate {
         newComicsErrorsDescription = configureDescription(of: messages)
     }
     
-    func errorsAccuredWhenWritingOnDataBase(errors: [FileManagerError]) {
+    func errorsAccured(errors: [AppFileManager.AppFileManagerError]) {
         
         var messages = [String]()
         
@@ -78,7 +78,7 @@ extension LibraryVC: ExtractorErrorDelegate, AppFileManagerErrorDelegate {
     
     func showExtractionErrorsIfExist() {
         if !newComicsErrorsDescription.isEmpty {
-            showAlert(with: "Can't extract some of your comics files.",
+            showAlert(with: "Can't extract some of your comic files.",
                       description: newComicsErrorsDescription)
             
             newComicsErrorsDescription = ""
