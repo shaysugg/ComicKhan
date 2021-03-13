@@ -35,6 +35,7 @@
 		E455AFDF245EA30D003F403D /* Library+DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E455AFDE245EA30D003F403D /* Library+DocumentBrowser.swift */; };
 		E4596A042407E7650030DB3E /* ReaderBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4596A032407E7650030DB3E /* ReaderBottomBar.swift */; };
 		E4596A07240803A60030DB3E /* ReaderTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4596A06240803A60030DB3E /* ReaderTopBar.swift */; };
+		E45A877D25FC99280011CF9F /* Cores.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45A877C25FC99280011CF9F /* Cores.swift */; };
 		E45C842A238DACD700669155 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C8429238DACD700669155 /* Colors.swift */; };
 		E462BD05245581940089AD5F /* VCAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD04245581940089AD5F /* VCAlert.swift */; };
 		E462BD07245583D90089AD5F /* Library+FetchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD06245583D90089AD5F /* Library+FetchResultController.swift */; };
@@ -128,6 +129,7 @@
 		E455AFDE245EA30D003F403D /* Library+DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+DocumentBrowser.swift"; sourceTree = "<group>"; };
 		E4596A032407E7650030DB3E /* ReaderBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderBottomBar.swift; sourceTree = "<group>"; };
 		E4596A06240803A60030DB3E /* ReaderTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTopBar.swift; sourceTree = "<group>"; };
+		E45A877C25FC99280011CF9F /* Cores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cores.swift; sourceTree = "<group>"; };
 		E45C8429238DACD700669155 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E462BD04245581940089AD5F /* VCAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCAlert.swift; sourceTree = "<group>"; };
 		E462BD06245583D90089AD5F /* Library+FetchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+FetchResultController.swift"; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				E40C0EB123944A8200D2E561 /* AppFileManager.swift */,
 				E4EB1E382569762800C56632 /* IndexSelectionManager.swift */,
 				E411C7F425BF44F9006D45A5 /* ExtractionDirectory.swift */,
+				E45A877C25FC99280011CF9F /* Cores.swift */,
 			);
 			path = Cores;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				E4C51EFE245EF82700B8AC04 /* LoadingView.swift in Sources */,
 				E462BD07245583D90089AD5F /* Library+FetchResultController.swift in Sources */,
 				E4CE377F240D578600429C30 /* ProgressContainerView.swift in Sources */,
+				E45A877D25FC99280011CF9F /* Cores.swift in Sources */,
 				E48253EA22D631B1001A0E85 /* Helper.swift in Sources */,
 				E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */,
 				E49C7C132417EBED004DE82A /* ImageResizer.swift in Sources */,
