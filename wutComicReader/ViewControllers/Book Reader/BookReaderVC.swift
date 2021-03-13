@@ -304,7 +304,7 @@ class BookReaderVC: UIViewController {
     }
     
     private func addGuideViewIfNeeded() {
-        if readerPresentForFirstTime() {
+        if UserDefaults.standard.readerPresentForFirstTime() {
             
             guideView.delegate = self
             

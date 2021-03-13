@@ -18,11 +18,11 @@ class LibraryVC: UIViewController {
     
     //MARK:- Variables
     
-    private(set) var appfileManager: AppFileManager!
-    private let comicExtractor = ComicExteractor()
-    var dataService: DataService!
+    let appfileManager: AppFileManager!
+    let comicExtractor: ComicExteractor
+    let dataService: DataService
     
-    var fetchResultController: NSFetchedResultsController<Comic>!
+    let fetchResultController: NSFetchedResultsController<Comic>
     var blockOperations = [BlockOperation]()
     
     private(set) var collectionViewCellSize: CGSize!
@@ -95,57 +95,31 @@ class LibraryVC: UIViewController {
     
     //MARK:- Functions
     
+    required init?(coder: NSCoder) {
+        self.appfileManager = Cores.main.appfileManager
+        self.comicExtractor = Cores.main.extractor
+        self.dataService = Cores.main.dataService
+        fetchResultController = try! dataService.configureFetchResultController()
+        
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dataService = DataService()
-        appfileManager = AppFileManager(dataService: dataService)
-        
-        if appLaunchedForFirstTime() {
-            do {
-                try dataService.createGroupForNewComics()
-                try appfileManager.makeAppDirectory()
-                setAppDidLaunchedFlag()
-                
-            }catch let error {
-                fatalError("Initialing Values was failed: " + error.localizedDescription)
-            }
-        }
-
-        do {
-            fetchResultController = try dataService.configureFetchResultController()
-        }catch {
-            showAlert(with: "Oh!", description: "there is a problem with fetching your comics")
-        }
         
         setupDiractoryWatcher()
         didUserAddNewFilesWhileAppWasDeactive()
         
-        fetchResultController.delegate = self
-        
         configureCellSize(basedOn: UIScreen.main.traitCollection)
-        
         setUpDesigns()
         
-        comicExtractor.delegate = self
-        comicExtractor.errorDelegate = self
-        appfileManager.progressDelegate = self
-        appfileManager.errorDelegate = self
-        emptyGroupsView.delegate = self
+        setupDelegates()
         
+        setUpNavigationButtons()
         
-        bookCollectionView.reloadData()
+        setupNotificationCenterObservers()
+        
         bookCollectionView.allowsMultipleSelection = true
-        
-        setUpSelectedCellObservers()
-         
-        navigationItem.setRightBarButtonItems([infoButton], animated: true)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAboutToAdd, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
-        
-        print(NSHomeDirectory())
-        
         
     }
     
@@ -230,6 +204,19 @@ class LibraryVC: UIViewController {
         
     }
     
+    private func setupDelegates() {
+        fetchResultController.delegate = self
+        comicExtractor.delegate = self
+        comicExtractor.errorDelegate = self
+        appfileManager.progressDelegate = self
+        appfileManager.errorDelegate = self
+        emptyGroupsView.delegate = self
+    }
+    
+    private func setupNotificationCenterObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAboutToAdd, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
+    }
         
     //MARK:- Collection View Functions
     
@@ -261,7 +248,9 @@ class LibraryVC: UIViewController {
         
     }
     
-    private func setUpSelectedCellObservers() {
+    private func setUpNavigationButtons() {
+        
+        navigationItem.setRightBarButtonItems([infoButton], animated: true)
         
         let barButtonIsEnabled = indexSelectionManager.publisher.tryMap{!$0.isEmpty}.replaceError(with: false)
         

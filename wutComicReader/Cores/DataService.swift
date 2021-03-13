@@ -9,13 +9,14 @@
 import UIKit
 import CoreData
 
-class DataService {
-    var managedContext: NSManagedObjectContext!
-    var comicFetchResultController: NSFetchedResultsController<Comic>?
-    var groupForNewComics: ComicGroup?
-    var groupForNewComicsName = ""
+final class DataService {
     
-    init(managedContext: NSManagedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext) {
+    var managedContext: NSManagedObjectContext
+    var comicFetchResultController: NSFetchedResultsController<Comic>?
+    private var groupForNewComics: ComicGroup?
+    private let groupForNewComicsName = ""
+    
+    init(managedContext: NSManagedObjectContext) {
         self.managedContext = managedContext
     }
     
@@ -55,19 +56,17 @@ class DataService {
     
     func deleteComicFromCoreData(withName name: String) throws {
         
-        guard let context = managedContext else { return }
-        
         let deletereq = NSFetchRequest<Comic>(entityName: "Comic")
         let predict = NSPredicate(format: "%K == %@", #keyPath(Comic.name) , name)
         deletereq.predicate = predict
         
         
-        guard let comics = try? context.fetch(deletereq) else { return }
+        guard let comics = try? managedContext.fetch(deletereq) else { return }
         for comic in comics {
-            context.delete(comic)
+            managedContext.delete(comic)
         }
         do {
-            try context.save()
+            try managedContext.save()
         }catch let err{
             throw err
         }

@@ -52,19 +52,24 @@ extension ProgressDelegate {
 fileprivate var keyPathToObserve = "fractionCompleted"
 
 
-class ComicExteractor: NSObject {
+final class ComicExteractor: NSObject {
+    
+    private let userDirectory: URL
+    private let comicDirectory: URL
     
     var rarExtractingProgress: Progress?
     weak var delegate: ProgressDelegate?
     private(set) var totalComicCount = 0
     private(set) var currentComicNumber = 1
     
-    private var userDirectory = URL.userDiractory
-    private var comicDirectory = URL.comicDiractory
-    
     weak var errorDelegate: ExtractorErrorDelegate?
     private var errors = [ExtractorError]()
     
+    
+    init(userDirectory: URL, comicDirectory: URL) {
+        self.userDirectory = userDirectory
+        self.comicDirectory = comicDirectory
+    }
     
     
     func extractUserComicsIntoComicDiractory() {
@@ -293,13 +298,6 @@ class ComicExteractor: NSObject {
         if number < 10 { return "00\(number)" }
         else if number < 100 { return "0\(number)" }
         else { return "\(number)" }
-    }
-    
-    ///use this init for testing purposes
-    convenience init(testUserDirectory: URL, testComicDirectory: URL) {
-        self.init()
-        userDirectory = testUserDirectory
-        comicDirectory = testComicDirectory
     }
     
 }

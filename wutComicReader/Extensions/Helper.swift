@@ -52,26 +52,24 @@ class ZoomGestureRecognizer: UITapGestureRecognizer {
 }
 
 
-extension UIViewController {
+extension UserDefaults {
     func appLaunchedForFirstTime() -> Bool {
-        let didLaunchedBefore = UserDefaults.standard.bool(forKey: "appDidLunchedBefore")
+        let didLaunchedBefore = self.bool(forKey: "appDidLunchedBefore")
         return !didLaunchedBefore 
     }
     
     func setAppDidLaunchedFlag() {
-        UserDefaults.standard.set(true, forKey: "appDidLunchedBefore")
+        self.set(true, forKey: "appDidLunchedBefore")
     }
-}
-
-
-extension BookReaderVC {
+    
     func readerPresentForFirstTime() -> Bool {
-        let didPresentBefore = UserDefaults.standard.bool(forKey: "readerDidPresentedBefore")
+        let didPresentBefore = self.bool(forKey: "readerDidPresentedBefore")
         if !didPresentBefore {
-            UserDefaults.standard.set(true, forKey: "readerDidPresentedBefore")
+            self.set(true, forKey: "readerDidPresentedBefore")
             return true
         }else{
             return false
         }
     }
+    
 }

@@ -37,36 +37,39 @@ class AppFileManager {
     
     //MARK:- Variables
     
-    var comicDirectory = URL.comicDiractory
-    var userDiractory = URL.userDiractory
+    let comicDirectory: URL
+    let userDirectory: URL
+    
     private var fileManager = FileManager.default
     internal var managedContext : NSManagedObjectContext?
     var dataService: DataService!
-    var progressDelegate: ProgressDelegate?
+    weak var progressDelegate: ProgressDelegate?
     
     var errors = [AppFileManagerError]()
     weak var errorDelegate: AppFileManagerErrorDelegate?
     
     //MARK:- Functions
     
-    init(dataService: DataService) {
+    init(dataService: DataService, userDirectory: URL, comicDirectory: URL) {
         managedContext = dataService.managedContext
         self.dataService = dataService
+        self.comicDirectory = comicDirectory
+        self.userDirectory = userDirectory
         
     }
     
     func deleteAllUserDirectoryContent() throws {
-        try fileManager.contentsOfDirectory(at: userDiractory, includingPropertiesForKeys: nil)
+        try fileManager.contentsOfDirectory(at: userDirectory, includingPropertiesForKeys: nil)
             .forEach({ (url) in
                 try fileManager.removeItem(at: url)
             })
     }
     
     func deleteFileInTheUserDiractory(withName fileName : String) throws{
-        if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbz") {
-            try fileManager.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbz"))
-        }else if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbr") {
-            try fileManager.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbr"))
+        if fileManager.subpaths(atPath: userDirectory.path)!.contains(fileName + ".cbz") {
+            try fileManager.removeItem(at: userDirectory.appendingPathComponent(fileName + ".cbz"))
+        }else if fileManager.subpaths(atPath: userDirectory.path)!.contains(fileName + ".cbr") {
+            try fileManager.removeItem(at: userDirectory.appendingPathComponent(fileName + ".cbr"))
         }
     }
     
@@ -75,7 +78,7 @@ class AppFileManager {
     }
     
     func filesInUserDiractory() -> [URL]? {
-        try? fileManager.contentsOfDirectory(at: userDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        try? fileManager.contentsOfDirectory(at: userDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
     }
     
     ///write extracted comics in the comic diractory on core data
@@ -94,9 +97,9 @@ class AppFileManager {
         
         for diractory in comicDiractories {
             
-            let extractionDirectory = ExtractionDirectory(directoryName: diractory.fileName())
-            
             let comicName = diractory.lastPathComponent
+            
+            let extractionDirectory = ExtractionDirectory(directoryName: comicName)
             
             if !dataService.comicAlreadyExistedInCoreData(withName: comicName) {
                 
