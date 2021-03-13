@@ -148,6 +148,9 @@ class ComicExteractor: NSObject {
                     errors.append(ExtractorError(type: .comicExtracting(.convertPDFtoImages), fileName: url.lastPathComponent))
                     continue
                 }
+            }else {
+                errors.append(ExtractorError(type: .unsupportFileFormat, fileName: url.lastPathComponent))
+                continue
             }
             
             //write comicGroupName as metada if needed
