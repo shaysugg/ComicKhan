@@ -47,6 +47,7 @@
 		E49C7C132417EBED004DE82A /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C122417EBED004DE82A /* ImageResizer.swift */; };
 		E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C142418FEF4004DE82A /* ComicImage.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
+		E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */; };
 		E4C51EFE245EF82700B8AC04 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C51EFD245EF82700B8AC04 /* LoadingView.swift */; };
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
 		E4CE377F240D578600429C30 /* ProgressContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE377E240D578600429C30 /* ProgressContainerView.swift */; };
@@ -142,6 +143,7 @@
 		E49C7C122417EBED004DE82A /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 		E49C7C142418FEF4004DE82A /* ComicImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicImage.swift; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
+		E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Library+ExtractionErrorHandeling.swift"; sourceTree = "<group>"; };
 		E4C51EFD245EF82700B8AC04 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
 		E4CE377E240D578600429C30 /* ProgressContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressContainerView.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				E40A353223F97C83006FA758 /* Library+ProgressContainer.swift */,
 				E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */,
 				E4EBC305241E8D4C00F558AF /* EmptyViewDelegate.swift */,
+				E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */,
 				E462BD06245583D90089AD5F /* Library+FetchResultController.swift */,
 				E455AFDE245EA30D003F403D /* Library+DocumentBrowser.swift */,
 			);
@@ -699,6 +702,7 @@
 				E4EB1E392569762800C56632 /* IndexSelectionManager.swift in Sources */,
 				E40FD64D22D1239800926CC4 /* ThumbnailCell.swift in Sources */,
 				E45C842A238DACD700669155 /* Colors.swift in Sources */,
+				E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */,
 				E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */,
 				E42576AC253458A8000F0D0D /* +NSLayoutContraint.swift in Sources */,
 				E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */,
