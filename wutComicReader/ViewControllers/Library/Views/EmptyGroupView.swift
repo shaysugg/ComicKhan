@@ -7,66 +7,143 @@
 //
 
 import UIKit
+import SwiftUI
 
-protocol EmptyViewDelegate {
-    func howAddComicsButtonTapped()
+protocol EmptyViewDelegate: class {
+    func importComicsButtonTapped()
+    func copyrightButtonDidTapped()
 }
 
 class EmptyGroupView: UIView {
     
-    var delegate: EmptyViewDelegate?
+    weak var delegate: EmptyViewDelegate?
+    
+    private lazy var vStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var hStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    //this stackView used in landscaped mode
+    private lazy var rightVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var pictureVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var pictureDiscriptionHStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var buttonVStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "emptyLibrary")
+        imageView.image = UIImage(named: "placeholder")
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private lazy var label: UILabel = {
+    private lazy var artistNameLabel: UILabel = {
         let label = UILabel()
-    
-        let attributedString = NSMutableAttributedString(string: "Go ahead and import your comics using ")
-        
-        if #available(iOS 13.0, *) {
-            let imgAttachment = NSTextAttachment(image: UIImage(systemName: "plus.circle")!)
-            attributedString.append(NSAttributedString(attachment: imgAttachment))
-        } else {
-            attributedString.append(NSAttributedString(string: "+"))
-        }
-        
-        attributedString.append(NSAttributedString(string: " button or copy them into the application directory with iTunes."))
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 1.5
-        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-        label.attributedText = attributedString
-        
-        label.font = UIFont(name: HelvetincaNeueFont.light.name, size: 15)
+        label.text = "By Samuel Jessurun de Mesquita"
+        label.font = UIFont(name: HelvetincaNeueFont.regular.name, size: 10)
         label.textColor = .appSeconedlabelColor
-        label.numberOfLines = 0
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var copyrightButton: UIButton = {
+        let button = UIButton()
+        let text = "copyright"
+        button.setTitle(text, for: .normal)
+        let textRange = NSRange(location: 0, length: text.count)
+        let attributedText = NSMutableAttributedString(string: text)
+        attributedText.addAttribute(.underlineStyle,
+                                    value: NSUnderlineStyle.single.rawValue,
+                                    range: textRange)
+        
+        button.titleLabel?.attributedText = attributedText
+        
+        button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.regular.name, size: 10)
+        button.setTitleColor(.appSecondaryLabel, for: .normal)
+        button.titleLabel?.textAlignment = .left
+        button.addTarget(self, action: #selector(copyrightButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Your Library is Empty ..."
-        label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 18)
+        label.text = "Your don’t have any comics here!"
+        label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 24)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var howToButton: UIButton = {
+    private lazy var importLabel: UILabel = {
+        let label = UILabel()
+        label.text = "You can also import them with iTunes"
+        label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 14)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .appSecondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var importButton: UIButton = {
         let button = UIButton()
-        button.setTitle("How can I add comics here?", for: .normal)
+        button.setTitle("Import Your Comics", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .appBlueColor
-        button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 14)
+        button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(howToAddComicsButtonTapped), for: .touchUpInside)
         return button
@@ -74,43 +151,75 @@ class EmptyGroupView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpDesign()
+        setUpStackViews()
     }
     
-    func setUpDesign() {
+    
+    private func setUpStackViews() {
         
-        addSubview(imageView)
-        imageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        imageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        pictureVStackView.addArrangedSubview(imageView)
+        pictureVStackView.addArrangedSubview(pictureDiscriptionHStackView)
+        pictureDiscriptionHStackView.addArrangedSubview(artistNameLabel)
+        pictureDiscriptionHStackView.addArrangedSubview(copyrightButton)
+
+        buttonVStackView.addArrangedSubview(importButton)
+        buttonVStackView.addArrangedSubview(importLabel)
+
+        importButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: leftAnchor , constant: 20).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: rightAnchor , constant: -20).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
+        imageView.widthAnchor.constraint(equalTo: pictureVStackView.widthAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.28).isActive = true
+        pictureDiscriptionHStackView.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
-        addSubview(label)
-        label.leftAnchor.constraint(equalTo: leftAnchor , constant: 20).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor , constant: -20).isActive = true
-        label.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
+    }
+    
+    
+    func designforportrait() {
+        hStackView.removeFromSuperview()
+        hStackView.arrangedSubviews.forEach({$0.removeFromSuperview()})
         
-//        addSubview(howToButton)
-//        howToButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
-//        howToButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-//        howToButton.widthAnchor.constraint(equalToConstant: 230).isActive = true
-//        howToButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        addSubview(vStackView)
+        vStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        vStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        vStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        vStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+        vStackView.addArrangedSubview(pictureVStackView)
+        vStackView.addArrangedSubview(titleLabel)
+        vStackView.addArrangedSubview(buttonVStackView)
+    }
+    
+    
+    func designForLandscape() {
+        vStackView.removeFromSuperview()
+        vStackView.arrangedSubviews.forEach({$0.removeFromSuperview()})
         
+        addSubview(hStackView)
+        hStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        hStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        hStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        hStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        
+        
+        
+        hStackView.addArrangedSubview(pictureVStackView)
+        hStackView.addArrangedSubview(rightVStackView)
+        
+        rightVStackView.addArrangedSubview(titleLabel)
+        rightVStackView.addArrangedSubview(buttonVStackView)
         
     }
     
     @objc func howToAddComicsButtonTapped() {
-        delegate?.howAddComicsButtonTapped()
+        delegate?.importComicsButtonTapped()
+    }
+    
+    @objc func copyrightButtonTapped() {
+        delegate?.copyrightButtonDidTapped()
     }
     
     override func layoutSubviews() {
-        howToButton.layer.cornerRadius = 20
-        imageView.layer.cornerRadius = 5
+        importButton.layer.cornerRadius = importButton.bounds.height * 0.25
     }
     
     required init?(coder: NSCoder) {
@@ -118,4 +227,11 @@ class EmptyGroupView: UIView {
     }
     
     
+}
+
+struct EmptyGroupView_Preview: PreviewProvider {
+    static var previews: some View {
+        UIKitPreview(view: EmptyGroupView())
+            .previewLayout(.fixed(width: 300, height: 600))
+    }
 }

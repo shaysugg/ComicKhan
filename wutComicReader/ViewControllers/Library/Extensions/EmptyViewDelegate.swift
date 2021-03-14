@@ -10,10 +10,14 @@ import UIKit
 
 
 extension LibraryVC: EmptyViewDelegate {
-    func howAddComicsButtonTapped() {
-        let howToVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HowToVC") as! HowToVC
-        present(howToVC, animated: true)
+    func copyrightButtonDidTapped() {
+        showAlert(with: "Zelfportret met hand aan snor (1917)", description: "By Samuel Jessurun de Mesquita (Dutch, 1868 – 1944)\nThe Artist died in 1944 so this work is in the public domain in its country of origin and other countries where the copyright term is the Artist's life plus 70 years or fewer.\n Source: artvee.com")
+        
+
     }
     
+    func importComicsButtonTapped() {
+        presentDocumentPicker()
+    }
     
 }
