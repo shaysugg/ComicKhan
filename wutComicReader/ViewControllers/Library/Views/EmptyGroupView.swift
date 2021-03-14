@@ -82,7 +82,8 @@ class EmptyGroupView: UIView {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "placeholder")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -130,7 +131,7 @@ class EmptyGroupView: UIView {
     private lazy var importLabel: UILabel = {
         let label = UILabel()
         label.text = "You can also import them with iTunes"
-        label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 14)
+        label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 12)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .appSecondaryLabel
@@ -168,7 +169,7 @@ class EmptyGroupView: UIView {
         importButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         imageView.widthAnchor.constraint(equalTo: pictureVStackView.widthAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.28).isActive = true
+        imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1).isActive = true
         pictureDiscriptionHStackView.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
     }
