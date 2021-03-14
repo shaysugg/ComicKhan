@@ -156,8 +156,10 @@ class LibraryVC: UIViewController {
             traitCollection.verticalSizeClass == .regular {
             //for portrait phones
             NSLayoutConstraint.activate(CHConstratis)
+            emptyGroupsView.designforportrait()
         }else {
             NSLayoutConstraint.activate(RHConstratis)
+            emptyGroupsView.designForLandscape()
         }
     }
     
@@ -167,8 +169,8 @@ class LibraryVC: UIViewController {
         deleteBarButton.isEnabled = false
         navigationItem.rightBarButtonItem = nil
         
-        setUpProgressBarDesign()
         designEmptyView()
+        setUpProgressBarDesign()
         layoutTrait(traitCollection: traitCollection)
         
         bookCollectionView.backgroundColor = .appSystemBackground
@@ -190,16 +192,17 @@ class LibraryVC: UIViewController {
     
     func designEmptyView(){
 
-        bookCollectionView.addSubview(emptyGroupsView)
-        emptyGroupsView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        view.addSubview(emptyGroupsView)
+        
         emptyGroupsView.centerXAnchor.constraint(equalTo: bookCollectionView.centerXAnchor).isActive = true
         emptyGroupsView.centerYAnchor.constraint(equalTo: bookCollectionView.centerYAnchor).isActive = true
         
-        RHConstratis.append(
-            emptyGroupsView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
-        )
+        RHConstratis.append(contentsOf: [
+            emptyGroupsView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            emptyGroupsView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
         CHConstratis.append(
-            emptyGroupsView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            emptyGroupsView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7)
         )
         
     }
@@ -263,17 +266,7 @@ class LibraryVC: UIViewController {
     
     //MARK:- actions
     @IBAction func addComicsButtonTapped(_ sender: Any) {
-        let documentPickerVC: UIDocumentPickerViewController!
-        
-        if #available(iOS 14.0, *) {
-            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: [.directory, .pdf , .archive , .init(exportedAs: "com.wutup.cbr")], asCopy: true)
-        } else {
-            documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
-        }
-        documentPickerVC.allowsMultipleSelection = true
-        documentPickerVC.delegate = self
-        
-        present(documentPickerVC, animated: true, completion: nil)
+        presentDocumentPicker()
         
         
     }
@@ -327,18 +320,6 @@ class LibraryVC: UIViewController {
     
     //MARK:- Top bar functions
     
-    private func makeEmptyView(appear isApear:Bool){
-        bookCollectionView.isHidden = !isApear
-        let emptyView = UIView()
-        emptyView.backgroundColor = .appSystemBackground
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        
-        if isApear{
-            
-        }
-    }
-    
-    
     func updateNavBarWhenEditingChanged() {
         if editingMode {
             navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
@@ -360,6 +341,20 @@ class LibraryVC: UIViewController {
     
     
     //MARK:- file functions
+    
+    func presentDocumentPicker() {
+        let documentPickerVC: UIDocumentPickerViewController!
+        
+        if #available(iOS 14.0, *) {
+            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: [.directory, .pdf , .archive , .init(exportedAs: "com.wutup.cbr")], asCopy: true)
+        } else {
+            documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
+        }
+        documentPickerVC.allowsMultipleSelection = true
+        documentPickerVC.delegate = self
+        
+        present(documentPickerVC, animated: true, completion: nil)
+    }
     
     @objc private func newGroupVCAddedANewGroup() {
         indexSelectionManager.removeAll()
