@@ -38,7 +38,8 @@ class LibraryVC: UIViewController {
     
     
     @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var bottomBar: UIToolbar!
+    
+    @IBOutlet weak var bottomToolbar: UIToolbar!
     @IBOutlet weak var infoButton: UIBarButtonItem!
     @IBOutlet weak var addComicsButton: UIBarButtonItem!
     @IBOutlet var groupBarButton: UIBarButtonItem!
@@ -176,11 +177,8 @@ class LibraryVC: UIViewController {
         bookCollectionView.backgroundColor = .appSystemBackground
         view.backgroundColor = .appSystemBackground
         
-        let infoImage = #imageLiteral(resourceName: "ic-actions-more-2").withRenderingMode(.alwaysTemplate)
+        let infoImage = #imageLiteral(resourceName: "ic-actions-more-1").withRenderingMode(.alwaysTemplate)
         infoButton.image = infoImage
-        
-        let addComicsImage = #imageLiteral(resourceName: "ic-actions-add").withRenderingMode(.alwaysTemplate)
-        addComicsButton.image = addComicsImage
         
         let deleteImage = #imageLiteral(resourceName: "ic-actions-trash").withRenderingMode(.alwaysTemplate)
         deleteBarButton.image = deleteImage
@@ -253,7 +251,8 @@ class LibraryVC: UIViewController {
     
     private func setUpNavigationButtons() {
         
-        navigationItem.setRightBarButtonItems([infoButton], animated: true)
+        navigationItem.setRightBarButtonItems([addComicsButton , editBarButton], animated: true)
+        navigationItem.setLeftBarButtonItems([infoButton], animated: true)
         
         let barButtonIsEnabled = indexSelectionManager.publisher.tryMap{!$0.isEmpty}.replaceError(with: false)
         
@@ -312,7 +311,7 @@ class LibraryVC: UIViewController {
     
     @IBAction func infoButtonTapped(_ sender: Any) {
         let infoVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "infoVC") as! InfoVC
-        navigationController?.pushViewController(infoVC, animated: true)
+        present(infoVC, animated: true)
     }
     
     
@@ -322,19 +321,43 @@ class LibraryVC: UIViewController {
     
     func updateNavBarWhenEditingChanged() {
         if editingMode {
-            navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
-            infoButton.isEnabled = false
+//            navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
+            //            navigationItem.setLeftBarButtonItems([editBarButton], animated: true)
+            bottomToolbar.isHidden = false
+            bottomToolbar.alpha = 0
+            
+            UIView.animate(withDuration: 0.2) {
+                self.bottomToolbar.alpha = 1
+            } completion: { (_) in
+                
+            }
+            
+            
+            
+            bottomToolbar.isHidden = false
+            //            infoButton.isEnabled = false
             addComicsButton.isEnabled = false
-            infoButton.tintColor = .clear
+//            infoButton.tintColor = .clear
             editBarButton.title = "Done"
+            editBarButton.style = .done
         }else{
-            navigationItem.setRightBarButtonItems([infoButton], animated: true)
-            infoButton.isEnabled = true
+//            navigationItem.setRightBarButtonItems([editBarButton], animated: true)
+//            navigationItem.setLeftBarButtonItems([infoButton], animated: true)
+            
+            UIView.animate(withDuration: 0.2) {
+                self.bottomToolbar.alpha = 0
+            } completion: { (_) in
+                self.bottomToolbar.isHidden = true
+            }
+            
+            
+//            infoButton.isEnabled = true
             addComicsButton.isEnabled = true
-            infoButton.tintColor = addComicsButton.tintColor
+//            infoButton.tintColor = addComicsButton.tintColor
             editBarButton.title = "Edit"
-            deleteBarButton.isEnabled = false
-            groupBarButton.isEnabled = false
+            editBarButton.style = .plain
+//            deleteBarButton.isEnabled = false
+//            groupBarButton.isEnabled = false
             
         }
     }
