@@ -108,8 +108,6 @@ final class ComicExteractor: NSObject {
     
     private func extractComics(inDirectoryWithURL url: URL, comicGroupName: String? = nil) {
         
-        defer { currentComicNumber += 1 }
-        
         guard let fileURLS = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else { return }
         
         let comicURLs = filterFilesWithAcceptedFormat(infileURLs: fileURLS)
@@ -163,6 +161,7 @@ final class ComicExteractor: NSObject {
                 try? extractionDirectory.write(metaData: .init(groupName: groupName))
             }
             
+            currentComicNumber += 1 
         }
     }
     
