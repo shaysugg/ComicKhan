@@ -49,7 +49,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let comic = fetchResultController.sections?[section].objects?.first as! Comic
-        let isGroupForNewComics = comic.ofComicGroup!.isForNewComics
+        let isGroupForNewComics = comic.ofComicGroup?.isForNewComics ?? false
         
         if isGroupForNewComics {
             return CGSize(width: collectionView.bounds.width, height: 10)
