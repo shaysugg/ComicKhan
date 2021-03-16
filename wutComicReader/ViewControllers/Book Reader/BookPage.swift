@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookPage: UIViewController , UIScrollViewDelegate {
+final class BookPage: UIViewController , UIScrollViewDelegate {
     
     //MARK:- Variables
     
@@ -79,6 +79,7 @@ class BookPage: UIViewController , UIScrollViewDelegate {
         pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
         pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
 
+        updateMinZoomScaleForSize(view.bounds.size)
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
             
@@ -113,7 +114,6 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-            updateMinZoomScaleForSize(view.bounds.size)
             centerTheImage()
         if !UIDevice.current.orientation.isFlat {
             previousRotation = UIDevice.current.orientation
@@ -182,16 +182,14 @@ class BookPage: UIViewController , UIScrollViewDelegate {
     func updateMinZoomScaleForSize(_ size: CGSize) {
         
         
-        guard let imageView = pagesThatHaveImage().first else {
-            //FIXME: sometimes pagesThatHaveImage has no Image!
-            //which is stupid
-            //but this func getting called again and pagesThatHaveImage has image and min scale calcuted correctly (but why pagesThatHaveImage with no Image happening?)
-            
+        guard let imagesHeight = pagesThatHaveImage().first?.image?.size.height else {
             return
         }
         
-        let widthScale = size.width / imageView.image!.size.width
-        let heightScale = size.height / imageView.image!.size.height
+        let imagesWidth = (pageImageView1.image?.size.width ?? 0) + (pageImageView2.image?.size.width ?? 0)
+        
+        let widthScale = size.width / imagesWidth
+        let heightScale = size.height / imagesHeight
         let minScale = min(widthScale, heightScale)
         
         scrollView.minimumZoomScale = minScale

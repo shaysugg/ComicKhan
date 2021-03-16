@@ -30,7 +30,7 @@ struct ConstraintsForSizeClasses {
     
 }
 
-class BookReaderVC: UIViewController {
+final class BookReaderVC: UIViewController {
     
     //MARK:- Variables
     
@@ -152,13 +152,29 @@ class BookReaderVC: UIViewController {
         //so we add a func here to tell bookpages that rotation has changed
         if trait.horizontalSizeClass == .regular,
             trait.verticalSizeClass == .regular {
+            
             layoutWith(traitCollection: UIScreen.main.traitCollection)
+            
+            //update page scrollView min scale when device rotate
+            if let page = bookPageViewController.viewControllers?.first as? BookPage {
+                //page deminsion hasn't updated yet and we need to swipe its deminsions manually
+                let size = page.view.bounds.size
+                page.updateMinZoomScaleForSize(CGSize(width: size.height, height: size.width))
+            }
         }
 //        
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
          layoutWith(traitCollection: UIScreen.main.traitCollection)
+        
+        //update page scrollView min scale when device rotate
+        if let page = bookPageViewController.viewControllers?.first as? BookPage {
+            //page deminsion hasn't updated yet and we need to swipe its deminsions manually
+            let size = page.view.bounds.size
+            page.updateMinZoomScaleForSize(CGSize(width: size.height, height: size.width))
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
