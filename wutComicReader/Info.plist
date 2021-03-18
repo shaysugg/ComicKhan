@@ -78,8 +78,8 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-				<string>cbr</string>
-				<string>CBR</string>
+					<string>cbr</string>
+					<string>CBR</string>
 				</array>
 			</dict>
 		</dict>
