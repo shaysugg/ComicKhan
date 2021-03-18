@@ -120,7 +120,7 @@ class EmptyGroupView: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Your don’t have any comics here!"
+        label.text = "You don’t have any comics here!"
         label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 24)
         label.numberOfLines = 0
         label.textAlignment = .center
