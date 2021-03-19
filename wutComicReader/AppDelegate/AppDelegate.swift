@@ -17,8 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        configureDeviceType()
+        if UserDefaults.standard.appLaunchedForFirstTime() {
+            do {
+                try Cores.main.dataService.createGroupForNewComics()
+                try Cores.main.appfileManager.makeAppDirectory()
+                UserDefaults.standard.setAppDidLaunchedFlag()
+                
+            }catch let error {
+                fatalError("Initial setup was failed: " + error.localizedDescription)
+            }
+        }
         
+        print(NSHomeDirectory())
         return true
     }
     

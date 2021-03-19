@@ -12,15 +12,29 @@ import Zip
 import CoreGraphics
 import MobileCoreServices
 
-enum ExtractorError : Error {
-    case unzipingCBZFailed
-    case unzipingCBRFailed
-    case unzipingPDFFailed
-    case fileAlreadyExisted
-    case formatIsNotRight
+extension ComicExteractor {
+    struct ExtractorError {
+        let type: ExtractorErrorType
+        let fileName: String
+    }
+    
+    enum ExtractorErrorType {
+        case unsupportFileFormat
+        case comicAlreadyExtracted
+        case createExtractionDirectories
+        case comicExtracting(ExtractingError)
+        
+        enum ExtractingError {
+            case unzipCBZ
+            case unrarCBR
+            case convertPDFtoImages
+        }
+    }
 }
 
-
+protocol ExtractorErrorDelegate: class {
+    func errorsAccured(errors: [ComicExteractor.ExtractorError])
+}
 
 protocol ProgressDelegate: class {
     func newFileAboutToCopy(withName name: String)
@@ -38,19 +52,124 @@ extension ProgressDelegate {
 fileprivate var keyPathToObserve = "fractionCompleted"
 
 
-class ComicExteractor: NSObject {
+final class ComicExteractor: NSObject {
+    
+    private let userDirectory: URL
+    private let comicDirectory: URL
     
     var rarExtractingProgress: Progress?
     weak var delegate: ProgressDelegate?
+    private(set) var totalComicCount = 0
+    private(set) var currentComicNumber = 1
+    
+    weak var errorDelegate: ExtractorErrorDelegate?
+    private var errors = [ExtractorError]()
     
     
-    private func extractZIP(withFileURL fileURL : URL) throws{
+    init(userDirectory: URL, comicDirectory: URL) {
+        self.userDirectory = userDirectory
+        self.comicDirectory = comicDirectory
+    }
+    
+    
+    func extractUserComicsIntoComicDiractory() {
         
-        do{
-            let extractionDirectory = try createExtractionDirectories(forFileWithURL: fileURL)
+        totalComicCount = calculateTotalNumberOfComicsInComicDirectory()
+        
+        //check for directories of comics first
+        try? FileManager.default.subpathsOfDirectory(atPath: userDirectory.path)
+            .map { userDirectory.appendingPathComponent($0) }
+            .filter { $0.pathExtension.isEmpty }
+            .forEach({ (url) in
+                extractComics(inDirectoryWithURL: url, comicGroupName: url.lastPathComponent)
+            })
+        
+        
+        //then the other comics without directories
+        extractComics(inDirectoryWithURL: userDirectory)
+        
+        delegate?.extractingProcessFinished()
+        if !errors.isEmpty { errorDelegate?.errorsAccured(errors: errors)}
+        
+        errors.removeAll()
+        currentComicNumber = 1
+    }
+    
+    private func calculateTotalNumberOfComicsInComicDirectory() -> Int {
+        do {
+            let urls = try FileManager.default.subpathsOfDirectory(atPath: userDirectory.path)
+                .map { userDirectory.appendingPathComponent($0) }
             
+            return filterFilesWithAcceptedFormat(infileURLs: urls).count
+        }catch {
+            return 0
+        }
+    }
+    
+    private func extractComics(inDirectoryWithURL url: URL, comicGroupName: String? = nil) {
+        
+        guard let fileURLS = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else { return }
+        
+        let comicURLs = filterFilesWithAcceptedFormat(infileURLs: fileURLS)
+        
+        for url in comicURLs {
+            let comicName = url.fileName()
+            let comicFormat = url.pathExtension.lowercased()
+            
+            
+            if DidComicAlreadyExistInComicDiractory(name: comicName) { errors.append(ExtractorError(type: .comicAlreadyExtracted, fileName: url.lastPathComponent))
+                continue
+            }
+            
+            delegate?.newFileAboutToExtract(withName: comicName,
+                                            andNumber: currentComicNumber,
+                                            inTotalFilesCount: totalComicCount)
+            
+            
+            //create extraction Directories
+            let extractionDirectory = ExtractionDirectory(directoryName: url.fileName(),
+                                                          baseURL: comicDirectory)
+            try? extractionDirectory.createDirectories()
+            
+            //extract based on format
+            if comicFormat == "cbz" {
+                do { try extractZIP(withFileURL: url, toURL: extractionDirectory) }
+                catch { errors.append(ExtractorError(type: .comicExtracting(.unzipCBZ), fileName: url.lastPathComponent))
+                    continue
+                }
+                
+            }else if comicFormat == "cbr" {
+                do { try extractRAR(withFileURL: url, toURL: extractionDirectory) }
+                catch {
+                    errors.append(ExtractorError(type: .comicExtracting(.unrarCBR), fileName: url.lastPathComponent))
+                    continue
+                }
+                
+            }else if comicFormat == "pdf"{
+                do {try convertPDFToImages(pdfURL: url, destinationURL: extractionDirectory)}
+                catch {
+                    errors.append(ExtractorError(type: .comicExtracting(.convertPDFtoImages), fileName: url.lastPathComponent))
+                    continue
+                }
+            }else {
+                errors.append(ExtractorError(type: .unsupportFileFormat, fileName: url.lastPathComponent))
+                continue
+            }
+            
+            //write comicGroupName as metada if needed
+            if let groupName = comicGroupName {
+                try? extractionDirectory.write(metaData: .init(groupName: groupName))
+            }
+            
+            currentComicNumber += 1 
+        }
+    }
+    
+    
+    private func extractZIP(withFileURL fileURL: URL, toURL destinationURL: ExtractionDirectory) throws{
+        
             try Zip.unzipFile(fileURL,
-                              destination: extractionDirectory.originalImagesDirectoryURL,
+                              destination: destinationURL.originalImagesDirectoryURL,
                               overwrite: true,
                               password: nil,
                               progress: { percent in
@@ -59,49 +178,40 @@ class ComicExteractor: NSObject {
                 self.delegate?.percentChanged(to: percent / 2)
             })
             
-            resizeExtractedImages(ofURL: extractionDirectory.originalImagesDirectoryURL,
-                                  toURL: extractionDirectory.thumbnailImagesDirectoryURL)
+            resizeExtractedImages(ofURL: destinationURL.originalImagesDirectoryURL,
+                                  toURL: destinationURL.thumbnailImagesDirectoryURL)
             
-        }catch {
-            throw ExtractorError.unzipingCBZFailed
-        }
     }
     
     
-    private func extractRAR(withFileURL fileURL : URL) throws{
+    private func extractRAR(withFileURL fileURL: URL, toURL destinationURL: ExtractionDirectory) throws{
         
         var archive : URKArchive?
         
-        do{
-            let extractionDirectory = try createExtractionDirectories(forFileWithURL: fileURL)
-            
             archive = try URKArchive(path: fileURL.path)
             rarExtractingProgress = Progress(totalUnitCount: 1)
             archive?.progress = rarExtractingProgress
             rarExtractingProgress?.addObserver(self, forKeyPath: keyPathToObserve, options: .new, context: nil)
             
-            try archive?.extractFiles(to: extractionDirectory.originalImagesDirectoryURL.path,
+            try archive?.extractFiles(to: destinationURL.originalImagesDirectoryURL.path,
                                       overwrite: true)
             
             rarExtractingProgress?.removeObserver(self, forKeyPath: keyPathToObserve)
             
-            resizeExtractedImages(ofURL: extractionDirectory.originalImagesDirectoryURL,
-                                  toURL: extractionDirectory.thumbnailImagesDirectoryURL)
+            resizeExtractedImages(ofURL: destinationURL.originalImagesDirectoryURL,
+                                  toURL: destinationURL.thumbnailImagesDirectoryURL)
             
-            
-        }catch {
-            throw ExtractorError.unzipingCBRFailed
-        }
+
     }
     
     
-    private func convertPDFToImages(pdfURL: URL) throws {
-        let extractionDirectory = try createExtractionDirectories(forFileWithURL: pdfURL)
-        guard let document = CGPDFDocument(pdfURL as CFURL) else { return }
+    private func convertPDFToImages(pdfURL: URL, destinationURL: ExtractionDirectory) throws {
+
+        guard let document = CGPDFDocument(pdfURL as CFURL) else { throw NSError() }
             
         let queue = DispatchQueue(label: "imagetodata", qos: .background, attributes: [], autoreleaseFrequency: .workItem, target: nil)
         
-        queue.sync {
+        try queue.sync {
         
         for pageNumber in 1 ... document.numberOfPages {
             guard let page = document.page(at: pageNumber) else { return }
@@ -120,13 +230,13 @@ class ComicExteractor: NSObject {
             }
 //
             let imageDestinationURL =
-                extractionDirectory.originalImagesDirectoryURL
+                destinationURL.originalImagesDirectoryURL
                 .appendingPathComponent(make3DigitString(from: pageNumber))
                 .appendingPathExtension("jpeg")
             
             guard let imageDestination = CGImageDestinationCreateWithURL(imageDestinationURL as CFURL, kUTTypeJPEG, 1, nil),
             let cgImage = img.cgImage
-            else { return }
+            else { throw NSError() }
             
             CGImageDestinationAddImage(imageDestination, cgImage, nil)
             CGImageDestinationFinalize(imageDestination)
@@ -134,7 +244,7 @@ class ComicExteractor: NSObject {
             delegate?.percentChanged(to: Double(pageNumber) / Double(document.numberOfPages) / 2)
         }
             
-            resizeExtractedImages(ofURL: extractionDirectory.originalImagesDirectoryURL, toURL: extractionDirectory.thumbnailImagesDirectoryURL)
+            resizeExtractedImages(ofURL: destinationURL.originalImagesDirectoryURL, toURL: destinationURL.thumbnailImagesDirectoryURL)
         }
     }
     
@@ -146,49 +256,6 @@ class ComicExteractor: NSObject {
                 delegate?.percentChanged(to: percent / 2)
             }
         }
-    }
-    
-    
-    func extractUserComicsIntoComicDiractory() {
-        
-        //change this to use contents of diractory
-        guard let fileURLS = try? FileManager.default.contentsOfDirectory(at: URL.userDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else { return }
-        
-        let comicURLs = filterFilesWithAcceptedFormat(infileURLs: fileURLS)
-        var counter = 1
-        
-        for url in comicURLs {
-            let comicName = url.fileName()
-            let comicFormat = url.pathExtension
-            
-            
-            if !DidComicAlreadyExistInComicDiractory(name: comicName) {
-                
-                delegate?.newFileAboutToExtract(withName: comicName,
-                                                andNumber: counter,
-                                                inTotalFilesCount: comicURLs.count)
-                
-                do {
-                    if comicFormat == "cbz" {
-                        try extractZIP(withFileURL: url)
-                    }else if comicFormat == "cbr" {
-                        try extractRAR(withFileURL: url)
-                    }else if comicFormat == "pdf"{
-                        try convertPDFToImages(pdfURL: url)
-                    }
-                    
-                    counter += 1
-                    
-                }catch let error{
-                    print("\(comicName) extract failed : \(error.localizedDescription)")
-                    if let _ = error as? ExtractorError {
-                        
-                    }
-                }
-            }
-        }
-        delegate?.extractingProcessFinished()
-        
     }
     
     private func resizeExtractedImages(ofURL comicURL: URL, toURL desURL: URL){
@@ -216,29 +283,14 @@ class ComicExteractor: NSObject {
     private func DidComicAlreadyExistInComicDiractory(name: String) -> Bool {
         do
         {
-            let appDirectoryComics = try FileManager.default.contentsOfDirectory(atPath: URL.comicDiractory.path)
+            let appDirectoryComics = try FileManager.default.contentsOfDirectory(atPath: comicDirectory.path)
             return appDirectoryComics.contains(name)
         }catch{
             return false
         }
     }
     
-    private func createExtractionDirectories(forFileWithURL fileURL: URL) throws -> ExtractionDirectory {
-        var extractionDirectory: ExtractionDirectory!
-        extractionDirectory = ExtractionDirectory(baseURL: URL.comicDiractory.appendingPathComponent(fileURL.fileName()))
-        
-        try FileManager.default.createDirectory(at: extractionDirectory.baseURL,
-                                                withIntermediateDirectories: true,
-                                                attributes: nil)
-        try FileManager.default.createDirectory(at: extractionDirectory.originalImagesDirectoryURL,
-                                                withIntermediateDirectories: true,
-                                                attributes: nil)
-        try FileManager.default.createDirectory(at: extractionDirectory.thumbnailImagesDirectoryURL,
-                                                withIntermediateDirectories: true,
-                                                attributes: nil)
-        
-        return extractionDirectory
-    }
+    
     
     
     private func make3DigitString(from number: Int) -> String {
@@ -247,21 +299,6 @@ class ComicExteractor: NSObject {
         else { return "\(number)" }
     }
     
-    
-    
-    
 }
 
 
-struct ExtractionDirectory {
-    let baseURL: URL
-    var originalImagesDirectoryURL: URL {
-        baseURL.appendingPathComponent(ExtractionDirectory.originalImagesDirectoryName)
-    }
-    var thumbnailImagesDirectoryURL: URL {
-        baseURL.appendingPathComponent(ExtractionDirectory.thumbnailImagesDirectoryName)
-    }
-    
-    static var originalImagesDirectoryName = "original"
-    static var thumbnailImagesDirectoryName = "thumbnail"
-}

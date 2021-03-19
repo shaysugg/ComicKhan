@@ -16,32 +16,60 @@ enum fileManagerError : Error {
     case fetchFailed
 }
 
+protocol AppFileManagerErrorDelegate: class {
+    func errorsAccured(errors: [AppFileManager.AppFileManagerError])
+}
+
+extension AppFileManager {
+    struct AppFileManagerError {
+        let type: AppFileManagerErrorType
+        let comicName: String?
+    }
+    enum AppFileManagerErrorType {
+        case cantWriteOnCoreData
+        case cantReadComicDirectory
+        case emptyFile
+    }
+}
+
 
 class AppFileManager {
     
     //MARK:- Variables
     
-    var comicDirectory = URL.comicDiractory
-    var userDiractory = URL.userDiractory
+    let comicDirectory: URL
+    let userDirectory: URL
+    
     private var fileManager = FileManager.default
     internal var managedContext : NSManagedObjectContext?
     var dataService: DataService!
-    var progressDelegate: ProgressDelegate?
+    weak var progressDelegate: ProgressDelegate?
+    
+    var errors = [AppFileManagerError]()
+    weak var errorDelegate: AppFileManagerErrorDelegate?
     
     //MARK:- Functions
     
-    init(dataService: DataService) {
+    init(dataService: DataService, userDirectory: URL, comicDirectory: URL) {
         managedContext = dataService.managedContext
         self.dataService = dataService
+        self.comicDirectory = comicDirectory
+        self.userDirectory = userDirectory
         
     }
     
+    func deleteAllUserDirectoryContent() throws {
+        try fileManager.contentsOfDirectory(at: userDirectory, includingPropertiesForKeys: nil)
+            .forEach({ (url) in
+                try fileManager.removeItem(at: url)
+            })
+    }
     
     func deleteFileInTheUserDiractory(withName fileName : String) throws{
-        if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbz") {
-            try fileManager.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbz"))
-        }else if fileManager.subpaths(atPath: userDiractory.path)!.contains(fileName + ".cbr") {
-            try fileManager.removeItem(at: userDiractory.appendingPathComponent(fileName + ".cbr"))
+        if fileManager.subpaths(atPath: userDirectory.path)!.contains(fileName + ".cbz") {
+            try fileManager.removeItem(at: userDirectory.appendingPathComponent(fileName + ".cbz"))
+        }else if fileManager.subpaths(atPath: userDirectory.path)!.contains(fileName + ".cbr") {
+            try fileManager.removeItem(at: userDirectory.appendingPathComponent(fileName + ".cbr"))
         }
     }
     
@@ -50,55 +78,59 @@ class AppFileManager {
     }
     
     func filesInUserDiractory() -> [URL]? {
-        try? fileManager.contentsOfDirectory(at: userDiractory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        try? fileManager.contentsOfDirectory(at: userDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
     }
     
     ///write extracted comics in the comic diractory on core data
     ///skip comics that already been added to core data
     
-    func writeNewComicsOnCoreData() throws{
+    func writeNewComicsOnCoreData(){
         
         guard let _ = managedContext else { return }
         
-        do{
-            let comicDiractories = try fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        
+        guard let comicDiractories = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else {
+            errors.append(AppFileManagerError(type: .cantReadComicDirectory, comicName: nil))
+            return
+        }
+        
+        
+        for diractory in comicDiractories {
             
+            let comicName = diractory.lastPathComponent
             
-            for diractory in comicDiractories {
+            let extractionDirectory = ExtractionDirectory(directoryName: comicName)
+            
+            if !dataService.comicAlreadyExistedInCoreData(withName: comicName) {
                 
-                let extractionDirectory = ExtractionDirectory(baseURL: diractory)
+                // comicImageNames = [("original" or "thumbnail") + image name]
+                guard
+                    let comicImageNames = try? sortedOriginalImagesSubpaths(in: extractionDirectory),
+                    let thumbnailImages = try? sortedThumbnailImagesSubpaths(in: extractionDirectory),
+                    !comicImageNames.isEmpty,
+                    !thumbnailImages.isEmpty
+                else {
+                    try? deleteFileInTheUserDiractory(withName: comicName)
+                    try? deleteFileInTheAppDiractory(withName: comicName)
+                    errors.append(AppFileManagerError(type: .emptyFile, comicName: comicName))
+                    continue
+                }
                 
-                let comicName = diractory.lastPathComponent
-                
-                if !dataService.comicAlreadyExistedInCoreData(withName: comicName) {
-                    
-                    // comicImageNames = [("original" or "thumbnail") + image name]
-                    guard
-                        let comicImageNames = try? sortedOriginalImagesSubpaths(in: extractionDirectory),
-                        let thumbnailImages = try? sortedThumbnailImagesSubpaths(in: extractionDirectory)
-                    else { return }
-                    
-                    if !comicImageNames.isEmpty {
-                        
-                        do{
-                            try dataService.addNewComic(name: comicName,
-                                                        imageNames: comicImageNames,
-                                                        thumbnailNames: thumbnailImages,
-                                                        to: nil)
-                        }catch let error {
-                            try? deleteFileInTheUserDiractory(withName: comicName)
-                            throw error
-                        }
-                    }else {
-                        try? deleteFileInTheUserDiractory(withName: comicName)
-                        try? deleteFileInTheAppDiractory(withName: comicName)
-                    }
+                do{
+                    let groupName = try? extractionDirectory.readMetaData().groupName
+                    try dataService.addNewComic(name: comicName,
+                                                imageNames: comicImageNames,
+                                                thumbnailNames: thumbnailImages,
+                                                toComicGroupWithName: groupName)
+                }catch {
+                    errors.append(AppFileManagerError(type: .cantWriteOnCoreData, comicName: comicName))
+                    continue
                 }
             }
-            
-        }catch let error{
-            print("can't going through subpath of comicDir: " + error.localizedDescription )
         }
+        
+        if !errors.isEmpty { errorDelegate?.errorsAccured(errors: errors) }
+        errors.removeAll()
     }
     
     
