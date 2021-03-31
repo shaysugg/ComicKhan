@@ -8,12 +8,12 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>CBR</string>
+			<string>Comic</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.wutup.cbr</string>
+				<string>com.wutup.comic</string>
 			</array>
 		</dict>
 	</array>
@@ -69,17 +69,19 @@
 				<string>public.archive</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>ComicBook RAR</string>
+			<string>ComicBook</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.wutup.cbr</string>
+			<string>com.wutup.comic</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
 					<string>cbr</string>
 					<string>CBR</string>
+					<string>cbz</string>
+					<string>CBZ</string>
 				</array>
 			</dict>
 		</dict>

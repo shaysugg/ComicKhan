@@ -130,7 +130,7 @@ class EmptyGroupView: UIView {
     
     private lazy var importLabel: UILabel = {
         let label = UILabel()
-        label.text = "You can also import them with iTunes"
+        label.text = "You can also import them by iTunes (Windows) / Files (Mac)"
         label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 12)
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -141,7 +141,7 @@ class EmptyGroupView: UIView {
     
     private lazy var importButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Import Your Comics", for: .normal)
+        button.setTitle("Import Comics", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .appBlueColor
         button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 16)
