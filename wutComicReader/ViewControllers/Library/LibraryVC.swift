@@ -369,7 +369,7 @@ class LibraryVC: UIViewController {
         let documentPickerVC: UIDocumentPickerViewController!
         
         if #available(iOS 14.0, *) {
-            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: [.directory, .pdf , .archive , .init(exportedAs: "com.wutup.cbr")], asCopy: true)
+            documentPickerVC = UIDocumentPickerViewController(forOpeningContentTypes: [.directory, .pdf, .init(exportedAs: "com.wutup.comic")], asCopy: true)
         } else {
             documentPickerVC = UIDocumentPickerViewController(documentTypes: ["public.item"], in: .import)
         }
