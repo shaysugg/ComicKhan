@@ -32,11 +32,11 @@ extension ComicExteractor {
     }
 }
 
-protocol ExtractorErrorDelegate: class {
+protocol ExtractorErrorDelegate: AnyObject {
     func errorsAccured(errors: [ComicExteractor.ExtractorError])
 }
 
-protocol ProgressDelegate: class {
+protocol ProgressDelegate: AnyObject {
     func newFileAboutToCopy(withName name: String)
     func newFileAboutToExtract(withName name:String, andNumber number:Int, inTotalFilesCount: Int?)
     func percentChanged(to value: Double)
@@ -228,7 +228,7 @@ final class ComicExteractor: NSObject {
                 ctx.cgContext.drawPDFPage(page)
                 
             }
-//
+            
             let imageDestinationURL =
                 destinationURL.originalImagesDirectoryURL
                 .appendingPathComponent(make3DigitString(from: pageNumber))
@@ -294,9 +294,10 @@ final class ComicExteractor: NSObject {
     
     
     private func make3DigitString(from number: Int) -> String {
-        if number < 10 { return "00\(number)" }
-        else if number < 100 { return "0\(number)" }
-        else { return "\(number)" }
+        let formatter = NumberFormatter()
+        formatter.minimumIntegerDigits = 3
+        let number = NSNumber(value: number)
+        return formatter.string(from: number)!
     }
     
 }
