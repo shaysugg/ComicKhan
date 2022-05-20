@@ -142,6 +142,9 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         
         imagesContainerView.addArrangedSubview(pageImageView1)
         
+        view.backgroundColor = .clear
+        scrollView.backgroundColor = .clear
+        
         
     }
     

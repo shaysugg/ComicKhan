@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 class BottomBar: UIView {
     
     weak var thumbnailDelegate: BookReaderVC? {
@@ -123,6 +122,7 @@ class BottomBar: UIView {
         layer.cornerRadius = 20
         makeDropShadow(shadowOffset: CGSize(width: 0, height: 0), opacity: 0.5, radius: 10)
     }
+    
     
     @objc private func sliderDidChanged(){
            let value = Int(pageSlider.value)

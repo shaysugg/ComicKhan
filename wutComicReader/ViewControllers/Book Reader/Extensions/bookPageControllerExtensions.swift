@@ -16,7 +16,6 @@ extension BookReaderVC {
     
     func setupPageController() {
         bookPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        bookPageViewController.view.backgroundColor = .appSystemSecondaryBackground
         bookPageViewController.delegate = self
         bookPageViewController.dataSource = self
         

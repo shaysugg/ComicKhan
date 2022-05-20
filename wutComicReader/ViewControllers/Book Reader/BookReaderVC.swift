@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Combine
 
 protocol BottomBarDelegate: AnyObject {
     func newPageBeenSet(pageNumber: Int)
@@ -47,7 +47,7 @@ final class BookReaderVC: UIViewController {
     var lastViewedPage : Int?
     var menusAreAppeard: Bool = false
     
-    var bookPageViewController : UIPageViewController!
+    
     var bookSingleImages : [ComicImage] = []
     var bookDoubleImages : [(ComicImage? , ComicImage?)] = []
     var bookPages: [BookPage] = []
@@ -69,6 +69,7 @@ final class BookReaderVC: UIViewController {
         }
     }
     
+    var cancellables = Set<AnyCancellable>()
     
     
     //MARK:- UI Variables
@@ -95,6 +96,7 @@ final class BookReaderVC: UIViewController {
         return view
     }()
     
+    var bookPageViewController : UIPageViewController!
     
     private lazy var guideView: ReaderGuideView = {
         let view = ReaderGuideView()
@@ -114,7 +116,6 @@ final class BookReaderVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPageController()
-//        initSinglePageThumbnails()
         
         disappearMenus(animated: false)
         
@@ -320,7 +321,7 @@ final class BookReaderVC: UIViewController {
     }
     
     private func addGuideViewIfNeeded() {
-        if UserDefaults.standard.readerPresentForFirstTime() {
+        if AppState.main.readerPresentForFirstTime() {
             
             guideView.delegate = self
             

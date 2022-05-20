@@ -45,15 +45,19 @@
 		E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E465B1192413FBAC00A6003D /* InfoVC.swift */; };
 		E475D0AE245751D10005CF8F /* ComicKhanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E475D0AD245751D10005CF8F /* ComicKhanUITests.swift */; };
 		E48253EA22D631B1001A0E85 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48253E922D631B1001A0E85 /* Helper.swift */; };
+		E4850C1D2832A43E00AA0F85 /* ThemesStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */; };
 		E49C7C132417EBED004DE82A /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C122417EBED004DE82A /* ImageResizer.swift */; };
 		E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C142418FEF4004DE82A /* ComicImage.swift */; };
+		E49F2F602833C73300BE90FE /* +CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F2F5F2833C73300BE90FE /* +CollectionView.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
 		E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */; };
+		E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C3D174261E09D7007CC0E1 /* AppState.swift */; };
 		E4C51EFE245EF82700B8AC04 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C51EFD245EF82700B8AC04 /* LoadingView.swift */; };
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
 		E4CE377F240D578600429C30 /* ProgressContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE377E240D578600429C30 /* ProgressContainerView.swift */; };
 		E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */; };
 		E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3920023EEA23800E8C873 /* NewGroupVC.swift */; };
+		E4E2834F28301DC500030C9D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E2834E28301DC500030C9D /* AppTheme.swift */; };
 		E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E667FC234BAB710050CB8C /* Assets.xcassets */; };
 		E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */; };
 		E4EB1E392569762800C56632 /* IndexSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EB1E382569762800C56632 /* IndexSelectionManager.swift */; };
@@ -141,11 +145,14 @@
 		E475D0AD245751D10005CF8F /* ComicKhanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicKhanUITests.swift; sourceTree = "<group>"; };
 		E475D0AF245751D10005CF8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesStackView.swift; sourceTree = "<group>"; };
 		E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
 		E49C7C122417EBED004DE82A /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 		E49C7C142418FEF4004DE82A /* ComicImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicImage.swift; sourceTree = "<group>"; };
+		E49F2F5F2833C73300BE90FE /* +CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+CollectionView.swift"; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Library+ExtractionErrorHandeling.swift"; sourceTree = "<group>"; };
+		E4C3D174261E09D7007CC0E1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E4C51EFD245EF82700B8AC04 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
 		E4CE377E240D578600429C30 /* ProgressContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressContainerView.swift; sourceTree = "<group>"; };
@@ -153,6 +160,7 @@
 		E4D3920023EEA23800E8C873 /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		E4DA532224507DB800A244FD /* ComicKhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComicKhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DA532624507DB800A244FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4E2834E28301DC500030C9D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		E4E667FC234BAB710050CB8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderVC.swift; sourceTree = "<group>"; };
 		E4EB1E382569762800C56632 /* IndexSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSelectionManager.swift; sourceTree = "<group>"; };
@@ -274,6 +282,7 @@
 				E45C8429238DACD700669155 /* Colors.swift */,
 				E4E667FC234BAB710050CB8C /* Assets.xcassets */,
 				E40C7AA822A1169000D7CD17 /* Info.plist */,
+				E4E2834E28301DC500030C9D /* AppTheme.swift */,
 			);
 			path = wutComicReader;
 			sourceTree = "<group>";
@@ -324,6 +333,7 @@
 				E4596A032407E7650030DB3E /* ReaderBottomBar.swift */,
 				E4596A06240803A60030DB3E /* ReaderTopBar.swift */,
 				E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */,
+				E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -354,6 +364,7 @@
 				E462BD04245581940089AD5F /* VCAlert.swift */,
 				E443C8B42528A4920060CDFB /* +URL.swift */,
 				E45A878A25FCB8410011CF9F /* UIKitPreview.swift */,
+				E49F2F5F2833C73300BE90FE /* +CollectionView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -378,6 +389,7 @@
 				E4EB1E382569762800C56632 /* IndexSelectionManager.swift */,
 				E411C7F425BF44F9006D45A5 /* ExtractionDirectory.swift */,
 				E45A877C25FC99280011CF9F /* Cores.swift */,
+				E4C3D174261E09D7007CC0E1 /* AppState.swift */,
 			);
 			path = Cores;
 			sourceTree = "<group>";
@@ -698,7 +710,9 @@
 				E40FD64D22D1239800926CC4 /* ThumbnailCell.swift in Sources */,
 				E45C842A238DACD700669155 /* Colors.swift in Sources */,
 				E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */,
+				E4850C1D2832A43E00AA0F85 /* ThemesStackView.swift in Sources */,
 				E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */,
+				E4E2834F28301DC500030C9D /* AppTheme.swift in Sources */,
 				E42576AC253458A8000F0D0D /* +NSLayoutContraint.swift in Sources */,
 				E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */,
 				E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */,
@@ -706,6 +720,7 @@
 				E463B29822AC2FCE0094265C /* Consts.swift in Sources */,
 				E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */,
 				E455AFDF245EA30D003F403D /* Library+DocumentBrowser.swift in Sources */,
+				E49F2F602833C73300BE90FE /* +CollectionView.swift in Sources */,
 				E4596A07240803A60030DB3E /* ReaderTopBar.swift in Sources */,
 				E407CB8323FD3D780056F64D /* RoundedProgressView.swift in Sources */,
 				E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */,
@@ -729,6 +744,7 @@
 				E4EBC306241E8D4C00F558AF /* EmptyViewDelegate.swift in Sources */,
 				E42B9EA024506CF3007B3803 /* DataService.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */,
+				E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */,
 				E411C7F525BF44F9006D45A5 /* ExtractionDirectory.swift in Sources */,
 				E4596A042407E7650030DB3E /* ReaderBottomBar.swift in Sources */,
 				E40A353323F97C83006FA758 /* Library+ProgressContainer.swift in Sources */,
@@ -918,7 +934,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WU5FXL4LFY;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = wutComicReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -941,7 +957,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WU5FXL4LFY;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = wutComicReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -17,11 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        if UserDefaults.standard.appLaunchedForFirstTime() {
+        if AppState.main.appLaunchedForFirstTime() {
             do {
                 try Cores.main.dataService.createGroupForNewComics()
                 try Cores.main.appfileManager.makeAppDirectory()
-                UserDefaults.standard.setAppDidLaunchedFlag()
+                AppState.main.setAppDidLaunchedFlag()
                 
             }catch let error {
                 fatalError("Initial setup was failed: " + error.localizedDescription)

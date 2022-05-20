@@ -10,16 +10,10 @@ import UIKit
 
 class LibraryCell: UICollectionViewCell {
     
-    var imageResizer: ImageResizer!
-    
     var book : Comic? {
         didSet{
-            
             guard let imageName = book?.thumbnailNames?[0] as? String else { return }
-            
             let cover = ComicImage(book, withImageName: imageName)
-//            bookCoverImageView.image = imageResizer.resize(UIImage(contentsOfFile: cover.path) ,
-//                                                           to: CGSize(width: 300, height: 450))
             bookCoverImageView.image = UIImage(contentsOfFile: cover.path)
             updateProgressValue()
         }
@@ -70,8 +64,6 @@ class LibraryCell: UICollectionViewCell {
     }
     
     override func awakeFromNib() {
-        
-        imageResizer = ImageResizer()
         setUpDesign()
         updateProgressValue()
     }
