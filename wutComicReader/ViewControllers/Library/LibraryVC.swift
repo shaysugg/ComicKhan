@@ -19,8 +19,8 @@ class LibraryVC: UIViewController {
     //MARK:- Variables
     
     let appfileManager: AppFileManager!
-    let comicExtractor: ComicExteractor
-    let dataService: DataService
+    private(set) var comicExtractor: ComicExteractor
+    private(set) var dataService: DataService
     
     let fetchResultController: NSFetchedResultsController<Comic>
     var blockOperations = [BlockOperation]()
@@ -434,3 +434,15 @@ class LibraryVC: UIViewController {
     
 }
 
+#if DEBUG
+extension LibraryVC {
+    func setupForTes(comicExtracror: ComicExteractor? = nil, dataService: DataService? = nil) {
+        if let comicExtracror = comicExtracror {
+            self.comicExtractor = comicExtracror
+        }
+        if let dataService = dataService {
+            self.dataService = dataService
+        }
+    }
+}
+#endif

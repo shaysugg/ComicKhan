@@ -41,7 +41,6 @@ class AppFileManager {
     let userDirectory: URL
     
     private var fileManager = FileManager.default
-    internal var managedContext : NSManagedObjectContext?
     var dataService: DataService!
     weak var progressDelegate: ProgressDelegate?
     
@@ -51,7 +50,6 @@ class AppFileManager {
     //MARK:- Functions
     
     init(dataService: DataService, userDirectory: URL, comicDirectory: URL) {
-        managedContext = dataService.managedContext
         self.dataService = dataService
         self.comicDirectory = comicDirectory
         self.userDirectory = userDirectory
@@ -85,8 +83,6 @@ class AppFileManager {
     ///skip comics that already been added to core data
     
     func writeNewComicsOnCoreData(){
-        
-        guard let _ = managedContext else { return }
         
         
         guard let comicDiractories = try? fileManager.contentsOfDirectory(at: comicDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else {

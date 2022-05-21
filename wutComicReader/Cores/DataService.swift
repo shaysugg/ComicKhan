@@ -11,13 +11,14 @@ import CoreData
 
 final class DataService {
     
-    var managedContext: NSManagedObjectContext
-    var comicFetchResultController: NSFetchedResultsController<Comic>?
+    private let managedContext: NSManagedObjectContext!
+    let groupForNewComicsName = ""
     private var groupForNewComics: ComicGroup?
-    private let groupForNewComicsName = ""
     
-    init(managedContext: NSManagedObjectContext) {
-        self.managedContext = managedContext
+    
+    init(managedContext: NSManagedObjectContext? = nil) {
+        ArrayOfStringsTransformer.register()
+        self.managedContext = managedContext ?? DataService.configurePersistentContainer().viewContext
     }
     
     func configureFetchResultController() throws -> NSFetchedResultsController<Comic> {
@@ -29,18 +30,19 @@ final class DataService {
         
         // Important: sectionNameKeyPath that we using to idenifie sections
         // SHOULD be in sortDescriptors to group comics correctly!
-        fetchRequest.sortDescriptors = [basedOnComicGroupName ,basedOnName]
+        fetchRequest.sortDescriptors = [basedOnComicGroupName, basedOnName]
         
         
-        comicFetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: #keyPath(Comic.ofComicGroup.name), cacheName: nil)
+        
+        let comicFetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedContext, sectionNameKeyPath: #keyPath(Comic.ofComicGroup.name), cacheName: nil)
         
         do {
-            try comicFetchResultController?.performFetch()
+            try comicFetchResultController.performFetch()
         }catch let err {
             throw err
         }
         
-        return comicFetchResultController!
+        return comicFetchResultController
     }
     
     
@@ -229,5 +231,17 @@ final class DataService {
         }
     }
     
+    static private func configurePersistentContainer() -> NSPersistentContainer {
+        let container = NSPersistentContainer(name: "coredata")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }
+    
     
 }
+
+
