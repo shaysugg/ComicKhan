@@ -231,23 +231,13 @@ final class BookReaderVC: UIViewController {
         
         
         view.addSubview(topBar)
-        let topBarHeight = CGFloat(50)
         
         topBarConstraint.sharedConstaints.append(contentsOf: [
             topBar.leftAnchor.constraint(equalTo: view.leftAnchor),
             topBar.rightAnchor.constraint(equalTo: view.rightAnchor),
-            topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+            topBar.topAnchor.constraint(equalTo: view.topAnchor),
+            topBar.heightAnchor.constraint(greaterThanOrEqualToConstant: 50)
         ])
-        
-        topBarConstraint.compactConstaints.append(contentsOf: [
-            topBar.heightAnchor.constraint(equalToConstant: short / 5).withLowPiority(),
-            topBar.heightAnchor.constraint(lessThanOrEqualToConstant: 100).withHighPiority()
-        ])
-        
-        topBarConstraint.regularConstraints.append(
-            topBar.heightAnchor.constraint(equalToConstant: topBarHeight)
-        )
-        
         
         NSLayoutConstraint.activate(topBarConstraint.sharedConstaints)
         NSLayoutConstraint.activate(bottomBarConstraints.sharedConstaints)

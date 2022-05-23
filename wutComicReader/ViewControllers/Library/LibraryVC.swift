@@ -70,8 +70,6 @@ class LibraryVC: UIViewController {
     }()
     var progressContainerHideBottomConstrait: NSLayoutConstraint!
     var progressContainerAppearedBottomConstrait: NSLayoutConstraint!
-    var progressContainerInCopyingStateHeight: NSLayoutConstraint!
-    var progressContainerInExtractingStateHeight: NSLayoutConstraint!
     var comicNameThatExtracting: String?
     
     

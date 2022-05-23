@@ -9,7 +9,7 @@
 import UIKit
 import SwiftUI
 
-protocol EmptyViewDelegate: class {
+protocol EmptyViewDelegate: AnyObject {
     func importComicsButtonTapped()
     func copyrightButtonDidTapped()
 }
@@ -91,7 +91,7 @@ class EmptyGroupView: UIView {
     private lazy var artistNameLabel: UILabel = {
         let label = UILabel()
         label.text = "By Samuel Jessurun de Mesquita"
-        label.font = UIFont(name: HelvetincaNeueFont.regular.name, size: 10)
+        label.font = AppState.main.font.caption2
         label.textColor = .appSeconedlabelColor
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +110,7 @@ class EmptyGroupView: UIView {
         
         button.titleLabel?.attributedText = attributedText
         
-        button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.regular.name, size: 10)
+        button.titleLabel?.font = AppState.main.font.caption2
         button.setTitleColor(.appSecondaryLabel, for: .normal)
         button.titleLabel?.textAlignment = .left
         button.addTarget(self, action: #selector(copyrightButtonTapped), for: .touchUpInside)
@@ -121,8 +121,8 @@ class EmptyGroupView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "You don’t have any comics here!"
-        label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 24)
-        label.numberOfLines = 0
+        label.font = AppState.main.font.h2
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -131,8 +131,8 @@ class EmptyGroupView: UIView {
     private lazy var importLabel: UILabel = {
         let label = UILabel()
         label.text = "You can also import them by iTunes (Windows) / Files (Mac)"
-        label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 12)
-        label.numberOfLines = 0
+        label.font = AppState.main.font.caption
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .appSecondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -144,7 +144,7 @@ class EmptyGroupView: UIView {
         button.setTitle("Import Comics", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .appBlueColor
-        button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 16)
+        button.titleLabel?.font = AppState.main.font.body
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(howToAddComicsButtonTapped), for: .touchUpInside)
         return button
@@ -170,7 +170,6 @@ class EmptyGroupView: UIView {
         
         imageView.widthAnchor.constraint(equalTo: pictureVStackView.widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1).isActive = true
-        pictureDiscriptionHStackView.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
     }
     
