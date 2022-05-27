@@ -23,7 +23,7 @@ class LibraryVC: UIViewController {
     private(set) var dataService: DataService
     
     let fetchResultController: NSFetchedResultsController<Comic>
-    var blockOperations = [BlockOperation]()
+    private var fetchResultHandler: LibraryFetchResultControllerHandler!
     
     private(set) var collectionViewCellSize: CGSize!
     
@@ -33,6 +33,7 @@ class LibraryVC: UIViewController {
     
     let indexSelectionManager = IndexSelectionManager()
     var indexSelectionCancelabels = [Cancellable]()
+    private var fetchResultControllerHandler: NSFetchedResultsControllerDelegate!
     
     //MARK:- UI Variables
     
@@ -98,7 +99,7 @@ class LibraryVC: UIViewController {
         self.appfileManager = Cores.main.appfileManager
         self.comicExtractor = Cores.main.extractor
         self.dataService = Cores.main.dataService
-        fetchResultController = try! dataService.configureFetchResultController()
+        self.fetchResultController = try! dataService.configureFetchResultController()
         
         super.init(coder: coder)
     }
@@ -106,12 +107,14 @@ class LibraryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchResultHandler = LibraryFetchResultControllerHandler(fetchResultController: fetchResultController,
+                                                                      collectionView: bookCollectionView)
+        
         setupDiractoryWatcher()
         didUserAddNewFilesWhileAppWasDeactive()
         
         configureCellSize(basedOn: UIScreen.main.traitCollection)
         setUpDesigns()
-        
         setupDelegates()
         
         setUpNavigationButtons()
@@ -204,7 +207,7 @@ class LibraryVC: UIViewController {
     }
     
     private func setupDelegates() {
-        fetchResultController.delegate = self
+        fetchResultHandler.delegate = self
         comicExtractor.delegate = self
         comicExtractor.errorDelegate = self
         appfileManager.progressDelegate = self
@@ -319,8 +322,6 @@ class LibraryVC: UIViewController {
     
     func updateNavBarWhenEditingChanged() {
         if editingMode {
-//            navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
-            //            navigationItem.setLeftBarButtonItems([editBarButton], animated: true)
             bottomToolbar.isHidden = false
             bottomToolbar.alpha = 0
             
@@ -329,33 +330,20 @@ class LibraryVC: UIViewController {
             } completion: { (_) in
                 
             }
-            
-            
-            
             bottomToolbar.isHidden = false
-            //            infoButton.isEnabled = false
             addComicsButton.isEnabled = false
-//            infoButton.tintColor = .clear
             editBarButton.title = "Done"
             editBarButton.style = .done
         }else{
-//            navigationItem.setRightBarButtonItems([editBarButton], animated: true)
-//            navigationItem.setLeftBarButtonItems([infoButton], animated: true)
             
             UIView.animate(withDuration: 0.2) {
                 self.bottomToolbar.alpha = 0
             } completion: { (_) in
                 self.bottomToolbar.isHidden = true
             }
-            
-            
-//            infoButton.isEnabled = true
             addComicsButton.isEnabled = true
-//            infoButton.tintColor = addComicsButton.tintColor
             editBarButton.title = "Edit"
             editBarButton.style = .plain
-//            deleteBarButton.isEnabled = false
-//            groupBarButton.isEnabled = false
             
         }
     }
