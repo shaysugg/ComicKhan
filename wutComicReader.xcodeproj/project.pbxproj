@@ -71,6 +71,7 @@
 		E4FD092D245427FA004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz in Resources */ = {isa = PBXBuildFile; fileRef = E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */; };
 		E4FD092F245435A1004D0A53 /* MockCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092E245435A1004D0A53 /* MockCoreDataStack.swift */; };
 		E4FD0931245436E2004D0A53 /* DataServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD0930245436E2004D0A53 /* DataServiceTests.swift */; };
+		E4FDA7F12840CC3D00605CDD /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FDA7F02840CC3D00605CDD /* CoreDataTests.swift */; };
 		E4FF655A2391684600AAD68B /* BookPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FF65592391684600AAD68B /* BookPage.swift */; };
 /* End PBXBuildFile section */
 
@@ -177,6 +178,7 @@
 		E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz"; sourceTree = "<group>"; };
 		E4FD092E245435A1004D0A53 /* MockCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataStack.swift; sourceTree = "<group>"; };
 		E4FD0930245436E2004D0A53 /* DataServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataServiceTests.swift; sourceTree = "<group>"; };
+		E4FDA7F02840CC3D00605CDD /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
 		E4FF65592391684600AAD68B /* BookPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -441,6 +443,7 @@
 		E4DA532324507DB800A244FD /* ComicKhanTests */ = {
 			isa = PBXGroup;
 			children = (
+				E4FDA7EF2840CC2200605CDD /* CoreData */,
 				E4FD092724542416004D0A53 /* DataService */,
 				E4FD092524542402004D0A53 /* FileManager */,
 				E4FD0923245423F2004D0A53 /* Extractor */,
@@ -488,6 +491,14 @@
 				E4FD0930245436E2004D0A53 /* DataServiceTests.swift */,
 			);
 			path = DataService;
+			sourceTree = "<group>";
+		};
+		E4FDA7EF2840CC2200605CDD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E4FDA7F02840CC3D00605CDD /* CoreDataTests.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -775,6 +786,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E43017FF25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift in Sources */,
+				E4FDA7F12840CC3D00605CDD /* CoreDataTests.swift in Sources */,
 				E4FD092B245426E7004D0A53 /* ExtractorTests.swift in Sources */,
 				E4FD092F245435A1004D0A53 /* MockCoreDataStack.swift in Sources */,
 				E462BD092455FA6D0089AD5F /* LibraryVCTests.swift in Sources */,
