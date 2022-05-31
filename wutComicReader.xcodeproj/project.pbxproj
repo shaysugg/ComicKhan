@@ -58,6 +58,7 @@
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
 		E4CE377F240D578600429C30 /* ProgressContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE377E240D578600429C30 /* ProgressContainerView.swift */; };
 		E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */; };
+		E4D1A05D2843914000EB945C /* RotatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D1A05C2843914000EB945C /* RotatableView.swift */; };
 		E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3920023EEA23800E8C873 /* NewGroupVC.swift */; };
 		E4E2834F28301DC500030C9D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E2834E28301DC500030C9D /* AppTheme.swift */; };
 		E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E667FC234BAB710050CB8C /* Assets.xcassets */; };
@@ -162,6 +163,7 @@
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
 		E4CE377E240D578600429C30 /* ProgressContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressContainerView.swift; sourceTree = "<group>"; };
 		E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+CollectionView.swift"; sourceTree = "<group>"; };
+		E4D1A05C2843914000EB945C /* RotatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatableView.swift; sourceTree = "<group>"; };
 		E4D3920023EEA23800E8C873 /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		E4DA532224507DB800A244FD /* ComicKhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComicKhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DA532624507DB800A244FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				E45213A722D4902C00216217 /* Book Reader */,
 				E4A1264C23AE7DC300EC1C96 /* Library */,
 				E465B1182413FB7B00A6003D /* Info */,
+				E4D1A05C2843914000EB945C /* RotatableView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -750,6 +753,7 @@
 				E48253EA22D631B1001A0E85 /* Helper.swift in Sources */,
 				E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */,
 				E49C7C132417EBED004DE82A /* ImageResizer.swift in Sources */,
+				E4D1A05D2843914000EB945C /* RotatableView.swift in Sources */,
 				E462BD05245581940089AD5F /* VCAlert.swift in Sources */,
 				E4FF655A2391684600AAD68B /* BookPage.swift in Sources */,
 				E407CB8523FD3DD80056F64D /* CircleProgressView.swift in Sources */,

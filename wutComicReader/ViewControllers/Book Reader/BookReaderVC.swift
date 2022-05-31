@@ -17,27 +17,13 @@ protocol TopBarDelegate: AnyObject {
     func dismissViewController()
 }
 
-struct ConstraintsForSizeClasses {
-    var sharedConstaints: [NSLayoutConstraint] = []
+final class BookReaderVC: DynamicConstraintHandler {
     
-    var CVCHConstaints: [NSLayoutConstraint] = []
-    var RVRHConstaints: [NSLayoutConstraint] = []
-    var CVRHConstaints: [NSLayoutConstraint] = []
-    var RVCHConstaints: [NSLayoutConstraint] = []
-    
-    var compactConstaints: [NSLayoutConstraint] = []
-    var regularConstraints: [NSLayoutConstraint] = []
-    
-}
-
-final class BookReaderVC: UIViewController {
-    
-    //MARK:- Variables
+    //MARK: Variables
     
     var comic : Comic? {
         didSet{
             guard let _ = comic else { return }
-//            topBar.titleLabel.text = comic?.name
         }
     }
     
@@ -60,6 +46,7 @@ final class BookReaderVC: UIViewController {
     private var regularConstraint: [NSLayoutConstraint] = []
     private var sharedConstraints: [NSLayoutConstraint] = []
     
+    //TODO: Get this outta here
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
         didSet{
             setPageViewControllers()
@@ -72,21 +59,19 @@ final class BookReaderVC: UIViewController {
     var cancellables = Set<AnyCancellable>()
     
     
-    //MARK:- UI Variables
+    //MARK: UI Variables
     
     lazy var bottomBar: BottomBar = {
-       let bar = BottomBar()
+        let bar = BottomBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
-    lazy var bottomBarConstraints = ConstraintsForSizeClasses()
     
     lazy var topBar: TopBar = {
         let view = TopBar()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    lazy var topBarConstraint = ConstraintsForSizeClasses()
     
     //this used for fill the space between topBar and top device edge in iphone X
     lazy var topBarBackgroundView: UIView = {
@@ -111,7 +96,7 @@ final class BookReaderVC: UIViewController {
         return UIDevice.current.orientation.isLandscape ?  .lightContent : .default
     }
     
-    //MARK:- Functions
+    //MARK: Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +120,7 @@ final class BookReaderVC: UIViewController {
         
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
         
+        //TODO: Take it outta here
         //force rotate to portrait if orientation was flat
         if UIDevice.current.orientation.isFlat {
             let value = UIInterfaceOrientation.portrait.rawValue
@@ -146,15 +132,15 @@ final class BookReaderVC: UIViewController {
     
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         deviceIsLandscaped = UIDevice.current.orientation.isLandscape
         let trait = UIScreen.main.traitCollection
         
         //this is because trait change in iPad not work
         //so we add a func here to tell bookpages that rotation has changed
         if trait.horizontalSizeClass == .regular,
-            trait.verticalSizeClass == .regular {
-            
-            layoutWith(traitCollection: UIScreen.main.traitCollection)
+           trait.verticalSizeClass == .regular {
+            updateTopBarBackground()
             
             //update page scrollView min scale when device rotate
             if let page = bookPageViewController.viewControllers?.first as? BookPage {
@@ -163,12 +149,12 @@ final class BookReaderVC: UIViewController {
                 page.updateMinZoomScaleForSize(CGSize(width: size.height, height: size.width))
             }
         }
-//        
+        //
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
-         layoutWith(traitCollection: UIScreen.main.traitCollection)
+        super.traitCollectionDidChange(previousTraitCollection)
+        updateTopBarBackground()
         
         //update page scrollView min scale when device rotate
         if let page = bookPageViewController.viewControllers?.first as? BookPage {
@@ -194,107 +180,53 @@ final class BookReaderVC: UIViewController {
     
     
     func setupDesign(){
-        
         view.addSubview(bottomBar)
-        
-        bottomBarConstraints.sharedConstaints.append(contentsOf: [
-            bottomBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
+        view.addSubview(topBar)
+        view.addSubview(topBarBackgroundView)
         
         let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
         let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
         
-        bottomBarConstraints.RVRHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
-            bottomBar.heightAnchor.constraint(equalToConstant: short / 3),
-            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -30)
-        ])
         
-        bottomBarConstraints.CVCHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: (larg * 2) / 3),
-            bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
-            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
-        ])
-        
-        bottomBarConstraints.RVCHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: short),
-            bottomBar.heightAnchor.constraint(equalToConstant: larg / 3.8),
-            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 0)
-        ])
-        
-        bottomBarConstraints.CVRHConstaints.append(contentsOf: [
-            bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
-            bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
-            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
-        ])
-        
-        
-        
-        view.addSubview(topBar)
-        
-        topBarConstraint.sharedConstaints.append(contentsOf: [
+        setConstraints(shared: [
             topBar.leftAnchor.constraint(equalTo: view.leftAnchor),
             topBar.rightAnchor.constraint(equalTo: view.rightAnchor),
             topBar.topAnchor.constraint(equalTo: view.topAnchor),
-            topBar.heightAnchor.constraint(greaterThanOrEqualToConstant: 50)
+            topBar.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
+            bottomBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            topBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            topBarBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            topBarBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            topBarBackgroundView.bottomAnchor.constraint(equalTo: topBar.topAnchor)
+            
         ])
         
-        NSLayoutConstraint.activate(topBarConstraint.sharedConstaints)
-        NSLayoutConstraint.activate(bottomBarConstraints.sharedConstaints)
-        
-        layoutWith(traitCollection: UIScreen.main.traitCollection)
-        
-        view.addSubview(topBarBackgroundView)
-        topBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        topBarBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        topBarBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        topBarBackgroundView.bottomAnchor.constraint(equalTo: topBar.topAnchor).isActive = true
-//        view.sendSubviewToBack(topBarBackgroundView)
+        setConstraints(
+            CVCH: [
+                bottomBar.widthAnchor.constraint(equalToConstant: (larg * 2) / 3),
+                bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
+                bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
+            ], RVCH: [
+                bottomBar.widthAnchor.constraint(equalToConstant: short),
+                bottomBar.heightAnchor.constraint(equalToConstant: larg / 3.8),
+                bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 0)
+            ], CVRH: [
+                bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
+                bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
+                bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
+            ], RVRH: [
+                bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
+                bottomBar.heightAnchor.constraint(equalToConstant: short / 3),
+                bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -30)
+            ])
+        setupDynamicLayout()
         
     }
     
-    func layoutWith(traitCollection: UITraitCollection) {
-        let horizontal = traitCollection.horizontalSizeClass
-        let vertical = traitCollection.verticalSizeClass
-        
-        //bottomBar setup
-        
-        NSLayoutConstraint.deactivate(bottomBarConstraints.CVCHConstaints)
-        NSLayoutConstraint.deactivate(bottomBarConstraints.CVRHConstaints)
-        NSLayoutConstraint.deactivate(bottomBarConstraints.RVCHConstaints)
-        NSLayoutConstraint.deactivate(bottomBarConstraints.RVRHConstaints)
-        
-        if horizontal == .compact && vertical == .compact {
-            NSLayoutConstraint.activate(bottomBarConstraints.CVCHConstaints)
-        }else if horizontal == .compact && vertical == .regular {
-            NSLayoutConstraint.activate(bottomBarConstraints.RVCHConstaints)
-        }else if horizontal == .regular && vertical == .compact {
-            NSLayoutConstraint.activate(bottomBarConstraints.CVRHConstaints)
-        }else {
-            NSLayoutConstraint.activate(bottomBarConstraints.RVRHConstaints)
-        }
-        
-        
-        if horizontal == .compact && vertical == .regular {
-            bottomBar.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        }else{
-            bottomBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-        }
-        //topBar setup
-        
-        NSLayoutConstraint.deactivate(topBarConstraint.compactConstaints)
-        NSLayoutConstraint.deactivate(topBarConstraint.regularConstraints)
-        
-        if UIDevice.current.orientation.isLandscape {
-            NSLayoutConstraint.activate(topBarConstraint.compactConstaints)
-        }else {
-            NSLayoutConstraint.activate(topBarConstraint.regularConstraints)
-        }
-        
-        //topBarBackground setup
-        
+    
+    func updateTopBarBackground() {
         topBarBackgroundView.backgroundColor = UIDevice.current.orientation.isLandscape ? UIColor.black.withAlphaComponent(0.7) : .appSystemBackground
-        
     }
     
     func addGestures() {
@@ -316,7 +248,7 @@ final class BookReaderVC: UIViewController {
             guideView.delegate = self
             
             view.addSubview(guideView)
-        
+            
             guideView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
             guideView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
             guideView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -339,10 +271,10 @@ final class BookReaderVC: UIViewController {
             }
             
             if let _ = pendingPage {
-//                var diraction: UIPageViewController.NavigationDirection {
-//                    return page1Number < number ? .reverse : .forward
-//                }
-            bookPageViewController.setViewControllers([pendingPage!], direction: .forward, animated: animate, completion: nil)
+                //                var diraction: UIPageViewController.NavigationDirection {
+                //                    return page1Number < number ? .reverse : .forward
+                //                }
+                bookPageViewController.setViewControllers([pendingPage!], direction: .forward, animated: animate, completion: nil)
             }
             
         }
@@ -374,7 +306,7 @@ final class BookReaderVC: UIViewController {
         
     }
     
-    //MARK:- Menues Appearing Handeling
+    //MARK: Menues Appearing Handeling
     
     @objc func toggleMenusGestureTapped() {
         if menusAreAppeard {
@@ -416,7 +348,7 @@ final class BookReaderVC: UIViewController {
                 self.bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.bottomBar.alpha = 1
                 self.topBarBackgroundView.alpha = 1
-//
+                //
             }, completion: { _ in
                 
             })
@@ -425,7 +357,7 @@ final class BookReaderVC: UIViewController {
             topBarBackgroundView.alpha = 1
             bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
             bottomBar.alpha = 1
-           
+            
         }
         //this shouldn't be there actually but idk wherever else i can make bottom bar collection view scroll
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0

@@ -73,7 +73,7 @@ class LibraryVC: UIViewController {
     var progressContainerAppearedBottomConstrait: NSLayoutConstraint!
     var comicNameThatExtracting: String?
     
-    
+
     var CHConstratis = [NSLayoutConstraint]()
     var RHConstratis = [NSLayoutConstraint]()
     
