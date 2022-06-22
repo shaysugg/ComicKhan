@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //TODO: Dont set constraint on landscape or not landscape
-class DynamicConstraintHandler: UIViewController {
+class DynamicConstraintViewController: UIViewController {
     
     private var sharedConstaints: [NSLayoutConstraint] = []
     private var CVCHConstaints: [NSLayoutConstraint] = []
