@@ -28,11 +28,6 @@ enum CollectioViewIDs {
     }
 }
 
-extension NSNotification.Name {
-    static let newGroupAboutToAdd = NSNotification.Name(rawValue: "new group added")
-    static let reloadLibraryAtIndex = NSNotification.Name(rawValue: "reload library at")
-}
-
 var previouseOriantation: UIDeviceOrientation? {
     didSet{
         if previouseOriantation!.isLandscape {

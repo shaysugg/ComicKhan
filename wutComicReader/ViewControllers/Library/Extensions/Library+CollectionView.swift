@@ -72,8 +72,14 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
             readerVC.comic = selectedComic
             readerVC.dataService = dataService
-            readerVC.bookIndexInLibrary = indexPath
             readerVC.modalPresentationStyle = .fullScreen
+            readerVC.comicReadingProgressDidChanged = { [weak self] comic in
+                guard let self = self else { return }
+                guard let index = self.fetchResultController.indexPath(forObject: comic) else { return }
+//                let cell = self.bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
+//                cell?.updateProgressValue()
+                self.bookCollectionView.reloadItems(at: [index])
+            }
             
             // showing a spinner if presenting VC is taking some moments
             if (selectedComic.imageNames?.count ?? 0) > 80 {

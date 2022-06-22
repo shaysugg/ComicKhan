@@ -17,7 +17,7 @@ protocol TopBarDelegate: AnyObject {
     func dismissViewController()
 }
 
-final class BookReaderVC: DynamicConstraintHandler {
+final class BookReaderVC: DynamicConstraintViewController {
     
     //MARK: Variables
     
@@ -27,8 +27,7 @@ final class BookReaderVC: DynamicConstraintHandler {
         }
     }
     
-    
-    var bookIndexInLibrary: IndexPath?
+
     
     var lastViewedPage : Int?
     var menusAreAppeard: Bool = false
@@ -45,6 +44,8 @@ final class BookReaderVC: DynamicConstraintHandler {
     private var compactConstaitns: [NSLayoutConstraint] = []
     private var regularConstraint: [NSLayoutConstraint] = []
     private var sharedConstraints: [NSLayoutConstraint] = []
+    
+    var comicReadingProgressDidChanged: ((_ comic: Comic) -> Void)?
     
     //TODO: Get this outta here
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
@@ -374,7 +375,7 @@ extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
     func dismissViewController() {
         
         saveLastViewedPageToCoreData()
-        NotificationCenter.default.post(name: .reloadLibraryAtIndex, object: bookIndexInLibrary)
+        comicReadingProgressDidChanged?(comic!)
         
         bottomBar.delegate = nil
         topBar.delegate = nil

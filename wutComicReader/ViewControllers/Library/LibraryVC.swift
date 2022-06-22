@@ -119,8 +119,6 @@ class LibraryVC: UIViewController {
         
         setUpNavigationButtons()
         
-        setupNotificationCenterObservers()
-        
         bookCollectionView.allowsMultipleSelection = true
         
     }
@@ -215,12 +213,7 @@ class LibraryVC: UIViewController {
         emptyGroupsView.delegate = self
     }
     
-    private func setupNotificationCenterObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAboutToAdd, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
-    }
-        
-    //MARK:- Collection View Functions
+    //MARK: Collection View Functions
     
     func configureCellSize(basedOn traitcollection: UITraitCollection) {
         let h = traitCollection.horizontalSizeClass
@@ -241,13 +234,6 @@ class LibraryVC: UIViewController {
             }
         }
         collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.53)
-    }
-    
-    @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
-        guard let indexPath = notification.object as? IndexPath else { return }
-        let cell = bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
-        cell?.updateProgressValue()
-        
     }
     
     private func setUpNavigationButtons() {
@@ -296,8 +282,28 @@ class LibraryVC: UIViewController {
 
     @IBAction func groupBarButtonTapped(_ sender: Any) {
         let newGroupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewGroupVC") as! NewGroupVC
-        newGroupVC.comicsAboutToGroup = indexSelectionManager.indexes.map {fetchResultController.object(at: $0)}
+        newGroupVC.comicsAboutToGroup = indexSelectionManager.indexes
+            .map {fetchResultController.object(at: $0)}
+        
         newGroupVC.dataService = dataService
+        
+        newGroupVC.newComicGroupAboutToAdd = { [weak self] groupName , comics in
+            do {
+                try self?.dataService.createANewComicGroup(name: groupName, comics: comics)
+                self?.indexSelectionManager.removeAll()
+            } catch {
+                self?.showAlert(with: "Oh!", description: "An issue happend while creating your comic group. Please try again.")
+            }
+        }
+        
+        newGroupVC.comicsGroupAboutToMove = { [weak self] group, comics in
+            do {
+                try self?.dataService.changeGroupOf(comics: comics, to: group)
+                self?.indexSelectionManager.removeAll()
+            } catch {
+                self?.showAlert(with: "Oh!", description: "An issue happend while moving your comics. Please try again.")
+            }
+        }
         present(newGroupVC , animated: true)
     }
     
@@ -365,9 +371,6 @@ class LibraryVC: UIViewController {
         present(documentPickerVC, animated: true, completion: nil)
     }
     
-    @objc private func newGroupVCAddedANewGroup() {
-        indexSelectionManager.removeAll()
-    }
     
     // if app killed or terminated in background when did open again
     // diractory watcher not gonna work again so we check with below function
