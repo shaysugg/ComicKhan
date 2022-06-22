@@ -36,7 +36,6 @@ final class BookReaderVC: DynamicConstraintViewController {
     var bookSingleImages : [ComicImage] = []
     var bookDoubleImages : [(ComicImage? , ComicImage?)] = []
     var bookPages: [BookPage] = []
-    var dataService: DataService!
     
     var thumbnailImages: [ComicImage] = []
     
@@ -45,7 +44,7 @@ final class BookReaderVC: DynamicConstraintViewController {
     private var regularConstraint: [NSLayoutConstraint] = []
     private var sharedConstraints: [NSLayoutConstraint] = []
     
-    var comicReadingProgressDidChanged: ((_ comic: Comic) -> Void)?
+    var comicReadingProgressDidChanged: ((_ comic: Comic, _ lastPageHasRead: Int) -> Void)?
     
     //TODO: Get this outta here
     var deviceIsLandscaped: Bool = UIDevice.current.orientation.isLandscape {
@@ -294,12 +293,6 @@ final class BookReaderVC: DynamicConstraintViewController {
         
     }
     
-    func saveLastViewedPageToCoreData() {
-        if let page = lastViewedPage {
-            try? dataService.saveLastPageOf(comic: comic!, lastPage: page)
-        }
-    }
-    
     @objc func zoomBookCurrentPage(_ sender: ZoomGestureRecognizer) {
         guard let point = sender.point else { return }
         let currentPage = bookPageViewController.viewControllers?.first as? BookPage
@@ -373,9 +366,7 @@ final class BookReaderVC: DynamicConstraintViewController {
 
 extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
     func dismissViewController() {
-        
-        saveLastViewedPageToCoreData()
-        comicReadingProgressDidChanged?(comic!)
+        comicReadingProgressDidChanged?(comic!, lastViewedPage ?? 0)
         
         bottomBar.delegate = nil
         topBar.delegate = nil
