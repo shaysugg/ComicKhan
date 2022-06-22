@@ -73,7 +73,7 @@ final class DataService {
             throw err
         }
     }
-    
+    @discardableResult
     func createANewComicGroup(name: String, comics: [Comic]) throws -> ComicGroup {
         
         let newComicGroup = ComicGroup(context: managedContext)
