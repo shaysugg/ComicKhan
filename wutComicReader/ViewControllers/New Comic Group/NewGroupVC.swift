@@ -14,7 +14,13 @@ class NewGroupVC: UIViewController {
     
     var dataService: DataService!
     var comicsAboutToGroup: [Comic] = []
-    var groups: [ComicGroup]!
+    
+    var groups: [ComicGroup]! { didSet {
+        groupNames = groups.map({
+            $0.name ?? ""
+        })
+    } }
+    var groupNames: [String]!
     
     var newComicGroupAboutToAdd: ((_ name: String, _ comics: [Comic]) -> Void)?
     var comicsGroupAboutToMove: ((_ group: ComicGroup, _ comics: [Comic]) -> Void)?
@@ -73,9 +79,13 @@ class NewGroupVC: UIViewController {
     
     
     private func addButtonTapped(){
-            if let text = newGroupTextField.text, !text.isEmpty {
+            if let text = newGroupTextField.text,
+               !text.isEmpty,
+               !groupNames.contains(text) {
                 newComicGroupAboutToAdd?(text, comicsAboutToGroup)
                 dismiss(animated: true, completion: nil)
+            }else {
+                alreadyExistLabel.isHidden = false
             }
     }
     
@@ -111,16 +121,7 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
 
 extension NewGroupVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let groupNames:[String] = groups.map({
-            $0.name ?? ""
-        })
-        if groupNames.contains(textField.text ?? "") {
-            alreadyExistLabel.isHidden = false
-        }else{
-            alreadyExistLabel.isHidden = true
-            addButtonTapped()
-        }
-        
+        addButtonTapped()
         return true
     }
     

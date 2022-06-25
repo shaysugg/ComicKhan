@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        print(NSHomeDirectory())
+        print("🏠 \(NSHomeDirectory())")
         return true
     }
     
