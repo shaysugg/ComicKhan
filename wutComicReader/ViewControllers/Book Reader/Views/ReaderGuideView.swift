@@ -87,7 +87,7 @@ class ReaderGuideView: UIView  {
         let button = UIButton()
         button.backgroundColor = .appBlueColor
         button.setTitle("Got it!", for: .normal)
-        button.titleLabel?.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 18)
+        button.titleLabel?.font = AppState.main.font.body
         button.addTarget(self, action: #selector(disappearViewElements), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -124,7 +124,7 @@ class ReaderGuideView: UIView  {
         let label = UILabel()
         label.textColor = .appBlueColor
         label.textAlignment = .center
-        label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 17)
+        label.font = AppState.main.font.body
         label.text = "Tap on the screen for appearing/disappearing menus."
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -135,7 +135,7 @@ class ReaderGuideView: UIView  {
         let label = UILabel()
         label.textColor = .appBlueColor
         label.textAlignment = .center
-        label.font = UIFont(name: HelvetincaNeueFont.medium.name, size: 17)
+        label.font = AppState.main.font.body
         label.text = "Double tap or pinch for zooming."
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false

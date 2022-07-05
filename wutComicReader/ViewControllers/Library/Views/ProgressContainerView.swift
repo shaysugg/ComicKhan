@@ -18,23 +18,41 @@ class ProgressContainerView: UIView {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 15)
-        label.textColor = UIColor.white.withAlphaComponent(0.9)
+        label.font = AppState.main.font.body
         label.textAlignment = .center
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private var numberLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: HelvetincaNeueFont.bold.name, size: 15)
-        label.textColor = UIColor.white.withAlphaComponent(0.9)
+        label.font = AppState.main.font.body
+        label.textColor = .white
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var nameLabalCopyingLeftConstraint: NSLayoutConstraint!
-    var nameLabalExtractingLeftConstraint: NSLayoutConstraint!
+    
+    private lazy var hStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var vStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     private var progressView: RoundedProgressView = {
         let progressView = RoundedProgressView()
@@ -70,28 +88,22 @@ class ProgressContainerView: UIView {
         backgroundColor = .appBlueColor
         clipsToBounds = true
         
-        addSubview(progressView)
-        progressView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        progressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        progressView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 10).isActive = true
+        addSubview(vStackView)
+        vStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        vStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        vStackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        vStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+        
+        
+        hStackView.addArrangedSubview(nameLabel)
+        hStackView.addArrangedSubview(numberLabel)
+        hStackView.addArrangedSubview(spinner)
+        
+        vStackView.addArrangedSubview(hStackView)
+        vStackView.addArrangedSubview(progressView)
+        
         progressView.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
-        addSubview(numberLabel)
-        numberLabel.leftAnchor.constraint(equalTo: progressView.leftAnchor).isActive = true
-        numberLabel.topAnchor.constraint(equalTo: topAnchor , constant: 15).isActive = true
-        numberLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        addSubview(spinner)
-        spinner.rightAnchor.constraint(equalTo: progressView.rightAnchor).isActive = true
-        spinner.topAnchor.constraint(equalTo: topAnchor , constant: 15).isActive = true
-        
-        addSubview(nameLabel)
-        nameLabel.topAnchor.constraint(equalTo: topAnchor , constant: 15).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: spinner.leftAnchor, constant: -5).isActive = true
-        nameLabalExtractingLeftConstraint = nameLabel.leftAnchor.constraint(equalTo: numberLabel.rightAnchor, constant: 5)
-        nameLabalCopyingLeftConstraint = nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20)
-        
-        nameLabalCopyingLeftConstraint.isActive = true
         
         
     }
@@ -117,17 +129,16 @@ class ProgressContainerView: UIView {
     func makeProgressBarFor(state: State, animated: Bool) {
         
         if state == .copying {
-            nameLabalExtractingLeftConstraint.isActive = false
-            nameLabalCopyingLeftConstraint.isActive = true
+            progressView.removeFromSuperview()
             
         }else {
-            nameLabalCopyingLeftConstraint.isActive = false
-            nameLabalExtractingLeftConstraint.isActive = true
+            vStackView.addArrangedSubview(progressView)
         }
-        self.progressView.alpha = state == .copying ? 0 : 1
+        
         
         if animated {
-            UIView.animate(withDuration: 0.1) {
+            UIView.animate(withDuration: 0.3) {
+                self.progressView.alpha = state == .copying ? 0 : 1
                 self.layoutIfNeeded()
             }
         }

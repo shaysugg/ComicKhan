@@ -39,36 +39,41 @@
 		E45A878B25FCB8410011CF9F /* UIKitPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45A878A25FCB8410011CF9F /* UIKitPreview.swift */; };
 		E45C842A238DACD700669155 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C8429238DACD700669155 /* Colors.swift */; };
 		E462BD05245581940089AD5F /* VCAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD04245581940089AD5F /* VCAlert.swift */; };
-		E462BD07245583D90089AD5F /* Library+FetchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD06245583D90089AD5F /* Library+FetchResultController.swift */; };
+		E462BD07245583D90089AD5F /* LibraryFetchResultControllerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD06245583D90089AD5F /* LibraryFetchResultControllerHandler.swift */; };
 		E462BD092455FA6D0089AD5F /* LibraryVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD082455FA6D0089AD5F /* LibraryVCTests.swift */; };
 		E463B29822AC2FCE0094265C /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463B29722AC2FCE0094265C /* Consts.swift */; };
 		E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E465B1192413FBAC00A6003D /* InfoVC.swift */; };
 		E475D0AE245751D10005CF8F /* ComicKhanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E475D0AD245751D10005CF8F /* ComicKhanUITests.swift */; };
 		E48253EA22D631B1001A0E85 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48253E922D631B1001A0E85 /* Helper.swift */; };
 		E4850C1D2832A43E00AA0F85 /* ThemesStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */; };
+		E499A0BC2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E499A0BB2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift */; };
 		E49C7C132417EBED004DE82A /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C122417EBED004DE82A /* ImageResizer.swift */; };
 		E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C142418FEF4004DE82A /* ComicImage.swift */; };
 		E49F2F602833C73300BE90FE /* +CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F2F5F2833C73300BE90FE /* +CollectionView.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
 		E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */; };
+		E4B2870928636A2C00397E83 /* BookReaderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B2870828636A2C00397E83 /* BookReaderFactory.swift */; };
 		E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C3D174261E09D7007CC0E1 /* AppState.swift */; };
 		E4C51EFE245EF82700B8AC04 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C51EFD245EF82700B8AC04 /* LoadingView.swift */; };
+		E4C596F7283BA25E004C71D9 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C596F6283BA25E004C71D9 /* AppFont.swift */; };
 		E4CC122423A56099006CD29E /* coredata.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4CC122223A56099006CD29E /* coredata.xcdatamodeld */; };
 		E4CE377F240D578600429C30 /* ProgressContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE377E240D578600429C30 /* ProgressContainerView.swift */; };
 		E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */; };
+		E4D1A05D2843914000EB945C /* DynamicConstraintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D1A05C2843914000EB945C /* DynamicConstraintViewController.swift */; };
 		E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3920023EEA23800E8C873 /* NewGroupVC.swift */; };
 		E4E2834F28301DC500030C9D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E2834E28301DC500030C9D /* AppTheme.swift */; };
 		E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E667FC234BAB710050CB8C /* Assets.xcassets */; };
 		E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */; };
 		E4EB1E392569762800C56632 /* IndexSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EB1E382569762800C56632 /* IndexSelectionManager.swift */; };
 		E4EBC304241E886600F558AF /* EmptyGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC303241E886600F558AF /* EmptyGroupView.swift */; };
-		E4EBC306241E8D4C00F558AF /* EmptyViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC305241E8D4C00F558AF /* EmptyViewDelegate.swift */; };
+		E4EBC306241E8D4C00F558AF /* Library+EmptyViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC305241E8D4C00F558AF /* Library+EmptyViewDelegate.swift */; };
 		E4EC58B225A47150004D6190 /* ArrayOfStringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */; };
 		E4FD092924542439004D0A53 /* FileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092824542439004D0A53 /* FileManagerTests.swift */; };
 		E4FD092B245426E7004D0A53 /* ExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092A245426E7004D0A53 /* ExtractorTests.swift */; };
 		E4FD092D245427FA004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz in Resources */ = {isa = PBXBuildFile; fileRef = E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */; };
 		E4FD092F245435A1004D0A53 /* MockCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092E245435A1004D0A53 /* MockCoreDataStack.swift */; };
 		E4FD0931245436E2004D0A53 /* DataServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD0930245436E2004D0A53 /* DataServiceTests.swift */; };
+		E4FDA7F12840CC3D00605CDD /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FDA7F02840CC3D00605CDD /* CoreDataTests.swift */; };
 		E4FF655A2391684600AAD68B /* BookPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FF65592391684600AAD68B /* BookPage.swift */; };
 /* End PBXBuildFile section */
 
@@ -137,7 +142,7 @@
 		E45A878A25FCB8410011CF9F /* UIKitPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitPreview.swift; sourceTree = "<group>"; };
 		E45C8429238DACD700669155 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E462BD04245581940089AD5F /* VCAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCAlert.swift; sourceTree = "<group>"; };
-		E462BD06245583D90089AD5F /* Library+FetchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+FetchResultController.swift"; sourceTree = "<group>"; };
+		E462BD06245583D90089AD5F /* LibraryFetchResultControllerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryFetchResultControllerHandler.swift; sourceTree = "<group>"; };
 		E462BD082455FA6D0089AD5F /* LibraryVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryVCTests.swift; sourceTree = "<group>"; };
 		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		E465B1192413FBAC00A6003D /* InfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
@@ -147,16 +152,20 @@
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesStackView.swift; sourceTree = "<group>"; };
 		E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
+		E499A0BB2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+FetchRsultHandlerDelegate.swift"; sourceTree = "<group>"; };
 		E49C7C122417EBED004DE82A /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 		E49C7C142418FEF4004DE82A /* ComicImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicImage.swift; sourceTree = "<group>"; };
 		E49F2F5F2833C73300BE90FE /* +CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+CollectionView.swift"; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Library+ExtractionErrorHandeling.swift"; sourceTree = "<group>"; };
+		E4B2870828636A2C00397E83 /* BookReaderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderFactory.swift; sourceTree = "<group>"; };
 		E4C3D174261E09D7007CC0E1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E4C51EFD245EF82700B8AC04 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		E4C596F6283BA25E004C71D9 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
 		E4CC122323A56099006CD29E /* coredata.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coredata.xcdatamodel; sourceTree = "<group>"; };
 		E4CE377E240D578600429C30 /* ProgressContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressContainerView.swift; sourceTree = "<group>"; };
 		E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+CollectionView.swift"; sourceTree = "<group>"; };
+		E4D1A05C2843914000EB945C /* DynamicConstraintViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicConstraintViewController.swift; sourceTree = "<group>"; };
 		E4D3920023EEA23800E8C873 /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		E4DA532224507DB800A244FD /* ComicKhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComicKhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DA532624507DB800A244FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -165,7 +174,7 @@
 		E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderVC.swift; sourceTree = "<group>"; };
 		E4EB1E382569762800C56632 /* IndexSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSelectionManager.swift; sourceTree = "<group>"; };
 		E4EBC303241E886600F558AF /* EmptyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyGroupView.swift; sourceTree = "<group>"; };
-		E4EBC305241E8D4C00F558AF /* EmptyViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewDelegate.swift; sourceTree = "<group>"; };
+		E4EBC305241E8D4C00F558AF /* Library+EmptyViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+EmptyViewDelegate.swift"; sourceTree = "<group>"; };
 		E4EC58B025A45631004D6190 /* coredata v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "coredata v2.xcdatamodel"; sourceTree = "<group>"; };
 		E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOfStringTransformer.swift; sourceTree = "<group>"; };
 		E4FD092824542439004D0A53 /* FileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerTests.swift; sourceTree = "<group>"; };
@@ -173,6 +182,7 @@
 		E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz"; sourceTree = "<group>"; };
 		E4FD092E245435A1004D0A53 /* MockCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataStack.swift; sourceTree = "<group>"; };
 		E4FD0930245436E2004D0A53 /* DataServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataServiceTests.swift; sourceTree = "<group>"; };
+		E4FDA7F02840CC3D00605CDD /* CoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTests.swift; sourceTree = "<group>"; };
 		E4FF65592391684600AAD68B /* BookPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,6 +293,7 @@
 				E4E667FC234BAB710050CB8C /* Assets.xcassets */,
 				E40C7AA822A1169000D7CD17 /* Info.plist */,
 				E4E2834E28301DC500030C9D /* AppTheme.swift */,
+				E4C596F6283BA25E004C71D9 /* AppFont.swift */,
 			);
 			path = wutComicReader;
 			sourceTree = "<group>";
@@ -294,6 +305,7 @@
 				E45213A722D4902C00216217 /* Book Reader */,
 				E4A1264C23AE7DC300EC1C96 /* Library */,
 				E465B1182413FB7B00A6003D /* Info */,
+				E4D1A05C2843914000EB945C /* DynamicConstraintViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -320,6 +332,7 @@
 			children = (
 				E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */,
 				E4FF65592391684600AAD68B /* BookPage.swift */,
+				E4B2870828636A2C00397E83 /* BookReaderFactory.swift */,
 				E4596A05240803860030DB3E /* Views */,
 				E4288B5023DB314A00182E0B /* Extensions */,
 			);
@@ -373,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				E40C7A9E22A1168C00D7CD17 /* LibraryVC.swift */,
+				E462BD06245583D90089AD5F /* LibraryFetchResultControllerHandler.swift */,
 				E4CE3781240D6C5800429C30 /* Views */,
 				E4CE3780240D6C2800429C30 /* Extensions */,
 			);
@@ -412,10 +426,10 @@
 			children = (
 				E40A353223F97C83006FA758 /* Library+ProgressContainer.swift */,
 				E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */,
-				E4EBC305241E8D4C00F558AF /* EmptyViewDelegate.swift */,
+				E4EBC305241E8D4C00F558AF /* Library+EmptyViewDelegate.swift */,
 				E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */,
-				E462BD06245583D90089AD5F /* Library+FetchResultController.swift */,
 				E455AFDE245EA30D003F403D /* Library+DocumentBrowser.swift */,
+				E499A0BB2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -435,6 +449,7 @@
 		E4DA532324507DB800A244FD /* ComicKhanTests */ = {
 			isa = PBXGroup;
 			children = (
+				E4FDA7EF2840CC2200605CDD /* CoreData */,
 				E4FD092724542416004D0A53 /* DataService */,
 				E4FD092524542402004D0A53 /* FileManager */,
 				E4FD0923245423F2004D0A53 /* Extractor */,
@@ -482,6 +497,14 @@
 				E4FD0930245436E2004D0A53 /* DataServiceTests.swift */,
 			);
 			path = DataService;
+			sourceTree = "<group>";
+		};
+		E4FDA7EF2840CC2200605CDD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E4FDA7F02840CC3D00605CDD /* CoreDataTests.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -720,18 +743,20 @@
 				E463B29822AC2FCE0094265C /* Consts.swift in Sources */,
 				E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */,
 				E455AFDF245EA30D003F403D /* Library+DocumentBrowser.swift in Sources */,
+				E499A0BC2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift in Sources */,
 				E49F2F602833C73300BE90FE /* +CollectionView.swift in Sources */,
 				E4596A07240803A60030DB3E /* ReaderTopBar.swift in Sources */,
 				E407CB8323FD3D780056F64D /* RoundedProgressView.swift in Sources */,
 				E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */,
 				E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */,
 				E4C51EFE245EF82700B8AC04 /* LoadingView.swift in Sources */,
-				E462BD07245583D90089AD5F /* Library+FetchResultController.swift in Sources */,
+				E462BD07245583D90089AD5F /* LibraryFetchResultControllerHandler.swift in Sources */,
 				E4CE377F240D578600429C30 /* ProgressContainerView.swift in Sources */,
 				E45A877D25FC99280011CF9F /* Cores.swift in Sources */,
 				E48253EA22D631B1001A0E85 /* Helper.swift in Sources */,
 				E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */,
 				E49C7C132417EBED004DE82A /* ImageResizer.swift in Sources */,
+				E4D1A05D2843914000EB945C /* DynamicConstraintViewController.swift in Sources */,
 				E462BD05245581940089AD5F /* VCAlert.swift in Sources */,
 				E4FF655A2391684600AAD68B /* BookPage.swift in Sources */,
 				E407CB8523FD3DD80056F64D /* CircleProgressView.swift in Sources */,
@@ -740,8 +765,9 @@
 				E4EC58B225A47150004D6190 /* ArrayOfStringTransformer.swift in Sources */,
 				E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */,
 				E4EBC304241E886600F558AF /* EmptyGroupView.swift in Sources */,
+				E4C596F7283BA25E004C71D9 /* AppFont.swift in Sources */,
 				E45A878B25FCB8410011CF9F /* UIKitPreview.swift in Sources */,
-				E4EBC306241E8D4C00F558AF /* EmptyViewDelegate.swift in Sources */,
+				E4EBC306241E8D4C00F558AF /* Library+EmptyViewDelegate.swift in Sources */,
 				E42B9EA024506CF3007B3803 /* DataService.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */,
 				E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */,
@@ -750,6 +776,7 @@
 				E40A353323F97C83006FA758 /* Library+ProgressContainer.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
 				E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */,
+				E4B2870928636A2C00397E83 /* BookReaderFactory.swift in Sources */,
 				E443C8B52528A4920060CDFB /* +URL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -767,6 +794,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E43017FF25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift in Sources */,
+				E4FDA7F12840CC3D00605CDD /* CoreDataTests.swift in Sources */,
 				E4FD092B245426E7004D0A53 /* ExtractorTests.swift in Sources */,
 				E4FD092F245435A1004D0A53 /* MockCoreDataStack.swift in Sources */,
 				E462BD092455FA6D0089AD5F /* LibraryVCTests.swift in Sources */,

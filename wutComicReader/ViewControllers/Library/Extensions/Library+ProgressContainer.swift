@@ -37,21 +37,15 @@ extension LibraryVC {
         
         progressContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        progressContainerInExtractingStateHeight = progressContainer.heightAnchor.constraint(equalToConstant: 100)
-        progressContainerInCopyingStateHeight = progressContainer.heightAnchor.constraint(equalToConstant: 60)
-        
         progressContainerHideBottomConstrait = progressContainer.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         progressContainerAppearedBottomConstrait = progressContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         
         
         progressContainerHideBottomConstrait.isActive = true
-        progressContainerInCopyingStateHeight.isActive = true
     }
     
     
     fileprivate func redesignForExtractingState() {
-        progressContainerInCopyingStateHeight.isActive = false
-        progressContainerInExtractingStateHeight.isActive = true
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -71,8 +65,6 @@ extension LibraryVC {
             self.makeBarButtons(hidden: false)
             self.progressContainer.spinner.stopAnimating()
             
-            self.progressContainerInExtractingStateHeight.isActive = false
-            self.progressContainerInCopyingStateHeight.isActive = true
             })
         editingMode = false
     }
@@ -92,7 +84,8 @@ extension LibraryVC: ProgressDelegate {
         showProgressView()
         progressContainer.makeProgressBarFor(state: .copying, animated: false)
         progressContainer.setTitleLabel(to: "Copying Files ...")
-        progressContainer.setNumberLabel(to: "")
+        progressContainer.setNumberLabel(to: "10/100")
+        progressContainer.setProgress(to: 20)
     }
     
     

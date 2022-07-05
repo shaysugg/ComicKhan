@@ -19,11 +19,11 @@ class LibraryVC: UIViewController {
     //MARK:- Variables
     
     let appfileManager: AppFileManager!
-    let comicExtractor: ComicExteractor
-    let dataService: DataService
+    private(set) var comicExtractor: ComicExteractor
+    private(set) var dataService: DataService
     
     let fetchResultController: NSFetchedResultsController<Comic>
-    var blockOperations = [BlockOperation]()
+    private var fetchResultHandler: LibraryFetchResultControllerHandler!
     
     private(set) var collectionViewCellSize: CGSize!
     
@@ -33,6 +33,7 @@ class LibraryVC: UIViewController {
     
     let indexSelectionManager = IndexSelectionManager()
     var indexSelectionCancelabels = [Cancellable]()
+    private var fetchResultControllerHandler: NSFetchedResultsControllerDelegate!
     
     //MARK:- UI Variables
     
@@ -70,11 +71,9 @@ class LibraryVC: UIViewController {
     }()
     var progressContainerHideBottomConstrait: NSLayoutConstraint!
     var progressContainerAppearedBottomConstrait: NSLayoutConstraint!
-    var progressContainerInCopyingStateHeight: NSLayoutConstraint!
-    var progressContainerInExtractingStateHeight: NSLayoutConstraint!
     var comicNameThatExtracting: String?
     
-    
+
     var CHConstratis = [NSLayoutConstraint]()
     var RHConstratis = [NSLayoutConstraint]()
     
@@ -100,7 +99,7 @@ class LibraryVC: UIViewController {
         self.appfileManager = Cores.main.appfileManager
         self.comicExtractor = Cores.main.extractor
         self.dataService = Cores.main.dataService
-        fetchResultController = try! dataService.configureFetchResultController()
+        self.fetchResultController = try! dataService.configureFetchResultController()
         
         super.init(coder: coder)
     }
@@ -108,17 +107,17 @@ class LibraryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        fetchResultHandler = LibraryFetchResultControllerHandler(fetchResultController: fetchResultController,
+                                                                      collectionView: bookCollectionView)
+        
         setupDiractoryWatcher()
         didUserAddNewFilesWhileAppWasDeactive()
         
         configureCellSize(basedOn: UIScreen.main.traitCollection)
         setUpDesigns()
-        
         setupDelegates()
         
         setUpNavigationButtons()
-        
-        setupNotificationCenterObservers()
         
         bookCollectionView.allowsMultipleSelection = true
         
@@ -206,7 +205,7 @@ class LibraryVC: UIViewController {
     }
     
     private func setupDelegates() {
-        fetchResultController.delegate = self
+        fetchResultHandler.delegate = self
         comicExtractor.delegate = self
         comicExtractor.errorDelegate = self
         appfileManager.progressDelegate = self
@@ -214,12 +213,7 @@ class LibraryVC: UIViewController {
         emptyGroupsView.delegate = self
     }
     
-    private func setupNotificationCenterObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(newGroupVCAddedANewGroup), name: .newGroupAboutToAdd, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionViewAtIndex(_:)), name: .reloadLibraryAtIndex, object: nil)
-    }
-        
-    //MARK:- Collection View Functions
+    //MARK: Collection View Functions
     
     func configureCellSize(basedOn traitcollection: UITraitCollection) {
         let h = traitCollection.horizontalSizeClass
@@ -240,13 +234,6 @@ class LibraryVC: UIViewController {
             }
         }
         collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.53)
-    }
-    
-    @objc func reloadCollectionViewAtIndex(_ notification: NSNotification){
-        guard let indexPath = notification.object as? IndexPath else { return }
-        let cell = bookCollectionView.cellForItem(at: indexPath) as? LibraryCell
-        cell?.updateProgressValue()
-        
     }
     
     private func setUpNavigationButtons() {
@@ -295,8 +282,28 @@ class LibraryVC: UIViewController {
 
     @IBAction func groupBarButtonTapped(_ sender: Any) {
         let newGroupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewGroupVC") as! NewGroupVC
-        newGroupVC.comicsAboutToGroup = indexSelectionManager.indexes.map {fetchResultController.object(at: $0)}
+        newGroupVC.comicsAboutToGroup = indexSelectionManager.indexes
+            .map {fetchResultController.object(at: $0)}
+        
         newGroupVC.dataService = dataService
+        
+        newGroupVC.newComicGroupAboutToAdd = { [weak self] groupName , comics in
+            do {
+                try self?.dataService.createANewComicGroup(name: groupName, comics: comics)
+                self?.indexSelectionManager.removeAll()
+            } catch {
+                self?.showAlert(with: "Oh!", description: "An issue happend while creating your comic group. Please try again.")
+            }
+        }
+        
+        newGroupVC.comicsGroupAboutToMove = { [weak self] group, comics in
+            do {
+                try self?.dataService.changeGroupOf(comics: comics, to: group)
+                self?.indexSelectionManager.removeAll()
+            } catch {
+                self?.showAlert(with: "Oh!", description: "An issue happend while moving your comics. Please try again.")
+            }
+        }
         present(newGroupVC , animated: true)
     }
     
@@ -321,8 +328,6 @@ class LibraryVC: UIViewController {
     
     func updateNavBarWhenEditingChanged() {
         if editingMode {
-//            navigationItem.setRightBarButtonItems([deleteBarButton , groupBarButton , infoButton], animated: true)
-            //            navigationItem.setLeftBarButtonItems([editBarButton], animated: true)
             bottomToolbar.isHidden = false
             bottomToolbar.alpha = 0
             
@@ -331,33 +336,20 @@ class LibraryVC: UIViewController {
             } completion: { (_) in
                 
             }
-            
-            
-            
             bottomToolbar.isHidden = false
-            //            infoButton.isEnabled = false
             addComicsButton.isEnabled = false
-//            infoButton.tintColor = .clear
             editBarButton.title = "Done"
             editBarButton.style = .done
         }else{
-//            navigationItem.setRightBarButtonItems([editBarButton], animated: true)
-//            navigationItem.setLeftBarButtonItems([infoButton], animated: true)
             
             UIView.animate(withDuration: 0.2) {
                 self.bottomToolbar.alpha = 0
             } completion: { (_) in
                 self.bottomToolbar.isHidden = true
             }
-            
-            
-//            infoButton.isEnabled = true
             addComicsButton.isEnabled = true
-//            infoButton.tintColor = addComicsButton.tintColor
             editBarButton.title = "Edit"
             editBarButton.style = .plain
-//            deleteBarButton.isEnabled = false
-//            groupBarButton.isEnabled = false
             
         }
     }
@@ -379,9 +371,6 @@ class LibraryVC: UIViewController {
         present(documentPickerVC, animated: true, completion: nil)
     }
     
-    @objc private func newGroupVCAddedANewGroup() {
-        indexSelectionManager.removeAll()
-    }
     
     // if app killed or terminated in background when did open again
     // diractory watcher not gonna work again so we check with below function
@@ -434,3 +423,15 @@ class LibraryVC: UIViewController {
     
 }
 
+#if DEBUG
+extension LibraryVC {
+    func setupForTes(comicExtracror: ComicExteractor? = nil, dataService: DataService? = nil) {
+        if let comicExtracror = comicExtracror {
+            self.comicExtractor = comicExtracror
+        }
+        if let dataService = dataService {
+            self.dataService = dataService
+        }
+    }
+}
+#endif

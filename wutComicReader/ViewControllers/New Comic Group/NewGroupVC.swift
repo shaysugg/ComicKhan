@@ -14,7 +14,16 @@ class NewGroupVC: UIViewController {
     
     var dataService: DataService!
     var comicsAboutToGroup: [Comic] = []
-    var groups: [ComicGroup]!
+    
+    var groups: [ComicGroup]! { didSet {
+        groupNames = groups.map({
+            $0.name ?? ""
+        })
+    } }
+    var groupNames: [String]!
+    
+    var newComicGroupAboutToAdd: ((_ name: String, _ comics: [Comic]) -> Void)?
+    var comicsGroupAboutToMove: ((_ group: ComicGroup, _ comics: [Comic]) -> Void)?
     
     @IBOutlet weak var alreadyExistLabel: UILabel!
     @IBOutlet weak var newGroupTextField: UITextField!
@@ -70,17 +79,14 @@ class NewGroupVC: UIViewController {
     
     
     private func addButtonTapped(){
-        do {
-            if let text = newGroupTextField.text, !text.isEmpty {
-                try dataService.createANewComicGroup(name: text, comics: comicsAboutToGroup)
-                NotificationCenter.default.post(name: .newGroupAboutToAdd, object: nil)
+            if let text = newGroupTextField.text,
+               !text.isEmpty,
+               !groupNames.contains(text) {
+                newComicGroupAboutToAdd?(text, comicsAboutToGroup)
                 dismiss(animated: true, completion: nil)
+            }else {
+                alreadyExistLabel.isHidden = false
             }
-            
-            
-        }catch let err {
-            showAlert(with: "Oh!", description: "there is a problem with creating your new comic group" + err.localizedDescription)
-        }
     }
     
 }
@@ -101,13 +107,8 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        do {
-            try dataService.changeGroupOf(comics: comicsAboutToGroup, to: groups[indexPath.row])
-            NotificationCenter.default.post(name: .newGroupAboutToAdd, object: nil)
+            comicsGroupAboutToMove?(groups[indexPath.row], comicsAboutToGroup)
             dismiss(animated: true, completion: nil)
-        }catch {
-            showAlert(with: "Oh!", description: "An issue happend while creating your comic group. Please try again.")
-        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -120,16 +121,7 @@ extension NewGroupVC: UITableViewDelegate , UITableViewDataSource {
 
 extension NewGroupVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let groupNames:[String] = groups.map({
-            $0.name ?? ""
-        })
-        if groupNames.contains(textField.text ?? "") {
-            alreadyExistLabel.isHidden = false
-        }else{
-            alreadyExistLabel.isHidden = true
-            addButtonTapped()
-        }
-        
+        addButtonTapped()
         return true
     }
     

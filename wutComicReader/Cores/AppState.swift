@@ -11,10 +11,12 @@ import UIKit
 
 final class AppState {
     static let main = AppState()
-    var storage = UserDefaults()
+    let font: AppFont
+    private let storage = UserDefaults()
     
     @Published private(set) var readerTheme: AppTheme!
     @Published private(set) var shouldShowComicNames = false
+    
     
     
     private enum Keys {
@@ -25,8 +27,10 @@ final class AppState {
     }
     
     init() {
+        font = SystemFont()
         readerTheme = getTheme()
         shouldShowComicNames = getShouldShowComics()
+        
     }
     
     func setTheme(to theme: AppTheme) {

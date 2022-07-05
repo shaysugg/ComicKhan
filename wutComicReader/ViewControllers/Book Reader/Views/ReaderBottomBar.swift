@@ -71,7 +71,8 @@ class BottomBar: UIView {
     
     private lazy var currentPageNumberLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: HelvetincaNeueFont.thin.name, size: 14)
+        label.font = AppState.main.font.caption
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.textColor = .appSeconedlabelColor
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "1"
@@ -80,7 +81,7 @@ class BottomBar: UIView {
     
     private lazy var comicPageNumberLabel : UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: HelvetincaNeueFont.thin.name, size: 14)
+        label.font = AppState.main.font.caption
         label.textColor = .appSeconedlabelColor
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "50"

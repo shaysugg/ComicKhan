@@ -9,7 +9,19 @@
 import UIKit
 import CoreData
 
-extension LibraryVC: NSFetchedResultsControllerDelegate {
+class LibraryFetchResultControllerHandler: NSObject, NSFetchedResultsControllerDelegate {
+    
+    let collectionView: UICollectionView
+    let fetchResultController: NSFetchedResultsController<Comic>
+    private var blockOperations = [BlockOperation]()
+    weak var delegate: LibraryFetchResultControllerHandlerDelegate?
+    
+    init(fetchResultController: NSFetchedResultsController<Comic> ,collectionView: UICollectionView) {
+        self.collectionView = collectionView
+        self.fetchResultController = fetchResultController
+        super.init()
+        fetchResultController.delegate = self
+    }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
@@ -17,29 +29,29 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
         case .insert:
             if let index = newIndexPath {
                 blockOperations.append(BlockOperation(block: { [weak self] in
-                    self?.bookCollectionView.insertItems(at: [index])
+                    self?.collectionView.insertItems(at: [index])
                 }))
             }
         case .delete:
             if let index = indexPath {
                 blockOperations.append(BlockOperation(block: { [weak self] in
-                    self?.bookCollectionView.deleteItems(at: [index])
+                    self?.collectionView.deleteItems(at: [index])
                 }))
             }
         case .update:
             if let updatatdComic = anObject as? Comic,
                 let index = indexPath {
                 blockOperations.append(BlockOperation(block: { [weak self] in
-                    let cell = self?.bookCollectionView.cellForItem(at: index) as? LibraryCell
+                    let cell = self?.collectionView.cellForItem(at: index) as? LibraryCell
                     cell?.book = updatatdComic
                 }))
             }
         case .move:
             if let index = indexPath,
-                let newIndex = newIndexPath {
+               let newIndex = newIndexPath {
                 blockOperations.append(BlockOperation(block: { [weak self] in
-                    self?.bookCollectionView.deleteItems(at: [index])
-                    self?.bookCollectionView.insertItems(at: [newIndex])
+                    self?.collectionView.deleteItems(at: [index])
+                    self?.collectionView.insertItems(at: [newIndex])
                 }))
             }
         default:
@@ -47,9 +59,7 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
         }
         
         
-        UIView.animate(withDuration: 0.2) {
-            self.emptyGroupsView.isHidden = !(controller.fetchedObjects?.isEmpty ?? true)
-        }
+        delegate?.libraryBecame(empty: controller.fetchedObjects?.isEmpty ?? true)
         
         
     }
@@ -67,22 +77,22 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
         case .insert:
             
                 blockOperations.append(BlockOperation(block: { [weak self] in
-                    self?.bookCollectionView.insertSections(indexSet)
+                    self?.collectionView.insertSections(indexSet)
                 }))
              print("------FRC Section Insert")
         case .delete:
             blockOperations.append(BlockOperation(block: { [weak self] in
-                self?.bookCollectionView.deleteSections(indexSet)
+                self?.collectionView.deleteSections(indexSet)
             }))
              print("------FRC Section  Delete")
         case .move:
             blockOperations.append(BlockOperation(block: { [weak self] in
-                self?.bookCollectionView.reloadData()
+                self?.collectionView.reloadData()
             }))
             print("------FRC  Section Move")
         case .update:
             blockOperations.append(BlockOperation(block: { [weak self] in
-                self?.bookCollectionView.reloadSections(indexSet)
+                self?.collectionView.reloadSections(indexSet)
             }))
             print("------FRC  Section Update")
             
@@ -95,7 +105,7 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
-        bookCollectionView.performBatchUpdates({
+        collectionView.performBatchUpdates({
             for operation in blockOperations {
                 operation.start()
             }
@@ -103,5 +113,9 @@ extension LibraryVC: NSFetchedResultsControllerDelegate {
             self.blockOperations.removeAll()
         }
     }
-    
+}
+
+
+protocol LibraryFetchResultControllerHandlerDelegate: NSObject {
+    func libraryBecame(empty: Bool)
 }

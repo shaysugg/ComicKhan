@@ -49,12 +49,14 @@ class DataServiceTests: XCTestCase {
     func testFetchRequestSort() {
         let fetchResultController = try! dataService.configureFetchResultController()
         
-        guard let firstSectionName = fetchResultController.sections?.first?.name else {
+        guard let firstSection = fetchResultController.sections?.first else {
             XCTFail()
             return
         }
         
-        XCTAssertTrue(firstSectionName.contains(dataService.groupForNewComicsName))
+        // Couldn't find a way to sort based on group name and isForNewComicsFroup so
+        // The first section name should be equal to "", because that the only way it's gonna appear as first group when groups getting sort
+        XCTAssertTrue(firstSection.name.isEmpty)
     }
     
     func testDeleteAComic(){
@@ -128,18 +130,6 @@ class DataServiceTests: XCTestCase {
         try! frc.performFetch()
         XCTAssertEqual(frc.sections?.count, 4)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     func printComics() {

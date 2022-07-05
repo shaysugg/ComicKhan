@@ -11,20 +11,23 @@ import CoreData
 
 
 extension ComicGroup {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<ComicGroup> {
-        return NSFetchRequest<ComicGroup>(entityName: "ComicGroup")
-    }
-
     @NSManaged public var id: UUID
     @NSManaged public var isForNewComics: Bool
     @NSManaged public var name: String
     @NSManaged public var comics: NSOrderedSet?
-
 }
 
 extension ComicGroup {
     static let entityName = "ComicGroup"
+}
+
+extension ComicGroup: CustomStringConvertible {
+    var description: String {
+        return """
+    name: \(name)
+    comics: \(comics)
+"""
+    }
 }
 
 // MARK: Generated accessors for comics
