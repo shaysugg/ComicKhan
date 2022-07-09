@@ -38,17 +38,3 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     
 }
 
-extension BookReaderVC {
-    func initSinglePageThumbnails(){
-        if let thumbnails = comic?.thumbnailNames as? [String] {
-            var pageNumber = 1
-            for thumbnail in thumbnails {
-                var comicImage = ComicImage(comic, withImageName: thumbnail)
-                comicImage.pageNumber = pageNumber
-                pageNumber += 1
-                thumbnailImages.append(comicImage)
-                
-            }
-        }
-    }
-}
