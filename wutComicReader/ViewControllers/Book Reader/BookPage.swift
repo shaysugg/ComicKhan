@@ -10,16 +10,14 @@ import UIKit
 
 final class BookPage: UIViewController , UIScrollViewDelegate {
     
-    //MARK:- Variables
+    //MARK: Variables
     
     var pageNumber: Int?
     
     var image1: ComicImage?
     var image2: ComicImage?
     
-    var previousRotation = UIDevice.current.orientation
-    
-    //MARK:- UI Variables
+    //MARK: UI Variables
     
     lazy var scrollView : UIScrollView! = {
         let scrollview = UIScrollView()
@@ -61,7 +59,7 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         return imageView
     }()
 
-    //MARK:- Functions
+    //MARK: Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +70,7 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
         if pageImageView1.image?.size == .zero ||
         pageImageView1.image?.size == nil{
 
@@ -80,6 +78,7 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
 
         updateMinZoomScaleForSize(view.bounds.size)
+        updateForPageMode()
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
             
@@ -89,35 +88,15 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-
+        super.viewDidDisappear(animated)
         pageImageView1.image = UIImage()
         pageImageView2.image = UIImage()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-         let orientation = UIDevice.current.orientation
-         
-         if orientation.isLandscape {
-             makeDoublePageDesign()
-         }else if orientation.isPortrait{
-             makeSinglePageDesign()
-         }else {
-             if previousRotation.isLandscape{
-                 makeDoublePageDesign()
-             }else{
-                 makeSinglePageDesign()
-             }
-         }
-         
-     }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        updateMinZoomScaleForSize(view.bounds.size)
             centerTheImage()
-        if !UIDevice.current.orientation.isFlat {
-            previousRotation = UIDevice.current.orientation
-        }
     }
     
     func setupDesign() {
@@ -166,12 +145,16 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         }
     }
     
-    private func makeDoublePageDesign() {
-        imagesContainerView.addArrangedSubview(pageImageView2)
-    }
-    
-    private func makeSinglePageDesign() {
-        pageImageView2.removeFromSuperview()
+    func updateForPageMode() {
+        switch AppState.main.bookReaderPageMode! {
+        case .single:
+            pageImageView2.removeFromSuperview()
+        case .double:
+            imagesContainerView.addArrangedSubview(pageImageView2)
+        }
+        
+        updateMinZoomScaleForSize(view.bounds.size)
+        centerTheImage()
     }
     
     private func pagesThatHaveImage() -> [UIImageView] {
@@ -179,7 +162,7 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     }
     
     
-    //MARK:- Scroll View Delegates
+    //MARK: Scroll View Delegates
     
     
     func updateMinZoomScaleForSize(_ size: CGSize) {
@@ -217,21 +200,10 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         let imageView = pagesThatHaveImage()[0]
         let numberOfPages = pagesThatHaveImage().count
         
-        let orientation = UIDevice.current.orientation
-        
-        if  orientation.isLandscape {
-            centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
-            
-        }else if orientation.isPortrait{
+        if AppState.main.bookReaderPageMode == .single {
             centerForPortraitMode(imageView)
-            
-            //when oriantation is flat
-        }else{
-            if previousRotation.isLandscape{
-                centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
-            }else {
-                centerForPortraitMode(imageView)
-            }
+        } else {
+            centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
         }
         
         scrollView.setNeedsLayout()
@@ -278,3 +250,5 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     }
     
 }
+
+
