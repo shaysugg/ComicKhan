@@ -14,22 +14,16 @@ final class AppState {
     let font: AppFont
     private let storage = UserDefaults()
     
+    
     @Published private(set) var readerTheme: AppTheme!
     @Published private(set) var shouldShowComicNames = false
-    
-    
-    
-    private enum Keys {
-        static let apptheme = "readerTheme"
-        static let showComicNames = "showComicNames"
-        static let appDidLunchedBefore = "appDidLunchedBefore"
-        static let readerDidPresentedBefore = "readerDidPresentedBefore"
-    }
+    @Published private(set) var bookReaderPageMode: BookReaderPageMode!
     
     init() {
         font = SystemFont()
         readerTheme = getTheme()
         shouldShowComicNames = getShouldShowComics()
+        bookReaderPageMode = getbookReaderPageMode()
         
     }
     
@@ -52,19 +46,28 @@ final class AppState {
     
     func setShouldShowComicNames(to show: Bool) {
         storage.setValue(show, forKey: Keys.showComicNames)
-        self.shouldShowComicNames = show
+        shouldShowComicNames = show
+    }
+    
+    func setbookReaderPageMode(_ mode: BookReaderPageMode) {
+        storage.set(mode.rawValue, forKey: Keys.bookReaderPageMode)
+        bookReaderPageMode = mode
     }
     
     private func getShouldShowComics() -> Bool {
         storage.bool(forKey: Keys.showComicNames)
     }
     
-    func appLaunchedForFirstTime() -> Bool {
+    private func getbookReaderPageMode() -> BookReaderPageMode {
+        BookReaderPageMode(rawValue: storage.integer(forKey: Keys.bookReaderPageMode)) ?? .single
+    }
+    
+    func didAppLaunchedForFirstTime() -> Bool {
         let didLaunchedBefore = storage.bool(forKey: Keys.appDidLunchedBefore)
         return !didLaunchedBefore
     }
     
-    func setAppDidLaunchedFlag() {
+    func setAppDidLaunchedForFirstTime() {
         storage.set(true, forKey: Keys.appDidLunchedBefore)
     }
     
@@ -79,5 +82,21 @@ final class AppState {
         }
     }
     
+    
+}
+
+extension AppState {
+    private enum Keys {
+        static let apptheme = "readerTheme"
+        static let showComicNames = "showComicNames"
+        static let appDidLunchedBefore = "appDidLunchedBefore"
+        static let readerDidPresentedBefore = "readerDidPresentedBefore"
+        static let bookReaderPageMode = "bookReaderPageMode"
+    }
+}
+
+enum BookReaderPageMode: Int {
+    case single = 1
+    case double = 2
     
 }

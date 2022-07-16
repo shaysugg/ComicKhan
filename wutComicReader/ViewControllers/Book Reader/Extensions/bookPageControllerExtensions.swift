@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-//MARK:- book Pages Setup
+//MARK: book Pages Setup
 
 extension BookReaderVC {
     
     
-    func setupPageController() {
+    func setupPageController(pageMode: BookReaderPageMode) {
         bookPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         bookPageViewController.delegate = self
         bookPageViewController.dataSource = self
@@ -22,87 +22,30 @@ extension BookReaderVC {
         addChild(bookPageViewController)
         view.addSubview(bookPageViewController.view)
         
-//        createSingleBookImages()
-//        createDoubleBookImages()
-        setPageViewControllers()
+        setBookPageViewControllers(pageMode: pageMode)
     }
     
     
-    public func createSingleBookImages() {
-        //bookSinglePage Setup
-        guard let comicPages = comic?.imageNames as? [String] else { return }
-        for comicPage in comicPages {
-            var bookPageImage = ComicImage(comic, withImageName: comicPage)
-            bookPageImage.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
-            bookSingleImages.append(bookPageImage)
-        }
-        
-    }
-    
-    public func createDoubleBookImages(){
-        
-        var tempDouble: [ComicImage?] = [nil]
-        guard let comicPages = comic?.imageNames as? [String] else { return }
-        
-        //creating tempDoubles
-        
-        for comicPage in comicPages {
-            let index = comicPages.firstIndex(of: comicPage)!
-            var image = ComicImage(comic, withImageName: comicPage)
-            image.pageNumber = comicPages.firstIndex(of: comicPage)! + 1
-            
-            if isImageInDoubleSplashSize(UIImage(contentsOfFile: image.path) ?? UIImage()) {
-                if index.isMultiple(of: 2) {
-                    tempDouble.append(contentsOf: [nil , image , nil])
-                }else{
-                    tempDouble.append(contentsOf: [image , nil])
-                }
-            }else{
-                tempDouble.append(image)
-            }
-        }
-        
-        //creating doubleImages
-        
-        for index in 0 ... tempDouble.count - 1 {
-            if index.isMultiple(of: 2){
-                if index < tempDouble.count - 1 {
-                    if tempDouble[index] == nil && tempDouble[index + 1] == nil {} else {
-                        bookDoubleImages.append((tempDouble[index], tempDouble[index + 1]))
-                    }
-                }else{
-                    bookDoubleImages.append((tempDouble[index] , nil))
-                }
-            }
-        }
-        
-    }
-    
-    
-    fileprivate func isImageInDoubleSplashSize(_ image: UIImage) -> Bool {
-        return image.size.height < image.size.width
-    }
-    
-    
-    func setPageViewControllers() {
+    func setBookPageViewControllers(pageMode: BookReaderPageMode) {
         
         bookPages.removeAll()
         
-        if deviceIsLandscaped {
+        switch pageMode {
+        case .single:
+            for bookImage in bookSingleImages {
+                let bookPage = BookPage()
+                bookPage.pageNumber = bookSingleImages.firstIndex(where: { $0 == bookImage })
+                bookPage.image1 = bookImage
+                
+                bookPages.append(bookPage)
+            }
+        case .double:
             for bookImages in bookDoubleImages {
                 let bookPage = BookPage()
                 
                 bookPage.pageNumber = bookDoubleImages.firstIndex(where: { $0 == bookImages })
                 bookPage.image1 = bookImages.0
                 bookPage.image2 = bookImages.1
-                
-                bookPages.append(bookPage)
-            }
-        }else{
-            for bookImage in bookSingleImages {
-                let bookPage = BookPage()
-                bookPage.pageNumber = bookSingleImages.firstIndex(where: { $0 == bookImage })
-                bookPage.image1 = bookImage
                 
                 bookPages.append(bookPage)
             }
@@ -113,17 +56,17 @@ extension BookReaderVC {
 
     }
     
-    func doublePageIndexForPage(withNumber pageNumber:Int) -> Int? {
-        if pageNumber < bookSingleImages.count {
-            let number = bookSingleImages[pageNumber].pageNumber
-            
-            return bookDoubleImages.firstIndex { touple -> Bool in
-                return (touple.0?.pageNumber == number || touple.1?.pageNumber == number)
-            }
-            
-        }
-        return nil
-    }
+//    func doublePageIndexForPage(withNumber pageNumber:Int) -> Int? {
+//        if pageNumber < bookSingleImages.count {
+//            let number = bookSingleImages[pageNumber].pageNumber
+//
+//            return bookDoubleImages.firstIndex { touple -> Bool in
+//                return (touple.0?.pageNumber == number || touple.1?.pageNumber == number)
+//            }
+//
+//        }
+//        return nil
+//    }
     
 }
 

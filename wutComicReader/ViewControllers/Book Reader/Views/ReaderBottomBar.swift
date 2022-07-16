@@ -9,20 +9,32 @@
 import Foundation
 import UIKit
 
-class BottomBar: UIView {
+protocol BottomBarDelegate: AnyObject {
+    func newPageBeenSet(pageNumber: Int)
+    func pageModeChanged(to pageMode: BookReaderPageMode)
+}
+
+final class BottomBar: UIView {
     
-    weak var thumbnailDelegate: BookReaderVC? {
+    weak var thumbnailsDataSource: UICollectionViewDataSource? {
         didSet{
-            thumbnailCollectionView.delegate = thumbnailDelegate
-            thumbnailCollectionView.dataSource = thumbnailDelegate
+            thumbnailCollectionView.dataSource = thumbnailsDataSource
+            
         }
     }
+    
+    weak var thumbnailDelegate: UICollectionViewDelegate? {
+        didSet {
+            thumbnailCollectionView.delegate = thumbnailDelegate
+        }
+    }
+    
     weak var delegate: BottomBarDelegate?
     
     var currentPage: Int? {
         didSet{
             guard let page = currentPage,
-                0 < page && page <= comicPagesCount else { return }
+                  0 < page && page <= comicPagesCount else { return }
             
             thumbnailCollectionView.selectItem(at: IndexPath(row: page - 1, section: 0), animated: true, scrollPosition: .centeredHorizontally)
             pageSlider.setValue(Float(page), animated: true)
@@ -37,12 +49,11 @@ class BottomBar: UIView {
         }
     }
     
-    private lazy var thumbnailCollectionView : UICollectionView = {
+    lazy var thumbnailCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 6, left: 5, bottom: 6, right: 5)
-        
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(ThumbnailCell.self, forCellWithReuseIdentifier: "thumbnailCell")
         collectionView.restorationIdentifier = "thumbnail"
@@ -88,34 +99,83 @@ class BottomBar: UIView {
         return label
     }()
     
+    private lazy var sliderStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private lazy var settingButton: UIButton = {
+        let view = UIButton()
+        let image = UIImage(named: "ic-actions-more-1")?.withTintColor(.appMainLabelColor)
+        view.setImage(image, for: .normal)
+        view.layer.borderColor = UIColor.appMainLabelColor.cgColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var containerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 20
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpDesign()
+        configurePageModeMenu()
     }
     
     private func setUpDesign(){
         
         backgroundColor = .appSystemBackground
         
-        addSubview(pageSlider)
-        pageSlider.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.62).isActive = true
-        pageSlider.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        pageSlider.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -15).isActive = true
+        addSubview(settingButton)
+        settingButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -15).isActive = true
+        settingButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        settingButton.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        settingButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
-        addSubview(currentPageNumberLabel)
-        currentPageNumberLabel.centerYAnchor.constraint(equalTo: pageSlider.centerYAnchor).isActive = true
-        currentPageNumberLabel.rightAnchor.constraint(equalTo: pageSlider.leftAnchor, constant: -17).isActive = true
         
-        addSubview(comicPageNumberLabel)
-        comicPageNumberLabel.centerYAnchor.constraint(equalTo: pageSlider.centerYAnchor).isActive = true
-        comicPageNumberLabel.leftAnchor.constraint(equalTo: pageSlider.rightAnchor, constant: 17).isActive = true
+        addSubview(sliderStackView)
+        sliderStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.7).isActive = true
+        sliderStackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        sliderStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -15).isActive = true
         
+        sliderStackView.addArrangedSubview(currentPageNumberLabel)
+        sliderStackView.addArrangedSubview(pageSlider)
+        sliderStackView.addArrangedSubview(comicPageNumberLabel)
+
         addSubview(thumbnailCollectionView)
-        thumbnailCollectionView.topAnchor.constraint(equalTo: topAnchor, constant: 15).isActive = true
-        thumbnailCollectionView.bottomAnchor.constraint(equalTo: pageSlider.topAnchor, constant: -5).isActive = true
-        thumbnailCollectionView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        thumbnailCollectionView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        thumbnailCollectionView.topAnchor.constraint(equalTo: settingButton.bottomAnchor, constant: 5).isActive = true
+        thumbnailCollectionView.bottomAnchor.constraint(equalTo: sliderStackView.topAnchor, constant: -5).isActive = true
+        thumbnailCollectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        thumbnailCollectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+   
+    }
+    
+    private func configurePageModeMenu() {
+        let singleMode =
+        UIAction(title: NSLocalizedString("Single page", comment: ""),
+                 image: UIImage(named: "single-page")?.withTintColor(.appMainLabelColor)) { [weak self] action in
+            self?.delegate?.pageModeChanged(to: .single)
+        }
         
+        let doubleMode =
+        UIAction(title: NSLocalizedString("Two pages", comment: ""),
+                 image: UIImage(named: "two-pages")?.withTintColor(.appMainLabelColor)) { [weak self] action in
+            self?.delegate?.pageModeChanged(to: .double)
+        }
+        
+        
+        let menu = UIMenu(title: "Reader Setting", children: [singleMode, doubleMode])
+        settingButton.menu = menu
+        settingButton.showsMenuAsPrimaryAction = true
     }
     
     override func layoutSubviews() {
@@ -126,12 +186,12 @@ class BottomBar: UIView {
     
     
     @objc private func sliderDidChanged(){
-           let value = Int(pageSlider.value)
-           
-           thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
+        let value = Int(pageSlider.value)
+        
+        thumbnailCollectionView.scrollToItem(at: IndexPath(row: value - 1, section: 0), at: .centeredHorizontally, animated: false)
         currentPageNumberLabel.text = String(value)
         
-       }
+    }
     
     @objc private func sliderDidFinishedChanging(){
         let value = Int(pageSlider.value)
@@ -145,8 +205,11 @@ class BottomBar: UIView {
     
     
     required init?(coder: NSCoder) {
-         fatalError("init(coder:) has not been implemented")
-     }
+        fatalError("init(coder:) has not been implemented")
+    }
     
+    func invalidateThimbnailCollectionViewLayout() {
+        thumbnailCollectionView.collectionViewLayout.invalidateLayout()
+    }
     
 }

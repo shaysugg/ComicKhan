@@ -21,7 +21,7 @@ class DynamicConstraintViewController: UIViewController {
     private var portraitConstraints: [NSLayoutConstraint] = []
     
     final func setupDynamicLayout() {
-        let traitCollection = UIScreen.main.traitCollection
+        let traitCollection = UITraitCollection.current
         let horizontal = traitCollection.horizontalSizeClass
         let vertical = traitCollection.verticalSizeClass
         
@@ -72,6 +72,7 @@ class DynamicConstraintViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         setupDynamicLayout()
+        
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

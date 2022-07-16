@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+extension BookReaderVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return thumbnailImages.count
@@ -25,7 +25,7 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.frame.height - 15
+        let height = collectionView.frame.height
         return CGSize(width: height * (0.58), height: height)
     }
     
@@ -38,17 +38,3 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     
 }
 
-extension BookReaderVC {
-    func initSinglePageThumbnails(){
-        if let thumbnails = comic?.thumbnailNames as? [String] {
-            var pageNumber = 1
-            for thumbnail in thumbnails {
-                var comicImage = ComicImage(comic, withImageName: thumbnail)
-                comicImage.pageNumber = pageNumber
-                pageNumber += 1
-                thumbnailImages.append(comicImage)
-                
-            }
-        }
-    }
-}
