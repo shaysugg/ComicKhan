@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
+extension BookReaderVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return thumbnailImages.count
@@ -25,7 +25,7 @@ extension BookReaderVC: UICollectionViewDelegate , UICollectionViewDataSource , 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.bounds.height
+        let height = collectionView.frame.height
         return CGSize(width: height * (0.58), height: height)
     }
     
