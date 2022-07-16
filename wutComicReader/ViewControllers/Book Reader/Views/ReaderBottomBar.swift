@@ -16,12 +16,19 @@ protocol BottomBarDelegate: AnyObject {
 
 final class BottomBar: UIView {
     
-    weak var thumbnailDelegate: BookReaderVC? {
+    weak var thumbnailsDataSource: UICollectionViewDataSource? {
         didSet{
-            thumbnailCollectionView.delegate = thumbnailDelegate
-            thumbnailCollectionView.dataSource = thumbnailDelegate
+            thumbnailCollectionView.dataSource = thumbnailsDataSource
+            
         }
     }
+    
+    weak var thumbnailDelegate: UICollectionViewDelegate? {
+        didSet {
+            thumbnailCollectionView.delegate = thumbnailDelegate
+        }
+    }
+    
     weak var delegate: BottomBarDelegate?
     
     var currentPage: Int? {
@@ -42,7 +49,7 @@ final class BottomBar: UIView {
         }
     }
     
-    private lazy var thumbnailCollectionView : UICollectionView = {
+    lazy var thumbnailCollectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
@@ -155,18 +162,18 @@ final class BottomBar: UIView {
     private func configurePageModeMenu() {
         let singleMode =
         UIAction(title: NSLocalizedString("Single page", comment: ""),
-                 image: UIImage(systemName: "arrow.up.square")) { [weak self] action in
+                 image: UIImage(named: "single-page")?.withTintColor(.appMainLabelColor)) { [weak self] action in
             self?.delegate?.pageModeChanged(to: .single)
         }
         
         let doubleMode =
-        UIAction(title: NSLocalizedString("Double page", comment: ""),
-                 image: UIImage(systemName: "plus.square.on.square")) { [weak self] action in
+        UIAction(title: NSLocalizedString("Two pages", comment: ""),
+                 image: UIImage(named: "two-pages")?.withTintColor(.appMainLabelColor)) { [weak self] action in
             self?.delegate?.pageModeChanged(to: .double)
         }
         
         
-        let menu = UIMenu(title: "", children: [singleMode, doubleMode])
+        let menu = UIMenu(title: "Reader Setting", children: [singleMode, doubleMode])
         settingButton.menu = menu
         settingButton.showsMenuAsPrimaryAction = true
     }
@@ -199,6 +206,10 @@ final class BottomBar: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func invalidateThimbnailCollectionViewLayout() {
+        thumbnailCollectionView.collectionViewLayout.invalidateLayout()
     }
     
 }

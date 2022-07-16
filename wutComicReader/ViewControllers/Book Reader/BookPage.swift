@@ -96,7 +96,7 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateMinZoomScaleForSize(view.bounds.size)
-            centerTheImage()
+        centerTheImage()
     }
     
     func setupDesign() {

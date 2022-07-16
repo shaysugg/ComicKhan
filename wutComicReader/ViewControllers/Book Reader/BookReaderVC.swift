@@ -97,6 +97,7 @@ final class BookReaderVC: DynamicConstraintViewController {
         setupDesign()
         addGuideViewIfNeeded()
         
+        bottomBar.thumbnailsDataSource = self
         bottomBar.thumbnailDelegate = self
         bottomBar.delegate = self
         bottomBar.comicPagesCount = comic?.imageNames?.count ?? 1
@@ -112,9 +113,12 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        print(UIScreen.main.traitCollection.verticalSizeClass)
-        print(UIScreen.main.traitCollection.horizontalSizeClass)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        bottomBar.invalidateThimbnailCollectionViewLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,20 +159,23 @@ final class BookReaderVC: DynamicConstraintViewController {
         
         setConstraints(
             CVCH: [
-                bottomBar.widthAnchor.constraint(equalToConstant: (larg * 2) / 3),
-                bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
+                bottomBar.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                bottomBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
                 bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
             ], RVCH: [
-                bottomBar.widthAnchor.constraint(equalToConstant: short),
-                bottomBar.heightAnchor.constraint(equalToConstant: larg / 3.8),
+                bottomBar.widthAnchor.constraint(equalTo: view.widthAnchor),
+                bottomBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
                 bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: 0)
             ], CVRH: [
-                bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
-                bottomBar.heightAnchor.constraint(equalToConstant: short / 2),
+                bottomBar.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                bottomBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
                 bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
             ], RVRH: [
-                bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
-                bottomBar.heightAnchor.constraint(equalToConstant: short / 3),
+//                bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
+//                bottomBar.heightAnchor.constraint(equalToConstant: short / 3),
+                bottomBar.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                bottomBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).withLowPiority(),
+                bottomBar.heightAnchor.constraint(lessThanOrEqualToConstant: 280).withHighPiority(),
                 bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -30)
             ])
         setupDynamicLayout()
