@@ -30,20 +30,20 @@ class InfoVC: UITableViewController {
     func setupDesign(){
         
         let githubImage = UIImage(named: "github")?.withRenderingMode(.alwaysTemplate)
-        githubImageView.tintColor = .appBlueColor
+        githubImageView.tintColor = .appMainColor
         githubImageView.image = githubImage
         
         let emailImage = UIImage(named: "mail")?.withRenderingMode(.alwaysTemplate)
-        mailImageView.tintColor = .appBlueColor
+        mailImageView.tintColor = .appMainColor
         mailImageView.image = emailImage
         
         let rateImage = UIImage(named: "smile")?.withRenderingMode(.alwaysTemplate)
-        rateImageView.tintColor = .appBlueColor
+        rateImageView.tintColor = .appMainColor
         rateImageView.image = rateImage
         
         iconImage.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 3)
         
-        navigationController?.navigationBar.tintColor = .appBlueColor
+        navigationController?.navigationBar.tintColor = .appMainColor
         
         
     }

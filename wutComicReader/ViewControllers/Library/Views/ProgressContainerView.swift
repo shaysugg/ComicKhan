@@ -58,7 +58,7 @@ class ProgressContainerView: UIView {
         let progressView = RoundedProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.progressViewTint = .appProgressColor
-        progressView.trackViewTint = .appTrackProgressColor
+        progressView.trackViewTint = .appMainSecondary
         return progressView
     }()
     
@@ -85,7 +85,7 @@ class ProgressContainerView: UIView {
     
     private func setUpDesign() {
         
-        backgroundColor = .appBlueColor
+        backgroundColor = .appMainColor
         clipsToBounds = true
         
         addSubview(vStackView)

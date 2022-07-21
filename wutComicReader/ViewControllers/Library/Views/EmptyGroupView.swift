@@ -143,7 +143,7 @@ class EmptyGroupView: UIView {
         let button = UIButton()
         button.setTitle("Import Comics", for: .normal)
         button.tintColor = .white
-        button.backgroundColor = .appBlueColor
+        button.backgroundColor = .appMainColor
         button.titleLabel?.font = AppState.main.font.body
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(howToAddComicsButtonTapped), for: .touchUpInside)

@@ -106,7 +106,6 @@ class LibraryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         fetchResultHandler = LibraryFetchResultControllerHandler(fetchResultController: fetchResultController,
                                                                       collectionView: bookCollectionView)
         
@@ -126,7 +125,7 @@ class LibraryVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
-        navigationController?.navigationBar.barTintColor = .appSystemBackground
+        navigationController?.navigationBar.barTintColor = .appBackground
         emptyGroupsView.isHidden = !(fetchResultController.fetchedObjects?.isEmpty ?? true)
         
     }
@@ -173,8 +172,8 @@ class LibraryVC: UIViewController {
         setUpProgressBarDesign()
         layoutTrait(traitCollection: traitCollection)
         
-        bookCollectionView.backgroundColor = .appSystemBackground
-        view.backgroundColor = .appSystemBackground
+        bookCollectionView.backgroundColor = .appBackground
+        view.backgroundColor = .appBackground
         
         let infoImage = #imageLiteral(resourceName: "ic-actions-more-1").withRenderingMode(.alwaysTemplate)
         infoButton.image = infoImage
