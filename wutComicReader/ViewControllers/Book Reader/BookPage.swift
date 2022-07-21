@@ -106,8 +106,8 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.backgroundColor = .appSystemSecondaryBackground
-        view.backgroundColor = .appSystemSecondaryBackground
+        scrollView.backgroundColor = .appSecondaryBackground
+        view.backgroundColor = .appSecondaryBackground
         
         scrollView.addSubview(imagesContainerView)
         imageContainerViewLeftAnchor = imagesContainerView.leftAnchor.constraint(equalTo: scrollView.leftAnchor)

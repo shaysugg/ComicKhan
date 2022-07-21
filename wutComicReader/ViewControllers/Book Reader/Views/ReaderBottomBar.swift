@@ -67,10 +67,10 @@ final class BottomBar: UIView {
     
     private lazy var pageSlider : UISlider = {
         let slider = UISlider(frame: .zero)
-        slider.tintColor = .appBlueColor
+        slider.tintColor = .appMainColor
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 1
-        slider.minimumTrackTintColor = .appBlueColor
+        slider.minimumTrackTintColor = .appMainColor
         slider.setThumbImage(UIImage(named: "sliderThumb"), for: .normal)
         slider.setValue(1.00, animated: false)
         slider.addTarget(self, action: #selector(sliderDidChanged), for: .valueChanged)
@@ -133,7 +133,7 @@ final class BottomBar: UIView {
     
     private func setUpDesign(){
         
-        backgroundColor = .appSystemBackground
+        backgroundColor = .appBackground
         
         addSubview(settingButton)
         settingButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -15).isActive = true

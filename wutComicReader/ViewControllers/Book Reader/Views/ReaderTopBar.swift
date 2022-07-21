@@ -67,7 +67,7 @@ class TopBar: UIView {
     
     private func setUpDesign(){
         
-        backgroundColor = .appSystemBackground
+        backgroundColor = .appBackground
         
         addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
@@ -119,7 +119,7 @@ class TopBar: UIView {
     
     private func redesignForPortrait() {
         gradient.removeFromSuperlayer()
-        backgroundColor = .appSystemBackground
+        backgroundColor = .appBackground
         
         dismissButton.transform = CGAffineTransform(scaleX: 1, y: 1).translatedBy(x: 0, y: 0)
         dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.0, radius: 1)

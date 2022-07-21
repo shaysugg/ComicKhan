@@ -65,7 +65,7 @@ final class BookReaderVC: DynamicConstraintViewController {
     //FIXME: You don't need this!
     lazy var topBarBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .appSystemBackground
+        view.backgroundColor = .appBackground
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -184,7 +184,7 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     
     func updateTopBarBackground() {
-        topBarBackgroundView.backgroundColor = UIDevice.current.orientation.isLandscape ? UIColor.black.withAlphaComponent(0.7) : .appSystemBackground
+        topBarBackgroundView.backgroundColor = UIDevice.current.orientation.isLandscape ? UIColor.black.withAlphaComponent(0.7) : .appBackground
     }
     
     func addGestures() {

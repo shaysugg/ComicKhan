@@ -70,7 +70,7 @@ class LibraryCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        readProgressView.progressCircleColor = UIColor.appBlueColor.cgColor
+        readProgressView.progressCircleColor = UIColor.appMainColor.cgColor
         self.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 5)
 //        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
     }

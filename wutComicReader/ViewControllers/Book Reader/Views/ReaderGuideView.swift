@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol GuideViewDelegate: class {
+protocol GuideViewDelegate: AnyObject {
     func viewElementsDidDissappeared()
 }
 
@@ -85,7 +85,7 @@ class ReaderGuideView: UIView  {
     
     private lazy var button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .appBlueColor
+        button.backgroundColor = .appMainColor
         button.setTitle("Got it!", for: .normal)
         button.titleLabel?.font = AppState.main.font.body
         button.addTarget(self, action: #selector(disappearViewElements), for: .touchUpInside)
@@ -122,7 +122,7 @@ class ReaderGuideView: UIView  {
     
     private lazy var tapLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .appBlueColor
+        label.textColor = .appMainColor
         label.textAlignment = .center
         label.font = AppState.main.font.body
         label.text = "Tap on the screen for appearing/disappearing menus."
@@ -133,7 +133,7 @@ class ReaderGuideView: UIView  {
     
     private lazy var doubleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .appBlueColor
+        label.textColor = .appMainColor
         label.textAlignment = .center
         label.font = AppState.main.font.body
         label.text = "Double tap or pinch for zooming."
