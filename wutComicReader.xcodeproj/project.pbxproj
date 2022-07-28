@@ -43,7 +43,6 @@
 		E462BD092455FA6D0089AD5F /* LibraryVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E462BD082455FA6D0089AD5F /* LibraryVCTests.swift */; };
 		E463B29822AC2FCE0094265C /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E463B29722AC2FCE0094265C /* Consts.swift */; };
 		E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E465B1192413FBAC00A6003D /* InfoVC.swift */; };
-		E475D0AE245751D10005CF8F /* ComicKhanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E475D0AD245751D10005CF8F /* ComicKhanUITests.swift */; };
 		E48253EA22D631B1001A0E85 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48253E922D631B1001A0E85 /* Helper.swift */; };
 		E4850C1D2832A43E00AA0F85 /* ThemesStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */; };
 		E499A0BC2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E499A0BB2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift */; };
@@ -78,13 +77,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E475D0B0245751D10005CF8F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E40C7A9122A1168C00D7CD17 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E40C7A9822A1168C00D7CD17;
-			remoteInfo = wutComicReader;
-		};
 		E4DA532724507DB800A244FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E40C7A9122A1168C00D7CD17 /* Project object */;
@@ -146,9 +138,6 @@
 		E462BD082455FA6D0089AD5F /* LibraryVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryVCTests.swift; sourceTree = "<group>"; };
 		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		E465B1192413FBAC00A6003D /* InfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
-		E475D0AB245751D10005CF8F /* ComicKhanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComicKhanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E475D0AD245751D10005CF8F /* ComicKhanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicKhanUITests.swift; sourceTree = "<group>"; };
-		E475D0AF245751D10005CF8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E4850C1C2832A43E00AA0F85 /* ThemesStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesStackView.swift; sourceTree = "<group>"; };
 		E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
@@ -192,13 +181,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				586F14818832ABECAF323894 /* Pods_wutComicReader.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E475D0A8245751D10005CF8F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +243,6 @@
 			children = (
 				E40C7A9B22A1168C00D7CD17 /* wutComicReader */,
 				E4DA532324507DB800A244FD /* ComicKhanTests */,
-				E475D0AC245751D10005CF8F /* ComicKhanUITests */,
 				E40C7A9A22A1168C00D7CD17 /* Products */,
 				6F67DD5253B7F4E09AC17837 /* Pods */,
 				085363A6001AD86691F3EB2B /* Frameworks */,
@@ -273,7 +254,6 @@
 			children = (
 				E40C7A9922A1168C00D7CD17 /* ComicKhan.app */,
 				E4DA532224507DB800A244FD /* ComicKhanTests.xctest */,
-				E475D0AB245751D10005CF8F /* ComicKhanUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -358,15 +338,6 @@
 				E465B1192413FBAC00A6003D /* InfoVC.swift */,
 			);
 			path = Info;
-			sourceTree = "<group>";
-		};
-		E475D0AC245751D10005CF8F /* ComicKhanUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E475D0AD245751D10005CF8F /* ComicKhanUITests.swift */,
-				E475D0AF245751D10005CF8F /* Info.plist */,
-			);
-			path = ComicKhanUITests;
 			sourceTree = "<group>";
 		};
 		E478E4F3287AE774009AB9A5 /* Views */ = {
@@ -537,24 +508,6 @@
 			productReference = E40C7A9922A1168C00D7CD17 /* ComicKhan.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E475D0AA245751D10005CF8F /* ComicKhanUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E475D0B2245751D10005CF8F /* Build configuration list for PBXNativeTarget "ComicKhanUITests" */;
-			buildPhases = (
-				E475D0A7245751D10005CF8F /* Sources */,
-				E475D0A8245751D10005CF8F /* Frameworks */,
-				E475D0A9245751D10005CF8F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E475D0B1245751D10005CF8F /* PBXTargetDependency */,
-			);
-			name = ComicKhanUITests;
-			productName = ComicKhanUITests;
-			productReference = E475D0AB245751D10005CF8F /* ComicKhanUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		E4DA532124507DB800A244FD /* ComicKhanTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E4DA532924507DB800A244FD /* Build configuration list for PBXNativeTarget "ComicKhanTests" */;
@@ -588,10 +541,6 @@
 					E40C7A9822A1168C00D7CD17 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
-					E475D0AA245751D10005CF8F = {
-						CreatedOnToolsVersion = 11.4;
-						TestTargetID = E40C7A9822A1168C00D7CD17;
-					};
 					E4DA532124507DB800A244FD = {
 						CreatedOnToolsVersion = 11.4;
 						TestTargetID = E40C7A9822A1168C00D7CD17;
@@ -613,7 +562,6 @@
 			targets = (
 				E40C7A9822A1168C00D7CD17 /* wutComicReader */,
 				E4DA532124507DB800A244FD /* ComicKhanTests */,
-				E475D0AA245751D10005CF8F /* ComicKhanUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -626,13 +574,6 @@
 				E40C7AA722A1169000D7CD17 /* LaunchScreen.storyboard in Resources */,
 				E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */,
 				E40C7AA222A1168C00D7CD17 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E475D0A9245751D10005CF8F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,14 +730,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E475D0A7245751D10005CF8F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E475D0AE245751D10005CF8F /* ComicKhanUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E4DA531E24507DB800A244FD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -814,11 +747,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E475D0B1245751D10005CF8F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E40C7A9822A1168C00D7CD17 /* wutComicReader */;
-			targetProxy = E475D0B0245751D10005CF8F /* PBXContainerItemProxy */;
-		};
 		E4DA532824507DB800A244FD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E40C7A9822A1168C00D7CD17 /* wutComicReader */;
@@ -1010,46 +938,6 @@
 			};
 			name = Release;
 		};
-		E475D0B3245751D10005CF8F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3K7MCLTVLC;
-				INFOPLIST_FILE = ComicKhanUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = wuttupdev.ComicKhanUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = wutComicReader;
-			};
-			name = Debug;
-		};
-		E475D0B4245751D10005CF8F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3K7MCLTVLC;
-				INFOPLIST_FILE = ComicKhanUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = wuttupdev.ComicKhanUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = wutComicReader;
-			};
-			name = Release;
-		};
 		E4DA532A24507DB800A244FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFBDE8E10B927AB3FCF06345 /* Pods-ComicKhanTests.debug.xcconfig */;
@@ -1111,15 +999,6 @@
 			buildConfigurations = (
 				E40C7AAC22A1169000D7CD17 /* Debug */,
 				E40C7AAD22A1169000D7CD17 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E475D0B2245751D10005CF8F /* Build configuration list for PBXNativeTarget "ComicKhanUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E475D0B3245751D10005CF8F /* Debug */,
-				E475D0B4245751D10005CF8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
