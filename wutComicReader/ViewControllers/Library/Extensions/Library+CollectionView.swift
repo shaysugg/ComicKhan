@@ -23,6 +23,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectioViewIDs.comicCell.id, for: indexPath) as! LibraryCell
         cell.isInEditingMode = editingMode
         cell.book = fetchResultController.object(at: indexPath)
+        cell.showNameLabel = AppState.main.showComicNames
         return cell
     }
     
@@ -43,8 +44,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return collectionViewCellSize
+        return libraryCellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
