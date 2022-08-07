@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 import StoreKit
+import Combine
 
 class InfoVC: UITableViewController {
     
@@ -18,6 +19,8 @@ class InfoVC: UITableViewController {
     @IBOutlet weak var rateImageView: UIImageView!
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var comicNameSwitch: UISwitch!
+    private var cancellables = Set<AnyCancellable>()
     
     
     override func viewDidLoad() {
@@ -25,6 +28,7 @@ class InfoVC: UITableViewController {
         super.viewDidLoad()
         setupDesign()
         setVersionLabel()
+        setupComicNameSwitch()
     }
     
     func setupDesign(){
@@ -48,22 +52,24 @@ class InfoVC: UITableViewController {
         
     }
     
-    func setVersionLabel() {
+    func setVersionLabel() {	
         if let versionText = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
             versionLabel.text = "version: " + versionText
         }
     }
     
+    func setupComicNameSwitch() {
+        AppState.main.$showComicNames.replaceNil(with: false)
+            .weakAssign(to: \.isOn, on: comicNameSwitch)
+            .store(in: &cancellables)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 { return }
-        
-        if indexPath.row == 0 {
-            emailCellTapped()
-        }else if indexPath.row == 1 {
-            githubCellTapped()
-        }else if indexPath.row == 2 {
-            rateCellTapped()
-        }else{}
+        if indexPath.section == 2 {
+            if indexPath.row == 0 { emailCellTapped() }
+            if indexPath.row == 1 { githubCellTapped() }
+            if indexPath.row == 2 { rateCellTapped() }
+        }
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -90,6 +96,10 @@ class InfoVC: UITableViewController {
         if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "id1516810943") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    @IBAction func comicNameSwitchDidTapped(_ sender: Any) {
+        AppState.main.setShouldShowComicNames(to: comicNameSwitch.isOn)
     }
 }
 

@@ -16,13 +16,13 @@ final class AppState {
     
     
     @Published private(set) var readerTheme: AppTheme!
-    @Published private(set) var shouldShowComicNames = false
+    @Published private(set) var showComicNames: Bool!
     @Published private(set) var bookReaderPageMode: BookReaderPageMode!
     
     init() {
         font = SystemFont()
         readerTheme = getTheme()
-        shouldShowComicNames = getShouldShowComics()
+        showComicNames = getShouldShowComics()
         bookReaderPageMode = getbookReaderPageMode()
         
     }
@@ -46,7 +46,8 @@ final class AppState {
     
     func setShouldShowComicNames(to show: Bool) {
         storage.setValue(show, forKey: Keys.showComicNames)
-        shouldShowComicNames = show
+        showComicNames = show
+        
     }
     
     func setbookReaderPageMode(_ mode: BookReaderPageMode) {

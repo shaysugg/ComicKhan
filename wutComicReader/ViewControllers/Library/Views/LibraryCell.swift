@@ -10,11 +10,23 @@ import UIKit
 
 class LibraryCell: UICollectionViewCell {
     
+
+    
+    @IBOutlet weak var selectionImageView: UIImageView!
+    @IBOutlet weak var whiteView: UIView!
+    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var readProgressView: CircleProgressView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var shadowView: UIView!
+    
     var book : Comic? {
         didSet{
-            guard let imageName = book?.thumbnailNames?[0] as? String else { return }
+            guard let imageName = book?.thumbnailNames?.firstObject as? String else { return }
             let cover = ComicImage(book, withImageName: imageName)
-            bookCoverImageView.image = UIImage(contentsOfFile: cover.path)
+            coverImageView.image = UIImage(contentsOfFile: cover.path)
+            if let name = book?.name {
+                nameLabel.text = name
+            }
             updateProgressValue()
         }
     }
@@ -28,11 +40,6 @@ class LibraryCell: UICollectionViewCell {
         }
     }
     
-    @IBOutlet weak var selectionImageView: UIImageView!
-    @IBOutlet weak var whiteView: UIView!
-    @IBOutlet weak var bookCoverImageView: UIImageView!
-    @IBOutlet weak var readProgressView: CircleProgressView!
-    
     
     override var isSelected: Bool {
         didSet{
@@ -44,26 +51,24 @@ class LibraryCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    var showNameLabel: Bool = true {
+        didSet {
+        nameLabel.isHidden = !showNameLabel
+        }
     }
     
     func setUpDesign(){
-        
         selectionImageView.image = #imageLiteral(resourceName: "ic-actions-select").withTintColor(.white)
         readProgressView.strokeWidth = 2
-        bookCoverImageView.layer.cornerRadius = 4
-        bookCoverImageView.clipsToBounds = true
+        coverImageView.layer.cornerRadius = 4
+        coverImageView.clipsToBounds = true
         whiteView.layer.cornerRadius = 4
         whiteView.clipsToBounds = true
         self.clipsToBounds = false
     }
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         setUpDesign()
         updateProgressValue()
     }
@@ -71,8 +76,7 @@ class LibraryCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         readProgressView.progressCircleColor = UIColor.appMainColor.cgColor
-        self.makeBoundsDropShadow(shadowOffset: .zero, opacity: 0.3, radius: 5)
-//        selectionImageView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
+        shadowView.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 5)
     }
     
     

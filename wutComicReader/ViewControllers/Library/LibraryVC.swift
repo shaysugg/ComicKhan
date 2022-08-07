@@ -16,7 +16,7 @@ var diractoryWatcher: DirectoryWatcher?
 
 class LibraryVC: UIViewController {
     
-    //MARK:- Variables
+    //MARK: Variables
     
     let appfileManager: AppFileManager!
     private(set) var comicExtractor: ComicExteractor
@@ -25,17 +25,17 @@ class LibraryVC: UIViewController {
     let fetchResultController: NSFetchedResultsController<Comic>
     private var fetchResultHandler: LibraryFetchResultControllerHandler!
     
-    private(set) var collectionViewCellSize: CGSize!
+    private(set) var libraryCellSize: CGSize!
     
     var editingMode = false
     
     var newComicsErrorsDescription = ""
     
     let indexSelectionManager = IndexSelectionManager()
-    var indexSelectionCancelabels = [Cancellable]()
+    private var cancelabels = [AnyCancellable]()
     private var fetchResultControllerHandler: NSFetchedResultsControllerDelegate!
     
-    //MARK:- UI Variables
+    //MARK: UI Variables
     
     
     @IBOutlet weak var navItem: UINavigationItem!
@@ -93,7 +93,7 @@ class LibraryVC: UIViewController {
 
     
     
-    //MARK:- Functions
+    //MARK: Functions
     
     required init?(coder: NSCoder) {
         self.appfileManager = Cores.main.appfileManager
@@ -111,11 +111,10 @@ class LibraryVC: UIViewController {
         
         setupDiractoryWatcher()
         didUserAddNewFilesWhileAppWasDeactive()
-        
-        configureCellSize(basedOn: UIScreen.main.traitCollection)
+        libraryCellSize = configureCellSize(showNames: AppState.main.showComicNames)
         setUpDesigns()
         setupDelegates()
-        
+        setUpShowingComicNames()
         setUpNavigationButtons()
         
         bookCollectionView.allowsMultipleSelection = true
@@ -140,7 +139,7 @@ class LibraryVC: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        configureCellSize(basedOn: UIScreen.main.traitCollection)
+        libraryCellSize = configureCellSize(showNames: AppState.main.showComicNames)
         bookCollectionView.collectionViewLayout.invalidateLayout()
         layoutTrait(traitCollection: traitCollection)
         
@@ -212,16 +211,26 @@ class LibraryVC: UIViewController {
         emptyGroupsView.delegate = self
     }
     
+    private func setUpShowingComicNames() {
+        AppState.main.$showComicNames.sink { [weak self] show in
+            
+            guard let self = self else { return }
+            self.libraryCellSize = self.configureCellSize(showNames: show!)
+            self.bookCollectionView.collectionViewLayout.invalidateLayout()
+            self.bookCollectionView.reloadData()
+        }.store(in: &cancelabels)
+    }
+    
     //MARK: Collection View Functions
     
-    func configureCellSize(basedOn traitcollection: UITraitCollection) {
+    func configureCellSize(showNames: Bool) -> CGSize {
         let h = traitCollection.horizontalSizeClass
         let v = traitCollection.verticalSizeClass
         
         let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
         let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
         
-        var collectionViewCellWidth: CGFloat {
+        var width: CGFloat {
             if h == .regular && v == .compact {
                 return larg / 8
             }else if h == .compact && v == .regular {
@@ -232,7 +241,11 @@ class LibraryVC: UIViewController {
                 return larg / 9
             }
         }
-        collectionViewCellSize = CGSize(width: collectionViewCellWidth, height: collectionViewCellWidth * 1.53)
+        var height: CGFloat {
+            (width * 1.53) + (showNames ? 20 : 0)
+        }
+        
+        return CGSize(width: width, height: height)
     }
     
     private func setUpNavigationButtons() {
@@ -242,14 +255,14 @@ class LibraryVC: UIViewController {
         
         let barButtonIsEnabled = indexSelectionManager.publisher.tryMap{!$0.isEmpty}.replaceError(with: false)
         
-        indexSelectionCancelabels = [
-            barButtonIsEnabled.assign(to: \.isEnabled, on: groupBarButton),
-            barButtonIsEnabled.assign(to: \.isEnabled, on: deleteBarButton)
-        ]
+        
+        barButtonIsEnabled.weakAssign(to: \.isEnabled, on: groupBarButton).store(in: &cancelabels)
+        barButtonIsEnabled.weakAssign(to: \.isEnabled, on: deleteBarButton).store(in: &cancelabels)
+        
     }
     
     
-    //MARK:- actions
+    //MARK: actions
     @IBAction func addComicsButtonTapped(_ sender: Any) {
         presentDocumentPicker()
         
@@ -323,7 +336,7 @@ class LibraryVC: UIViewController {
     
     
     
-    //MARK:- Top bar functions
+    //MARK: Top bar functions
     
     func updateNavBarWhenEditingChanged() {
         if editingMode {
@@ -354,7 +367,7 @@ class LibraryVC: UIViewController {
     }
     
     
-    //MARK:- file functions
+    //MARK: File functions
     
     func presentDocumentPicker() {
         let documentPickerVC: UIDocumentPickerViewController!

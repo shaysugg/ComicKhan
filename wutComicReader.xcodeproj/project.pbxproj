@@ -67,6 +67,7 @@
 		E4EBC304241E886600F558AF /* EmptyGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC303241E886600F558AF /* EmptyGroupView.swift */; };
 		E4EBC306241E8D4C00F558AF /* Library+EmptyViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBC305241E8D4C00F558AF /* Library+EmptyViewDelegate.swift */; };
 		E4EC58B225A47150004D6190 /* ArrayOfStringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */; };
+		E4F09F7F289579E800662164 /* +Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F09F7E289579E800662164 /* +Combine.swift */; };
 		E4FD092924542439004D0A53 /* FileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092824542439004D0A53 /* FileManagerTests.swift */; };
 		E4FD092B245426E7004D0A53 /* ExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FD092A245426E7004D0A53 /* ExtractorTests.swift */; };
 		E4FD092D245427FA004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz in Resources */ = {isa = PBXBuildFile; fileRef = E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */; };
@@ -166,6 +167,7 @@
 		E4EBC305241E8D4C00F558AF /* Library+EmptyViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+EmptyViewDelegate.swift"; sourceTree = "<group>"; };
 		E4EC58B025A45631004D6190 /* coredata v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "coredata v2.xcdatamodel"; sourceTree = "<group>"; };
 		E4EC58B125A47150004D6190 /* ArrayOfStringTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayOfStringTransformer.swift; sourceTree = "<group>"; };
+		E4F09F7E289579E800662164 /* +Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+Combine.swift"; sourceTree = "<group>"; };
 		E4FD092824542439004D0A53 /* FileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerTests.swift; sourceTree = "<group>"; };
 		E4FD092A245426E7004D0A53 /* ExtractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtractorTests.swift; sourceTree = "<group>"; };
 		E4FD092C245427F9004D0A53 /* Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dark Corridor 004 (2015) (Digital) (AnHeroGold-Empire).cbz"; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				E443C8B42528A4920060CDFB /* +URL.swift */,
 				E45A878A25FCB8410011CF9F /* UIKitPreview.swift */,
 				E49F2F5F2833C73300BE90FE /* +CollectionView.swift */,
+				E4F09F7E289579E800662164 /* +Combine.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -719,6 +722,7 @@
 				E4EBC306241E8D4C00F558AF /* Library+EmptyViewDelegate.swift in Sources */,
 				E42B9EA024506CF3007B3803 /* DataService.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */,
+				E4F09F7F289579E800662164 /* +Combine.swift in Sources */,
 				E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */,
 				E411C7F525BF44F9006D45A5 /* ExtractionDirectory.swift in Sources */,
 				E4596A042407E7650030DB3E /* ReaderBottomBar.swift in Sources */,
