@@ -72,19 +72,16 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if pageImageView1.image?.size == .zero ||
-        pageImageView1.image?.size == nil{
-
-        pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
-        pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
-
-        updateMinZoomScaleForSize(view.bounds.size)
-        updateForPageMode()
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
+            pageImageView1.image?.size == nil{
             
+            pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
+            pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
+            
+            updateMinZoomScaleForSize(view.bounds.size)
+            updateForPageMode()
+            scrollView.setNeedsLayout()
+            scrollView.layoutIfNeeded()
         }
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -97,6 +94,7 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         super.viewDidLayoutSubviews()
         updateMinZoomScaleForSize(view.bounds.size)
         centerTheImage()
+        configureBackgroundGradient()
     }
     
     func setupDesign() {
@@ -106,8 +104,6 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.backgroundColor = .appSecondaryBackground
-        view.backgroundColor = .appSecondaryBackground
         
         scrollView.addSubview(imagesContainerView)
         imageContainerViewLeftAnchor = imagesContainerView.leftAnchor.constraint(equalTo: scrollView.leftAnchor)
@@ -120,9 +116,6 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         imageContainerViewTopAnchor?.isActive = true
         
         imagesContainerView.addArrangedSubview(pageImageView1)
-        
-        view.backgroundColor = .clear
-        scrollView.backgroundColor = .clear
         
         
     }
@@ -159,6 +152,23 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     
     private func pagesThatHaveImage() -> [UIImageView] {
         [pageImageView1, pageImageView2].filter{ $0.image != nil && $0.image != UIImage() }
+    }
+    
+    private func configureBackgroundGradient() {
+        guard let image1 = pageImageView1.image,
+              let color1 = image1.getPixelColor(pos: CGPoint()) else { return }
+
+        let image2 = pageImageView2.image ?? image1
+        guard let color2 = image2.getPixelColor(
+            pos: CGPoint(x: image2.size.width - 1, y: image2.size.height - 1))
+        else { return }
+        
+        
+        let gradient = CAGradientLayer()
+        gradient.colors = [color1.cgColor, color2.cgColor]
+        gradient.locations = [0 , 1]
+        gradient.frame = view.bounds
+        view.layer.insertSublayer(gradient, at: 0)
     }
     
     
