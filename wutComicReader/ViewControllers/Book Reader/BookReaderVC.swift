@@ -126,21 +126,10 @@ final class BookReaderVC: DynamicConstraintViewController {
         self.setNeedsStatusBarAppearanceUpdate()
     }
     
-    
-    override func viewDidAppear(_ animated: Bool) {
-        let LastpageNumber = (comic?.lastVisitedPage) ?? 0
-        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: true)
-    }
-    
-    
-    
     func setupDesign(){
         view.addSubview(bottomBar)
         view.addSubview(topBar)
         view.addSubview(topBarBackgroundView)
-        
-        let larg = view.bounds.width > view.bounds.height ? view.bounds.width : view.bounds.height
-        let short = view.bounds.width > view.bounds.height ? view.bounds.height : view.bounds.width
         
         
         setConstraints(shared: [
@@ -171,8 +160,6 @@ final class BookReaderVC: DynamicConstraintViewController {
                 bottomBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
                 bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -20)
             ], RVRH: [
-//                bottomBar.widthAnchor.constraint(equalToConstant: larg / 2),
-//                bottomBar.heightAnchor.constraint(equalToConstant: short / 3),
                 bottomBar.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
                 bottomBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).withLowPiority(),
                 bottomBar.heightAnchor.constraint(lessThanOrEqualToConstant: 280).withHighPiority(),
@@ -218,9 +205,9 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     func setLastViewedPage(toPageWithNumber number: Int, withAnimate animate: Bool = true) {
         
-        let bookPage = bookPageViewController.viewControllers?.first as! BookPage
-        let page1Number = bookPage.image1?.pageNumber
-        let page2Number = bookPage.image2?.pageNumber
+        let bookPage = bookPageViewController.viewControllers?.first as? BookPage
+        let page1Number = bookPage?.image1?.pageNumber
+        let page2Number = bookPage?.image2?.pageNumber
         
         if page1Number != number && page2Number != number {
             
@@ -322,7 +309,7 @@ final class BookReaderVC: DynamicConstraintViewController {
 extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
     func pageModeChanged(to pageMode: BookReaderPageMode) {
         AppState.main.setbookReaderPageMode(pageMode)
-        setBookPageViewControllers(pageMode: pageMode)
+        configureBookPages(pageMode: pageMode)
         if let page = lastViewedPage {
             setLastViewedPage(toPageWithNumber: page, withAnimate: false)
         }

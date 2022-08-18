@@ -22,11 +22,11 @@ extension BookReaderVC {
         addChild(bookPageViewController)
         view.addSubview(bookPageViewController.view)
         
-        setBookPageViewControllers(pageMode: pageMode)
+        configureBookPages(pageMode: pageMode)
     }
     
     
-    func setBookPageViewControllers(pageMode: BookReaderPageMode) {
+    func configureBookPages(pageMode: BookReaderPageMode) {
         
         bookPages.removeAll()
         
@@ -50,8 +50,6 @@ extension BookReaderVC {
                 bookPages.append(bookPage)
             }
         }
-        
-        bookPageViewController.setViewControllers([bookPages[0]], direction: .forward, animated: false)
         
 
     }
@@ -91,7 +89,6 @@ extension BookReaderVC : UIPageViewControllerDataSource , UIPageViewControllerDe
         if let index = bookPages.firstIndex(of: viewController as! BookPage) {
             if index > 0 {
                 return bookPages[index - 1]
-                
             }else {
                 return nil
             }
