@@ -49,14 +49,28 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     //MARK: UI Variables
     
-    lazy var bottomBar: BottomBar = {
+    private lazy var bottomBar: BottomBar = {
         let bar = BottomBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
     
-    lazy var topBar: TopBar = {
+    private lazy var topBar: TopBar = {
         let view = TopBar()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var settingBar: ReaderSettingVC = {
+        let vc = ReaderSettingVC(settingDelegate: self)
+        vc.view.layer.cornerRadius = 20
+        vc.view.clipsToBounds = true
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+        return vc
+    }()
+    
+    private lazy var blurView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -105,7 +119,7 @@ final class BookReaderVC: DynamicConstraintViewController {
         topBar.title = comic?.name
         
         
-        let LastpageNumber = (comic?.lastVisitedPage) ?? 0
+        let LastpageNumber = (comic?.lastVisitedPage) ?? 1
         setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: true)
         
     }
@@ -143,6 +157,7 @@ final class BookReaderVC: DynamicConstraintViewController {
             topBarBackgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
             topBarBackgroundView.rightAnchor.constraint(equalTo: view.rightAnchor),
             topBarBackgroundView.bottomAnchor.constraint(equalTo: topBar.topAnchor)
+            
             
         ])
         
@@ -304,19 +319,21 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     
     
+    
+    
 }
 
 extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
-    func pageModeChanged(to pageMode: BookReaderPageMode) {
-        AppState.main.setbookReaderPageMode(pageMode)
-        configureBookPages(pageMode: pageMode)
-        if let page = lastViewedPage {
-            setLastViewedPage(toPageWithNumber: page, withAnimate: false)
-        }
-        if let page = bookPageViewController.viewControllers?.first as? BookPage {
-            page.updateForPageMode()
-        }
-    }
+//    func pageModeChanged(to pageMode: BookReaderPageMode) {
+//        AppState.main.setbookReaderPageMode(pageMode)
+//        configureBookPages(pageMode: pageMode)
+//        if let page = lastViewedPage {
+//            setLastViewedPage(toPageWithNumber: page, withAnimate: false)
+//        }
+//        if let page = bookPageViewController.viewControllers?.first as? BookPage {
+//            page.updateForPageMode()
+//        }
+//    }
     
     func dismissViewController() {
         comicReadingProgressDidChanged?(comic!, lastViewedPage ?? 0)
@@ -333,6 +350,63 @@ extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
     }
     
     
+    
+    
+}
+
+extension BookReaderVC: ReaderSettingVCDelegate {
+    func settingTapped() {
+        presentSettingBar()
+    }
+    
+    func doneButtonTapped() {
+        dismissSettingBar()
+    }
+    
+    func presentSettingBar() {
+        blurView.effect = UIBlurEffect(style: .systemThinMaterial)
+        
+        view.addSubview(blurView)
+        blurView.alpha = 0
+        
+        addChild(settingBar)
+        view.addSubview(settingBar.view)
+        settingBar.didMove(toParent: self)
+        
+        NSLayoutConstraint.activate([
+            settingBar.view.topAnchor.constraint(equalTo: bottomBar.topAnchor),
+            settingBar.view.leftAnchor.constraint(equalTo: bottomBar.leftAnchor),
+            settingBar.view.rightAnchor.constraint(equalTo: bottomBar.rightAnchor),
+            settingBar.view.bottomAnchor.constraint(equalTo: bottomBar.bottomAnchor),
+            
+            blurView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            blurView.topAnchor.constraint(equalTo: view.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            blurView.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ])
+        
+        settingBar.view.transform = CGAffineTransform(translationX: 0, y: 200)
+        
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn) { [weak self] in
+            self?.settingBar.view.transform = CGAffineTransform(translationX: 0, y: 0)
+            self?.blurView.alpha = 1
+        } completion: { _ in}
+        
+        UIView.animate(withDuration: 1, delay: 0.2, options: .curveEaseIn) { [weak self] in
+//            self?.bottomBar.transform = CGAffineTransform(translationX: 0, y: 200)
+//            self?.bottomBar.alpha = 0
+            
+        } completion: { _ in}
+        
+    }
+    
+    func dismissSettingBar() {
+        settingBar.willMove(toParent: nil)
+        settingBar.removeFromParent()
+        settingBar.view.removeFromSuperview()
+        blurView.removeFromSuperview()
+        
+    }
 }
 
 extension BookReaderVC: GuideViewDelegate {

@@ -11,7 +11,8 @@ import UIKit
 
 protocol BottomBarDelegate: AnyObject {
     func newPageBeenSet(pageNumber: Int)
-    func pageModeChanged(to pageMode: BookReaderPageMode)
+    func settingTapped()
+//    func pageModeChanged(to pageMode: BookReaderPageMode)
 }
 
 final class BottomBar: UIView {
@@ -114,6 +115,7 @@ final class BottomBar: UIView {
         let image = UIImage(named: "ic-actions-more-1")?.withTintColor(.appMainLabelColor)
         view.setImage(image, for: .normal)
         view.layer.borderColor = UIColor.appMainLabelColor.cgColor
+        view.addAction(settingDidTapped(), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -128,7 +130,6 @@ final class BottomBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpDesign()
-        configurePageModeMenu()
     }
     
     private func setUpDesign(){
@@ -159,23 +160,30 @@ final class BottomBar: UIView {
    
     }
     
-    private func configurePageModeMenu() {
-        let singleMode =
-        UIAction(title: NSLocalizedString("Single page", comment: ""),
-                 image: UIImage(named: "single-page")?.withTintColor(.appMainLabelColor)) { [weak self] action in
-            self?.delegate?.pageModeChanged(to: .single)
+//    private func configurePageModeMenu() {
+//        let singleMode =
+//        UIAction(title: NSLocalizedString("Single page", comment: ""),
+//                 image: UIImage(named: "single-page")?.withTintColor(.appMainLabelColor)) { [weak self] action in
+//            self?.delegate?.pageModeChanged(to: .single)
+//        }
+//
+//        let doubleMode =
+//        UIAction(title: NSLocalizedString("Two pages", comment: ""),
+//                 image: UIImage(named: "two-pages")?.withTintColor(.appMainLabelColor) ) { [weak self] action in
+//            self?.delegate?.pageModeChanged(to: .double)
+//        }
+//
+//
+//        let menu = UIMenu(title: "Reader Setting", options: .displayInline, children:  [singleMode, doubleMode])
+//
+//        settingButton.menu = menu
+//        settingButton.showsMenuAsPrimaryAction = true
+//    }
+    
+    private func settingDidTapped() -> UIAction {
+        UIAction { [weak self] _ in
+            self?.delegate?.settingTapped()
         }
-        
-        let doubleMode =
-        UIAction(title: NSLocalizedString("Two pages", comment: ""),
-                 image: UIImage(named: "two-pages")?.withTintColor(.appMainLabelColor)) { [weak self] action in
-            self?.delegate?.pageModeChanged(to: .double)
-        }
-        
-        
-        let menu = UIMenu(title: "Reader Setting", children: [singleMode, doubleMode])
-        settingButton.menu = menu
-        settingButton.showsMenuAsPrimaryAction = true
     }
     
     override func layoutSubviews() {
