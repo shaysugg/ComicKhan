@@ -9,39 +9,14 @@
 import Foundation
 import UIKit
 
-struct AppTheme: Hashable {
-    let id: String
-    let primaryColor: UIColor
-    let backgroundColor: UIColor
-    let labelColor: UIColor
-}
-
-extension AppTheme {
+enum ReaderTheme: String, CaseIterable {
+    case dynamic = "dynamic"
+    case light = "light"
+    case dark = "dark"
+    case system = "system"
     
-    static let themes: [AppTheme] = [.light, .dark, .yellow]
     
-    static func theme(byID id: String) -> AppTheme? {
-        return themes.first { $0.id == id }
+    var name: String {
+        self.rawValue.capitalized
     }
-    
-    static let light = AppTheme(
-        id: "light",
-        primaryColor: .white,
-        backgroundColor: .lightGray,
-        labelColor: .black)
-    
-    static let dark = AppTheme(
-        id: "dark",
-        primaryColor: .white,
-        backgroundColor: .lightGray,
-        labelColor: .black)
-    
-    
-    static let yellow = AppTheme(
-        id: "yellow",
-        primaryColor: .yellow,
-        backgroundColor: .lightGray,
-        labelColor: .black)
-    
-    
 }

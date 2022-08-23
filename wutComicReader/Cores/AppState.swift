@@ -14,8 +14,7 @@ final class AppState {
     let font: AppFont
     private let storage = UserDefaults()
     
-    
-    @Published private(set) var readerTheme: AppTheme!
+    @Published private(set) var readerTheme: ReaderTheme!
     @Published private(set) var showComicNames: Bool!
     @Published private(set) var bookReaderPageMode: BookReaderPageMode!
     
@@ -27,14 +26,14 @@ final class AppState {
         
     }
     
-    func setTheme(to theme: AppTheme) {
-        storage.setValue(theme.id, forKey: Keys.apptheme)
+    func setTheme(to theme: ReaderTheme) {
+        storage.setValue(theme.rawValue, forKey: Keys.apptheme)
         self.readerTheme = theme
     }
     
-    private func getTheme() -> AppTheme {
+    private func getTheme() -> ReaderTheme {
         if let id = storage.string(forKey: Keys.apptheme),
-           let theme = AppTheme.theme(byID: id) {
+           let theme = ReaderTheme.init(rawValue: id) {
             return theme
         }else {
             switch UITraitCollection.current.userInterfaceStyle {
@@ -96,8 +95,16 @@ extension AppState {
     }
 }
 
-enum BookReaderPageMode: Int {
+enum BookReaderPageMode: Int, CaseIterable {
     case single = 1
     case double = 2
     
+    var name: String {
+        switch self {
+        case .single:
+            return "Single"
+        case .double:
+            return "Double"
+        }
+    }
 }
