@@ -36,12 +36,12 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
     }()
     
     private lazy var pageModeSegmentControll: UISegmentedControl = {
-        let view = UISegmentedControl(frame: .zero, actions: BookReaderPageMode.allCases.map({ pageMode in
+        let view = UISegmentedControl(frame: .zero, actions: ReaderPageMode.allCases.map({ pageMode in
             return UIAction(title: pageMode.name, handler: { [weak self] _ in
                 self?.pageModeChanged(to: pageMode)
             })
         }))
-        view.selectedSegmentIndex = BookReaderPageMode.allCases.firstIndex(of: AppState.main.bookReaderPageMode)!
+        view.selectedSegmentIndex = ReaderPageMode.allCases.firstIndex(of: AppState.main.readerPageMode)!
         view.selectedSegmentTintColor = .appMainColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -160,7 +160,7 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
         AppState.main.setTheme(to: theme)
     }
     
-    private func pageModeChanged(to pageMode: BookReaderPageMode) {
+    private func pageModeChanged(to pageMode: ReaderPageMode) {
         AppState.main.setbookReaderPageMode(pageMode)
     }
     

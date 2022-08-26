@@ -85,6 +85,9 @@ final class BookReaderVC: DynamicConstraintViewController {
     }()
     
     var bookPageViewController : UIPageViewController!
+    var currentPage: BookPage? {
+        bookPageViewController.viewControllers?.first as? BookPage
+    }
     
     private lazy var guideView: ReaderGuideView = {
         let view = ReaderGuideView()
@@ -103,13 +106,14 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPageController(pageMode: AppState.main.bookReaderPageMode)
+        setupPageController(pageMode: AppState.main.readerPageMode)
         
         disappearMenus(animated: false)
         
         addGestures()
         setupDesign()
         addGuideViewIfNeeded()
+        observeAppStateChanges()
         
         bottomBar.thumbnailsDataSource = self
         bottomBar.thumbnailDelegate = self
@@ -218,13 +222,14 @@ final class BookReaderVC: DynamicConstraintViewController {
     }
     
     
-    func setLastViewedPage(toPageWithNumber number: Int, withAnimate animate: Bool = true) {
+    func setLastViewedPage(toPageWithNumber number: Int, withAnimate animate: Bool = true, force: Bool = false) {
         
-        let bookPage = bookPageViewController.viewControllers?.first as? BookPage
-        let page1Number = bookPage?.image1?.pageNumber
-        let page2Number = bookPage?.image2?.pageNumber
+        //if numbers where not the same, set the bookpages in pageviewcontroller
+        //if force is true set them any way
+        let page1Number = currentPage?.image1?.pageNumber
+        let page2Number = currentPage?.image2?.pageNumber
         
-        if page1Number != number && page2Number != number {
+        if force || (page1Number != number && page2Number != number) {
             
             let pendingPage = bookPages.first {
                 return $0.image1?.pageNumber == number || $0.image2?.pageNumber == number
@@ -250,9 +255,29 @@ final class BookReaderVC: DynamicConstraintViewController {
         
     }
     
+    private func observeAppStateChanges() {
+        AppState.main.$readerTheme
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .filter { $0 != nil }
+            .sink { [weak self] theme in
+                self?.currentPage?.setUpTheme(theme!)
+            }.store(in: &cancellables)
+        
+        AppState.main.$readerPageMode
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .filter { $0 != nil }
+            .sink { [weak self] pageMode in
+                self?.configureBookPages(pageMode: pageMode!)
+                if let page = self?.lastViewedPage {
+                    self?.setLastViewedPage(toPageWithNumber: page, withAnimate: false, force: true)
+                }
+                self?.currentPage?.setUpPageMode(pageMode!)
+                
+            }.store(in: &cancellables)
+    }
+    
     @objc func zoomBookCurrentPage(_ sender: ZoomGestureRecognizer) {
         guard let point = sender.point else { return }
-        let currentPage = bookPageViewController.viewControllers?.first as? BookPage
         currentPage?.zoomWithDoubleTap(toPoint: point)
         
     }
@@ -272,45 +297,44 @@ final class BookReaderVC: DynamicConstraintViewController {
     func disappearMenus(animated: Bool) {
         menusAreAppeard = false
         
-        if animated {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-                self.topBar.alpha = 0.0
-                self.topBarBackgroundView.alpha = 0
-                self.bottomBar.transform = CGAffineTransform(translationX: 0, y: self.bottomBar.frame.height + 30)
-                self.bottomBar.alpha = 0.1
-                
-            }, completion: { _ in
-                self.setNeedsStatusBarAppearanceUpdate()
-            })
-        }else{
+        func changes() {
             topBar.alpha = 0.0
             topBarBackgroundView.alpha = 0
             bottomBar.transform = CGAffineTransform(translationX: 0, y: bottomBar.frame.height + 30)
             bottomBar.alpha = 0.0
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+                changes()
+            }, completion: { _ in
+                self.setNeedsStatusBarAppearanceUpdate()
+            })
+        }else{
+            changes()
         }
     }
     
     func appearMenus(animated: Bool) {
         menusAreAppeard = true
         self.setNeedsStatusBarAppearanceUpdate()
+        
+        func changes() {
+            self.topBar.alpha = 1
+            self.bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
+            self.bottomBar.alpha = 1
+            self.topBarBackgroundView.alpha = 1
+        }
+        
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-                self.topBar.alpha = 1
-                self.bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
-                self.bottomBar.alpha = 1
-                self.topBarBackgroundView.alpha = 1
-                //
+                changes()
             }, completion: { _ in
-                
             })
         }else{
-            topBar.alpha = 1
-            topBarBackgroundView.alpha = 1
-            bottomBar.transform = CGAffineTransform(translationX: 0, y: 0)
-            bottomBar.alpha = 1
-            
+            changes()
         }
-        //this shouldn't be there actually but idk wherever else i can make bottom bar collection view scroll
+        //FIXME: this shouldn't be there actually but idk wherever else i can make bottom bar collection view scroll
         let LastpageNumber = (comic?.lastVisitedPage) ?? 0
         bottomBar.currentPage = Int(LastpageNumber)
         
@@ -324,16 +348,6 @@ final class BookReaderVC: DynamicConstraintViewController {
 }
 
 extension BookReaderVC: TopBarDelegate, BottomBarDelegate {
-//    func pageModeChanged(to pageMode: BookReaderPageMode) {
-//        AppState.main.setbookReaderPageMode(pageMode)
-//        configureBookPages(pageMode: pageMode)
-//        if let page = lastViewedPage {
-//            setLastViewedPage(toPageWithNumber: page, withAnimate: false)
-//        }
-//        if let page = bookPageViewController.viewControllers?.first as? BookPage {
-//            page.updateForPageMode()
-//        }
-//    }
     
     func dismissViewController() {
         comicReadingProgressDidChanged?(comic!, lastViewedPage ?? 0)
@@ -385,26 +399,37 @@ extension BookReaderVC: ReaderSettingVCDelegate {
             blurView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
         
-        settingBar.view.transform = CGAffineTransform(translationX: 0, y: 200)
+        let shifting = settingBar.view.bounds.height + 40
+        settingBar.view.transform = CGAffineTransform(translationX: 0, y: shifting)
         
-        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn) { [weak self] in
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
             self?.settingBar.view.transform = CGAffineTransform(translationX: 0, y: 0)
             self?.blurView.alpha = 1
         } completion: { _ in}
         
-        UIView.animate(withDuration: 1, delay: 0.2, options: .curveEaseIn) { [weak self] in
+//        UIView.animate(withDuration: 1, delay: 0.2, options: .curveEaseIn) { [weak self] in
 //            self?.bottomBar.transform = CGAffineTransform(translationX: 0, y: 200)
 //            self?.bottomBar.alpha = 0
-            
-        } completion: { _ in}
+//
+//        } completion: { _ in}
         
     }
     
     func dismissSettingBar() {
-        settingBar.willMove(toParent: nil)
-        settingBar.removeFromParent()
-        settingBar.view.removeFromSuperview()
-        blurView.removeFromSuperview()
+        
+        let shifting = settingBar.view.bounds.height + 40
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.settingBar.view.transform = CGAffineTransform(translationX: 0, y: shifting)
+            self?.blurView.alpha = 0
+        } completion: { [weak self] _ in
+            self?.settingBar.willMove(toParent: nil)
+            self?.settingBar.removeFromParent()
+            self?.settingBar.view.removeFromSuperview()
+            self?.blurView.removeFromSuperview()
+        }
+        
+        
         
     }
 }
