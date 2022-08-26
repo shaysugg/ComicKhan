@@ -14,7 +14,7 @@ import UIKit
 extension BookReaderVC {
     
     
-    func setupPageController(pageMode: BookReaderPageMode) {
+    func setupPageController(pageMode: ReaderPageMode) {
         bookPageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         bookPageViewController.delegate = self
         bookPageViewController.dataSource = self
@@ -26,7 +26,7 @@ extension BookReaderVC {
     }
     
     
-    func configureBookPages(pageMode: BookReaderPageMode) {
+    func configureBookPages(pageMode: ReaderPageMode) {
         
         bookPages.removeAll()
         
