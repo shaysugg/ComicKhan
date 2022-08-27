@@ -205,9 +205,6 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         }
         
         let imagesWidth = (pageImageView1.image?.size.width ?? 0) + (pageImageView2.image?.size.width ?? 0)
-        print("------------")
-        print(pageImageView1.image?.size.width)
-        print(pageImageView2.image?.size.width)
         
         let widthScale = size.width / imagesWidth
         let heightScale = size.height / imagesHeight
