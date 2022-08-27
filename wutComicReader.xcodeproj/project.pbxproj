@@ -30,6 +30,7 @@
 		E42D4BD828A0EA2100AC3C6A /* +UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D4BD728A0EA2100AC3C6A /* +UIImage.swift */; };
 		E43017FF25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43017FE25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift */; };
 		E430912024CDB8EB00007FD3 /* ReaderGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */; };
+		E43C225528BA37D9006BAFDF /* ReaderPageMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C225428BA37D9006BAFDF /* ReaderPageMode.swift */; };
 		E443C8B52528A4920060CDFB /* +URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E443C8B42528A4920060CDFB /* +URL.swift */; };
 		E44FA70C23F0015C00338457 /* LibraryReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44FA70B23F0015C00338457 /* LibraryReusableView.swift */; };
 		E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45213A822D4927D00216217 /* ComicExteractor.swift */; };
@@ -50,7 +51,7 @@
 		E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49C7C142418FEF4004DE82A /* ComicImage.swift */; };
 		E49F2F602833C73300BE90FE /* +CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49F2F5F2833C73300BE90FE /* +CollectionView.swift */; };
 		E4A20D6822D879450067BDF8 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A20D6722D879450067BDF8 /* LibraryCell.swift */; };
-		E4A6CD3D28AF6C8400E87FE0 /* SettingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A6CD3C28AF6C8400E87FE0 /* SettingBar.swift */; };
+		E4A6CD3D28AF6C8400E87FE0 /* ReaderSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A6CD3C28AF6C8400E87FE0 /* ReaderSettingVC.swift */; };
 		E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */; };
 		E4B2870928636A2C00397E83 /* BookReaderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B2870828636A2C00397E83 /* BookReaderFactory.swift */; };
 		E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C3D174261E09D7007CC0E1 /* AppState.swift */; };
@@ -61,7 +62,7 @@
 		E4CE3783240D6CFB00429C30 /* Library+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE3782240D6CFB00429C30 /* Library+CollectionView.swift */; };
 		E4D1A05D2843914000EB945C /* DynamicConstraintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D1A05C2843914000EB945C /* DynamicConstraintViewController.swift */; };
 		E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D3920023EEA23800E8C873 /* NewGroupVC.swift */; };
-		E4E2834F28301DC500030C9D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E2834E28301DC500030C9D /* AppTheme.swift */; };
+		E4E2834F28301DC500030C9D /* ReaderTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E2834E28301DC500030C9D /* ReaderTheme.swift */; };
 		E4E667FD234BAB710050CB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E667FC234BAB710050CB8C /* Assets.xcassets */; };
 		E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */; };
 		E4EB1E392569762800C56632 /* IndexSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EB1E382569762800C56632 /* IndexSelectionManager.swift */; };
@@ -127,6 +128,7 @@
 		E42D4BD728A0EA2100AC3C6A /* +UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIImage.swift"; sourceTree = "<group>"; };
 		E43017FE25BD7F18004ECE45 /* ExtractionDirectoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractionDirectoriesTests.swift; sourceTree = "<group>"; };
 		E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderGuideView.swift; sourceTree = "<group>"; };
+		E43C225428BA37D9006BAFDF /* ReaderPageMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderPageMode.swift; sourceTree = "<group>"; };
 		E443C8B42528A4920060CDFB /* +URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+URL.swift"; sourceTree = "<group>"; };
 		E44FA70B23F0015C00338457 /* LibraryReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryReusableView.swift; sourceTree = "<group>"; };
 		E45213A822D4927D00216217 /* ComicExteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComicExteractor.swift; sourceTree = "<group>"; };
@@ -148,7 +150,7 @@
 		E49C7C142418FEF4004DE82A /* ComicImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicImage.swift; sourceTree = "<group>"; };
 		E49F2F5F2833C73300BE90FE /* +CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+CollectionView.swift"; sourceTree = "<group>"; };
 		E4A20D6722D879450067BDF8 /* LibraryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
-		E4A6CD3C28AF6C8400E87FE0 /* SettingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBar.swift; sourceTree = "<group>"; };
+		E4A6CD3C28AF6C8400E87FE0 /* ReaderSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderSettingVC.swift; sourceTree = "<group>"; };
 		E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Library+ExtractionErrorHandeling.swift"; sourceTree = "<group>"; };
 		E4B2870828636A2C00397E83 /* BookReaderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderFactory.swift; sourceTree = "<group>"; };
 		E4C3D174261E09D7007CC0E1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -161,7 +163,7 @@
 		E4D3920023EEA23800E8C873 /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		E4DA532224507DB800A244FD /* ComicKhanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComicKhanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DA532624507DB800A244FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E4E2834E28301DC500030C9D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		E4E2834E28301DC500030C9D /* ReaderTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderTheme.swift; sourceTree = "<group>"; };
 		E4E667FC234BAB710050CB8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderVC.swift; sourceTree = "<group>"; };
 		E4EB1E382569762800C56632 /* IndexSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSelectionManager.swift; sourceTree = "<group>"; };
@@ -277,7 +279,6 @@
 				E45C8429238DACD700669155 /* Colors.swift */,
 				E4E667FC234BAB710050CB8C /* Assets.xcassets */,
 				E40C7AA822A1169000D7CD17 /* Info.plist */,
-				E4E2834E28301DC500030C9D /* AppTheme.swift */,
 				E4C596F6283BA25E004C71D9 /* AppFont.swift */,
 			);
 			path = wutComicReader;
@@ -317,10 +318,12 @@
 			children = (
 				E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */,
 				E4FF65592391684600AAD68B /* BookPage.swift */,
-				E4A6CD3C28AF6C8400E87FE0 /* SettingBar.swift */,
+				E4A6CD3C28AF6C8400E87FE0 /* ReaderSettingVC.swift */,
 				E4B2870828636A2C00397E83 /* BookReaderFactory.swift */,
+				E4E2834E28301DC500030C9D /* ReaderTheme.swift */,
 				E4596A05240803860030DB3E /* Views */,
 				E4288B5023DB314A00182E0B /* Extensions */,
+				E43C225428BA37D9006BAFDF /* ReaderPageMode.swift */,
 			);
 			path = "Book Reader";
 			sourceTree = "<group>";
@@ -689,7 +692,7 @@
 				E45C842A238DACD700669155 /* Colors.swift in Sources */,
 				E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */,
 				E465B11A2413FBAD00A6003D /* InfoVC.swift in Sources */,
-				E4E2834F28301DC500030C9D /* AppTheme.swift in Sources */,
+				E4E2834F28301DC500030C9D /* ReaderTheme.swift in Sources */,
 				E42576AC253458A8000F0D0D /* +NSLayoutContraint.swift in Sources */,
 				E4E8FCED22C28E4700A8B32D /* BookReaderVC.swift in Sources */,
 				E49C7C152418FEF4004DE82A /* ComicImage.swift in Sources */,
@@ -700,6 +703,7 @@
 				E499A0BC2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift in Sources */,
 				E49F2F602833C73300BE90FE /* +CollectionView.swift in Sources */,
 				E4596A07240803A60030DB3E /* ReaderTopBar.swift in Sources */,
+				E43C225528BA37D9006BAFDF /* ReaderPageMode.swift in Sources */,
 				E407CB8323FD3D780056F64D /* RoundedProgressView.swift in Sources */,
 				E45213A922D4927D00216217 /* ComicExteractor.swift in Sources */,
 				E4D3920123EEA23800E8C873 /* NewGroupVC.swift in Sources */,
@@ -725,7 +729,7 @@
 				E42B9EA024506CF3007B3803 /* DataService.swift in Sources */,
 				E4288B4E23DB30E000182E0B /* thumbnailCollectionView.swift in Sources */,
 				E4F09F7F289579E800662164 /* +Combine.swift in Sources */,
-				E4A6CD3D28AF6C8400E87FE0 /* SettingBar.swift in Sources */,
+				E4A6CD3D28AF6C8400E87FE0 /* ReaderSettingVC.swift in Sources */,
 				E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */,
 				E411C7F525BF44F9006D45A5 /* ExtractionDirectory.swift in Sources */,
 				E4596A042407E7650030DB3E /* ReaderBottomBar.swift in Sources */,
