@@ -36,10 +36,7 @@ final class AppState {
            let theme = ReaderTheme.init(rawValue: id) {
             return theme
         }else {
-            switch UITraitCollection.current.userInterfaceStyle {
-            case .dark: return .dark
-            default: return .light
-            }
+            return .dynamic
         }
     }
     
