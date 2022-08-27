@@ -14,33 +14,29 @@ final class AppState {
     let font: AppFont
     private let storage = UserDefaults()
     
-    
-    @Published private(set) var readerTheme: AppTheme!
+    @Published private(set) var readerTheme: ReaderTheme!
     @Published private(set) var showComicNames: Bool!
-    @Published private(set) var bookReaderPageMode: BookReaderPageMode!
+    @Published private(set) var readerPageMode: ReaderPageMode!
     
     init() {
         font = SystemFont()
         readerTheme = getTheme()
         showComicNames = getShouldShowComics()
-        bookReaderPageMode = getbookReaderPageMode()
+        readerPageMode = getbookReaderPageMode()
         
     }
     
-    func setTheme(to theme: AppTheme) {
-        storage.setValue(theme.id, forKey: Keys.apptheme)
+    func setTheme(to theme: ReaderTheme) {
+        storage.setValue(theme.rawValue, forKey: Keys.apptheme)
         self.readerTheme = theme
     }
     
-    private func getTheme() -> AppTheme {
+    private func getTheme() -> ReaderTheme {
         if let id = storage.string(forKey: Keys.apptheme),
-           let theme = AppTheme.theme(byID: id) {
+           let theme = ReaderTheme.init(rawValue: id) {
             return theme
         }else {
-            switch UITraitCollection.current.userInterfaceStyle {
-            case .dark: return .dark
-            default: return .light
-            }
+            return .dynamic
         }
     }
     
@@ -50,17 +46,17 @@ final class AppState {
         
     }
     
-    func setbookReaderPageMode(_ mode: BookReaderPageMode) {
+    func setbookReaderPageMode(_ mode: ReaderPageMode) {
         storage.set(mode.rawValue, forKey: Keys.bookReaderPageMode)
-        bookReaderPageMode = mode
+        readerPageMode = mode
     }
     
     private func getShouldShowComics() -> Bool {
         storage.bool(forKey: Keys.showComicNames)
     }
     
-    private func getbookReaderPageMode() -> BookReaderPageMode {
-        BookReaderPageMode(rawValue: storage.integer(forKey: Keys.bookReaderPageMode)) ?? .single
+    private func getbookReaderPageMode() -> ReaderPageMode {
+        ReaderPageMode(rawValue: storage.integer(forKey: Keys.bookReaderPageMode)) ?? .single
     }
     
     func didAppLaunchedForFirstTime() -> Bool {
@@ -94,10 +90,4 @@ extension AppState {
         static let readerDidPresentedBefore = "readerDidPresentedBefore"
         static let bookReaderPageMode = "bookReaderPageMode"
     }
-}
-
-enum BookReaderPageMode: Int {
-    case single = 1
-    case double = 2
-    
 }
