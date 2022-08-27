@@ -42,20 +42,16 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
             })
         }))
         view.selectedSegmentIndex = ReaderPageMode.allCases.firstIndex(of: AppState.main.readerPageMode)!
-        view.selectedSegmentTintColor = .appMainColor
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var ReaderThemeSegmentControll: UISegmentedControl = {
         let view = UISegmentedControl(frame: .zero, actions: ReaderTheme.allCases.map({ theme in
-            return UIAction(title: theme.rawValue, handler: {[weak self] _ in
+            return UIAction(title: theme.rawValue.capitalized, handler: {[weak self] _ in
                 self?.readerThemeChanged(to: theme)
             })
         }))
         view.selectedSegmentIndex = ReaderTheme.allCases.firstIndex(of: AppState.main.readerTheme)!
-        view.selectedSegmentTintColor = .appMainColor
-        view.tintColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -79,7 +75,7 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
                 target: self,
                 action: #selector(doneButtonTapped)),
             animated: false)
-        navigationController?.navigationBar.tintColor = .appMainLabelColor
+        navigationController?.navigationBar.tintColor = .appMainColor
         
         title = "Reader Setting"
         

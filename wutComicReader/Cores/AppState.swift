@@ -91,17 +91,3 @@ extension AppState {
         static let bookReaderPageMode = "bookReaderPageMode"
     }
 }
-
-enum ReaderPageMode: Int, CaseIterable {
-    case single = 1
-    case double = 2
-    
-    var name: String {
-        switch self {
-        case .single:
-            return "Single"
-        case .double:
-            return "Double"
-        }
-    }
-}
