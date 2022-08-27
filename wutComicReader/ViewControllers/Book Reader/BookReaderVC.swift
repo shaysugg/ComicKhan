@@ -407,12 +407,6 @@ extension BookReaderVC: ReaderSettingVCDelegate {
             self?.blurView.alpha = 1
         } completion: { _ in}
         
-//        UIView.animate(withDuration: 1, delay: 0.2, options: .curveEaseIn) { [weak self] in
-//            self?.bottomBar.transform = CGAffineTransform(translationX: 0, y: 200)
-//            self?.bottomBar.alpha = 0
-//
-//        } completion: { _ in}
-        
     }
     
     func dismissSettingBar() {
