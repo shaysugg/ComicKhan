@@ -51,8 +51,8 @@ class ThumbnailCell: UICollectionViewCell {
     func setupDesign() {
         
         addSubview(imageHolderView)
-        imageHolderView.topAnchor.constraint(equalTo: topAnchor , constant: 10).isActive = true
-        imageHolderView.bottomAnchor.constraint(equalTo: bottomAnchor , constant: -5).isActive = true
+        imageHolderView.topAnchor.constraint(equalTo: topAnchor , constant: 0).isActive = true
+        imageHolderView.bottomAnchor.constraint(equalTo: bottomAnchor , constant: 0).isActive = true
         imageHolderView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
         imageHolderView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
         imageHolderView.layer.cornerRadius = 5
