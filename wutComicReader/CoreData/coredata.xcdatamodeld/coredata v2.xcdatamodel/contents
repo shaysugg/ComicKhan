@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Comic" representedClassName=".Comic" syncable="YES" codeGenerationType="class">
         <attribute name="groupName" attributeType="String" defaultValueString="New Comics"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageNames" attributeType="Transformable" valueTransformerName="ArrayOfStringsTransformer" customClassName="NSArray"/>
-        <attribute name="lastVisitedPage" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastVisitedPage" attributeType="Integer 16" minValueString="0" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="thumbnailNames" attributeType="Transformable" valueTransformerName="ArrayOfStringsTransformer" customClassName="NSArray"/>
         <relationship name="ofComicGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ComicGroup" inverseName="comics" inverseEntity="ComicGroup"/>
