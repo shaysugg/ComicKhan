@@ -31,8 +31,8 @@ ComicKhan is an app for reading your comic files (.cbz /.cbr/.pdf) on your iPhon
 
 
 ## Features
-* Detects new comic files when their added into the document directory and start extracting them while showing their extraction progress.
-* Read your comics in double page when your device orientation is landscape and single page when your device orientation is portrait.
+* Detects new comic files when you add them into the document directory and start extracting them while showing their extraction progress.
+* Read your comics in double page and single page based on your device orientation.
 * Stores the last page that you have read and show reading progress with a circular progress view on the left bottom corner of each book in your library.
 * Resizes comic images for smooth scrolling and better performance.
 * Group your comics and organize them in the library.
@@ -40,6 +40,7 @@ ComicKhan is an app for reading your comic files (.cbz /.cbr/.pdf) on your iPhon
 ## TODO
 - [x] Support for comics with PDF format
 - [x] Support for extracting directories of comics.
+- [ ] Switch between dark mode / light mode in book reader without needing to change the system color preferences.
 - [ ] Ability to sort comic groups based on name, date added, etc.
 
 
