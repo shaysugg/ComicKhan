@@ -142,6 +142,7 @@ fileprivate final class ThumbnailVC: UIViewController {
     private func setUpDesign(){
         
         view.backgroundColor = .appBackground
+        view.layer.cornerRadius = 20
         
         view.addSubview(sliderStackView)
         sliderStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7).isActive = true

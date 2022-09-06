@@ -79,14 +79,14 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
         
         title = "Reader Setting"
         
-        
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
+        view.layer.cornerRadius = 20
         
         configurePageModeCell()
         configureReaderThemeCell()

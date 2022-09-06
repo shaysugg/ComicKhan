@@ -16,12 +16,7 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     //MARK: Variables
     
-    var comic : Comic? {
-        didSet{
-            guard let _ = comic else { return }
-        }
-    }
-    
+    var comic : Comic?
     
     var lastViewedPage : Int?
     var menusAreAppeard: Bool = false
@@ -62,17 +57,11 @@ final class BookReaderVC: DynamicConstraintViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    //    private lazy var topBar: TopBar = {
-    //        let view = TopBar()
-    //        view.translatesAutoresizingMaskIntoConstraints = false
-    //        return view
-    //    }()
+
     
     private lazy var settingBar: ReaderSettingVC = {
         let vc = ReaderSettingVC(settingDelegate: self)
         vc.view.layer.cornerRadius = 20
-        vc.view.clipsToBounds = true
         vc.view.translatesAutoresizingMaskIntoConstraints = false
         return vc
     }()
@@ -82,15 +71,6 @@ final class BookReaderVC: DynamicConstraintViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    //this used for fill the space between topBar and top device edge in iphone X
-    //    //FIXME: You don't need this!
-    //    lazy var topBarBackgroundView: UIView = {
-    //        let view = UIView()
-    //        view.backgroundColor = .appBackground
-    //        view.translatesAutoresizingMaskIntoConstraints = false
-    //        return view
-    //    }()
     
     private lazy var dismissButton : UIButton = {
         let button = UIButton()
@@ -134,9 +114,7 @@ final class BookReaderVC: DynamicConstraintViewController {
         
         disappearDismissButton(animated: false)
         
-        let LastpageNumber = (comic?.lastVisitedPage) ?? 1
-        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: true)
-        
+        setToLastVisitedPage()
     }
     
     
@@ -157,8 +135,8 @@ final class BookReaderVC: DynamicConstraintViewController {
         view.addSubview(dismissButton)
         dismissButton.layer.cornerRadius = 20
         setConstraints(shared: [
-            dismissButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10),
-            dismissButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            dismissButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 15),
+            dismissButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
             dismissButton.heightAnchor.constraint(equalToConstant: 40),
             dismissButton.widthAnchor.constraint(equalTo: dismissButton.heightAnchor),
             
@@ -217,6 +195,17 @@ final class BookReaderVC: DynamicConstraintViewController {
         }
     }
     
+    private func setToLastVisitedPage() {
+        var LastpageNumber: Int {
+            if comic?.lastVisitedPage == nil || comic?.lastVisitedPage == 0 {
+                return 1
+            }else {
+                return Int(comic!.lastVisitedPage)
+            }
+        }
+        setLastViewedPage(toPageWithNumber: Int(LastpageNumber), withAnimate: true)
+    }
+    
     
     func setLastViewedPage(toPageWithNumber number: Int, withAnimate animate: Bool = true, force: Bool = false) {
         
@@ -270,6 +259,13 @@ final class BookReaderVC: DynamicConstraintViewController {
                 self?.currentPage?.setUpPageMode(pageMode!)
                 
             }.store(in: &cancellables)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 7)
+        thumbnailBar.view.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 10)
+        settingBar.view.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 10)
     }
     
     @objc func zoomBookCurrentPage(_ sender: ZoomGestureRecognizer) {
@@ -362,9 +358,8 @@ extension BookReaderVC {
         let shifting = thumbnailBar.view.bounds.height + 40
         thumbnailBar.view.transform = CGAffineTransform(translationX: 0, y: shifting)
         
-        let changes = { [weak self] in
+        let changes: () -> Void = { [weak self] in
             self?.thumbnailBar.view.transform = CGAffineTransform(translationX: 0, y: 0)
-            self?.thumbnailBar.view.alpha = 1
         }
         
         let complition: (Bool) -> Void = { [weak self] _ in
