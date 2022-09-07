@@ -271,24 +271,84 @@ class LibraryVC: UIViewController {
     
     
     @IBAction func DeleteBarButtonTapped(_ sender: Any) {
-        //if we don't sorted high to low then we have a crash
-        let lowToHighIndexes = indexSelectionManager.indexes.sorted()
-        let highToLowIndexes = lowToHighIndexes.reversed()
+        //Definitions
+        struct DeletingComics: LocalizedError {
+            var errorDescription = "There is a problem with removing some of your comics!"
+        }
         
-        for indexPath in highToLowIndexes{
-            let comic = fetchResultController.object(at: indexPath)
-            if let comicName = comic.name,
-                comicName != "" {
+        func deleteComics() throws {
+            var comicNamesWithErrors = [String]()
+            for name in comicsNames {
                 do{
-                    try dataService.deleteComicFromCoreData(withName: comicName)
-                    try appfileManager.deleteFileInTheAppDiractory(withName: comicName)
-                    
-                }catch {
-                    showAlert(with: "Oh!", description: "There is a problem with removing your comics")
+                    try dataService.deleteComicFromCoreData(withName: name)
+                    try appfileManager.deleteFileInTheAppDiractory(withName: name)
+                } catch { comicNamesWithErrors.append(name) }
+            }
+            if !comicNamesWithErrors.isEmpty { throw DeletingComics() }
+            
+        }
+        //if we don't sorted high to low then we have a crash
+        lazy var comicsNames: [String] = {
+            let lowToHighIndexes = indexSelectionManager.indexes.sorted()
+            let highToLowIndexes = lowToHighIndexes.reversed()
+            
+            return highToLowIndexes
+                .map { fetchResultController.object(at: $0) }
+                .map(\.name)
+                .compactMap { $0 }
+        }()
+        
+        //Execution
+        let names = comicsNames
+            .filter { !$0.isEmpty }
+            .reduce("", { partialResult, string in
+                partialResult + string + ", "
+            })
+        
+        let alert = UIAlertController(
+            title: "Are you sure you want to delete these comics?",
+            message: "\(names)",
+            preferredStyle: .alert)
+        
+        let deleteAction = UIAlertAction(
+            title: "Delete",
+            style: .destructive) { [weak self] _ in
+                do {
+                    try deleteComics()
+                    self?.indexSelectionManager.removeAll()
+                    alert.dismiss(animated: true)
+                } catch let e {
+                    alert.dismiss(animated: true) { [weak self] in
+                        self?.showAlert(with: (e as! DeletingComics).errorDescription, description: "")
+                    }
                 }
             }
-        }
-        indexSelectionManager.removeAll()
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel) { _ in
+                alert.dismiss(animated: true)
+            }
+        
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+        
+        
+        
+//        for indexPath in highToLowIndexes{
+//            let comic = fetchResultController.object(at: indexPath)
+//            if let comicName = comic.name,
+//                comicName != "" {
+//                do{
+//                    try dataService.deleteComicFromCoreData(withName: comicName)
+//                    try appfileManager.deleteFileInTheAppDiractory(withName: comicName)
+//
+//                }catch {
+//                    showAlert(with: "Oh!", description: "There is a problem with removing your comics")
+//                }
+//            }
+//        }
+        
         
     }
 
