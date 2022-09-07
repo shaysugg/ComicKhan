@@ -44,7 +44,6 @@ final class BookReaderVC: DynamicConstraintViewController {
         let vc = ReaderThumbnailVC(thumbnailDelegate: self,
                                    thumbnailImages: thumbnailImages,
                                    comicName: comic?.name ?? "")
-        vc.view.layer.cornerRadius = 20
         vc.view.clipsToBounds = true
         vc.view.translatesAutoresizingMaskIntoConstraints = false
         return vc
@@ -61,7 +60,7 @@ final class BookReaderVC: DynamicConstraintViewController {
     
     private lazy var settingBar: ReaderSettingVC = {
         let vc = ReaderSettingVC(settingDelegate: self)
-        vc.view.layer.cornerRadius = 20
+        vc.view.clipsToBounds = true
         vc.view.translatesAutoresizingMaskIntoConstraints = false
         return vc
     }()
@@ -265,7 +264,7 @@ final class BookReaderVC: DynamicConstraintViewController {
         super.viewDidLayoutSubviews()
         dismissButton.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 7)
         thumbnailBar.view.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 10)
-        settingBar.view.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 10)
+//        settingBar.view.makeDropShadow(shadowOffset: .zero, opacity: 0.5, radius: 10)
     }
     
     @objc func zoomBookCurrentPage(_ sender: ZoomGestureRecognizer) {

@@ -64,10 +64,30 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDesign()
+        setupNavigationBar()
+        configurePageModeCell()
+        configureReaderThemeCell()
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    private func setupDesign() {
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ])
         
+        
+        tableView.clipsToBounds = true
+        tableView.layer.cornerRadius = 20
+    }
+    
+    private func setupNavigationBar() {
         navigationItem.setRightBarButton(
             UIBarButtonItem(
                 title: "Done",
@@ -78,21 +98,6 @@ fileprivate final class SettingVC: UIViewController, UITableViewDelegate, UITabl
         navigationController?.navigationBar.tintColor = .appMainColor
         
         title = "Reader Setting"
-        
-        view.addSubview(tableView)
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-        ])
-        view.layer.cornerRadius = 20
-        
-        configurePageModeCell()
-        configureReaderThemeCell()
-        
-        
-        
     }
     
     @objc private func doneButtonTapped() {

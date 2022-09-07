@@ -109,14 +109,6 @@ fileprivate final class ThumbnailVC: UIViewController {
         return stackView
     }()
     
-    
-    private lazy var containerView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 20
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     init(thumbnailImages: [ComicImage], comicName: String) {
         self.thumbnailImages = thumbnailImages
         self.comicName = comicName
