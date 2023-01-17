@@ -36,7 +36,7 @@ final class AppState {
            let theme = ReaderTheme.init(rawValue: id) {
             return theme
         }else {
-            return .dynamic
+            return .system
         }
     }
     

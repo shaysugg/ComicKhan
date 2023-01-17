@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 enum ReaderTheme: String, CaseIterable {
-    case dynamic = "dynamic"
+//    case dynamic = "dynamic"
     case light = "light"
     case dark = "dark"
     case system = "system"

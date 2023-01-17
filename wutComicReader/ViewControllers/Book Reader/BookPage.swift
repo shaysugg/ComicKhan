@@ -170,8 +170,8 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     
     func setUpTheme(_ theme: ReaderTheme) {
         switch theme {
-        case .dynamic:
-            configureBackgroundGradient()
+//        case .dynamic:
+//            configureBackgroundGradient()
         case .light:
             setBackgroundColor(to: .white)
         case .dark:

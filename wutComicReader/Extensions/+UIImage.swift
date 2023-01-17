@@ -18,7 +18,8 @@ extension UIImage {
          let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
 
          let pixelInfo: Int = ((Int(self.size.width) * Int(pos.y)) + Int(pos.x)) * 4
-
+         //FIXME: pixelfInfo ois out of the range probably
+         
          let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
          let g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
          let b = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
