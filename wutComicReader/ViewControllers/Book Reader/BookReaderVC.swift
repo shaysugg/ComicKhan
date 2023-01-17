@@ -226,7 +226,7 @@ final class BookReaderVC: DynamicConstraintViewController {
         }
         
         //update bottomBar variables
-        if thumbnailBar.isBeingPresented {
+        if view.subviews.contains(thumbnailBar.view) {
             thumbnailBar.setCurrentPage(to: number)
         }
         
