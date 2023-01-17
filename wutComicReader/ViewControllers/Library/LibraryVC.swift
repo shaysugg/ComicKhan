@@ -294,7 +294,7 @@ class LibraryVC: UIViewController {
             
             return highToLowIndexes
                 .map { fetchResultController.object(at: $0) }
-                .map(\.name)
+                .map {$0.name}
                 .compactMap { $0 }
         }()
         
