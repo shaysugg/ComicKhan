@@ -50,26 +50,3 @@ class ZoomGestureRecognizer: UITapGestureRecognizer {
         point = touches.first?.location(in: view)
     }
 }
-
-
-extension UserDefaults {
-    func appLaunchedForFirstTime() -> Bool {
-        let didLaunchedBefore = self.bool(forKey: "appDidLunchedBefore")
-        return !didLaunchedBefore 
-    }
-    
-    func setAppDidLaunchedFlag() {
-        self.set(true, forKey: "appDidLunchedBefore")
-    }
-    
-    func readerPresentForFirstTime() -> Bool {
-        let didPresentBefore = self.bool(forKey: "readerDidPresentedBefore")
-        if !didPresentBefore {
-            self.set(true, forKey: "readerDidPresentedBefore")
-            return true
-        }else{
-            return false
-        }
-    }
-    
-}

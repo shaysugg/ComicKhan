@@ -23,6 +23,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectioViewIDs.comicCell.id, for: indexPath) as! LibraryCell
         cell.isInEditingMode = editingMode
         cell.book = fetchResultController.object(at: indexPath)
+        cell.showNameLabel = AppState.main.showComicNames
         return cell
     }
     
@@ -43,8 +44,7 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return collectionViewCellSize
+        return libraryCellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -67,33 +67,27 @@ extension LibraryVC : UICollectionViewDelegate , UICollectionViewDataSource , UI
             indexSelectionManager.insert(indexPath)
             
         }else{
-
-            collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
-            let readerVC = storyboard?.instantiateViewController(withIdentifier: "bookReader") as! BookReaderVC
-            readerVC.comic = selectedComic
-            readerVC.dataService = dataService
-            readerVC.bookIndexInLibrary = indexPath
-            readerVC.modalPresentationStyle = .fullScreen
             
-            // showing a spinner if presenting VC is taking some moments
-            if (selectedComic.imageNames?.count ?? 0) > 80 {
-                addLoadingView()
+            collectionView.selectItem(at: nil, animated: false, scrollPosition: [])
+            
+            var readerVCFactory = BookReaderFactory(comic: selectedComic)
+            readerVCFactory.loadingHandler = { [weak self] in
+                self?.addLoadingView()
             }
-            // doing creation of book images in another thread since they time consuming
-            DispatchQueue.global(qos: .userInitiated).async {
-                
-                readerVC.createSingleBookImages()
-                readerVC.createDoubleBookImages()
-                readerVC.initSinglePageThumbnails()
-                
-                DispatchQueue.main.async { [weak self] in
-                    self?.present(readerVC, animated: true, completion: { [weak self] in
+            
+            readerVCFactory.comicReadingProgressDidChanged = {[weak self] comic , lastPage in
+                guard let self = self else { return }
+                guard let index = self.fetchResultController.indexPath(forObject: comic) else { return }
+                try? self.dataService.saveLastPageOf(comic: comic, lastPage: lastPage)
+                self.bookCollectionView.reloadItems(at: [index])
+            }
+            
+            readerVCFactory.build { [weak self] readerVC in
+                self?.present(readerVC, animated: true, completion: { [weak self] in
 
-                        self?.removeLoadingView()
-                    })
-                }
+                    self?.removeLoadingView()
+                })
             }
- 
         }
     }
     

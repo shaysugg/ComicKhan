@@ -19,7 +19,7 @@ final class Cores {
         extractor = ComicExteractor(userDirectory: URL.userDiractory,
                                           comicDirectory: URL.comicDiractory)
         
-        dataService = DataService(managedContext: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
+        dataService = DataService()
         
         appfileManager = AppFileManager(dataService: dataService,
                                         userDirectory: URL.userDiractory,

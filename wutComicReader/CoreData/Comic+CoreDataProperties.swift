@@ -11,11 +11,6 @@ import CoreData
 
 
 extension Comic {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Comic> {
-        return NSFetchRequest<Comic>(entityName: "Comic")
-    }
-
     @NSManaged public var id: UUID
     @NSManaged public var imageNames: [String]
     @NSManaged public var lastVisitedPage: Int16
@@ -23,11 +18,13 @@ extension Comic {
     @NSManaged public var thumbnailNames: [String]
     @NSManaged public var ofComicGroup: ComicGroup?
     @NSManaged public var groupName: String
-
+    
+    static var entityName: String = "Comic"
+   
 }
 
 
-extension Comic: NSObjcet {
+extension Comic: CustomStringConvertible {
     override var description: String {
         return """
         name : \(name)
@@ -36,7 +33,4 @@ extension Comic: NSObjcet {
         """
     }
     
-    static var entityName: String {
-        return "Comic"
-    } 
 }

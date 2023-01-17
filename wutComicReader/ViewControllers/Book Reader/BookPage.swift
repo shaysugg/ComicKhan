@@ -10,16 +10,14 @@ import UIKit
 
 final class BookPage: UIViewController , UIScrollViewDelegate {
     
-    //MARK:- Variables
+    //MARK: Variables
     
     var pageNumber: Int?
     
     var image1: ComicImage?
     var image2: ComicImage?
     
-    var previousRotation = UIDevice.current.orientation
-    
-    //MARK:- UI Variables
+    //MARK: UI Variables
     
     lazy var scrollView : UIScrollView! = {
         let scrollview = UIScrollView()
@@ -60,64 +58,45 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    private var gradientLayer: CAGradientLayer?
 
-    //MARK:- Functions
+    //MARK: Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDesign()
         scrollView.delegate = self
-        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
         if pageImageView1.image?.size == .zero ||
-        pageImageView1.image?.size == nil{
-
-        pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
-        pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
-
-        updateMinZoomScaleForSize(view.bounds.size)
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
+            pageImageView1.image?.size == nil{
             
+            pageImageView1.image = UIImage(contentsOfFile: image1?.path ?? "")
+            pageImageView2.image = UIImage(contentsOfFile: image2?.path ?? "")
+            
+            updateMinZoomScaleForSize(view.bounds.size)
+            scrollView.setNeedsLayout()
+            scrollView.layoutIfNeeded()
+            
+            setUpPageMode(AppState.main.readerPageMode)
+            setUpTheme(AppState.main.readerTheme)
         }
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-
+        super.viewDidDisappear(animated)
         pageImageView1.image = UIImage()
         pageImageView2.image = UIImage()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-         let orientation = UIDevice.current.orientation
-         
-         if orientation.isLandscape {
-             makeDoublePageDesign()
-         }else if orientation.isPortrait{
-             makeSinglePageDesign()
-         }else {
-             if previousRotation.isLandscape{
-                 makeDoublePageDesign()
-             }else{
-                 makeSinglePageDesign()
-             }
-         }
-         
-     }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-            centerTheImage()
-        if !UIDevice.current.orientation.isFlat {
-            previousRotation = UIDevice.current.orientation
-        }
+        updateMinZoomScaleForSize(view.bounds.size)
+        centerTheImage()
     }
     
     func setupDesign() {
@@ -127,8 +106,6 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.backgroundColor = .appSystemSecondaryBackground
-        view.backgroundColor = .appSystemSecondaryBackground
         
         scrollView.addSubview(imagesContainerView)
         imageContainerViewLeftAnchor = imagesContainerView.leftAnchor.constraint(equalTo: scrollView.leftAnchor)
@@ -163,20 +140,61 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         }
     }
     
-    private func makeDoublePageDesign() {
-        imagesContainerView.addArrangedSubview(pageImageView2)
-    }
     
-    private func makeSinglePageDesign() {
-        pageImageView2.removeFromSuperview()
-    }
     
     private func pagesThatHaveImage() -> [UIImageView] {
         [pageImageView1, pageImageView2].filter{ $0.image != nil && $0.image != UIImage() }
     }
     
+    private func configureBackgroundGradient() {
+        guard let image1 = pageImageView1.image,
+              let color1 = image1.getPixelColor(pos: CGPoint()) else { return }
+
+        let image2 = pageImageView2.image ?? image1
+        guard let color2 = image2.getPixelColor(
+            pos: CGPoint(x: image2.size.width - 1, y: image2.size.height - 1))
+        else { return }
+        
+        
+        gradientLayer = CAGradientLayer()
+        gradientLayer!.colors = [color1.cgColor, color2.cgColor]
+        gradientLayer!.locations = [0 , 1]
+        gradientLayer!.frame = view.bounds
+        view.layer.insertSublayer(gradientLayer!, at: 0)
+    }
     
-    //MARK:- Scroll View Delegates
+    func setBackgroundColor(to color: UIColor) {
+        gradientLayer?.removeFromSuperlayer()
+        view.backgroundColor = color
+    }
+    
+    func setUpTheme(_ theme: ReaderTheme) {
+        switch theme {
+//        case .dynamic:
+//            configureBackgroundGradient()
+        case .light:
+            setBackgroundColor(to: .white)
+        case .dark:
+            setBackgroundColor(to: .black)
+        case .system:
+            setBackgroundColor(to: .systemBackground)
+        }
+    }
+    
+    func setUpPageMode(_ pageMode: ReaderPageMode) {
+        switch pageMode {
+        case .single:
+            pageImageView2.removeFromSuperview()
+        case .double:
+            imagesContainerView.addArrangedSubview(pageImageView2)
+        }
+        
+        updateMinZoomScaleForSize(view.bounds.size)
+        centerTheImage()
+    }
+    
+    
+    //MARK: Scroll View Delegates
     
     
     func updateMinZoomScaleForSize(_ size: CGSize) {
@@ -214,21 +232,10 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
         let imageView = pagesThatHaveImage()[0]
         let numberOfPages = pagesThatHaveImage().count
         
-        let orientation = UIDevice.current.orientation
-        
-        if  orientation.isLandscape {
-            centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
-            
-        }else if orientation.isPortrait{
+        if AppState.main.readerPageMode == .single {
             centerForPortraitMode(imageView)
-            
-            //when oriantation is flat
-        }else{
-            if previousRotation.isLandscape{
-                centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
-            }else {
-                centerForPortraitMode(imageView)
-            }
+        } else {
+            centerForLandscapeMode(imageView, withNumberOfPages: numberOfPages)
         }
         
         scrollView.setNeedsLayout()
@@ -275,3 +282,5 @@ final class BookPage: UIViewController , UIScrollViewDelegate {
     }
     
 }
+
+

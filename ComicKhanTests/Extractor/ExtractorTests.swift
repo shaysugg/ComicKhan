@@ -50,7 +50,7 @@ class ExtractorTests: XCTestCase {
     override func setUp() {
         super.setUp()
         creatTempDiractories()
-        extractor = ComicExteractor(testUserDirectory: tempUserDirectory, testComicDirectory: tempComicDirectory)
+        extractor = ComicExteractor(userDirectory: tempUserDirectory, comicDirectory: tempComicDirectory)
         testBundle = Bundle(for: type(of: self))
         
     }
