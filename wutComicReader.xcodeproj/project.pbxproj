@@ -902,7 +902,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2K28MF7GYQ;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -910,7 +910,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.9.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wutup.wutComicReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuttup.comickhan;
 				PRODUCT_NAME = ComicKhan;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -926,7 +926,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2K28MF7GYQ;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -934,7 +934,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.9.10;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wutup.wutComicReader;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuttup.comickhan;
 				PRODUCT_NAME = ComicKhan;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
