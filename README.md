@@ -1,9 +1,11 @@
 
 # ComicKhan - CBZ/CBR/PDF Reader
 
-ComicKhan is an app for reading your comic files (.cbz /.cbr/.pdf) on your iPhone and iPad.
+*Notice:
+Unfortunately, during the past few years a lot has happened in my life and I couldn't maintain this repo and project properly. At the same time the codebase has become a bit old and I believe any possible feature development or bug fixing is really difficult right now. I decided to archive this repo.
+But regardless of that, I am still willing to work on this project. In the feature, if the life becomes easier and I have the time, I am definitely looking forward to planning a rewrite using newer frameworks like swiftUI and async await and probably try to reuse bunch of components from here.*
 
-[![App Store](http://cl.ly/WouG/Download_on_the_App_Store_Badge_US-UK_135x40.svg)](https://apps.apple.com/us/app/comickhan/id1516810943)
+ComicKhan is an app for reading your comic files (.cbz /.cbr/.pdf) on your iPhone and iPad.
 
 ## Screenshots
 
@@ -31,16 +33,16 @@ ComicKhan is an app for reading your comic files (.cbz /.cbr/.pdf) on your iPhon
 
 
 ## Features
-* Detects new comic files when you add them into the document directory and start extracting them while showing their extraction progress.
-* Read your comics in double page and single page based on your device orientation.
-* Stores the last page that you have read and show reading progress with a circular progress view on the left bottom corner of each book in your library.
+* Detects new comic files when you add them into the document directory and starts extracting them while showing their extraction progress.
+* Allows you to reading your comics in double pages or single page based.
+* Stores the last page you have read and displays its reading progress on each book in your library.
 * Resizes comic images for smooth scrolling and better performance.
-* Group your comics and organize them in the library.
+* Allows you to group your comics and organize them in the library.
 
 ## TODO
 - [x] Support for comics with PDF format
 - [x] Support for extracting directories of comics.
-- [ ] Switch between dark mode / light mode in book reader without needing to change the system color preferences.
+- [X] Switch between dark mode / light mode in book reader without needing to change the system color preferences.
 - [ ] Ability to sort comic groups based on name, date added, etc.
 
 
