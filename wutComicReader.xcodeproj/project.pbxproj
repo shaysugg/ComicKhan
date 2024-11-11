@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		288A28934775CC4429D1A584 /* Pods_ComicKhanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64718B53B0D27B425ECABD9 /* Pods_ComicKhanTests.framework */; };
-		586F14818832ABECAF323894 /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49D47E858DD7025A9B0A0A7 /* Pods_wutComicReader.framework */; };
+		0BC0FBA2F8F44ABF6BE7EBDF /* Pods_wutComicReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0FBFEF6FC376935C3D0A40 /* Pods_wutComicReader.framework */; };
+		8282ED2D1B0B17EAE78B1D0C /* Pods_ComicKhanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEEF12AA51D2291EF854BB3 /* Pods_ComicKhanTests.framework */; };
+		E401D9872CCCDE92001DC7BA /* BookReader+PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401D9862CCCDE7C001DC7BA /* BookReader+PageVC.swift */; };
 		E407CB8323FD3D780056F64D /* RoundedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407CB8223FD3D780056F64D /* RoundedProgressView.swift */; };
 		E407CB8523FD3DD80056F64D /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407CB8423FD3DD80056F64D /* CircleProgressView.swift */; };
 		E40A353323F97C83006FA758 /* Library+ProgressContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40A353223F97C83006FA758 /* Library+ProgressContainer.swift */; };
@@ -51,7 +52,6 @@
 		E4A6CD3D28AF6C8400E87FE0 /* ReaderSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A6CD3C28AF6C8400E87FE0 /* ReaderSettingVC.swift */; };
 		E4AE1A2425E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */; };
 		E4B2870928636A2C00397E83 /* BookReaderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B2870828636A2C00397E83 /* BookReaderFactory.swift */; };
-		E4B9F9CC28C1F6CF007662AF /* Reader+PageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B9F9CB28C1F6CF007662AF /* Reader+PageController.swift */; };
 		E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C3D174261E09D7007CC0E1 /* AppState.swift */; };
 		E4C51EFE245EF82700B8AC04 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C51EFD245EF82700B8AC04 /* LoadingView.swift */; };
 		E4C596F7283BA25E004C71D9 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C596F6283BA25E004C71D9 /* AppFont.swift */; };
@@ -88,17 +88,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03E66DBFBABD013BDBA0361C /* Pods-ComicKhanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicKhanTests.release.xcconfig"; path = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests.release.xcconfig"; sourceTree = "<group>"; };
-		0496EF6CFF440D2E36E12FF2 /* Pods_ExtractorTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExtractorTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0CFD32FD6353340A5DEC1C6B /* Pods-wutComicReaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReaderTests.release.xcconfig"; path = "Target Support Files/Pods-wutComicReaderTests/Pods-wutComicReaderTests.release.xcconfig"; sourceTree = "<group>"; };
-		58CA482A5B5030EF46D9CA98 /* Pods-ExtractorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExtractorTests.release.xcconfig"; path = "Target Support Files/Pods-ExtractorTests/Pods-ExtractorTests.release.xcconfig"; sourceTree = "<group>"; };
-		67F714B0C1F81838D54423EA /* Pods_wutComicReaderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReaderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6DD90200F782ACE9AB28120F /* Pods-ExtractorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExtractorTests.debug.xcconfig"; path = "Target Support Files/Pods-ExtractorTests/Pods-ExtractorTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7EB3D039244623FD3AA96A8F /* Pods-wutComicReaderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReaderTests.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReaderTests/Pods-wutComicReaderTests.debug.xcconfig"; sourceTree = "<group>"; };
-		B49D47E858DD7025A9B0A0A7 /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA3AE4D05ABFE887ADCFCC8C /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
-		CFBDE8E10B927AB3FCF06345 /* Pods-ComicKhanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicKhanTests.debug.xcconfig"; path = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D64718B53B0D27B425ECABD9 /* Pods_ComicKhanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ComicKhanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		322C001793F74CC9696CD658 /* Pods-wutComicReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.release.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.release.xcconfig"; sourceTree = "<group>"; };
+		3AAF23A6F71F8518834C3542 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
+		3D1396127AC301728BA949F5 /* Pods-ComicKhanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicKhanTests.debug.xcconfig"; path = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7AEEF12AA51D2291EF854BB3 /* Pods_ComicKhanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ComicKhanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD5737ACFC00EB794819F6C5 /* Pods-ComicKhanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ComicKhanTests.release.xcconfig"; path = "Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests.release.xcconfig"; sourceTree = "<group>"; };
+		CA0FBFEF6FC376935C3D0A40 /* Pods_wutComicReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wutComicReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E401D9862CCCDE7C001DC7BA /* BookReader+PageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BookReader+PageVC.swift"; sourceTree = "<group>"; };
 		E407CB8223FD3D780056F64D /* RoundedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedProgressView.swift; sourceTree = "<group>"; };
 		E407CB8423FD3DD80056F64D /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 		E40A353223F97C83006FA758 /* Library+ProgressContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+ProgressContainer.swift"; sourceTree = "<group>"; };
@@ -139,7 +135,6 @@
 		E463B29722AC2FCE0094265C /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		E465B1192413FBAC00A6003D /* InfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoVC.swift; sourceTree = "<group>"; };
 		E48253E922D631B1001A0E85 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wutComicReader.debug.xcconfig"; path = "Target Support Files/Pods-wutComicReader/Pods-wutComicReader.debug.xcconfig"; sourceTree = "<group>"; };
 		E499A0BB2840C20F002F8351 /* Library+FetchRsultHandlerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Library+FetchRsultHandlerDelegate.swift"; sourceTree = "<group>"; };
 		E49C7C122417EBED004DE82A /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 		E49C7C142418FEF4004DE82A /* ComicImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicImage.swift; sourceTree = "<group>"; };
@@ -148,7 +143,6 @@
 		E4A6CD3C28AF6C8400E87FE0 /* ReaderSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderSettingVC.swift; sourceTree = "<group>"; };
 		E4AE1A2325E28E6000AEF86A /* Library+ExtractionErrorHandeling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Library+ExtractionErrorHandeling.swift"; sourceTree = "<group>"; };
 		E4B2870828636A2C00397E83 /* BookReaderFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookReaderFactory.swift; sourceTree = "<group>"; };
-		E4B9F9CB28C1F6CF007662AF /* Reader+PageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Reader+PageController.swift"; path = "../../../../../../../../Desktop/Reader+PageController.swift"; sourceTree = "<group>"; };
 		E4C3D174261E09D7007CC0E1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E4C51EFD245EF82700B8AC04 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E4C596F6283BA25E004C71D9 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
@@ -182,7 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				586F14818832ABECAF323894 /* Pods_wutComicReader.framework in Frameworks */,
+				0BC0FBA2F8F44ABF6BE7EBDF /* Pods_wutComicReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,37 +184,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				288A28934775CC4429D1A584 /* Pods_ComicKhanTests.framework in Frameworks */,
+				8282ED2D1B0B17EAE78B1D0C /* Pods_ComicKhanTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		085363A6001AD86691F3EB2B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B49D47E858DD7025A9B0A0A7 /* Pods_wutComicReader.framework */,
-				67F714B0C1F81838D54423EA /* Pods_wutComicReaderTests.framework */,
-				0496EF6CFF440D2E36E12FF2 /* Pods_ExtractorTests.framework */,
-				D64718B53B0D27B425ECABD9 /* Pods_ComicKhanTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		6F67DD5253B7F4E09AC17837 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */,
-				BA3AE4D05ABFE887ADCFCC8C /* Pods-wutComicReader.release.xcconfig */,
-				7EB3D039244623FD3AA96A8F /* Pods-wutComicReaderTests.debug.xcconfig */,
-				0CFD32FD6353340A5DEC1C6B /* Pods-wutComicReaderTests.release.xcconfig */,
-				6DD90200F782ACE9AB28120F /* Pods-ExtractorTests.debug.xcconfig */,
-				58CA482A5B5030EF46D9CA98 /* Pods-ExtractorTests.release.xcconfig */,
-				CFBDE8E10B927AB3FCF06345 /* Pods-ComicKhanTests.debug.xcconfig */,
-				03E66DBFBABD013BDBA0361C /* Pods-ComicKhanTests.release.xcconfig */,
+				3D1396127AC301728BA949F5 /* Pods-ComicKhanTests.debug.xcconfig */,
+				AD5737ACFC00EB794819F6C5 /* Pods-ComicKhanTests.release.xcconfig */,
+				3AAF23A6F71F8518834C3542 /* Pods-wutComicReader.debug.xcconfig */,
+				322C001793F74CC9696CD658 /* Pods-wutComicReader.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		720C8E2F63549F6A9A954883 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7AEEF12AA51D2291EF854BB3 /* Pods_ComicKhanTests.framework */,
+				CA0FBFEF6FC376935C3D0A40 /* Pods_wutComicReader.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E406C44223CA49870053056A /* AppDelegate */ = {
@@ -247,7 +235,7 @@
 				E4DA532324507DB800A244FD /* ComicKhanTests */,
 				E40C7A9A22A1168C00D7CD17 /* Products */,
 				6F67DD5253B7F4E09AC17837 /* Pods */,
-				085363A6001AD86691F3EB2B /* Frameworks */,
+				720C8E2F63549F6A9A954883 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -303,12 +291,12 @@
 		E45213A722D4902C00216217 /* Book Reader */ = {
 			isa = PBXGroup;
 			children = (
-				E4DD77CD28C1F64300E7EE0B /* Reader Thumbnails */,
 				E4DD77CC28C1F61000E7EE0B /* Reader Setting */,
+				E4DD77CD28C1F64300E7EE0B /* Reader Thumbnails */,
+				E401D9862CCCDE7C001DC7BA /* BookReader+PageVC.swift */,
 				E4E8FCEC22C28E4700A8B32D /* BookReaderVC.swift */,
 				E430911F24CDB8EB00007FD3 /* ReaderGuideView.swift */,
 				E4FF65592391684600AAD68B /* BookPage.swift */,
-				E4B9F9CB28C1F6CF007662AF /* Reader+PageController.swift */,
 				E4B2870828636A2C00397E83 /* BookReaderFactory.swift */,
 			);
 			path = "Book Reader";
@@ -496,11 +484,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E40C7AAB22A1169000D7CD17 /* Build configuration list for PBXNativeTarget "wutComicReader" */;
 			buildPhases = (
-				710A9CC518E5FECD93FE3EE3 /* [CP] Check Pods Manifest.lock */,
+				D5AA8F563E2DCB40592935F4 /* [CP] Check Pods Manifest.lock */,
 				E40C7A9522A1168C00D7CD17 /* Sources */,
 				E40C7A9622A1168C00D7CD17 /* Frameworks */,
 				E40C7A9722A1168C00D7CD17 /* Resources */,
-				F026DC445316025F05F6BA9E /* [CP] Embed Pods Frameworks */,
+				C1137C48453DEEFA6D1F0370 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -515,11 +503,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E4DA532924507DB800A244FD /* Build configuration list for PBXNativeTarget "ComicKhanTests" */;
 			buildPhases = (
-				4861D61952B9EA79487A4508 /* [CP] Check Pods Manifest.lock */,
+				2B31D3678F27BAAF5DCB197E /* [CP] Check Pods Manifest.lock */,
 				E4DA531E24507DB800A244FD /* Sources */,
 				E4DA531F24507DB800A244FD /* Frameworks */,
 				E4DA532024507DB800A244FD /* Resources */,
-				030CB3D720341449407CE743 /* [CP] Embed Pods Frameworks */,
+				B66859918EB8551E4DFDC66C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -595,24 +583,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		030CB3D720341449407CE743 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4861D61952B9EA79487A4508 /* [CP] Check Pods Manifest.lock */ = {
+		2B31D3678F27BAAF5DCB197E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -634,7 +605,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		710A9CC518E5FECD93FE3EE3 /* [CP] Check Pods Manifest.lock */ = {
+		B66859918EB8551E4DFDC66C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ComicKhanTests/Pods-ComicKhanTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1137C48453DEEFA6D1F0370 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5AA8F563E2DCB40592935F4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -654,23 +659,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F026DC445316025F05F6BA9E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-wutComicReader/Pods-wutComicReader-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -720,13 +708,13 @@
 				E4EBC306241E8D4C00F558AF /* Library+EmptyViewDelegate.swift in Sources */,
 				E42B9EA024506CF3007B3803 /* DataService.swift in Sources */,
 				E4F09F7F289579E800662164 /* +Combine.swift in Sources */,
+				E401D9872CCCDE92001DC7BA /* BookReader+PageVC.swift in Sources */,
 				E4A6CD3D28AF6C8400E87FE0 /* ReaderSettingVC.swift in Sources */,
 				E4C3D175261E09D7007CC0E1 /* AppState.swift in Sources */,
 				E411C7F525BF44F9006D45A5 /* ExtractionDirectory.swift in Sources */,
 				E4596A042407E7650030DB3E /* ReaderThumbnailsVC.swift in Sources */,
 				E40A353323F97C83006FA758 /* Library+ProgressContainer.swift in Sources */,
 				E40C0EB223944A8200D2E561 /* AppFileManager.swift in Sources */,
-				E4B9F9CC28C1F6CF007662AF /* Reader+PageController.swift in Sources */,
 				E40C7A9D22A1168C00D7CD17 /* AppDelegate.swift in Sources */,
 				E42D4BD828A0EA2100AC3C6A /* +UIImage.swift in Sources */,
 				E4B2870928636A2C00397E83 /* BookReaderFactory.swift in Sources */,
@@ -896,7 +884,7 @@
 		};
 		E40C7AAC22A1169000D7CD17 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E48B2009883E73D5F63B7D37 /* Pods-wutComicReader.debug.xcconfig */;
+			baseConfigurationReference = 3AAF23A6F71F8518834C3542 /* Pods-wutComicReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -904,7 +892,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2K28MF7GYQ;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -920,7 +908,7 @@
 		};
 		E40C7AAD22A1169000D7CD17 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA3AE4D05ABFE887ADCFCC8C /* Pods-wutComicReader.release.xcconfig */;
+			baseConfigurationReference = 322C001793F74CC9696CD658 /* Pods-wutComicReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -928,7 +916,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2K28MF7GYQ;
 				INFOPLIST_FILE = wutComicReader/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -944,7 +932,7 @@
 		};
 		E4DA532A24507DB800A244FD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFBDE8E10B927AB3FCF06345 /* Pods-ComicKhanTests.debug.xcconfig */;
+			baseConfigurationReference = 3D1396127AC301728BA949F5 /* Pods-ComicKhanTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -966,7 +954,7 @@
 		};
 		E4DA532B24507DB800A244FD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03E66DBFBABD013BDBA0361C /* Pods-ComicKhanTests.release.xcconfig */;
+			baseConfigurationReference = AD5737ACFC00EB794819F6C5 /* Pods-ComicKhanTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
